@@ -1,0 +1,219 @@
+"use client";
+
+import { motion } from "motion/react";
+import { CountryMapWithGradient } from "./country-map-svg";
+import { getIndexNarrative, getOrdinalSuffix } from "@/lib/narratives";
+import type { FullRankingData } from "@/data/countries";
+import { iso3ToIso2 } from "@/data/countries";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
+
+interface CountryHeroProps {
+  country: FullRankingData;
+  regionalRank: number;
+  totalInRegion: number;
+}
+
+export function CountryHero({ country, regionalRank, totalInRegion }: CountryHeroProps) {
+  const iso2 = iso3ToIso2[country.iso3] ?? country.iso3.slice(0, 2).toLowerCase();
+  const flagUrl = `https://flagcdn.com/w160/${iso2}.png`;
+  
+  const indexNarrative = getIndexNarrative(country.country, country.indexScore);
+
+  return (
+    <section className="relative min-h-[80vh] overflow-hidden">
+      {/* Background gradient */}
+      <div className="absolute inset-0 bg-linear-to-br from-primary/5 via-background to-primary/10 dark:from-primary/10 dark:via-background dark:to-primary/20" />
+      
+      {/* Decorative elements */}
+      <div className="absolute top-0 right-0 w-1/2 h-full opacity-5">
+        <div className="absolute inset-0 bg-linear-to-l from-primary to-transparent" />
+      </div>
+
+      <div className="relative z-10 container mx-auto px-4 py-8">
+        {/* Back button */}
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <Link href="/">
+            <Button variant="ghost" size="sm" className="mb-6 gap-2">
+              <ArrowLeft className="h-4 w-4" />
+              Back to Index
+            </Button>
+          </Link>
+        </motion.div>
+
+        <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[60vh]">
+          {/* Left column - Country info */}
+          <div className="space-y-8">
+            {/* Flag and country name */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="flex items-center gap-4"
+            >
+              <img
+                src={flagUrl}
+                alt={`${country.country} flag`}
+                className="h-16 w-auto rounded-md shadow-lg object-cover"
+                onError={(e) => {
+                  e.currentTarget.style.display = "none";
+                }}
+              />
+              <div>
+                <h1 className="text-3xl md:text-4xl font-bold text-foreground">
+                  {country.country}
+                </h1>
+                <p className="text-muted-foreground mt-1">
+                  {country.giraiRegion} • {country.unSubregion}
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Score and ranking */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="space-y-4"
+            >
+              <div className="flex items-baseline gap-4">
+                <span className="text-7xl md:text-8xl font-bold text-primary tabular-nums">
+                  {country.indexScore.toFixed(1)}
+                </span>
+                <div className="space-y-1">
+                  <span 
+                    className="inline-block px-3 py-1 rounded-full text-sm font-semibold text-white"
+                    style={{ backgroundColor: indexNarrative.color }}
+                  >
+                    {indexNarrative.label}
+                  </span>
+                  <p className="text-sm text-muted-foreground">GIRAI Index Score</p>
+                </div>
+              </div>
+
+              {/* Rankings */}
+              <div className="flex flex-wrap gap-3">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary/10 border border-primary/20">
+                  <span className="text-2xl font-bold text-primary">
+                    #{country.ranking}
+                  </span>
+                  <span className="text-sm text-muted-foreground">
+                    Global Rank
+                  </span>
+                </div>
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-muted border border-border">
+                  <span className="text-2xl font-bold text-foreground">
+                    #{regionalRank}
+                  </span>
+                  <span className="text-sm text-muted-foreground">
+                    of {totalInRegion} in {country.giraiRegion}
+                  </span>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Narrative */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="max-w-xl"
+            >
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                {indexNarrative.narrative}
+              </p>
+            </motion.div>
+
+            {/* Quick stats */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="grid grid-cols-3 gap-4"
+            >
+              <QuickStat
+                label="Gov. Frameworks"
+                value={country.pillarScores.governmentFrameworks}
+                color="#6366f1"
+              />
+              <QuickStat
+                label="Gov. Actions"
+                value={country.pillarScores.governmentActions}
+                color="#8b5cf6"
+              />
+              <QuickStat
+                label="Non-State Actors"
+                value={country.pillarScores.nonStateActors}
+                color="#a855f7"
+              />
+            </motion.div>
+          </div>
+
+          {/* Right column - Country map silhouette */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="flex items-center justify-center"
+          >
+            <div className="relative">
+              {/* Glow effect */}
+              <div className="absolute inset-0 blur-3xl opacity-30 animate-pulse">
+                <CountryMapWithGradient
+                  iso3={country.iso3}
+                  gradientColors={["#6D6BFF", "#A4F9E9"]}
+                  width={500}
+                  height={400}
+                  className="w-full h-auto"
+                  strokeWidth={0}
+                />
+              </div>
+              {/* Main map */}
+              <CountryMapWithGradient
+                iso3={country.iso3}
+                gradientColors={["#6D6BFF", "#A4FCE9"]}
+                gradientId="heroMapGradient"
+                width={500}
+                height={400}
+                className="w-full h-auto relative z-10 drop-shadow-2xl"
+                strokeWidth={0}
+              />
+            </div>
+          </motion.div>
+        </div>
+      </div>
+
+      {/* Scroll indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1, duration: 0.5 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2"
+      >
+        <motion.div
+          animate={{ y: [0, 8, 0] }}
+          transition={{ repeat: Infinity, duration: 1.5 }}
+          className="w-6 h-10 rounded-full border-2 border-muted-foreground/30 flex items-start justify-center p-2"
+        >
+          <div className="w-1 h-2 rounded-full bg-muted-foreground/50" />
+        </motion.div>
+      </motion.div>
+    </section>
+  );
+}
+
+function QuickStat({ label, value, color }: { label: string; value: number; color: string }) {
+  return (
+    <div className="p-3 rounded-lg bg-card border border-border">
+      <div className="text-2xl font-bold tabular-nums" style={{ color }}>
+        {value.toFixed(1)}
+      </div>
+      <div className="text-xs text-muted-foreground mt-1">{label}</div>
+    </div>
+  );
+}

@@ -1,0 +1,140 @@
+Ranking,ISO3,Country,GIRAI_region,UN_region,UN_subregion,Index score,PILLAR SCORES,,,DIMENSION SCORES,,,COEFFICIENTS,,
+,,,,,,,Government frameworks (0-100),Government actions (0-100),Non-state actors (0-100),Human Rights and AI (0-100),Responsible AI Governance (0-100),Responsible AI Capacities (0-100),Government frameworks (0-1),Government actions (0-1),Non-state actors (0-1)
+1,NLD,Netherlands,Europe,Europe,Western Europe,86.16,74.33,95.46,91.23,78.74,91.12,88.59,0.96,0.97,1.00
+2,DEU,Germany,Europe,Europe,Western Europe,82.77,72.69,93.00,82.48,80.30,90.94,64.03,0.94,0.94,0.92
+3,IRL,Ireland,Europe,Europe,Northern Europe,74.98,81.71,74.17,63.16,84.10,73.68,57.60,0.95,0.95,1.00
+4,GBR,United Kingdom of Great Britain and Northern Ireland,Europe,Europe,Northern Europe,73.12,60.66,80.90,82.48,67.59,79.62,66.54,0.93,0.92,0.92
+5,USA,United States of America,North America,Americas,Northern America,72.81,62.41,79.19,80.87,65.37,74.75,84.34,0.92,0.89,0.92
+6,EST,Estonia,Europe,Europe,Northern Europe,67.61,65.58,81.52,43.86,65.85,72.01,58.54,0.93,0.93,1.00
+7,ITA,Italy,Europe,Europe,Southern Europe,61.80,59.99,55.96,77.10,66.34,66.13,38.21,0.73,0.76,0.98
+8,FRA,France,Europe,Europe,Western Europe,57.62,56.23,58.92,57.81,39.84,72.27,55.17,0.89,0.88,0.89
+9,CAN,Canada,North America,Americas,Northern America,57.39,37.80,80.84,49.68,55.37,59.08,57.06,0.96,0.95,0.98
+10,AUS,Australia,Asia and Oceania,Oceania,Australia and New Zealand,56.22,34.69,72.44,66.82,71.31,52.67,31.62,0.96,0.96,0.98
+11,SGP,Singapore,Asia and Oceania,Asia,South-eastern Asia,53.77,43.70,70.68,40.09,48.35,58.54,52.10,1.00,0.99,0.51
+12,JPN,Japan,Asia and Oceania,Asia,Eastern Asia,52.21,28.86,72.54,58.25,41.67,63.07,44.19,0.94,0.95,0.98
+13,SVN,Slovenia,Europe,Europe,Southern Europe,49.58,68.89,39.63,30.84,51.97,47.12,51.35,0.84,0.85,0.98
+14,PRT,Portugal,Europe,Europe,Southern Europe,49.44,66.06,34.74,45.61,54.47,43.38,55.89,0.85,0.84,1.00
+15,CHE,Switzerland,Europe,Europe,Western Europe,48.11,56.15,50.42,27.41,32.92,57.92,54.14,0.97,0.99,0.98
+16,ESP,Spain,Europe,Europe,Southern Europe,45.08,68.02,33.36,22.64,47.59,41.82,48.99,0.82,0.82,0.92
+17,ARE,United Arab Emirates,Middle East,Asia,Western Asia,44.66,46.40,55.62,19.24,40.58,45.66,51.15,0.85,0.90,0.41
+18,BRA,Brazil,South and Central America,Americas,Latin America and the Caribbean,44.42,44.56,40.86,51.26,44.85,46.90,35.97,0.58,0.49,0.86
+19,URY,Uruguay,South and Central America,Americas,Latin America and the Caribbean,44.09,35.64,54.03,41.12,47.20,43.84,37.59,0.81,0.89,0.98
+20,FIN,Finland,Europe,Europe,Northern Europe,43.07,36.45,49.29,43.86,36.58,47.24,45.69,0.99,0.99,1.00
+21,POL,Poland,Europe,Europe,Eastern Europe,42.73,63.50,34.97,16.74,43.83,42.07,42.15,0.77,0.74,0.87
+22,ROU,Romania,Europe,Europe,Eastern Europe,42.11,26.61,55.81,45.71,36.96,48.63,34.57,0.72,0.66,0.90
+23,CHL,Chile,South and Central America,Americas,Latin America and the Caribbean,40.38,33.36,49.18,36.84,42.45,43.47,26.30,0.83,0.81,1.00
+24,BEL,Belgium,Europe,Europe,Western Europe,38.55,57.24,27.13,23.99,40.35,41.62,25.11,0.91,0.90,0.98
+25,IND,India,Asia and Oceania,Asia,Southern Asia,38.51,28.42,52.95,29.81,28.99,46.74,36.05,0.65,0.65,0.68
+26,UKR,Ukraine,Europe,Europe,Eastern Europe,38.13,25.72,39.19,60.81,34.35,39.31,43.39,0.47,0.48,0.68
+27,KOR,Republic of Korea,Asia and Oceania,Asia,Eastern Asia,36.18,35.64,34.59,40.43,35.08,36.40,38.07,0.88,0.88,0.92
+28,GRC,Greece,Europe,Europe,Southern Europe,35.86,53.61,21.35,29.36,31.14,42.25,27.69,0.73,0.71,0.93
+29,LTU,Lithuania,Europe,Europe,Northern Europe,35.78,42.17,29.02,36.49,35.41,39.20,26.35,0.89,0.84,0.95
+30,AUT,Austria,Europe,Europe,Western Europe,35.76,55.85,26.87,13.38,28.64,37.01,48.63,0.94,0.91,0.95
+31,PHL,Philippines,Asia and Oceania,Asia,South-eastern Asia,35.46,19.24,40.72,57.36,34.87,37.84,29.67,0.58,0.59,0.73
+32,CHN,China,Asia and Oceania,Asia,Eastern Asia,35.30,22.11,54.07,24.16,25.40,39.13,46.95,0.59,0.71,0.34
+33,VNM,Viet Nam,Asia and Oceania,Asia,South-eastern Asia,34.29,21.80,55.29,17.27,28.61,35.22,44.75,0.56,0.64,0.35
+34,TWN,Taiwan,Asia and Oceania,,,33.86,26.49,44.57,27.19,44.23,23.98,39.33,0.92,0.90,0.97
+35,SVK,Slovakia,Europe,Europe,Eastern Europe,33.17,47.83,18.82,32.55,25.87,41.72,24.57,0.80,0.72,0.98
+36,HUN,Hungary,Europe,Europe,Eastern Europe,32.00,44.79,21.03,28.34,29.89,25.52,56.35,0.73,0.70,0.73
+37,QAT,Qatar,Middle East,Asia,Western Asia,29.84,27.91,38.33,16.72,42.66,17.44,37.10,0.84,0.86,0.48
+38,JOR,Jordan,Middle East,Asia,Western Asia,29.60,36.88,28.78,16.69,30.68,26.75,35.63,0.68,0.69,0.45
+39,BGR,Bulgaria,Europe,Europe,Eastern Europe,29.09,33.96,11.97,53.59,26.08,36.73,13.17,0.67,0.60,0.90
+40,SAU,Saudi Arabia,Middle East,Asia,Western Asia,28.95,25.60,42.87,7.81,26.28,27.69,38.96,0.71,0.75,0.30
+41,MYS,Malaysia,Asia and Oceania,Asia,South-eastern Asia,28.46,38.26,23.01,19.74,20.05,27.84,49.92,0.78,0.78,0.63
+42,ZAF,South Africa,Africa,Africa,Sub-Saharan Africa,27.61,3.26,31.50,68.53,28.93,24.99,32.40,0.62,0.60,0.98
+43,NZL,New Zealand,Asia and Oceania,Oceania,Australia and New Zealand,27.33,28.49,33.70,12.28,27.87,32.20,11.47,0.98,0.96,1.00
+44,CRI,Costa Rica,South and Central America,Americas,Latin America and the Caribbean,27.05,0.00,58.29,18.70,33.12,27.80,10.67,0.76,0.71,0.97
+45,LVA,Latvia,Europe,Europe,Northern Europe,26.74,45.65,12.00,18.39,24.50,25.72,35.02,0.87,0.81,0.95
+46,PSE,Palestine,Middle East,Asia,Western Asia,26.38,17.37,44.06,9.05,22.23,28.54,29.59,0.71,0.70,0.52
+47,THA,Thailand,Asia and Oceania,Asia,South-eastern Asia,23.87,24.26,30.73,9.35,17.78,21.00,46.65,0.67,0.60,0.48
+48,COL,Colombia,South and Central America,Americas,Latin America and the Caribbean,23.84,24.51,18.17,33.85,25.36,24.38,18.66,0.61,0.61,0.74
+49,HRV,Croatia,Europe,Europe,Southern Europe,23.58,33.59,14.76,21.20,30.95,18.43,21.85,0.74,0.74,0.93
+50,DOM,Dominican Republic,Caribbean,Americas,Latin America and the Caribbean,23.18,39.46,9.11,18.75,16.58,26.45,28.79,0.64,0.58,0.89
+51,MAR,Morocco,Africa,Africa,Northern Africa,22.99,9.51,30.97,34.02,27.99,20.24,19.60,0.60,0.58,0.57
+52,HKG,"China, Hong Kong Special Administrative Region",Asia and Oceania,Asia,Eastern Asia,22.07,26.13,24.15,9.80,12.66,28.35,25.20,0.93,0.96,0.51
+53,BEN,Benin,Africa,Africa,Sub-Saharan Africa,21.96,16.88,22.18,31.66,19.02,22.24,27.96,0.51,0.61,0.86
+54,ARG,Argentina,South and Central America,Americas,Latin America and the Caribbean,21.95,10.49,29.47,29.85,25.73,18.41,23.77,0.48,0.54,0.95
+55,SRB,Serbia,Europe,Europe,Southern Europe,21.24,29.96,9.11,28.04,19.89,22.23,21.39,0.64,0.60,0.73
+56,SEN,Senegal,Africa,Africa,Sub-Saharan Africa,20.11,26.76,13.34,20.35,16.74,22.89,19.63,0.56,0.65,0.77
+57,KWT,Kuwait,Middle East,Asia,Western Asia,19.11,0.00,35.79,23.99,23.39,15.85,18.92,0.69,0.69,0.55
+58,MKD,North Macedonia,Europe,Europe,Southern Europe,18.14,12.69,14.85,35.64,22.47,16.11,14.15,0.69,0.60,0.78
+59,RWA,Rwanda,Africa,Africa,Sub-Saharan Africa,18.09,29.74,14.48,2.01,11.94,22.92,17.96,0.68,0.74,0.38
+60,GEO,Georgia,Europe,Asia,Western Asia,17.83,28.30,7.93,16.69,17.20,20.60,11.03,0.77,0.79,0.68
+61,PER,Peru,South and Central America,Americas,Latin America and the Caribbean,16.40,12.56,16.67,23.53,10.99,18.91,21.51,0.60,0.47,0.79
+62,TUN,Tunisia,Africa,Africa,Northern Africa,15.80,6.11,19.37,28.04,19.25,14.44,11.86,0.58,0.58,0.73
+63,EGY,Egypt,Africa,Africa,Northern Africa,15.79,24.62,14.54,0.62,18.12,10.55,26.07,0.50,0.48,0.35
+64,MEX,Mexico,North America,Americas,Latin America and the Caribbean,15.77,3.53,22.73,26.32,21.48,9.22,22.09,0.50,0.47,0.75
+65,MNE,Montenegro,Europe,Europe,Southern Europe,14.84,0.00,15.01,44.19,20.61,9.63,17.02,0.69,0.63,0.81
+66,OMN,Oman,Middle East,Asia,Western Asia,14.80,23.54,13.03,0.86,13.85,15.12,16.06,0.75,0.67,0.49
+67,IDN,Indonesia,Asia and Oceania,Asia,South-eastern Asia,13.77,20.30,6.73,14.79,0.00,21.45,22.86,0.64,0.64,0.65
+68,PAK,Pakistan,Asia and Oceania,Asia,Southern Asia,13.19,2.21,23.16,15.21,16.01,10.79,13.83,0.42,0.44,0.58
+69,MDA,Republic of Moldova,Europe,Europe,Eastern Europe,12.99,0.00,29.04,6.85,13.72,14.25,7.51,0.61,0.56,0.78
+70,UZB,Uzbekistan,Asia and Oceania,Asia,Central Asia,11.27,14.21,12.00,3.95,5.78,11.15,24.47,0.45,0.49,0.38
+71,KHM,Cambodia,Asia and Oceania,Asia,South-eastern Asia,11.26,8.91,16.56,5.35,14.15,7.11,16.96,0.42,0.43,0.51
+72,LKA,Sri Lanka,Asia and Oceania,Asia,Southern Asia,10.92,11.56,10.13,11.23,9.95,11.04,12.83,0.55,0.53,0.71
+73,NAM,Namibia,Africa,Africa,Sub-Saharan Africa,10.84,0.00,19.83,14.56,15.35,6.16,14.37,0.68,0.69,0.92
+74,KAZ,Kazakhstan,Asia and Oceania,Asia,Central Asia,9.91,3.07,18.86,5.70,14.15,6.10,11.43,0.58,0.65,0.41
+75,PAN,Panama,South and Central America,Americas,Latin America and the Caribbean,9.14,0.00,22.03,1.66,9.20,7.15,14.98,0.61,0.54,0.95
+76,MNG,Mongolia,Asia and Oceania,Asia,Eastern Asia,9.11,10.19,5.31,14.56,6.18,7.56,20.62,0.58,0.50,0.92
+77,KEN,Kenya,Africa,Africa,Sub-Saharan Africa,8.79,8.67,4.68,17.27,6.03,9.46,13.25,0.55,0.49,0.70
+78,BHR,Bahrain,Middle East,Asia,Western Asia,8.71,9.67,10.96,2.30,9.38,5.15,17.84,0.79,0.74,0.33
+79,KGZ,Kyrgyz Republic,Asia and Oceania,Asia,Central Asia,7.40,2.14,10.50,11.76,8.88,3.62,15.32,0.41,0.36,0.61
+80,NGA,Nigeria,Africa,Africa,Sub-Saharan Africa,7.21,3.90,6.97,14.31,8.59,6.10,7.32,0.37,0.36,0.68
+81,TJK,Tajikistan,Asia and Oceania,Asia,Central Asia,6.93,8.18,7.42,3.45,6.00,5.19,14.33,0.33,0.36,0.28
+82,NPL,Nepal,Asia and Oceania,Asia,Southern Asia,6.78,0.00,12.43,9.02,7.30,2.84,17.38,0.50,0.44,0.73
+83,JAM,Jamaica,Caribbean,Americas,Latin America and the Caribbean,6.76,0.00,10.26,13.27,8.22,4.29,10.77,0.67,0.72,0.95
+84,PRY,Paraguay,South and Central America,Americas,Latin America and the Caribbean,6.33,0.00,10.34,10.96,6.27,3.99,13.51,0.53,0.42,0.78
+85,MUS,Mauritius,Africa,Africa,Sub-Saharan Africa,6.29,7.53,7.40,1.62,3.27,7.62,9.37,0.86,0.78,0.92
+86,GHA,Ghana,Africa,Africa,Sub-Saharan Africa,6.26,0.00,9.39,12.50,0.85,10.00,7.65,0.61,0.64,0.89
+87,ETH,Ethiopia,Africa,Africa,Sub-Saharan Africa,6.10,0.00,11.33,7.84,6.85,4.73,8.45,0.41,0.48,0.41
+88,AZE,Azerbaijan,Asia and Oceania,Asia,Western Asia,5.86,3.70,10.09,1.73,2.91,5.29,14.49,0.53,0.50,0.33
+89,GUY,Guyana,Caribbean,Americas,Latin America and the Caribbean,5.42,0.00,2.76,21.56,4.50,3.50,13.29,0.53,0.58,0.95
+90,NER,Niger,Africa,Africa,Sub-Saharan Africa,5.28,9.81,2.25,2.28,5.94,4.14,7.14,0.47,0.47,0.65
+91,ATG,Antigua and Barbuda,Caribbean,Americas,Latin America and the Caribbean,4.72,0.00,9.38,4.81,6.01,2.64,7.92,0.71,0.66,0.91
+92,ZMB,Zambia,Africa,Africa,Sub-Saharan Africa,4.71,2.60,6.87,4.61,4.07,1.93,14.52,0.49,0.48,0.66
+93,TTO,Trinidad and Tobago,Caribbean,Americas,Latin America and the Caribbean,4.65,0.00,5.67,11.90,4.61,3.11,9.33,0.61,0.60,0.97
+94,LBY,Libya,Africa,Africa,Northern Africa,4.53,0.00,6.61,9.44,5.17,2.32,9.68,0.26,0.27,0.41
+95,ECU,Ecuador,South and Central America,Americas,Latin America and the Caribbean,4.51,0.00,4.85,12.83,5.42,2.05,9.75,0.48,0.51,0.81
+96,ALB,Albania,Europe,Europe,Southern Europe,4.06,3.38,6.07,1.41,0.77,0.00,23.95,0.64,0.61,0.80
+97,CMR,Cameroon,Africa,Africa,Sub-Saharan Africa,4.04,0.00,5.46,9.27,5.60,2.68,4.44,0.38,0.37,0.41
+98,ZWE,Zimbabwe,Africa,Africa,Sub-Saharan Africa,3.69,3.34,3.23,5.35,4.92,0.00,11.92,0.32,0.32,0.51
+99,LBN,Lebanon,Middle East,Asia,Western Asia,3.69,1.86,1.56,11.60,3.50,2.66,7.22,0.35,0.33,0.73
+100,LCA,Saint Lucia,Caribbean,Americas,Latin America and the Caribbean,3.34,0.00,6.62,3.43,0.00,0.00,21.12,0.76,0.70,0.98
+101,ARM,Armenia,Asia and Oceania,Asia,Western Asia,3.30,0.00,5.75,4.99,3.80,1.58,7.29,0.62,0.61,0.71
+102,BLZ,Belize,Caribbean,Americas,Latin America and the Caribbean,3.22,0.00,8.05,0.00,2.91,2.27,6.80,0.48,0.57,0.97
+103,SLV,El Salvador,South and Central America,Americas,Latin America and the Caribbean,2.70,2.48,2.37,3.82,2.08,0.00,12.27,0.47,0.50,0.73
+104,DZA,Algeria,Africa,Africa,Northern Africa,2.66,0.00,4.53,4.25,0.00,1.08,13.63,0.39,0.48,0.48
+105,BWA,Botswana,Africa,Africa,Sub-Saharan Africa,2.37,0.00,3.71,4.44,0.00,1.88,9.39,0.77,0.78,0.84
+106,UGA,Uganda,Africa,Africa,Sub-Saharan Africa,2.25,0.00,2.03,7.20,0.56,2.60,5.14,0.52,0.43,0.59
+107,BFA,Burkina Faso,Africa,Africa,Sub-Saharan Africa,2.24,2.55,2.48,1.11,3.38,0.00,6.29,0.49,0.52,0.63
+108,TZA,United Republic of Tanzania,Africa,Africa,Sub-Saharan Africa,2.23,0.00,2.57,6.00,0.54,1.69,7.77,0.51,0.54,0.57
+109,XKX,Kosovo,Europe,,,2.15,0.00,2.81,5.15,2.80,0.00,7.12,0.54,0.59,0.73
+110,BLR,Belarus,Europe,Europe,Eastern Europe,2.06,0.00,4.20,1.92,0.26,2.18,5.92,0.32,0.44,0.27
+111,TKM,Turkmenistan,Asia and Oceania,Asia,Central Asia,1.98,0.00,4.51,0.88,3.74,0.00,3.81,0.28,0.32,0.25
+112,BRB,Barbados,Caribbean,Americas,Latin America and the Caribbean,1.92,0.00,3.93,1.75,0.95,0.00,9.96,0.73,0.83,1.00
+113,BTN,Bhutan,Asia and Oceania,Asia,Southern Asia,1.83,0.00,4.02,1.12,0.61,0.00,10.20,0.66,0.85,0.64
+114,MOZ,Mozambique,Africa,Africa,Sub-Saharan Africa,1.67,0.00,2.01,4.33,0.00,1.83,5.10,0.40,0.43,0.62
+115,GAB,Gabon,Africa,Africa,Sub-Saharan Africa,1.66,2.26,1.90,0.00,2.45,0.00,4.83,0.43,0.40,0.51
+116,LAO,Lao People's Democratic Republic,Asia and Oceania,Asia,South-eastern Asia,1.66,0.00,4.14,0.00,0.00,1.75,5.25,0.40,0.44,0.32
+117,BOL,Bolivia (Plurinational State of),South and Central America,Americas,Latin America and the Caribbean,1.45,0.00,2.11,3.02,1.64,0.00,5.36,0.32,0.45,0.86
+118,GTM,Guatemala,South and Central America,Americas,Latin America and the Caribbean,1.42,0.00,3.54,0.00,2.02,0.00,4.25,0.46,0.35,0.67
+119,MWI,Malawi,Africa,Africa,Sub-Saharan Africa,1.40,0.00,2.09,2.82,0.77,0.00,7.08,0.50,0.44,0.80
+120,TCD,Chad,Africa,Africa,Sub-Saharan Africa,1.20,0.00,3.00,0.00,0.00,0.00,7.59,0.33,0.30,0.52
+121,LSO,Lesotho,Africa,Africa,Sub-Saharan Africa,1.16,0.00,2.24,1.32,0.71,0.00,5.67,0.49,0.47,0.75
+122,TGO,Togo,Africa,Africa,Sub-Saharan Africa,1.09,0.00,2.17,1.08,0.00,0.00,6.88,0.48,0.46,0.62
+123,CIV,Côte d'Ivoire,Africa,Africa,Sub-Saharan Africa,1.04,0.00,2.61,0.00,0.00,0.00,6.61,0.56,0.55,0.70
+124,SLE,Sierra Leone,Africa,Africa,Sub-Saharan Africa,1.03,0.00,1.97,1.21,0.00,0.00,6.52,0.39,0.42,0.69
+125,GMB,Gambia,Africa,Africa,Sub-Saharan Africa,1.00,0.00,2.49,0.00,0.00,0.00,6.31,0.48,0.53,0.65
+126,SOM,Somalia,Africa,Africa,Sub-Saharan Africa,0.97,0.00,2.44,0.00,1.32,0.00,3.08,0.26,0.26,0.41
+127,HND,Honduras,South and Central America,Americas,Latin America and the Caribbean,0.75,0.00,1.86,0.00,0.00,0.00,4.72,0.44,0.39,0.62
+128,GIN,Guinea,Africa,Africa,Sub-Saharan Africa,0.71,0.00,1.79,0.00,0.00,0.00,4.53,0.36,0.38,0.59
+129,HTI,Haiti,Caribbean,Americas,Latin America and the Caribbean,0.71,0.00,1.29,0.99,0.00,0.00,4.53,0.31,0.27,0.56
+130,BDI,Burundi,Africa,Africa,Sub-Saharan Africa,0.71,0.00,1.44,0.66,0.00,0.00,4.49,0.35,0.30,0.38
+131,MLI,Mali,Africa,Africa,Sub-Saharan Africa,0.70,0.00,1.76,0.00,0.00,0.00,4.46,0.42,0.37,0.57
+132,COD,Democratic Republic of the Congo,Africa,Africa,Sub-Saharan Africa,0.70,0.00,1.30,0.89,0.48,0.00,3.30,0.29,0.27,0.51
+133,LBR,Liberia,Africa,Africa,Sub-Saharan Africa,0.67,0.00,1.69,0.00,0.00,0.00,4.27,0.38,0.36,0.76
+134,MMR,Myanmar,Asia and Oceania,Asia,South-eastern Asia,0.60,0.00,1.51,0.00,0.00,0.00,3.83,0.31,0.32,0.38
+135,AFG,Afghanistan,Asia and Oceania,Asia,Southern Asia,0.57,0.00,1.44,0.00,0.00,0.00,3.64,0.30,0.30,0.34
+136,CAF,Central African Republic,Africa,Africa,Sub-Saharan Africa,0.57,0.00,1.42,0.00,0.00,0.00,3.59,0.29,0.30,0.35
+137,ERI,Eritrea,Africa,Africa,Sub-Saharan Africa,0.56,0.00,1.39,0.00,0.00,0.00,3.53,0.26,0.29,0.27
+138,SSD,South Sudan,Africa,Africa,Sub-Saharan Africa,0.47,0.00,1.18,0.00,0.00,0.00,3.00,0.26,0.25,0.36
