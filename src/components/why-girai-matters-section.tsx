@@ -76,7 +76,7 @@ function StickyCard({
         className={`
           grid grid-cols-1 md:grid-cols-2 
           overflow-hidden rounded-2xl border 
-          bg-white dark:bg-neutral-900
+          ${theme.bgTint} ${theme.darkBgTint}
           ${theme.borderColor}
           shadow-lg ${theme.shadowColor} ${theme.darkShadowColor}
           transition-shadow duration-300

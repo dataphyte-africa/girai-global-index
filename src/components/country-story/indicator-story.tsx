@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useState } from "react";
-import { motion, useScroll, useMotionValueEvent } from "motion/react";
+import { motion, useScroll, useMotionValueEvent, useInView } from "motion/react";
 import { IndicatorIllustration } from "./indicator-illustrations";
 import {
   getIndicatorNarrative,
@@ -36,10 +36,11 @@ const indicatorColorPairs: Record<IndicatorType, { primary: string; secondary: s
 
 export function IndicatorStorySection({ country }: IndicatorStoryProps) {
   const [activeCard, setActiveCard] = useState(0);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
-    container: containerRef,
+    // Use target (page scroll) instead of container (internal scroll)
+    target: sectionRef,
     offset: ["start start", "end end"],
   });
 
@@ -96,26 +97,19 @@ export function IndicatorStorySection({ country }: IndicatorStoryProps) {
   ];
 
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    // Fixed breakpoint calculation to ensure last card becomes active
-    // Divide the scroll into equal segments for each card
     const cardCount = indicators.length;
     const segmentSize = 1 / cardCount;
-    
-    // Find which segment we're in
     let newActiveCard = Math.floor(latest / segmentSize);
-    
-    // Clamp to valid range (0 to cardCount - 1)
     newActiveCard = Math.max(0, Math.min(cardCount - 1, newActiveCard));
-    
     setActiveCard(newActiveCard);
   });
 
   const activeIndicator = indicators[activeCard];
 
   return (
-    <section className="py-16 bg-background">
+    <section className="py-16 md:py-24 bg-background">
+      {/* Section header */}
       <div className="container mx-auto px-4">
-        {/* Section header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -132,89 +126,89 @@ export function IndicatorStorySection({ country }: IndicatorStoryProps) {
             actions, and multi-stakeholder engagement.
           </p>
         </motion.div>
+      </div>
 
-        {/* Two-column scroll section */}
-        <div
-          ref={containerRef}
-          className="relative h-200 overflow-y-auto rounded-xl border bg-card"
-        >
-          <div className="flex">
-            {/* Left column - Sticky illustration */}
-            <div className="w-1/2 hidden lg:block">
-              <div className="sticky top-0 h-screen flex items-center justify-center p-8">
+      {/* Two-column section — flows with page scroll */}
+      <div
+        ref={sectionRef}
+        className="relative container mx-auto px-4"
+      >
+        <div className="flex gap-8">
+          {/* Left column - Sticky illustration */}
+          <div className="w-1/2 hidden lg:block">
+            <div className="sticky top-24 flex items-center justify-center p-8" style={{ height: "calc(100vh - 8rem)" }}>
+              <motion.div
+                key={activeCard}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.4 }}
+                className="relative w-full h-full flex flex-col items-center justify-center"
+              >
+                {/* Background glow */}
+                <div
+                  className="absolute inset-0 blur-3xl opacity-30 transition-all duration-700 rounded-full"
+                  style={{
+                    background: `radial-gradient(circle, ${activeIndicator.color}50 0%, transparent 60%)`,
+                  }}
+                />
+                
+                {/* Illustration */}
+                <div className="relative z-10 w-80 h-80">
+                  <IndicatorIllustration
+                    indicator={activeIndicator.id}
+                    color={activeIndicator.color}
+                    secondaryColor={activeIndicator.secondaryColor}
+                  />
+                </div>
+                
+                {/* Active indicator label */}
                 <motion.div
-                  key={activeCard}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{ duration: 0.4 }}
-                  className="relative w-full h-full flex flex-col items-center justify-center"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: 0.2 }}
+                  className="mt-6 px-5 py-2.5 rounded-full text-white text-sm font-medium shadow-lg z-20"
+                  style={{ backgroundColor: activeIndicator.color }}
                 >
-                  {/* Background glow */}
-                  <div
-                    className="absolute inset-0 blur-3xl opacity-30 transition-all duration-700 rounded-full"
-                    style={{
-                      background: `radial-gradient(circle, ${activeIndicator.color}50 0%, transparent 60%)`,
-                    }}
-                  />
-                  
-                  {/* Illustration */}
-                  <div className="relative z-10 w-80 h-80">
-                    <IndicatorIllustration
-                      indicator={activeIndicator.id}
-                      color={activeIndicator.color}
-                      secondaryColor={activeIndicator.secondaryColor}
-                    />
-                  </div>
-                  
-                  {/* Active indicator label */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, delay: 0.2 }}
-                    className="mt-6 px-5 py-2.5 rounded-full text-white text-sm font-medium shadow-lg z-20"
-                    style={{ backgroundColor: activeIndicator.color }}
-                  >
-                    {activeIndicator.label}
-                  </motion.div>
-                  
-                  {/* Score badge */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, delay: 0.3 }}
-                    className="mt-3 text-4xl font-bold tabular-nums"
-                    style={{ color: activeIndicator.color }}
-                  >
-                    {activeIndicator.score.toFixed(1)}
-                    <span className="text-lg text-muted-foreground font-normal ml-1">/ 100</span>
-                  </motion.div>
+                  {activeIndicator.label}
                 </motion.div>
-              </div>
+                
+                {/* Score badge */}
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: 0.3 }}
+                  className="mt-3 text-4xl font-bold tabular-nums"
+                  style={{ color: activeIndicator.color }}
+                >
+                  {activeIndicator.score.toFixed(1)}
+                  <span className="text-lg text-muted-foreground font-normal ml-1">/ 100</span>
+                </motion.div>
+              </motion.div>
             </div>
+          </div>
 
-            {/* Right column - Scrollable content */}
-            <div className="w-full lg:w-1/2 p-8">
-              {indicators.map((indicator, index) => {
-                const narrative = getIndicatorNarrative(
-                  indicator.id,
-                  country.country,
-                  indicator.score
-                );
+          {/* Right column - Content cards that flow with page */}
+          <div className="w-full lg:w-1/2 py-8">
+            {indicators.map((indicator, index) => {
+              const narrative = getIndicatorNarrative(
+                indicator.id,
+                country.country,
+                indicator.score
+              );
 
-                return (
-                  <IndicatorCard
-                    key={indicator.id}
-                    indicator={indicator}
-                    narrative={narrative}
-                    isActive={activeCard === index}
-                    isLast={index === indicators.length - 1}
-                  />
-                );
-              })}
-              {/* Extra space at bottom for scroll to reach last item - smaller on mobile */}
-              <div className="h-40 lg:h-96" />
-            </div>
+              return (
+                <IndicatorCard
+                  key={indicator.id}
+                  indicator={indicator}
+                  narrative={narrative}
+                  isActive={activeCard === index}
+                  isLast={index === indicators.length - 1}
+                />
+              );
+            })}
+            {/* Bottom padding for scroll room so last card can become active */}
+            <div className="h-[30vh]" />
           </div>
         </div>
       </div>
@@ -235,13 +229,19 @@ interface IndicatorCardProps {
 }
 
 function IndicatorCard({ indicator, narrative, isActive, isLast }: IndicatorCardProps) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(cardRef, { once: true, margin: "-80px" });
+
   return (
     <motion.div
-      animate={{
-        opacity: isActive ? 1 : 0.3,
-        scale: isActive ? 1 : 0.98,
-      }}
-      transition={{ duration: 0.3 }}
+      ref={cardRef}
+      initial={{ opacity: 0, y: 30 }}
+      animate={
+        isInView
+          ? { opacity: isActive ? 1 : 0.3, y: 0, scale: isActive ? 1 : 0.98 }
+          : { opacity: 0, y: 30 }
+      }
+      transition={{ duration: 0.4, ease: "easeOut" }}
       className={`my-16 first:mt-8 ${isLast ? "mb-8" : ""}`}
     >
       {/* Category badge */}

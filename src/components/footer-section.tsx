@@ -70,13 +70,10 @@ export function FooterSection() {
               src="/girai-logo-white.png"
               alt="GIRAI Logo"
               width={200}
-              height={50}
+              height={70}
               className="mb-4"
             />
-            <p className="text-white/60 text-sm leading-relaxed mb-6">
-              Discover products, connect with vendors, and pay securely without
-              leaving the app. Zeefas makes online transactions effortless.
-            </p>
+           
             {/* Social Icons */}
             <div className="flex gap-3">
               <SocialIcon href="https://instagram.com" label="Instagram">

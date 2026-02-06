@@ -2,6 +2,7 @@
 
 import React from "react";
 import { motion, useInView } from "motion/react";
+import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation";
 
 export function ShapingIntelligenceSection() {
   const sectionRef = React.useRef<HTMLDivElement>(null);
@@ -13,29 +14,39 @@ export function ShapingIntelligenceSection() {
       className="relative flex items-center justify-center overflow-hidden py-32 md:py-44 lg:py-56"
     >
       {/* Animated gradient background */}
-      <div className="absolute inset-0 shaping-gradient-bg" />
+      <BackgroundGradientAnimation
+        // Light mode: softer gradient, Dark mode: richer gradient
+        gradientBackgroundStart="rgb(250, 245, 255)" // Light lavender for light mode base
+        gradientBackgroundEnd="rgb(240, 253, 250)" // Light teal tint for light mode
+        // Purple
+        firstColor="147, 51, 234"
+        // Pink
+        secondColor="236, 72, 153"
+        // Teal
+        thirdColor="20, 184, 166"
+        // Light blue
+        fourthColor="56, 189, 248"
+        // Purple-pink blend
+        fifthColor="168, 85, 247"
+        pointerColor="99, 102, 241"
+        size="100%"
+        blendingValue="soft-light"
+        interactive={true}
+        containerClassName="!h-full !w-full !absolute !inset-0 dark:!bg-[linear-gradient(40deg,rgb(30,10,60),rgb(10,30,50))]"
+        className="absolute inset-0 z-10"
+      />
 
-      {/* Horizontal light streaks */}
-      {/* <div className="absolute inset-0 pointer-events-none">
-        <div className="shaping-streak shaping-streak-1" />
-        <div className="shaping-streak shaping-streak-2" />
-        <div className="shaping-streak shaping-streak-3" />
-        <div className="shaping-streak shaping-streak-4" />
-        <div className="shaping-streak shaping-streak-5" />
-        <div className="shaping-streak shaping-streak-6" />
-      </div> */}
-
-      {/* Radial fade overlay to white edges */}
-      <div className="absolute inset-0 shaping-vignette pointer-events-none" />
+      {/* Radial fade overlay for smooth edge blending */}
+      <div className="absolute inset-0 shaping-vignette pointer-events-none z-20" />
 
       {/* Text content */}
       <motion.div
-        className="relative z-10 text-center px-4"
+        className="relative z-30 text-center px-4"
         initial={{ opacity: 0, y: 30 }}
         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
         transition={{ duration: 0.7, ease: "easeOut" }}
       >
-        <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight text-foreground">
+        <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight text-foreground drop-shadow-sm">
           Shaping
           <br />
           Responsible
