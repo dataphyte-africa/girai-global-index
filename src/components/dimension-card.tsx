@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { BookOpen, Share2 } from "lucide-react";
 import {
@@ -54,10 +55,12 @@ export function DimensionCard({ dimension }: DimensionCardProps) {
               </p>
             </CardContent>
             <CardFooter className="flex gap-3 pt-2">
-              <Button variant="default" size="sm">
-                <BookOpen className="size-4" />
-                Read more
-              </Button>
+              <Link href={`/dimensions/${dimension.id}`}>
+                <Button variant="default" size="sm">
+                  <BookOpen className="size-4" />
+                  View dimension
+                </Button>
+              </Link>
               <Button variant="outline" size="sm">
                 <Share2 className="size-4" />
                 Share

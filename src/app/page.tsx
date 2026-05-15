@@ -1,8 +1,18 @@
 import { HeroSection } from "@/components/hero-section";
 import { ChoroplethMapSection } from "@/components/choropleth-map-section";
 import { DimensionsSection } from "@/components/dimensions-section";
-import { getHeroGlobeData, getTopAndBottomCountries, getRegionalAggregatedData, getUniqueRegions, getFullRankingData } from "@/lib/parse-ranking";
-import type { ArcPosition, Country } from "@/data/countries";
+import {
+  getAllCountries,
+  getRegionSummaries,
+  getRegions,
+  getTopAndBottomCountries,
+} from "@/lib/girai";
+import {
+  selectMixedCountries,
+  generateArcData,
+  type ArcPosition,
+  type Country,
+} from "@/data/countries";
 import { Header } from "@/components/header";
 import { IndicatorCategorySection } from "@/components/indicator-category-section";
 import { GlobalPerformanceSection } from "@/components/global-performance-section";
@@ -13,13 +23,23 @@ import { ShapingIntelligenceSection } from "@/components/shaping-intelligence-se
 import { FooterSection } from "@/components/footer-section";
 
 export default async function Home() {
-  const { arcData, markers }: { arcData: ArcPosition[]; markers: Country[] } =
-    getHeroGlobeData();
+  const allCountries = getAllCountries();
+
+  // Hero globe: pick a mix of countries with known coordinates and flag art.
+  const globeCandidates = allCountries.map((c) => ({
+    iso3: c.iso3,
+    name: c.name,
+    region: c.region,
+    rankGlobal: c.rankGlobal,
+    girai: c.girai,
+  }));
+  const markers: Country[] = selectMixedCountries(globeCandidates, 20);
+  const arcData: ArcPosition[] = generateArcData(markers, 15);
+
   const { topCountries, bottomCountries } = getTopAndBottomCountries(10);
-  const regions = getUniqueRegions();
-  const regionData = getRegionalAggregatedData();
-  const allCountries = getFullRankingData();
-  
+  const regions = getRegions();
+  const regionData = getRegionSummaries();
+
   return (
     <div className="flex flex-col min-h-screen  bg-background font-sans dark:bg-black">
       <Header />
@@ -27,19 +47,14 @@ export default async function Home() {
       <ChoroplethMapSection />
       <DimensionsSection />
       <IndicatorCategorySection />
-      <RegionalComparisonSection 
-        regions={regions}
-        regionData={regionData}
-      />
-      <CountryComparisonSection 
-        countries={allCountries}
-      />
+      <RegionalComparisonSection regions={regions} regionData={regionData} />
+      <CountryComparisonSection countries={allCountries} />
       <WhyGIRAIMattersSection />
       <ShapingIntelligenceSection />
 
-      <GlobalPerformanceSection 
-        topCountries={topCountries} 
-        bottomCountries={bottomCountries} 
+      <GlobalPerformanceSection
+        topCountries={topCountries}
+        bottomCountries={bottomCountries}
       />
 
       <FooterSection />

@@ -4,21 +4,9 @@ import { useState, useRef, useMemo } from "react";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { Plus, X, Globe, MapPin } from "lucide-react";
 import { SearchableSelect, type SearchableSelectOption } from "@/components/ui/searchable-select";
-import type { FullRankingData } from "@/data/countries";
+import type { CountryRanking } from "@/lib/girai";
 import { countryFlags } from "@/data/countries";
-
-// Display names for dimensions/indicators
-const DIMENSION_DISPLAY_NAMES = {
-  humanRightsAI: "Human Rights & AI",
-  responsibleAIGovernance: "Responsible AI Governance",
-  responsibleAICapacities: "Responsible AI Capacities",
-};
-
-const PILLAR_DISPLAY_NAMES = {
-  governmentFrameworks: "Government Frameworks",
-  governmentActions: "Government Actions",
-  nonStateActors: "Non-State Actors",
-};
+import { DIMENSIONS, PILLARS } from "@/data/2026/taxonomy";
 
 // Color palette for different countries
 const COUNTRY_COLORS = [
@@ -30,14 +18,14 @@ const COUNTRY_COLORS = [
 ];
 
 interface CountryComparisonSectionProps {
-  countries: FullRankingData[];
+  countries: CountryRanking[];
 }
 
 function CountryScoreCard({
   country,
   index,
 }: {
-  country: FullRankingData;
+  country: CountryRanking;
   index: number;
 }) {
   const flag = countryFlags[country.iso3] || "🏳️";
@@ -61,10 +49,10 @@ function CountryScoreCard({
           {flag}
         </motion.span>
         <span className="text-sm font-medium text-muted-foreground truncate">
-          {country.country}
+          {country.name}
         </span>
       </div>
-      
+
       <motion.div
         className="text-4xl font-bold mb-3"
         initial={{ opacity: 0 }}
@@ -74,12 +62,12 @@ function CountryScoreCard({
         <motion.span
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          key={country.indexScore}
+          key={country.girai ?? 0}
         >
-          {country.indexScore.toFixed(2)}
+          {(country.girai ?? 0).toFixed(2)}
         </motion.span>
       </motion.div>
-      
+
       <div className="flex flex-col gap-2 text-xs">
         <motion.div
           initial={{ opacity: 0, x: -10 }}
@@ -89,7 +77,8 @@ function CountryScoreCard({
         >
           <Globe className="w-3 h-3 text-primary" />
           <span className="text-primary font-medium">
-            Rank: {country.ranking}{getOrdinalSuffix(country.ranking)}
+            Rank: {country.rankGlobal ?? "—"}
+            {country.rankGlobal !== null ? getOrdinalSuffix(country.rankGlobal) : ""}
           </span>
         </motion.div>
         <motion.div
@@ -99,7 +88,7 @@ function CountryScoreCard({
           className="flex items-center gap-1 bg-teal-50 dark:bg-teal-950/30 rounded-lg p-2"
         >
           <MapPin className="w-3 h-3 text-muted-foreground" />
-          <span className="text-muted-foreground truncate">{country.giraiRegion}</span>
+          <span className="text-muted-foreground truncate">{country.region}</span>
         </motion.div>
       </div>
     </motion.div>
@@ -205,7 +194,7 @@ function CountryLegend({
   selectedCountries,
   colorIndices,
 }: {
-  selectedCountries: FullRankingData[];
+  selectedCountries: CountryRanking[];
   colorIndices: number[];
 }) {
   return (
@@ -232,7 +221,7 @@ function CountryLegend({
               <span className="text-lg">{flag}</span>
               <div className={`w-3 h-3 rounded ${color.bg}`} />
               <span className="text-sm text-muted-foreground">
-                {country.country.length > 15 ? country.country.slice(0, 15) + "..." : country.country}
+                {country.name.length > 15 ? country.name.slice(0, 15) + "..." : country.name}
               </span>
             </motion.div>
           );
@@ -256,7 +245,7 @@ export function CountryComparisonSection({
 
   // Map ISO3 codes to their data
   const countryDataMap = useMemo(() => {
-    const map = new Map<string, FullRankingData>();
+    const map = new Map<string, CountryRanking>();
     for (const data of countries) {
       map.set(data.iso3, data);
     }
@@ -268,7 +257,7 @@ export function CountryComparisonSection({
     return selectedISO3s
       .filter(Boolean)
       .map((iso3) => countryDataMap.get(iso3))
-      .filter((data): data is FullRankingData => data !== undefined);
+      .filter((data): data is CountryRanking => data !== undefined);
   }, [selectedISO3s, countryDataMap]);
 
   // Color indices for consistent coloring
@@ -305,33 +294,36 @@ export function CountryComparisonSection({
     );
   };
 
-  // Prepare comparison data for dimensions
+  // Prepare comparison data: 5 dimensions + 3 pillars from the 2026 taxonomy.
   const dimensionComparisonData = useMemo(() => {
-    const dimensions = Object.entries(DIMENSION_DISPLAY_NAMES).map(([key, label]) => ({
-      key: key as keyof typeof DIMENSION_DISPLAY_NAMES,
-      label,
+    const dimensions = DIMENSIONS.map((d) => ({
+      key: `dimension:${d.slug}`,
+      label: d.name,
       values: selectedCountryData.map((data) => ({
-        country: data.country,
+        country: data.name,
         iso3: data.iso3,
-        value: data.dimensionScores[key as keyof typeof data.dimensionScores],
+        value: data.dimensionScores[d.slug] ?? 0,
       })),
     }));
-    
-    const pillars = Object.entries(PILLAR_DISPLAY_NAMES).map(([key, label]) => ({
-      key: key as keyof typeof PILLAR_DISPLAY_NAMES,
-      label,
+
+    const pillars = PILLARS.map((p) => ({
+      key: `pillar:${p.slug}`,
+      label: p.name,
       values: selectedCountryData.map((data) => ({
-        country: data.country,
+        country: data.name,
         iso3: data.iso3,
-        value: data.pillarScores[key as keyof typeof data.pillarScores],
+        value: data.pillarScores[p.slug] ?? 0,
       })),
     }));
-    
+
     return [...dimensions, ...pillars];
   }, [selectedCountryData]);
 
   return (
-    <section className="w-full px-4 py-16 md:py-24 bg-muted/30">
+    <section
+      id="countries"
+      className="w-full px-4 py-16 md:py-24 bg-muted/30"
+    >
       <div className="mx-auto max-w-6xl">
         {/* Header */}
         <div ref={headingRef} className="mb-12 text-center">
@@ -377,10 +369,14 @@ export function CountryComparisonSection({
                   // Build options for this selector
                   const countryOptions: SearchableSelectOption[] = getAvailableCountries(index).map((c) => ({
                     value: c.iso3,
-                    label: c.country,
-                    searchTerms: `${c.iso3} ${c.giraiRegion} ${c.unRegion}`, // Search by ISO code and regions too
+                    label: c.name,
+                    searchTerms: `${c.iso3} ${c.region} ${c.subregion}`,
                     icon: <span className="text-lg">{countryFlags[c.iso3] || "🏳️"}</span>,
-                    suffix: <span className="text-muted-foreground text-xs">#{c.ranking}</span>,
+                    suffix: (
+                      <span className="text-muted-foreground text-xs">
+                        {c.rankGlobal !== null ? `#${c.rankGlobal}` : ""}
+                      </span>
+                    ),
                   }));
                   
                   return (

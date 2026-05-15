@@ -20,7 +20,10 @@ export function DimensionsSection() {
   }, []);
 
   return (
-    <section className="w-full px-4 py-16 md:py-24 overflow-visible">
+    <section
+      id="dimensions"
+      className="w-full px-4 py-16 md:py-24 overflow-visible"
+    >
       <div className="mx-auto max-w-6xl overflow-visible">
         <div ref={headingRef} className="mb-12 text-center">
           <motion.h2

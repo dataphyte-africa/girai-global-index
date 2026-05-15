@@ -1,84 +1,88 @@
+/**
+ * UI metadata for the five 2026 GIRAI dimensions.
+ *
+ * The canonical name, slug and indicator list come from
+ * `src/data/2026/taxonomy.ts`. This file only adds presentation-only
+ * fields (subtitle, description, image) and exposes the shape the
+ * dimensions UI components already consume.
+ *
+ * The descriptions here are placeholders pending Sanity CMS authoring
+ * (see ADR 0004); replace them by wiring `getNarrative('dimension', slug)`
+ * once the CMS schema lands.
+ */
+
+import { DIMENSIONS as TAXONOMY_DIMENSIONS, INDICATORS } from "./2026/taxonomy";
+import type { DimensionDef, IndicatorDef } from "./2026/taxonomy";
+
 export interface Dimension {
+  /** Slug — matches the URL contract (ADR 0007). */
   id: string;
   name: string;
   subtitle: string;
   description: string;
+  /** Display names of indicators in this dimension (AI Policy + CSO Engagement only). */
   indicators: string[];
   image?: string;
 }
 
-export const DIMENSIONS: Dimension[] = [
-  {
-    id: "inclusion-diversity",
-    name: "Inclusion and Diversity",
-    image: "/dimensions/dimension-inclusion-diversity.jpg",
+interface PresentationCopy {
+  subtitle: string;
+  description: string;
+  image: string;
+}
+
+const PRESENTATION: Record<DimensionDef["slug"], PresentationCopy> = {
+  "inclusion-diversity": {
     subtitle: "Representation and Protection in AI Systems",
     description:
-      "Evaluates whether AI systems are designed and governed to be inclusive and equitable. This dimension examines the extent to which artificial intelligence systems are designed, governed, and deployed in ways that are inclusive, equitable, and protective of diverse populations. It assesses how countries address issues such as bias and discrimination, gender equality, children's rights, cultural and linguistic diversity, and public participation in AI-related decision-making.\n\nStrong performance in this dimension reflects national efforts to ensure that AI systems do not reinforce existing inequalities, exclude marginalized groups, or undermine fundamental rights. By focusing on who is represented, protected, and heard in AI ecosystems, the Inclusion and Diversity dimension highlights whether technological progress benefits society as a whole.",
-    indicators: [
-      "Gender Equality",
-      "Children's Rights",
-      "Rights of Persons with Disabilities",
-      "Cultural and Linguistic Diversity",
-    ],
+      "Evaluates whether AI systems are designed and governed to be inclusive and equitable. This dimension examines how countries address bias and discrimination, gender equality, children's rights, and cultural and linguistic diversity in AI policy and governance.\n\nStrong performance reflects national efforts to ensure AI does not reinforce existing inequalities or exclude marginalised groups.",
+    image: "/dimensions/dimension-inclusion-diversity.jpg",
   },
-  {
-    id: "ethics-sustainability",
-    name: "Ethics and Sustainability",
-    image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=800&q=80",
+  "ethics-sustainability": {
     subtitle: "Principles and Long-term Impact",
     description:
-      "Evaluates whether AI systems are developed and used in alignment with ethical principles and environmental sustainability. This dimension examines how countries address fairness and non-discrimination in AI outcomes, transparency and explainability of algorithmic decisions, human oversight and determination in automated systems, and the environmental impact of AI infrastructure and deployment.\n\nStrong performance in this dimension reflects national commitment to embedding ethical considerations throughout the AI lifecycle and ensuring that technological advancement does not come at the expense of environmental or social well-being.",
-    indicators: [
-      "Fairness and Non-Discrimination",
-      "Transparency and Explainability",
-      "Human Oversight and Determination",
-      "Environmental Impact",
-    ],
+      "Evaluates whether AI systems are developed and used in alignment with ethical principles and environmental sustainability. Covers fairness and non-discrimination, transparency and explainability, human oversight, and the environmental impact of AI infrastructure.\n\nStrong performance reflects a national commitment to embedding ethical considerations throughout the AI lifecycle.",
+    image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=800&q=80",
   },
-  {
-    id: "labour-skills",
-    name: "Labour and Skills",
-    image: "/dimensions/dimension-labour-skills.jpg",
+  "labour-skills": {
     subtitle: "Workforce Readiness and Adaptation",
     description:
-      "Evaluates how countries prepare workers for an AI-driven economy and protect labour rights in the age of automation. This dimension examines labour protections for workers affected by AI adoption, reskilling and upskilling initiatives to support workforce transition, and AI literacy programs to ensure citizens can participate meaningfully in an AI-enabled society.\n\nStrong performance in this dimension reflects national efforts to ensure that the benefits of AI are shared broadly and that workers are supported through technological disruption.",
-    indicators: [
-      "Labour Protections",
-      "Reskilling/Upskilling Initiatives",
-      "AI Literacy",
-    ],
+      "Evaluates how countries prepare workers for an AI-driven economy and protect labour rights in the age of automation. Examines labour protections, reskilling and upskilling initiatives, and AI literacy across the population.\n\nStrong performance reflects efforts to ensure the benefits of AI are shared broadly and that workers are supported through technological change.",
+    image: "/dimensions/dimension-labour-skills.jpg",
   },
-  {
-    id: "trust-safety",
-    name: "Trust and Safety",
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80",
+  "trust-safety": {
     subtitle: "Security, Accountability, and Redress",
     description:
-      "Evaluates the safeguards in place to protect individuals and society from AI-related harms. This dimension examines data protection and privacy frameworks, data sharing and access arrangements, safety and security measures, consumer protection, access to redress and remedy, impact assessments, and measures to address AI-facilitated misinformation and violence.\n\nStrong performance in this dimension reflects national commitment to building trust in AI systems through robust governance, accountability mechanisms, and pathways for those affected by AI to seek remedy.",
-    indicators: [
-      "Data Protection and Privacy",
-      "Data Sharing and Access",
-      "Safety and Security",
-      "Consumer Protection",
-      "Access to Redress and Remedy",
-      "Impact Assessments",
-      "AI-Facilitated Misinformation and Violence",
-    ],
+      "Evaluates the safeguards in place to protect individuals and society from AI-related harms. Covers safety and security, access to redress and remedy, impact assessments, and measures to address AI-facilitated misinformation and violence.\n\nStrong performance reflects a national commitment to building trust in AI systems through robust governance, accountability, and pathways to remedy.",
+    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80",
   },
-  {
-    id: "public-sector",
-    name: "Use of AI in Public Sector Delivery",
-    image: "/dimensions/dimension-public-sector.jpg",
+  "ai-use-public-service": {
     subtitle: "Government AI Governance and Transparency",
     description:
-      "Evaluates how governments deploy AI in public services and the transparency and oversight mechanisms in place. This dimension examines public sector skills development for AI adoption, public disclosure of government algorithmic systems, ethical public procurement practices, model audits, and the handling of AI systems with unacceptable risks.\n\nStrong performance in this dimension reflects national efforts to ensure that government use of AI serves the public interest and is subject to appropriate scrutiny and accountability.",
-    indicators: [
-      "Public Sector Skills Development",
-      "Public Disclosure of Government Algorithmic Systems",
-      "Public Procurement",
-      "Model Audits",
-      "Deployment of AI Systems with Unacceptable Risks",
-    ],
+      "Evaluates how governments deploy AI in public services and the transparency and oversight mechanisms in place. Covers public sector skills development, public disclosure of government algorithmic systems, ethical public procurement, and the handling of unacceptable-risk AI deployments.\n\nStrong performance reflects efforts to ensure that government use of AI serves the public interest and is subject to appropriate scrutiny.",
+    image: "/dimensions/dimension-public-sector.jpg",
   },
-];
+};
+
+/**
+ * Indicators shown on the public-facing dimension cards. We hide
+ * Enabling Conditions indicators here because they're externally-sourced
+ * indices (Rule of Law, Cybersecurity, Population Digital Readiness, …)
+ * rather than GIRAI-collected primary evidence — the dimension landing
+ * surface focuses on the latter. The full catalogue is still available
+ * via the taxonomy module.
+ */
+function indicatorsForCard(slug: DimensionDef["slug"]): string[] {
+  return INDICATORS.filter(
+    (i: IndicatorDef) => i.dimension === slug && i.family !== "enabling-conditions"
+  ).map((i) => i.name);
+}
+
+export const DIMENSIONS: Dimension[] = TAXONOMY_DIMENSIONS.map((d) => ({
+  id: d.slug,
+  name: d.name,
+  subtitle: PRESENTATION[d.slug].subtitle,
+  description: PRESENTATION[d.slug].description,
+  image: PRESENTATION[d.slug].image,
+  indicators: indicatorsForCard(d.slug),
+}));

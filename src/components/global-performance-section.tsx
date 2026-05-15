@@ -4,14 +4,7 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { TrendingUp, TrendingDown } from "lucide-react";
 import { countryFlags } from "@/data/countries";
-
-type CountryRanking = {
-  ranking: number;
-  iso3: string;
-  country: string;
-  indexScore: number;
-  change?: number; // rank change from previous period
-};
+import type { CountryRanking } from "@/lib/girai";
 
 interface GlobalPerformanceSectionProps {
   topCountries: CountryRanking[];
@@ -37,95 +30,67 @@ function CountryRow({
   maxScore: number;
 }) {
   const flag = countryFlags[country.iso3] || "🏳️";
-  const scorePercent = (country.indexScore / maxScore) * 100;
-  // const change = country.change ?? (isTop ? Math.floor(Math.random() * 5) : -Math.floor(Math.random() * 5));
+  const score = country.girai ?? 0;
+  const rank = country.rankGlobal ?? 0;
+  const scorePercent = (score / maxScore) * 100;
 
   return (
-      <motion.div
-          initial={{ opacity: 0, x: isTop ? -20 : 20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.4, delay: index * 0.05 }}
-          viewport={{ once: false }}
-          className="flex items-center gap-3 p-2.5 group bg-card rounded-lg shadow-sm"
+    <motion.div
+      initial={{ opacity: 0, x: isTop ? -20 : 20 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.4, delay: index * 0.05 }}
+      viewport={{ once: false }}
+      className="flex items-center gap-3 p-2.5 group bg-card rounded-lg shadow-sm"
+    >
+      <div className="flex text-center gap-1.5 w-[50px] h-[50px] bg-muted rounded-lg justify-center items-center p-3">
+        {rankIcons[rank] ? (
+          <span className="text-lg">{rankIcons[rank]}</span>
+        ) : (
+          <span className="text-sm font-semibold text-muted-foreground w-6">
+            {rank}
+          </span>
+        )}
+      </div>
+
+      <div className="flex flex-col gap-2 w-full ">
+        <div className="flex items-center">
+          <div className="flex items-center gap-2 min-w-[130px]">
+            <span className="text-xl">{flag}</span>
+            <span className="text-sm font-medium truncate ">
+              {country.name}
+            </span>
+          </div>
+        </div>
+
+        <div className="flex h-2 bg-muted rounded-full overflow-hidden">
+          <motion.div
+            className={`h-full rounded-full ${
+              isTop
+                ? "bg-linear-to-r from-indigo-400 to-indigo-500"
+                : "bg-linear-to-r from-slate-300 to-slate-400"
+            }`}
+            initial={{ width: 0 }}
+            whileInView={{ width: `${scorePercent}%` }}
+            transition={{
+              duration: 0.8,
+              delay: index * 0.05 + 0.2,
+              ease: "easeOut",
+            }}
+            viewport={{ once: true }}
+          />
+        </div>
+      </div>
+
+      <motion.span
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.3, delay: index * 0.05 + 0.6 }}
+        viewport={{ once: true }}
+        className="text-sm font-semibold text-foreground min-w-[40px] text-right"
       >
-          {/* Rank */}
-          <div className="flex text-center gap-1.5 w-[50px] h-[50px] bg-muted rounded-lg justify-center items-center p-3">
-              {rankIcons[country.ranking] ? (
-                  <span className="text-lg">{rankIcons[country.ranking]}</span>
-              ) : (
-                  <span className="text-sm font-semibold text-muted-foreground w-6">
-                      {country.ranking}
-                  </span>
-              )}
-          </div>
-
-          {/* Flag & Country Name */}
-          <div className="flex flex-col gap-2 w-full ">
-              <div className="flex items-center">
-                  <div className="flex items-center gap-2 min-w-[130px]">
-                      <span className="text-xl">{flag}</span>
-                      <span className="text-sm font-medium truncate ">
-                          {country.country}
-                      </span>
-                  </div>
-
-                  {/* Change Indicator */}
-                  {/* <div
-                      className={`flex items-center gap-0.5 text-xs font-medium min-w-[36px] ${
-                          change > 0
-                              ? 'text-emerald-500'
-                              : change < 0
-                              ? 'text-red-500'
-                              : 'text-muted-foreground'
-                      }`}
-                  >
-                      {change > 0 ? (
-                          <>
-                              <TrendingUp className="w-3 h-3" />
-                              <span>+{change}</span>
-                          </>
-                      ) : change < 0 ? (
-                          <>
-                              <TrendingDown className="w-3 h-3" />
-                              <span>{change}</span>
-                          </>
-                      ) : (
-                          <span>—</span>
-                      )}
-                  </div> */}
-              </div>
-
-              {/* Progress Bar */}
-              <div className="flex h-2 bg-muted rounded-full overflow-hidden">
-                  <motion.div
-                      className={`h-full rounded-full ${
-                          isTop
-                              ? 'bg-linear-to-r from-indigo-400 to-indigo-500'
-                              : 'bg-linear-to-r from-slate-300 to-slate-400'
-                      }`}
-                      initial={{ width: 0 }}
-                      whileInView={{ width: `${scorePercent}%` }}
-                      transition={{
-                          duration: 0.8,
-                          delay: index * 0.05 + 0.2,
-                          ease: 'easeOut',
-                      }}
-                      viewport={{ once: true }}
-                  />
-              </div>
-          </div>
-
-          {/* Score */}
-          <motion.span
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ duration: 0.3, delay: index * 0.05 + 0.6 }}
-              viewport={{ once: true }}
-              className="text-sm font-semibold text-foreground min-w-[40px] text-right"
-          >
-              {country.indexScore.toFixed(0)}
-          </motion.span>
-      </motion.div>
+        {score.toFixed(0)}
+      </motion.span>
+    </motion.div>
   );
 }
 
@@ -136,16 +101,17 @@ export function GlobalPerformanceSection({
   const headingRef = useRef(null);
   const isInView = useInView(headingRef, { once: false, amount: 0.5 });
 
-  // Find max score for normalization (should be around 100)
   const maxScore = Math.max(
-    ...topCountries.map((c) => c.indexScore),
+    ...topCountries.map((c) => c.girai ?? 0),
     100
   );
 
   return (
-    <section className="w-full px-4 py-16 md:py-24 bg-muted/30">
+    <section
+      id="top-takeaways"
+      className="w-full px-4 py-16 md:py-24 bg-muted/30"
+    >
       <div className="mx-auto max-w-6xl">
-        {/* Header */}
         <div ref={headingRef} className="mb-12 text-center">
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
@@ -166,9 +132,7 @@ export function GlobalPerformanceSection({
           </motion.p>
         </div>
 
-        {/* Two Column Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-          {/* Top 10 Countries */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -196,7 +160,6 @@ export function GlobalPerformanceSection({
             </div>
           </motion.div>
 
-          {/* Bottom 10 Countries */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}

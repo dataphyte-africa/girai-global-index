@@ -1,38 +1,35 @@
 "use client";
 
 import { motion } from "motion/react";
-import { CountryMapWithGradient } from "./country-map-svg";
-import { getIndexNarrative, getOrdinalSuffix } from "@/lib/narratives";
-import type { FullRankingData } from "@/data/countries";
-import { iso3ToIso2 } from "@/data/countries";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { CountryMapWithGradient } from "./country-map-svg";
 import { Button } from "@/components/ui/button";
+import { iso3ToIso2 } from "@/data/countries";
+import { PILLARS } from "@/data/2026/taxonomy";
+import { getIndexNarrative, getOrdinalSuffix, pillarColors } from "@/lib/narratives";
+import type { CountryRanking } from "@/lib/girai";
 
 interface CountryHeroProps {
-  country: FullRankingData;
-  regionalRank: number;
-  totalInRegion: number;
+  country: CountryRanking;
 }
 
-export function CountryHero({ country, regionalRank, totalInRegion }: CountryHeroProps) {
+export function CountryHero({ country }: CountryHeroProps) {
   const iso2 = iso3ToIso2[country.iso3] ?? country.iso3.slice(0, 2).toLowerCase();
   const flagUrl = `https://flagcdn.com/w160/${iso2}.png`;
-  
-  const indexNarrative = getIndexNarrative(country.country, country.indexScore);
+
+  const indexScore = country.girai ?? 0;
+  const indexNarrative = getIndexNarrative(country.name, indexScore);
 
   return (
     <section className="relative min-h-[80vh] overflow-hidden">
-      {/* Background gradient */}
       <div className="absolute inset-0 bg-linear-to-br from-primary/5 via-background to-primary/10 dark:from-primary/10 dark:via-background dark:to-primary/20" />
-      
-      {/* Decorative elements */}
+
       <div className="absolute top-0 right-0 w-1/2 h-full opacity-5">
         <div className="absolute inset-0 bg-linear-to-l from-primary to-transparent" />
       </div>
 
       <div className="relative z-10 container mx-auto px-4 py-8">
-        {/* Back button */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -47,9 +44,7 @@ export function CountryHero({ country, regionalRank, totalInRegion }: CountryHer
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[60vh]">
-          {/* Left column - Country info */}
           <div className="space-y-8">
-            {/* Flag and country name */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -58,7 +53,7 @@ export function CountryHero({ country, regionalRank, totalInRegion }: CountryHer
             >
               <img
                 src={flagUrl}
-                alt={`${country.country} flag`}
+                alt={`${country.name} flag`}
                 className="h-16 w-auto rounded-md shadow-lg object-cover"
                 onError={(e) => {
                   e.currentTarget.style.display = "none";
@@ -66,15 +61,15 @@ export function CountryHero({ country, regionalRank, totalInRegion }: CountryHer
               />
               <div>
                 <h1 className="text-3xl md:text-4xl font-bold text-foreground">
-                  {country.country}
+                  {country.name}
                 </h1>
                 <p className="text-muted-foreground mt-1">
-                  {country.giraiRegion} • {country.unSubregion}
+                  {country.region}
+                  {country.subregion ? ` • ${country.subregion}` : ""}
                 </p>
               </div>
             </motion.div>
 
-            {/* Score and ranking */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -83,10 +78,10 @@ export function CountryHero({ country, regionalRank, totalInRegion }: CountryHer
             >
               <div className="flex items-baseline gap-4">
                 <span className="text-7xl md:text-8xl font-bold text-primary tabular-nums">
-                  {country.indexScore.toFixed(1)}
+                  {indexScore.toFixed(1)}
                 </span>
                 <div className="space-y-1">
-                  <span 
+                  <span
                     className="inline-block px-3 py-1 rounded-full text-sm font-semibold text-white"
                     style={{ backgroundColor: indexNarrative.color }}
                   >
@@ -96,28 +91,34 @@ export function CountryHero({ country, regionalRank, totalInRegion }: CountryHer
                 </div>
               </div>
 
-              {/* Rankings */}
               <div className="flex flex-wrap gap-3">
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary/10 border border-primary/20">
-                  <span className="text-2xl font-bold text-primary">
-                    #{country.ranking}
-                  </span>
-                  <span className="text-sm text-muted-foreground">
-                    Global Rank
-                  </span>
-                </div>
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-muted border border-border">
-                  <span className="text-2xl font-bold text-foreground">
-                    #{regionalRank}
-                  </span>
-                  <span className="text-sm text-muted-foreground">
-                    of {totalInRegion} in {country.giraiRegion}
-                  </span>
-                </div>
+                {country.rankGlobal !== null && (
+                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary/10 border border-primary/20">
+                    <span className="text-2xl font-bold text-primary">
+                      {getOrdinalSuffix(country.rankGlobal)}
+                    </span>
+                    <span className="text-sm text-muted-foreground">Global Rank</span>
+                  </div>
+                )}
+                {country.rankRegional !== null && (
+                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-muted border border-border">
+                    <span className="text-2xl font-bold text-foreground">
+                      {getOrdinalSuffix(country.rankRegional)}
+                    </span>
+                    <span className="text-sm text-muted-foreground">in {country.region}</span>
+                  </div>
+                )}
+                {country.rankIncomeGroup !== null && (
+                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-muted border border-border">
+                    <span className="text-2xl font-bold text-foreground">
+                      {getOrdinalSuffix(country.rankIncomeGroup)}
+                    </span>
+                    <span className="text-sm text-muted-foreground">{country.incomeGroup}</span>
+                  </div>
+                )}
               </div>
             </motion.div>
 
-            {/* Narrative */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -129,32 +130,23 @@ export function CountryHero({ country, regionalRank, totalInRegion }: CountryHer
               </p>
             </motion.div>
 
-            {/* Quick stats */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
               className="grid grid-cols-3 gap-4"
             >
-              <QuickStat
-                label="Gov. Frameworks"
-                value={country.pillarScores.governmentFrameworks}
-                color="#6366f1"
-              />
-              <QuickStat
-                label="Gov. Actions"
-                value={country.pillarScores.governmentActions}
-                color="#8b5cf6"
-              />
-              <QuickStat
-                label="Non-State Actors"
-                value={country.pillarScores.nonStateActors}
-                color="#a855f7"
-              />
+              {PILLARS.map((p) => (
+                <QuickStat
+                  key={p.slug}
+                  label={p.name}
+                  value={country.pillarScores[p.slug] ?? 0}
+                  color={pillarColors[p.slug]}
+                />
+              ))}
             </motion.div>
           </div>
 
-          {/* Right column - Country map silhouette */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -162,7 +154,6 @@ export function CountryHero({ country, regionalRank, totalInRegion }: CountryHer
             className="flex items-center justify-center"
           >
             <div className="relative">
-              {/* Glow effect */}
               <div className="absolute inset-0 blur-3xl opacity-30 animate-pulse">
                 <CountryMapWithGradient
                   iso3={country.iso3}
@@ -173,7 +164,6 @@ export function CountryHero({ country, regionalRank, totalInRegion }: CountryHer
                   strokeWidth={0}
                 />
               </div>
-              {/* Main map */}
               <CountryMapWithGradient
                 iso3={country.iso3}
                 gradientColors={["#6D6BFF", "#A4FCE9"]}
@@ -188,7 +178,6 @@ export function CountryHero({ country, regionalRank, totalInRegion }: CountryHer
         </div>
       </div>
 
-      {/* Scroll indicator */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

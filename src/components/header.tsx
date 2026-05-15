@@ -3,10 +3,20 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu } from "lucide-react";
+import { ChevronRight, Download, Menu, Orbit } from "lucide-react";
+import { DIMENSIONS } from "@/data/dimensions-data";
+import { cn } from "@/lib/utils";
 import { ThemeSwitcher } from "./theme-switcher";
-import { YearSwitcher } from "./year-switcher";
 import { Button } from "./ui/button";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
+} from "./ui/navigation-menu";
 import {
   Sheet,
   SheetContent,
@@ -15,100 +25,278 @@ import {
   SheetTrigger,
 } from "./ui/sheet";
 
-const menuItems = [
-  { label: "Research", href: "/" },
+const desktopNavLinkClass = cn(
+  navigationMenuTriggerStyle(),
+  "h-10 rounded-full bg-transparent px-3 text-[15px] font-medium text-foreground/80 shadow-none hover:bg-muted/70 hover:text-foreground focus:bg-muted/70 focus:text-foreground data-[active=true]:bg-muted/70 data-[active=true]:text-foreground"
+);
+
+const exploreLinks = [
+  { label: "Indicators", href: "/#indicators" },
+  { label: "Evidence Explorer", href: "/#indicators" },
+  { label: "Top Takeaway", href: "/#top-takeaways" },
+  { label: "2025 results", href: "/#results" },
+  { label: "2024 results", href: "/#results" },
+];
+
+const regionLinks = [
+  { label: "Africa", href: "/#regions" },
+  { label: "Asia and Oceania", href: "/#regions" },
+  { label: "The Caribbean", href: "/#regions" },
+  { label: "Europe", href: "/#regions" },
+  { label: "Middle East", href: "/#regions" },
+  { label: "North America", href: "/#regions" },
+  { label: "South and Central America", href: "/#regions" },
+];
+
+const dimensionLinks = DIMENSIONS.map((dimension) => ({
+  label: dimension.name,
+  href: "/#dimensions",
+}));
+
+const indicatorLinks = [
+  { label: "Gender equality", href: "/#indicators" },
+  { label: "Children's rights", href: "/#indicators" },
+  { label: "Public participation & inclusion", href: "/#indicators" },
+  { label: "Protection of vulnerable groups", href: "/#indicators" },
+  { label: "Bias & unfair discrimination", href: "/#indicators" },
+  { label: "Cultural & linguistic diversity", href: "/#indicators" },
+  { label: "Ethical AI principles & frameworks", href: "/#indicators" },
+];
+
+const primaryNavItems = [
+  { label: "Countries", href: "/#countries" },
   { label: "Methodology", href: "/methodology" },
+  { label: "Updates", href: "/updates" },
   { label: "About", href: "/about" },
-  { label: "DataVIZ Challenge", href: "/dataviz-challenge" },
 ];
 
 export const Header = () => {
   const [sheetOpen, setSheetOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-1000 flex flex-row items-center justify-between gap-4 py-5 px-4 sm:px-6 md:px-8 w-full bg-background/60 backdrop-blur-xl border-b border-border/40">
-      <Link href="/" className="shrink-0" aria-label="Home">
-        <Image
-          src="/girai-logo.png"
-          alt="Girai logo"
-          width={230}
-          height={40}
-          className="block dark:hidden h-8 w-auto max-w-[180px] sm:max-w-[230px]"
-        />
-        <Image
-          src="/girai-logo-white.png"
-          alt="Girai logo"
-          width={230}
-          height={40}
-          className="hidden dark:block h-8 w-auto max-w-[180px] sm:max-w-[230px]"
-        />
-      </Link>
+    <header className="sticky top-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl">
+      <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
+        <Link href="/" className="shrink-0" aria-label="Home">
+          <Image
+            src="/girai-logo.png"
+            alt="GIRAI logo"
+            width={230}
+            height={40}
+            className="block h-8 w-auto max-w-[180px] dark:hidden sm:max-w-[230px]"
+          />
+          <Image
+            src="/girai-logo-white.png"
+            alt="GIRAI logo"
+            width={230}
+            height={40}
+            className="hidden h-8 w-auto max-w-[180px] dark:block sm:max-w-[230px]"
+          />
+        </Link>
 
-      {/* Desktop nav + switchers */}
-      <nav className="hidden md:flex flex-row gap-8 items-center mx-auto">
-        {menuItems.map((item) => (
-          <Link
-            key={item.href}
-            href={item.href}
-            className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
-          >
-            {item.label}
-          </Link>
-        ))}
-      </nav>
+        <div className="hidden min-w-0 flex-1 items-center justify-center lg:flex">
+          <NavigationMenu viewport={false} className="max-w-full">
+            <NavigationMenuList className="gap-1.5">
+              <NavigationMenuItem>
+                <NavigationMenuTrigger className={desktopNavLinkClass}>
+                  Explore
+                </NavigationMenuTrigger>
+                <NavigationMenuContent className="w-[min(92vw,58rem)] rounded-[1.75rem] border-border/60 bg-background/95 p-6 shadow-[0_32px_90px_-40px_rgba(15,23,42,0.45)] backdrop-blur-xl">
+                  <div className="grid gap-8 md:grid-cols-[0.9fr_1fr_1.15fr_1.35fr]">
+                    <MenuColumn title="Explore" links={exploreLinks} />
+                    <MenuColumn title="Regions" links={regionLinks} />
+                    <MenuColumn title="Dimensions" links={dimensionLinks} />
+                    <MenuColumn
+                      title="Indicators"
+                      links={indicatorLinks}
+                      footerLink={{
+                        label: "View all",
+                        href: "/#indicators",
+                      }}
+                    />
+                  </div>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
 
-      <div className="relative z-1001 flex flex-row gap-4 items-center">
-        {/* Desktop: Year + Theme switchers */}
-        <div className="hidden md:flex flex-row gap-4 items-center">
-          <YearSwitcher />
-          <ThemeSwitcher />
+              {primaryNavItems.map((item) => (
+                <NavigationMenuItem key={item.label}>
+                  <NavigationMenuLink asChild className={desktopNavLinkClass}>
+                    <Link href={item.href}>{item.label}</Link>
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+              ))}
+            </NavigationMenuList>
+          </NavigationMenu>
         </div>
 
-        {/* Mobile: hamburger → sheet with menu + Year + Theme */}
-        <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
-          <SheetTrigger asChild>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="md:hidden shrink-0"
-              aria-label="Open menu"
+        <div className="relative z-50 flex items-center gap-2 sm:gap-3">
+          <Link
+            href="/"
+            className="hidden items-center gap-3 text-left transition-colors hover:bg-muted/60 xl:flex"
+          >
+            <Image src="/gcg-logo.png" alt="GCG logo" width={230} height={30} />
+          </Link>
+
+          <div className="hidden lg:block">
+            <ThemeSwitcher />
+          </div>
+
+          <Button asChild className="hidden rounded-full px-5 shadow-sm sm:inline-flex">
+            <Link href="/data">
+              <Download data-icon="inline-start" />
+              Download Data
+            </Link>
+          </Button>
+
+          <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
+            <SheetTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="shrink-0 lg:hidden"
+                aria-label="Open menu"
+              >
+                <Menu className="size-5 text-foreground" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent
+              side="right"
+              className="w-[min(100vw-1.25rem,360px)] overflow-y-auto"
             >
-              <Menu className="size-5 text-foreground" />
-            </Button>
-          </SheetTrigger>
-          <SheetContent side="right" className="flex flex-col w-[min(100vw-2rem,320px)]">
-            <SheetHeader>
-              <SheetTitle className="sr-only">Menu</SheetTitle>
-            </SheetHeader>
-            <nav className="flex flex-col gap-1 pt-2">
-              {menuItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setSheetOpen(false)}
-                  className="rounded-md px-3 py-2.5 text-base font-medium text-foreground/90 hover:bg-muted hover:text-foreground transition-colors"
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </nav>
-            <div className="mt-6 pt-6 border-t border-border flex flex-col gap-4">
-              <div className="flex flex-col gap-2">
-                <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider px-3">
-                  Year
-                </span>
-                <YearSwitcher />
+              <SheetHeader>
+                <SheetTitle>Navigation</SheetTitle>
+              </SheetHeader>
+
+              <div className="flex flex-col gap-6 pt-6">
+                <nav className="flex flex-col gap-2">
+                  {primaryNavItems.map((item) => (
+                    <Link
+                      key={item.label}
+                      href={item.href}
+                      onClick={() => setSheetOpen(false)}
+                      className="rounded-xl px-3 py-3 text-base font-medium text-foreground/90 transition-colors hover:bg-muted hover:text-foreground"
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </nav>
+
+                <MobileMenuGroup
+                  title="Explore"
+                  links={exploreLinks}
+                  onNavigate={() => setSheetOpen(false)}
+                />
+                <MobileMenuGroup
+                  title="Regions"
+                  links={regionLinks}
+                  onNavigate={() => setSheetOpen(false)}
+                />
+                <MobileMenuGroup
+                  title="Dimensions"
+                  links={dimensionLinks}
+                  onNavigate={() => setSheetOpen(false)}
+                />
+                <MobileMenuGroup
+                  title="Indicators"
+                  links={[
+                    ...indicatorLinks,
+                    { label: "View all", href: "/#indicators" },
+                  ]}
+                  onNavigate={() => setSheetOpen(false)}
+                />
+
+                <div className="flex flex-col gap-4 border-t border-border pt-6">
+                  <div className="flex items-center justify-between rounded-2xl border border-border/60 bg-muted/30 px-4 py-3">
+                    <span className="text-sm font-medium text-foreground/80">
+                      Theme
+                    </span>
+                    <ThemeSwitcher />
+                  </div>
+
+                  <Button asChild className="w-full rounded-full">
+                    <Link href="/data" onClick={() => setSheetOpen(false)}>
+                      <Download data-icon="inline-start" />
+                      Download Data
+                    </Link>
+                  </Button>
+                </div>
               </div>
-              <div className="flex flex-col gap-2">
-                <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider px-3">
-                  Theme
-                </span>
-                <ThemeSwitcher />
-              </div>
-            </div>
-          </SheetContent>
-        </Sheet>
+            </SheetContent>
+          </Sheet>
+        </div>
       </div>
     </header>
   );
 };
+
+function MenuColumn({
+  title,
+  links,
+  footerLink,
+}: {
+  title: string;
+  links: { label: string; href: string }[];
+  footerLink?: { label: string; href: string };
+}) {
+  return (
+    <div className="flex flex-col gap-4">
+      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+        {title}
+      </p>
+      <ul className="flex flex-col gap-1.5">
+        {links.map((link) => (
+          <li key={`${title}-${link.label}`}>
+            <NavigationMenuLink asChild>
+              <Link
+                href={link.href}
+                className="block rounded-xl px-3 py-2 text-sm text-foreground/78 transition-colors hover:bg-muted hover:text-foreground"
+              >
+                {link.label}
+              </Link>
+            </NavigationMenuLink>
+          </li>
+        ))}
+      </ul>
+      {footerLink ? (
+        <NavigationMenuLink asChild>
+          <Link
+            href={footerLink.href}
+            className="inline-flex items-center gap-1 rounded-xl px-3 py-2 text-sm font-medium text-primary transition-colors hover:bg-primary/10"
+          >
+            {footerLink.label}
+            <ChevronRight className="size-4" />
+          </Link>
+        </NavigationMenuLink>
+      ) : null}
+    </div>
+  );
+}
+
+function MobileMenuGroup({
+  title,
+  links,
+  onNavigate,
+}: {
+  title: string;
+  links: { label: string; href: string }[];
+  onNavigate: () => void;
+}) {
+  return (
+    <div className="flex flex-col gap-3 rounded-2xl border border-border/60 bg-muted/25 p-4">
+      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+        {title}
+      </p>
+      <div className="flex flex-col gap-1">
+        {links.map((link) => (
+          <Link
+            key={`${title}-${link.label}`}
+            href={link.href}
+            onClick={onNavigate}
+            className="rounded-xl px-3 py-2 text-sm text-foreground/80 transition-colors hover:bg-background hover:text-foreground"
+          >
+            {link.label}
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+}

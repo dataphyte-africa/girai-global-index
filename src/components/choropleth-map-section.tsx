@@ -1,14 +1,12 @@
-import { getFullRankingData } from "@/lib/parse-ranking";
-import { ChoroplethMapClient } from "@/components/choropleth-map-client";
-import { ChoroplethMapHeading } from "@/components/choropleth-map-heading";
+import { getAllCountries } from "@/lib/girai";
+import { CountryPerformanceTabs } from "@/components/country-performance-tabs";
 
 export function ChoroplethMapSection() {
-  const rankingData = getFullRankingData();
+  const rankingData = getAllCountries();
   return (
-    <section className="w-full px-4 py-12 md:px-8 md:py-16">
+    <section id="results" className="w-full px-4 py-12 md:px-8 md:py-16">
       <div className="mx-auto max-w-6xl">
-        <ChoroplethMapHeading />
-        <ChoroplethMapClient rankingData={rankingData} />
+        <CountryPerformanceTabs rankingData={rankingData} />
       </div>
     </section>
   );

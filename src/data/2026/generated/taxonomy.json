@@ -1,0 +1,515 @@
+{
+  "generatedAt": "2026-05-15T08:14:31.457Z",
+  "sourceHash": "f09a9cd57f26c47c3e6fcefa910de1043d8a37c5df654c581022e374649ddb3d",
+  "dimensions": [
+    {
+      "slug": "inclusion-diversity",
+      "name": "Inclusion and Diversity",
+      "aliases": [
+        "Inclusion and Diversity",
+        "Inclusion & Diversity"
+      ],
+      "order": 1
+    },
+    {
+      "slug": "ethics-sustainability",
+      "name": "Ethics and Sustainability",
+      "aliases": [
+        "Ethics and Sustainability",
+        "Ethics & Sustainability"
+      ],
+      "order": 2
+    },
+    {
+      "slug": "labour-skills",
+      "name": "Labour and Skills",
+      "aliases": [
+        "Labour and Skills",
+        "Labour & Skills"
+      ],
+      "order": 3
+    },
+    {
+      "slug": "trust-safety",
+      "name": "Trust and Safety",
+      "aliases": [
+        "Trust and Safety",
+        "Trust & Safety"
+      ],
+      "order": 4
+    },
+    {
+      "slug": "ai-use-public-service",
+      "name": "AI Use in Public Service",
+      "aliases": [
+        "AI Use in Public Service",
+        "AI Use in Public Service Delivery",
+        "Use of AI in the Public Sector",
+        "Use of AI in Public Sector Delivery"
+      ],
+      "order": 5
+    }
+  ],
+  "pillars": [
+    {
+      "slug": "ai-policy",
+      "name": "AI Policy",
+      "aliases": [
+        "AI Policy"
+      ]
+    },
+    {
+      "slug": "cso-engagement",
+      "name": "CSO Engagement",
+      "aliases": [
+        "CSO Engagement"
+      ]
+    },
+    {
+      "slug": "enabling-conditions",
+      "name": "Enabling Conditions",
+      "aliases": [
+        "Enabling Conditions"
+      ]
+    }
+  ],
+  "indicators": [
+    {
+      "slug": "gender-equality",
+      "name": "Gender Equality",
+      "aliases": [
+        "Gender Equality"
+      ],
+      "dimension": "inclusion-diversity",
+      "pillar": "ai-policy",
+      "family": "ai-policy",
+      "hasEvidence": true
+    },
+    {
+      "slug": "childrens-rights",
+      "name": "Children's Rights",
+      "aliases": [
+        "Children's Rights",
+        "Childrens Rights"
+      ],
+      "dimension": "inclusion-diversity",
+      "pillar": "ai-policy",
+      "family": "ai-policy",
+      "hasEvidence": true
+    },
+    {
+      "slug": "cultural-linguistic-diversity",
+      "name": "Cultural and Linguistic Diversity",
+      "aliases": [
+        "Cultural and Linguistic Diversity"
+      ],
+      "dimension": "inclusion-diversity",
+      "pillar": "ai-policy",
+      "family": "ai-policy",
+      "hasEvidence": true
+    },
+    {
+      "slug": "civil-society-engagement-inclusion-diversity",
+      "name": "Civil Society Engagement in Inclusion and Diversity",
+      "aliases": [
+        "Civil Society Engagement in Inclusion and Diversity"
+      ],
+      "dimension": "inclusion-diversity",
+      "pillar": "cso-engagement",
+      "family": "cse",
+      "hasEvidence": true
+    },
+    {
+      "slug": "egalitarian-democracy",
+      "name": "Egalitarian Democracy",
+      "aliases": [
+        "Egalitarian Democracy"
+      ],
+      "dimension": "inclusion-diversity",
+      "pillar": "enabling-conditions",
+      "family": "enabling-conditions",
+      "hasEvidence": false
+    },
+    {
+      "slug": "socioeconomic-inclusion-connectivity",
+      "name": "Socioeconomic Inclusion in Connectivity",
+      "aliases": [
+        "Socioeconomic Inclusion in Connectivity"
+      ],
+      "dimension": "inclusion-diversity",
+      "pillar": "enabling-conditions",
+      "family": "enabling-conditions",
+      "hasEvidence": false
+    },
+    {
+      "slug": "gender-inclusion-connectivity",
+      "name": "Gender Inclusion in Connectivity",
+      "aliases": [
+        "Gender Inclusion in Connectivity"
+      ],
+      "dimension": "inclusion-diversity",
+      "pillar": "enabling-conditions",
+      "family": "enabling-conditions",
+      "hasEvidence": false
+    },
+    {
+      "slug": "fairness-non-discrimination",
+      "name": "Fairness and Non-discrimination",
+      "aliases": [
+        "Fairness and Non-discrimination",
+        "Fairness and Non-Discrimination"
+      ],
+      "dimension": "ethics-sustainability",
+      "pillar": "ai-policy",
+      "family": "ai-policy",
+      "hasEvidence": true
+    },
+    {
+      "slug": "transparency-explainability",
+      "name": "Transparency and Explainability",
+      "aliases": [
+        "Transparency and Explainability"
+      ],
+      "dimension": "ethics-sustainability",
+      "pillar": "ai-policy",
+      "family": "ai-policy",
+      "hasEvidence": true
+    },
+    {
+      "slug": "human-oversight-determination",
+      "name": "Human Oversight and Determination",
+      "aliases": [
+        "Human Oversight and Determination"
+      ],
+      "dimension": "ethics-sustainability",
+      "pillar": "ai-policy",
+      "family": "ai-policy",
+      "hasEvidence": true
+    },
+    {
+      "slug": "environmental-impact",
+      "name": "Environmental Impact",
+      "aliases": [
+        "Environmental Impact"
+      ],
+      "dimension": "ethics-sustainability",
+      "pillar": "ai-policy",
+      "family": "ai-policy",
+      "hasEvidence": true
+    },
+    {
+      "slug": "civil-society-engagement-ethics-sustainability",
+      "name": "Civil Society Engagement in Ethics and Sustainability",
+      "aliases": [
+        "Civil Society Engagement in Ethics and Sustainability"
+      ],
+      "dimension": "ethics-sustainability",
+      "pillar": "cso-engagement",
+      "family": "cse",
+      "hasEvidence": true
+    },
+    {
+      "slug": "environmental-performance",
+      "name": "Environmental Performance",
+      "aliases": [
+        "Environmental Performance"
+      ],
+      "dimension": "ethics-sustainability",
+      "pillar": "enabling-conditions",
+      "family": "enabling-conditions",
+      "hasEvidence": false
+    },
+    {
+      "slug": "institutional-integrity",
+      "name": "Institutional Integrity",
+      "aliases": [
+        "Institutional Integrity"
+      ],
+      "dimension": "ethics-sustainability",
+      "pillar": "enabling-conditions",
+      "family": "enabling-conditions",
+      "hasEvidence": false
+    },
+    {
+      "slug": "labour-protections",
+      "name": "Labour Protections",
+      "aliases": [
+        "Labour Protections"
+      ],
+      "dimension": "labour-skills",
+      "pillar": "ai-policy",
+      "family": "ai-policy",
+      "hasEvidence": true
+    },
+    {
+      "slug": "reskilling-upskilling-initiatives",
+      "name": "Reskilling/Upskilling Initiatives",
+      "aliases": [
+        "Reskilling/Upskilling Initiatives",
+        "Reskilling / upskilling initiatives",
+        "Reskilling / Upskilling Initiatives",
+        "Reskilling and upskilling initiatives"
+      ],
+      "dimension": "labour-skills",
+      "pillar": "ai-policy",
+      "family": "ai-policy",
+      "hasEvidence": true
+    },
+    {
+      "slug": "ai-literacy",
+      "name": "AI Literacy",
+      "aliases": [
+        "AI Literacy",
+        "AI literacy"
+      ],
+      "dimension": "labour-skills",
+      "pillar": "ai-policy",
+      "family": "ai-policy",
+      "hasEvidence": true
+    },
+    {
+      "slug": "civil-society-engagement-labour-skills",
+      "name": "Civil Society Engagement in Labour and Skills",
+      "aliases": [
+        "Civil Society Engagement in Labour and Skills"
+      ],
+      "dimension": "labour-skills",
+      "pillar": "cso-engagement",
+      "family": "cse",
+      "hasEvidence": true
+    },
+    {
+      "slug": "labour-rights",
+      "name": "Labour Rights",
+      "aliases": [
+        "Labour Rights"
+      ],
+      "dimension": "labour-skills",
+      "pillar": "enabling-conditions",
+      "family": "enabling-conditions",
+      "hasEvidence": false
+    },
+    {
+      "slug": "population-digital-readiness",
+      "name": "Population Digital Readiness",
+      "aliases": [
+        "Population Digital Readiness"
+      ],
+      "dimension": "labour-skills",
+      "pillar": "enabling-conditions",
+      "family": "enabling-conditions",
+      "hasEvidence": false
+    },
+    {
+      "slug": "safety-security",
+      "name": "Safety and Security",
+      "aliases": [
+        "Safety and Security"
+      ],
+      "dimension": "trust-safety",
+      "pillar": "ai-policy",
+      "family": "ai-policy",
+      "hasEvidence": true
+    },
+    {
+      "slug": "access-redress-remedy",
+      "name": "Access to Redress and Remedy",
+      "aliases": [
+        "Access to Redress and Remedy"
+      ],
+      "dimension": "trust-safety",
+      "pillar": "ai-policy",
+      "family": "ai-policy",
+      "hasEvidence": true
+    },
+    {
+      "slug": "impact-assessments",
+      "name": "Impact Assessments",
+      "aliases": [
+        "Impact Assessments"
+      ],
+      "dimension": "trust-safety",
+      "pillar": "ai-policy",
+      "family": "ai-policy",
+      "hasEvidence": true
+    },
+    {
+      "slug": "ai-facilitated-misinformation-violence",
+      "name": "AI-facilitated Misinformation and Violence",
+      "aliases": [
+        "AI-facilitated Misinformation and Violence",
+        "AI-Facilitated Misinformation and Violence"
+      ],
+      "dimension": "trust-safety",
+      "pillar": "ai-policy",
+      "family": "ai-policy",
+      "hasEvidence": true
+    },
+    {
+      "slug": "civil-society-engagement-trust-safety",
+      "name": "Civil Society Engagement in Trust and Safety",
+      "aliases": [
+        "Civil Society Engagement in Trust and Safety"
+      ],
+      "dimension": "trust-safety",
+      "pillar": "cso-engagement",
+      "family": "cse",
+      "hasEvidence": true
+    },
+    {
+      "slug": "data-protection-privacy",
+      "name": "Data Protection and Privacy",
+      "aliases": [
+        "Data Protection and Privacy"
+      ],
+      "dimension": "trust-safety",
+      "pillar": "enabling-conditions",
+      "family": "enabling-conditions",
+      "hasEvidence": false
+    },
+    {
+      "slug": "data-sharing-access",
+      "name": "Data Sharing and Access",
+      "aliases": [
+        "Data Sharing and Access"
+      ],
+      "dimension": "trust-safety",
+      "pillar": "enabling-conditions",
+      "family": "enabling-conditions",
+      "hasEvidence": false
+    },
+    {
+      "slug": "consumer-protection",
+      "name": "Consumer Protection",
+      "aliases": [
+        "Consumer Protection"
+      ],
+      "dimension": "trust-safety",
+      "pillar": "enabling-conditions",
+      "family": "enabling-conditions",
+      "hasEvidence": false
+    },
+    {
+      "slug": "cybersecurity",
+      "name": "Cybersecurity",
+      "aliases": [
+        "Cybersecurity"
+      ],
+      "dimension": "trust-safety",
+      "pillar": "enabling-conditions",
+      "family": "enabling-conditions",
+      "hasEvidence": false
+    },
+    {
+      "slug": "rule-of-law",
+      "name": "Rule of Law",
+      "aliases": [
+        "Rule of Law"
+      ],
+      "dimension": "trust-safety",
+      "pillar": "enabling-conditions",
+      "family": "enabling-conditions",
+      "hasEvidence": false
+    },
+    {
+      "slug": "global-peace",
+      "name": "Global Peace",
+      "aliases": [
+        "Global Peace"
+      ],
+      "dimension": "trust-safety",
+      "pillar": "enabling-conditions",
+      "family": "enabling-conditions",
+      "hasEvidence": false
+    },
+    {
+      "slug": "public-sector-skills-development",
+      "name": "Public Sector Skills Development",
+      "aliases": [
+        "Public Sector Skills Development"
+      ],
+      "dimension": "ai-use-public-service",
+      "pillar": "ai-policy",
+      "family": "ai-policy",
+      "hasEvidence": true
+    },
+    {
+      "slug": "public-disclosure-government-algorithmic-systems",
+      "name": "Public Disclosure of Government Algorithmic Systems",
+      "aliases": [
+        "Public Disclosure of Government Algorithmic Systems"
+      ],
+      "dimension": "ai-use-public-service",
+      "pillar": "ai-policy",
+      "family": "ai-policy",
+      "hasEvidence": true
+    },
+    {
+      "slug": "public-procurement",
+      "name": "Public Procurement",
+      "aliases": [
+        "Public Procurement"
+      ],
+      "dimension": "ai-use-public-service",
+      "pillar": "ai-policy",
+      "family": "ai-policy",
+      "hasEvidence": true
+    },
+    {
+      "slug": "government-mechanisms-cso-inclusion",
+      "name": "Government Mechanisms for CSO Inclusion in AI Policy and Governance",
+      "aliases": [
+        "Government Mechanisms for CSO Inclusion in AI Policy and Governance"
+      ],
+      "dimension": "ai-use-public-service",
+      "pillar": "cso-engagement",
+      "family": "cse",
+      "hasEvidence": true
+    },
+    {
+      "slug": "civil-society-oversight",
+      "name": "Civil Society Oversight",
+      "aliases": [
+        "Civil Society Oversight"
+      ],
+      "dimension": "ai-use-public-service",
+      "pillar": "enabling-conditions",
+      "family": "enabling-conditions",
+      "hasEvidence": false
+    },
+    {
+      "slug": "public-service-delivery",
+      "name": "Public Service Delivery",
+      "aliases": [
+        "Public Service Delivery"
+      ],
+      "dimension": "ai-use-public-service",
+      "pillar": "enabling-conditions",
+      "family": "enabling-conditions",
+      "hasEvidence": false
+    },
+    {
+      "slug": "right-to-information",
+      "name": "Right to Information",
+      "aliases": [
+        "Right to Information"
+      ],
+      "dimension": "ai-use-public-service",
+      "pillar": "enabling-conditions",
+      "family": "enabling-conditions",
+      "hasEvidence": false
+    },
+    {
+      "slug": "unacceptable-risks-ai-systems",
+      "name": "Unacceptable Risks AI Systems",
+      "aliases": [
+        "Unacceptable Risks AI Systems",
+        "Unacceptable Risk AI Systems"
+      ],
+      "dimension": "ai-use-public-service",
+      "pillar": "enabling-conditions",
+      "family": "enabling-conditions",
+      "hasEvidence": true
+    }
+  ]
+}

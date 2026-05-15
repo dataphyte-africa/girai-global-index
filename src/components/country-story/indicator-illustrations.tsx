@@ -1,89 +1,11 @@
 "use client";
 
 import { motion } from "motion/react";
-import type { IndicatorType } from "@/lib/narratives";
+import type { DimensionSlug } from "@/data/2026/taxonomy";
 
 interface IllustrationProps {
   color: string;
   secondaryColor: string;
-}
-
-// Government Frameworks - Document with policy structure
-function GovernmentFrameworksIllustration({ color, secondaryColor }: IllustrationProps) {
-  return (
-    <svg viewBox="0 0 200 200" className="w-full h-full">
-      <defs>
-        <linearGradient id="frameworkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor={color} />
-          <stop offset="100%" stopColor={secondaryColor} />
-        </linearGradient>
-      </defs>
-      
-      {/* Main document */}
-      <motion.rect
-        x="50" y="30" width="100" height="130" rx="8"
-        fill="url(#frameworkGrad)"
-        initial={{ scale: 0, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.5 }}
-      />
-      
-      {/* Document lines */}
-      {[0, 1, 2, 3, 4].map((i) => (
-        <motion.rect
-          key={i}
-          x="65" y={55 + i * 22} width={i === 0 ? 70 : 50 + Math.random() * 20} height="6" rx="3"
-          fill="rgba(255,255,255,0.7)"
-          initial={{ scaleX: 0, opacity: 0 }}
-          animate={{ scaleX: 1, opacity: 1 }}
-          transition={{ duration: 0.3, delay: 0.5 + i * 0.1 }}
-        />
-      ))}
-      
-      {/* Seal/stamp */}
-      <motion.circle
-        cx="120" cy="140" r="18"
-        fill="rgba(255,255,255,0.9)"
-        stroke={secondaryColor}
-        strokeWidth="3"
-        initial={{ scale: 0, rotate: -180 }}
-        animate={{ scale: 1, rotate: 0 }}
-        transition={{ duration: 0.5, delay: 1, type: "spring" }}
-      />
-      
-      {/* Checkmark in seal */}
-      <motion.path
-        d="M112 140 L118 146 L130 134"
-        stroke={color}
-        strokeWidth="3"
-        fill="none"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        initial={{ pathLength: 0 }}
-        animate={{ pathLength: 1 }}
-        transition={{ duration: 0.3, delay: 1.3 }}
-      />
-      
-      {/* Floating gears */}
-      <motion.g
-        animate={{ rotate: 360 }}
-        transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-        style={{ transformOrigin: "170px 50px" }}
-      >
-        <circle cx="170" cy="50" r="20" fill={secondaryColor} opacity="0.3" />
-        <circle cx="170" cy="50" r="12" fill="white" opacity="0.5" />
-      </motion.g>
-      
-      <motion.g
-        animate={{ rotate: -360 }}
-        transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
-        style={{ transformOrigin: "30px 70px" }}
-      >
-        <circle cx="30" cy="70" r="15" fill={color} opacity="0.3" />
-        <circle cx="30" cy="70" r="8" fill="white" opacity="0.5" />
-      </motion.g>
-    </svg>
-  );
 }
 
 // Government Actions - Building with action arrows
@@ -602,25 +524,26 @@ function ResponsibleAICapacitiesIllustration({ color, secondaryColor }: Illustra
   );
 }
 
-// Map indicator type to illustration component
-const illustrationComponents: Record<IndicatorType, React.FC<IllustrationProps>> = {
-  governmentFrameworks: GovernmentFrameworksIllustration,
-  governmentActions: GovernmentActionsIllustration,
-  nonStateActors: NonStateActorsIllustration,
-  humanRightsAI: HumanRightsAIIllustration,
-  responsibleAIGovernance: ResponsibleAIGovernanceIllustration,
-  responsibleAICapacities: ResponsibleAICapacitiesIllustration,
+// Map each 2026 dimension to a stable illustration. Picked by visual
+// affinity (rights/people for inclusion, scales/oversight for ethics,
+// capacity/skills for labour, network/trust for trust-safety, and a
+// government-action motif for public-service).
+const dimensionIllustrations: Record<DimensionSlug, React.FC<IllustrationProps>> = {
+  "inclusion-diversity": HumanRightsAIIllustration,
+  "ethics-sustainability": ResponsibleAIGovernanceIllustration,
+  "labour-skills": ResponsibleAICapacitiesIllustration,
+  "trust-safety": NonStateActorsIllustration,
+  "ai-use-public-service": GovernmentActionsIllustration,
 };
 
-interface IndicatorIllustrationProps {
-  indicator: IndicatorType;
+interface DimensionIllustrationProps {
+  dimension: DimensionSlug;
   color: string;
   secondaryColor: string;
 }
 
-export function IndicatorIllustration({ indicator, color, secondaryColor }: IndicatorIllustrationProps) {
-  const IllustrationComponent = illustrationComponents[indicator];
-  
+export function DimensionIllustration({ dimension, color, secondaryColor }: DimensionIllustrationProps) {
+  const IllustrationComponent = dimensionIllustrations[dimension];
   return (
     <div className="w-full h-full flex items-center justify-center">
       <div className="w-80 h-80">

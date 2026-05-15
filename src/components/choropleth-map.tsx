@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { MapContainer, GeoJSON, useMap } from "react-leaflet";
 import L from "leaflet";
-import type { FullRankingData } from "@/data/countries";
+import type { CountryRanking } from "@/lib/girai";
 import { CountryDrawer } from "./country-drawer";
 import { Lock, Unlock } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -135,11 +135,11 @@ function buildTooltipContent(
 export function ChoroplethMap({
   rankingData,
 }: {
-  rankingData: FullRankingData[];
+  rankingData: CountryRanking[];
 }) {
   const [geojson, setGeojson] = useState<GeoJSON.GeoJsonObject | null>(null);
   const [selectedCountry, setSelectedCountry] =
-    useState<FullRankingData | null>(null);
+    useState<CountryRanking | null>(null);
   const [isLocked, setIsLocked] = useState(true);
 
   const rankingByIso3 = useMemo(
@@ -158,8 +158,8 @@ export function ChoroplethMap({
     const iso3 = feature?.properties?.iso_a3;
     const countryData = iso3 ? rankingByIso3.get(iso3) : undefined;
     return {
-      fillColor: countryData
-        ? getColor(countryData.indexScore)
+      fillColor: countryData && countryData.girai !== null
+        ? getColor(countryData.girai)
         : "var(--background)",
       weight: 1,
       opacity: 1,
@@ -179,10 +179,10 @@ export function ChoroplethMap({
 
     if (countryData && iso2 && iso2 !== "-99") {
       const content = buildTooltipContent(
-        countryData.country || name,
+        countryData.name || name,
         iso2,
-        countryData.ranking,
-        countryData.indexScore
+        countryData.rankGlobal ?? 0,
+        countryData.girai ?? 0
       );
       layer.bindTooltip(content, {
         sticky: true,

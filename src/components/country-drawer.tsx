@@ -11,8 +11,9 @@ import {
   SheetFooter,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import type { FullRankingData } from "@/data/countries";
+import type { CountryRanking } from "@/lib/girai";
 import { iso3ToIso2 } from "@/data/countries";
+import { DIMENSIONS, PILLARS } from "@/data/2026/taxonomy";
 
 // Animated number counter
 function AnimatedNumber({
@@ -34,8 +35,6 @@ function AnimatedNumber({
     const animate = (timestamp: number) => {
       if (!startTimeRef.current) startTimeRef.current = timestamp;
       const progress = Math.min((timestamp - startTimeRef.current) / duration, 1);
-      
-      // Ease out cubic
       const eased = 1 - Math.pow(1 - progress, 3);
       setDisplayValue(eased * value);
 
@@ -56,7 +55,6 @@ function AnimatedNumber({
   return <span>{displayValue.toFixed(decimals)}</span>;
 }
 
-// Animated progress bar
 function AnimatedProgressBar({
   label,
   value,
@@ -105,18 +103,23 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
   );
 }
 
+function getOrdinalSuffix(n: number): string {
+  const s = ["th", "st", "nd", "rd"];
+  const v = n % 100;
+  return s[(v - 20) % 10] || s[v] || s[0];
+}
+
 export function CountryDrawer({
   country,
   open,
   onClose,
 }: {
-  country: FullRankingData | null;
+  country: CountryRanking | null;
   open: boolean;
   onClose: () => void;
 }) {
   const [key, setKey] = useState(0);
 
-  // Reset animations when country changes
   useEffect(() => {
     if (country) {
       setKey((prev) => prev + 1);
@@ -138,19 +141,18 @@ export function CountryDrawer({
           <div className="flex items-center gap-3">
             <img
               src={flagUrl}
-              alt={`${country.country} flag`}
+              alt={`${country.name} flag`}
               className="h-10 w-auto rounded-sm shadow-sm object-cover"
               onError={(e) => {
-                // Fallback to a default if flag image fails to load
                 e.currentTarget.style.display = "none";
               }}
             />
             <div className="text-left">
               <SheetTitle className="text-lg font-semibold">
-                {country.country}
+                {country.name}
               </SheetTitle>
               <SheetDescription className="text-xs text-muted-foreground">
-                2025 Research
+                2026 Edition · {country.region}
               </SheetDescription>
             </div>
           </div>
@@ -160,18 +162,28 @@ export function CountryDrawer({
           {/* Global Index Score */}
           <div className="text-center py-6">
             <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">
-              Global Index
+              Global Index Score
             </p>
             <p className="text-4xl font-bold text-primary tabular-nums">
-              <AnimatedNumber value={country.indexScore} duration={1200} decimals={2} />
+              <AnimatedNumber value={country.girai ?? 0} duration={1200} decimals={2} />
             </p>
-            <div className="flex items-center justify-center gap-3 mt-3">
-              <span className="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
-                Global: {country.ranking}th
-              </span>
-              {country.giraiRegion && (
+            <div className="flex flex-wrap items-center justify-center gap-2 mt-3">
+              {country.rankGlobal !== null && (
+                <span className="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
+                  Global: {country.rankGlobal}
+                  {getOrdinalSuffix(country.rankGlobal)}
+                </span>
+              )}
+              {country.rankRegional !== null && (
                 <span className="inline-flex items-center rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground">
-                  Regional: {getRegionalRank(country)}
+                  Regional: {country.rankRegional}
+                  {getOrdinalSuffix(country.rankRegional)}
+                </span>
+              )}
+              {country.rankIncomeGroup !== null && (
+                <span className="inline-flex items-center rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground">
+                  Income: {country.rankIncomeGroup}
+                  {getOrdinalSuffix(country.rankIncomeGroup)}
                 </span>
               )}
             </div>
@@ -179,23 +191,16 @@ export function CountryDrawer({
 
           {/* Dimension-Level Performance */}
           <div className="border-t pt-4">
-            <SectionTitle>Dimension-Level Performance</SectionTitle>
+            <SectionTitle>Dimension Scores</SectionTitle>
             <div className="space-y-4 rounded-lg border bg-card p-4">
-              <AnimatedProgressBar
-                label="Human Rights and AI"
-                value={country.dimensionScores.humanRightsAI}
-                delay={100}
-              />
-              <AnimatedProgressBar
-                label="Responsible AI Governance"
-                value={country.dimensionScores.responsibleAIGovernance}
-                delay={200}
-              />
-              <AnimatedProgressBar
-                label="Responsible AI Capacities"
-                value={country.dimensionScores.responsibleAICapacities}
-                delay={300}
-              />
+              {DIMENSIONS.map((d, i) => (
+                <AnimatedProgressBar
+                  key={d.slug}
+                  label={d.name}
+                  value={country.dimensionScores[d.slug] ?? 0}
+                  delay={100 * (i + 1)}
+                />
+              ))}
             </div>
           </div>
 
@@ -203,54 +208,43 @@ export function CountryDrawer({
           <div className="pt-4">
             <SectionTitle>Pillar Scores</SectionTitle>
             <div className="space-y-4 rounded-lg border bg-card p-4">
-              <AnimatedProgressBar
-                label="Government Frameworks"
-                value={country.pillarScores.governmentFrameworks}
-                delay={400}
-              />
-              <AnimatedProgressBar
-                label="Government Actions"
-                value={country.pillarScores.governmentActions}
-                delay={500}
-              />
-              <AnimatedProgressBar
-                label="Non-State Actors"
-                value={country.pillarScores.nonStateActors}
-                delay={600}
-              />
+              {PILLARS.map((p, i) => (
+                <AnimatedProgressBar
+                  key={p.slug}
+                  label={p.name}
+                  value={country.pillarScores[p.slug] ?? 0}
+                  delay={100 * (DIMENSIONS.length + i + 1)}
+                />
+              ))}
             </div>
           </div>
 
-          {/* Global Index Trend (Placeholder) */}
-          <div className="pt-4 pb-2">
-            <SectionTitle>Global Index Trend</SectionTitle>
-            <div className="rounded-lg border bg-card p-4">
-              <p className="text-xs text-muted-foreground">
-                See how index change over time
-              </p>
-              <div className="h-16 flex items-center justify-center text-muted-foreground/50 text-sm">
-                {/* Placeholder for trend chart */}
-                <span className="text-xs">—</span>
+          {country.uraiCount > 0 && (
+            <div className="pt-4 pb-2">
+              <SectionTitle>Government Misuse (URAI)</SectionTitle>
+              <div className="rounded-lg border bg-card p-4">
+                <p className="text-sm text-foreground">
+                  <strong className="tabular-nums">{country.uraiCount}</strong>{" "}
+                  documented case{country.uraiCount === 1 ? "" : "s"}
+                </p>
+                {country.uraiPenalty !== null && country.uraiPenalty < 1 && (
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    Applied penalty: ×{country.uraiPenalty.toFixed(2)}
+                  </p>
+                )}
               </div>
             </div>
-          </div>
+          )}
         </div>
 
         <SheetFooter className="border-t pt-4">
-          <Link href={`/country/${country.iso3}`} className="w-full">
+          <Link href={`/countries/${country.iso3}`} className="w-full">
             <Button className="w-full rounded-full" size="lg">
-              Read story
+              View country page
             </Button>
           </Link>
         </SheetFooter>
       </SheetContent>
     </Sheet>
   );
-}
-
-// Helper function to calculate regional rank (placeholder - needs actual data)
-function getRegionalRank(_country: FullRankingData): string {
-  // This would ideally come from the data
-  // For now, return a placeholder
-  return "—";
 }

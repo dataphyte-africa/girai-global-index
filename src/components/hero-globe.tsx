@@ -39,10 +39,10 @@ export function GlobeDemo({ arcData, markers }: GlobeDemoProps) {
       lat: m.lat,
       lng: m.lng,
       iso3: m.iso3,
-      country: m.country,
+      country: m.name,
       flag: m.flag,
-      ranking: m.ranking,
-      indexScore: m.indexScore,
+      ranking: m.rankGlobal ?? 0,
+      indexScore: m.girai ?? 0,
     })),
   };
   return (

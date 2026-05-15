@@ -1,86 +1,55 @@
 "use client";
 import React from "react";
 import { CategoryStickScroll } from "./category-stick-scroll";
+import { PILLARS } from "@/data/2026/taxonomy";
 
-const content = [
-  {
-    title: "Government Practices & Frameworks",
+/**
+ * High-level summary copy for each of the three GIRAI pillars. The labels
+ * track `taxonomy.PILLARS` so renames flow through; the editorial body
+ * stays in this file until Sanity authoring lands (ADR 0004).
+ */
+const PILLAR_COPY: Record<string, { heading: string; body: string; image: string }> = {
+  "ai-policy": {
+    heading: "AI Policy",
+    body: "This pillar assesses whether governments have established laws, strategies, guidelines, and other formal frameworks to guide the responsible development and use of AI. It looks not only at the existence of those frameworks, but also how they are implemented in practice — through designated bodies, plans, budgets, monitoring, and concrete initiatives.",
+    image: "/categories/government.png",
+  },
+  "cso-engagement": {
+    heading: "CSO Engagement",
+    body: "This pillar examines how civil society organisations, academic institutions, and other non-state actors contribute to AI governance through policy input, advocacy, research, oversight, and public engagement. It also captures the government mechanisms that make CSO participation meaningful, ongoing, and influential rather than one-off or symbolic.",
+    image: "/categories/cso-engagement.png",
+  },
+  "enabling-conditions": {
+    heading: "Enabling Conditions",
+    body: "This pillar reflects the broader national conditions that shape how AI is developed and governed — institutional integrity, rule of law, data protection, cybersecurity, digital readiness, and labour rights. These contextual indicators (drawn from established external data sources) help explain why countries differ in their ability to implement responsible AI practices.",
+    image: "/categories/country-context.png",
+  },
+};
+
+const content = PILLARS.map((pillar) => {
+  const copy = PILLAR_COPY[pillar.slug];
+  return {
+    title: copy.heading,
     description: "",
     content: (
       <div className="flex flex-col h-full w-full items-center justify-center p-4 bg-muted rounded-md">
         <img
-          src="/categories/government.png"
+          src={copy.image}
           className="w-full h-[300px] object-cover rounded-sm"
-          alt="Government"
+          alt={copy.heading}
         />
         <div className="flex flex-col gap-2 mt-2">
-          <h2 className="text-2xl font-bold">
-            Government Practices & Frameworks
-          </h2>
-          <p className="text-sm text-muted-foreground">
-            This category assesses whether governments have established
-            policies, laws, strategies, and institutional mechanisms to guide
-            the responsible development and use of AI. It examines not only the
-            existence of these frameworks, but also how they are implemented in
-            practice, including oversight arrangements, resourcing, and concrete
-            government-led actions shaping AI use in the public sector.
-          </p>
+          <h2 className="text-2xl font-bold">{copy.heading}</h2>
+          <p className="text-sm text-muted-foreground">{copy.body}</p>
         </div>
       </div>
     ),
-  },
-  {
-    title: "Civil Society Engagement",
-    description: "",
-    content: (
-      <div className="flex flex-col h-full w-full items-center justify-center p-4 bg-muted rounded-md">
-        <img
-          src="/categories/cso-engagement.png"
-          className="w-full h-[300px] object-cover"
-          alt="Civil Society"
-        />
-        <div className="flex flex-col gap-2 mt-2">
-          <h2 className="text-2xl font-bold">Civil Society Engagement</h2>
-          <p className="text-sm text-muted-foreground">
-            This category examines how civil society organisations, academic
-            institutions, and other non-state actors contribute to AI governance
-            through policy input, advocacy, research, oversight, and public
-            engagement. It focuses on whether participation is meaningful,
-            ongoing, and influential, rather than limited to one-off or symbolic
-            consultations.
-          </p>
-        </div>
-      </div>
-    ),
-  },
-  {
-    title: "Country Context Indicators",
-    description: "",
-    content: (
-      <div className="flex flex-col h-full w-full items-center justify-center p-4 bg-muted rounded-md">
-        <img
-          src="/categories/country-context.png"
-          className="w-full h-[300px] object-cover"
-          alt="Country Context"
-        />
-        <div className="flex flex-col gap-2 mt-2">
-          <h2 className="text-2xl font-bold">Country Context Indicators</h2>
-          <p className="text-sm text-muted-foreground">
-            This category reflects the broader national conditions that
-            influence how AI is developed and governed, including institutional
-            capacity, rule of law, labour protections, digital skills, and data
-            governance. These contextual factors help explain why countries
-            differ in their ability to implement responsible AI practices.
-          </p>
-        </div>
-      </div>
-    ),
-  },
-];
+  };
+});
 
 export function IndicatorCategorySection() {
   return (
-    <section className="w-full">
+    <section id="indicators" className="w-full">
       <CategoryStickScroll
         content={content}
         backgroundColors={["#C8DBFF", "#D6FBC6", "#D8C7E4"]}

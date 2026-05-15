@@ -10,20 +10,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import type { RegionAggregatedData } from "@/lib/parse-ranking";
-
-// Display names for dimensions/indicators
-const DIMENSION_DISPLAY_NAMES = {
-  humanRightsAI: "Human Rights & AI",
-  responsibleAIGovernance: "Responsible AI Governance",
-  responsibleAICapacities: "Responsible AI Capacities",
-};
-
-const PILLAR_DISPLAY_NAMES = {
-  governmentFrameworks: "Government Frameworks",
-  governmentActions: "Government Actions",
-  nonStateActors: "Non-State Actors",
-};
+import type { RegionSummary } from "@/lib/girai";
+import { DIMENSIONS, PILLARS } from "@/data/2026/taxonomy";
 
 // Color palette for different regions
 const REGION_COLORS = [
@@ -36,7 +24,7 @@ const REGION_COLORS = [
 
 interface RegionalComparisonSectionProps {
   regions: string[];
-  regionData: RegionAggregatedData[];
+  regionData: RegionSummary[];
 }
 
 function ScoreCard({
@@ -46,7 +34,7 @@ function ScoreCard({
   index,
 }: {
   region: string;
-  data: RegionAggregatedData;
+  data: RegionSummary;
   colorIndex: number;
   index: number;
 }) {
@@ -80,9 +68,9 @@ function ScoreCard({
         <motion.span
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          key={data.averageScore}
+          key={data.averageGirai}
         >
-          {data.averageScore.toFixed(2)}
+          {data.averageGirai.toFixed(2)}
         </motion.span>
       </motion.div>
       
@@ -254,7 +242,7 @@ export function RegionalComparisonSection({
 
   // Map region names to their data
   const regionDataMap = useMemo(() => {
-    const map = new Map<string, RegionAggregatedData>();
+    const map = new Map<string, RegionSummary>();
     for (const data of regionData) {
       map.set(data.region, data);
     }
@@ -266,7 +254,7 @@ export function RegionalComparisonSection({
     return selectedRegions
       .filter(Boolean)
       .map((region) => regionDataMap.get(region))
-      .filter((data): data is RegionAggregatedData => data !== undefined);
+      .filter((data): data is RegionSummary => data !== undefined);
   }, [selectedRegions, regionDataMap]);
 
   // Color indices for consistent coloring
@@ -303,31 +291,31 @@ export function RegionalComparisonSection({
     );
   };
 
-  // Prepare comparison data for dimensions
+  // Prepare comparison data: 5 dimensions + 3 pillars from the 2026 taxonomy.
   const dimensionComparisonData = useMemo(() => {
-    const dimensions = Object.entries(DIMENSION_DISPLAY_NAMES).map(([key, label]) => ({
-      key: key as keyof typeof DIMENSION_DISPLAY_NAMES,
-      label,
+    const dimensions = DIMENSIONS.map((d) => ({
+      key: `dimension:${d.slug}`,
+      label: d.name,
       values: selectedRegionData.map((data) => ({
         region: data.region,
-        value: data.dimensionScores[key as keyof typeof data.dimensionScores],
+        value: data.dimensions[d.slug] ?? 0,
       })),
     }));
-    
-    const pillars = Object.entries(PILLAR_DISPLAY_NAMES).map(([key, label]) => ({
-      key: key as keyof typeof PILLAR_DISPLAY_NAMES,
-      label,
+
+    const pillars = PILLARS.map((p) => ({
+      key: `pillar:${p.slug}`,
+      label: p.name,
       values: selectedRegionData.map((data) => ({
         region: data.region,
-        value: data.pillarScores[key as keyof typeof data.pillarScores],
+        value: data.pillars[p.slug] ?? 0,
       })),
     }));
-    
+
     return [...dimensions, ...pillars];
   }, [selectedRegionData]);
 
   return (
-    <section className="w-full px-4 py-16 md:py-24 bg-background">
+    <section id="regions" className="w-full px-4 py-16 md:py-24 bg-background">
       <div className="mx-auto max-w-6xl">
         {/* Header */}
         <div ref={headingRef} className="mb-12 text-center">

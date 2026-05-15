@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import type { FullRankingData } from "@/data/countries";
+import type { CountryRanking } from "@/lib/girai";
 
 const ChoroplethMap = dynamic(
   () =>
@@ -14,7 +14,7 @@ const ChoroplethMap = dynamic(
 export function ChoroplethMapClient({
   rankingData,
 }: {
-  rankingData: FullRankingData[];
+  rankingData: CountryRanking[];
 }) {
   return <ChoroplethMap rankingData={rankingData} />;
 }

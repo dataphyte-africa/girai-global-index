@@ -1,0 +1,13 @@
+description,formula
+Country page (ISO3 in column C),"=""https://girai.global/countries/"" & C2"
+Framework slot 1 (interview_key in column A),"=""https://girai.global/evidence/"" & A2 & "":framework:1"""
+Framework slot 2,"=""https://girai.global/evidence/"" & A2 & "":framework:2"""
+"Initiative — body 1, item N (replace N=1..3)","=""https://girai.global/evidence/"" & A2 & "":initiative:b1-i1"""
+"Initiative — body 2, item N (replace N=1..3)","=""https://girai.global/evidence/"" & A2 & "":initiative:b2-i1"""
+CSO initiative slot N (1..6),"=""https://girai.global/evidence/"" & A2 & "":cso-initiative:1"""
+GMC consultation slot N (1..3),"=""https://girai.global/evidence/"" & A2 & "":gmc-consultation:1"""
+GMC provision slot N (1..4),"=""https://girai.global/evidence/"" & A2 & "":gmc-provision:1"""
+GMC mechanism slot N (1..4),"=""https://girai.global/evidence/"" & A2 & "":gmc-mechanism:1"""
+Government misuse / URAI slot N (1..7) — uses ISO3 in column C,"=""https://girai.global/evidence/urai-"" & C2 & "":government-misuse:1"""
+Evidence Explorer — filter by country (ISO3 in C),"=""https://girai.global/evidence?country="" & C2"
+Evidence Explorer — filter by indicator slug (paste slug in cell D2),"=""https://girai.global/evidence?indicator="" & D2"

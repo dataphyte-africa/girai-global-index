@@ -313,39 +313,24 @@ export const countryFlags: Record<string, string> = {
    SSD: "🇸🇸",
  };
  
-export type RankingData = {
-  ranking: number;
+/**
+ * Minimal country shape used by the home-page hero globe. Decoupled
+ * from the full {@link CountryRanking} shape so the globe doesn't have
+ * to know about score data.
+ */
+export type GlobeCountry = {
   iso3: string;
-  country: string;
-  giraiRegion: string;
-  unRegion: string;
-  unSubregion: string;
-  indexScore: number;
+  name: string;
+  region: string;
+  rankGlobal: number | null;
+  girai: number | null;
 };
 
-export type FullRankingData = RankingData & {
-  pillarScores: {
-    governmentFrameworks: number;
-    governmentActions: number;
-    nonStateActors: number;
-  };
-  dimensionScores: {
-    humanRightsAI: number;
-    responsibleAIGovernance: number;
-    responsibleAICapacities: number;
-  };
-  coefficients: {
-    governmentFrameworks: number;
-    governmentActions: number;
-    nonStateActors: number;
-  };
+export type Country = GlobeCountry & {
+  lat: number;
+  lng: number;
+  flag: string;
 };
-
-export type Country = RankingData & {
-   lat: number;
-   lng: number;
-   flag: string;
- };
  
  export type ArcPosition = {
    order: number;
@@ -359,47 +344,47 @@ export type Country = RankingData & {
  
  const ARC_COLORS = ["#4fd1c5", "#38b2ac", "#2dd4bf"];
  
- /**
-  * Select 20 countries with a mix from all continents (GIRAI regions).
-  */
- export function selectMixedCountries(
-   rankings: RankingData[],
-   count: number = 20
- ): Country[] {
-   const byRegion = new Map<string, RankingData[]>();
-   for (const r of rankings) {
-     const region = r.giraiRegion || "Other";
-     if (!byRegion.has(region)) byRegion.set(region, []);
-     byRegion.get(region)!.push(r);
-   }
- 
-   const selected: Country[] = [];
-   const regions = Array.from(byRegion.keys());
- 
-   while (selected.length < count) {
-     let added = 0;
-     for (const region of regions) {
-       const pool = byRegion.get(region)!;
-       if (pool.length === 0 || selected.length >= count) continue;
-       const idx = Math.floor(Math.random() * pool.length);
-       const r = pool.splice(idx, 1)[0];
-       const coords = countryCoordinates[r.iso3];
-       const flag = countryFlags[r.iso3];
-       if (coords && flag) {
-         selected.push({
-           ...r,
-           lat: coords.lat,
-           lng: coords.lng,
-           flag,
-         });
-         added++;
-       }
-     }
-     if (added === 0) break;
-   }
- 
-   return selected.slice(0, count);
- }
+/**
+ * Select N countries with a mix from all GIRAI regions.
+ */
+export function selectMixedCountries(
+  rankings: GlobeCountry[],
+  count: number = 20
+): Country[] {
+  const byRegion = new Map<string, GlobeCountry[]>();
+  for (const r of rankings) {
+    const region = r.region || "Other";
+    if (!byRegion.has(region)) byRegion.set(region, []);
+    byRegion.get(region)!.push(r);
+  }
+
+  const selected: Country[] = [];
+  const regions = Array.from(byRegion.keys());
+
+  while (selected.length < count) {
+    let added = 0;
+    for (const region of regions) {
+      const pool = byRegion.get(region)!;
+      if (pool.length === 0 || selected.length >= count) continue;
+      const idx = Math.floor(Math.random() * pool.length);
+      const r = pool.splice(idx, 1)[0];
+      const coords = countryCoordinates[r.iso3];
+      const flag = countryFlags[r.iso3];
+      if (coords && flag) {
+        selected.push({
+          ...r,
+          lat: coords.lat,
+          lng: coords.lng,
+          flag,
+        });
+        added++;
+      }
+    }
+    if (added === 0) break;
+  }
+
+  return selected.slice(0, count);
+}
  
  /**
   * Generate random arc data between countries for visual effect.
