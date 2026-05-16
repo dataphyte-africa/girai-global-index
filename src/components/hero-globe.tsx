@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { Suspense } from "react";
 import dynamic from "next/dynamic";
 import type { Country } from "@/data/countries";
 import type { ArcPosition } from "@/data/countries";
@@ -50,7 +50,9 @@ export function GlobeDemo({ arcData, markers }: GlobeDemoProps) {
         
         
         <div className="absolute w-full h-72 md:h-full z-10">
-          <World data={arcData} globeConfig={globeConfig} />
+          <Suspense fallback={null}>
+            <World data={arcData} globeConfig={globeConfig} />
+          </Suspense>
         </div>
       </div>
   );

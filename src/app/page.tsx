@@ -3,7 +3,9 @@ import { ChoroplethMapSection } from "@/components/choropleth-map-section";
 import { DimensionsSection } from "@/components/dimensions-section";
 import {
   getAllCountries,
-  getRegionSummaries,
+  getAllEvidenceItems,
+  getIndicatorDefs,
+  getRegionAverages,
   getRegions,
   getTopAndBottomCountries,
 } from "@/lib/girai";
@@ -16,11 +18,25 @@ import {
 import { Header } from "@/components/header";
 import { IndicatorCategorySection } from "@/components/indicator-category-section";
 import { GlobalPerformanceSection } from "@/components/global-performance-section";
-import { RegionalComparisonSection } from "@/components/regional-comparison-section";
-import { CountryComparisonSection } from "@/components/country-comparison-section";
+import { ComparisonSection } from "@/components/comparison-section";
 import { WhyGIRAIMattersSection } from "@/components/why-girai-matters-section";
+import { WhyGIRAIMattersIntroSection } from "@/components/why-girai-matters-intro-section";
 import { ShapingIntelligenceSection } from "@/components/shaping-intelligence-section";
+import { TopTakeawaysSection } from "@/components/top-takeaways-section";
+import { ReportDownloadSection } from "@/components/report-download-section";
+import { EvidenceExplorerSection } from "@/components/evidence-explorer-section";
+import { OurImpactSection } from "@/components/our-impact-section";
+import { LimitsOfMeasurementSection } from "@/components/limits-of-measurement-section";
+import { WhatMotivatedUsSection } from "@/components/what-motivated-us-section";
 import { FooterSection } from "@/components/footer-section";
+
+// Rounds an exact count down to the nearest 100 and appends a "+" so the
+// stat reads as a confident floor (e.g. 2,977 → "2,900+").
+function formatRoundedCount(n: number): string {
+  if (n < 100) return `${n}`;
+  const floored = Math.floor(n / 100) * 100;
+  return `${floored.toLocaleString("en-US")}+`;
+}
 
 export default async function Home() {
   const allCountries = getAllCountries();
@@ -38,7 +54,28 @@ export default async function Home() {
 
   const { topCountries, bottomCountries } = getTopAndBottomCountries(10);
   const regions = getRegions();
-  const regionData = getRegionSummaries();
+  const regionAverages = getRegionAverages();
+
+  const evidenceCount = getAllEvidenceItems().length;
+  const indicatorCount = getIndicatorDefs().length;
+  const evidenceStats = [
+    {
+      value: formatRoundedCount(evidenceCount),
+      label: "Documents reviewed",
+    },
+    {
+      value: `${allCountries.length}`,
+      label: "Countries assessed",
+    },
+    {
+      value: `${indicatorCount}`,
+      label: "Indicators covered",
+    },
+    {
+      value: `${regions.length}`,
+      label: "Global regions",
+    },
+  ];
 
   return (
     <div className="flex flex-col min-h-screen  bg-background font-sans dark:bg-black">
@@ -47,9 +84,19 @@ export default async function Home() {
       <ChoroplethMapSection />
       <DimensionsSection />
       <IndicatorCategorySection />
-      <RegionalComparisonSection regions={regions} regionData={regionData} />
-      <CountryComparisonSection countries={allCountries} />
+      <ComparisonSection
+        countries={allCountries}
+        regions={regions}
+        regionAverages={regionAverages}
+      />
+      <WhatMotivatedUsSection />
+      <WhyGIRAIMattersIntroSection />
       <WhyGIRAIMattersSection />
+      <TopTakeawaysSection />
+      <ReportDownloadSection />
+      <EvidenceExplorerSection stats={evidenceStats} />
+      <OurImpactSection />
+      <LimitsOfMeasurementSection />
       <ShapingIntelligenceSection />
 
       <GlobalPerformanceSection
