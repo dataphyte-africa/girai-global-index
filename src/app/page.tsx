@@ -81,22 +81,22 @@ export default async function Home() {
     <div className="flex flex-col min-h-screen  bg-background font-sans dark:bg-black">
       <Header />
       <HeroSection arcData={arcData} markers={markers} />
-      <ChoroplethMapSection />
+      <WhyGIRAIMattersIntroSection />
       <DimensionsSection />
-      <IndicatorCategorySection />
+      <ReportDownloadSection />
+      <TopTakeawaysSection />
+      <ChoroplethMapSection />
+      <EvidenceExplorerSection stats={evidenceStats} />
       <ComparisonSection
         countries={allCountries}
         regions={regions}
         regionAverages={regionAverages}
       />
-      <WhatMotivatedUsSection />
-      <WhyGIRAIMattersIntroSection />
-      <WhyGIRAIMattersSection />
-      <TopTakeawaysSection />
-      <ReportDownloadSection />
-      <EvidenceExplorerSection stats={evidenceStats} />
-      <OurImpactSection />
+      <IndicatorCategorySection />
       <LimitsOfMeasurementSection />
+      <OurImpactSection />
+      <WhatMotivatedUsSection />
+     {/* <WhyGIRAIMattersSection /> */}
       <ShapingIntelligenceSection />
 
       <GlobalPerformanceSection
