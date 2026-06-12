@@ -143,31 +143,8 @@ export const countryCoordinates: Record<string, { lat: number; lng: number }> = 
    SSD: { lat: 6.877, lng: 31.307 },
  };
  
-/**
- * ISO3 to ISO2 country code mapping for flag images.
- */
-export const iso3ToIso2: Record<string, string> = {
-  NLD: "nl", DEU: "de", IRL: "ie", GBR: "gb", USA: "us", EST: "ee", ITA: "it",
-  FRA: "fr", CAN: "ca", AUS: "au", SGP: "sg", JPN: "jp", SVN: "si", PRT: "pt",
-  CHE: "ch", ESP: "es", ARE: "ae", BRA: "br", URY: "uy", FIN: "fi", POL: "pl",
-  ROU: "ro", CHL: "cl", BEL: "be", IND: "in", UKR: "ua", KOR: "kr", GRC: "gr",
-  LTU: "lt", AUT: "at", PHL: "ph", CHN: "cn", VNM: "vn", TWN: "tw", SVK: "sk",
-  HUN: "hu", QAT: "qa", JOR: "jo", BGR: "bg", SAU: "sa", MYS: "my", ZAF: "za",
-  NZL: "nz", CRI: "cr", LVA: "lv", PSE: "ps", THA: "th", COL: "co", HRV: "hr",
-  DOM: "do", MAR: "ma", HKG: "hk", BEN: "bj", ARG: "ar", SRB: "rs", SEN: "sn",
-  KWT: "kw", MKD: "mk", RWA: "rw", GEO: "ge", PER: "pe", TUN: "tn", EGY: "eg",
-  MEX: "mx", MNE: "me", OMN: "om", IDN: "id", PAK: "pk", MDA: "md", UZB: "uz",
-  KHM: "kh", LKA: "lk", NAM: "na", KAZ: "kz", PAN: "pa", MNG: "mn", KEN: "ke",
-  BHR: "bh", KGZ: "kg", NGA: "ng", TJK: "tj", NPL: "np", JAM: "jm", PRY: "py",
-  MUS: "mu", GHA: "gh", ETH: "et", AZE: "az", GUY: "gy", NER: "ne", ATG: "ag",
-  ZMB: "zm", TTO: "tt", LBY: "ly", ECU: "ec", ALB: "al", CMR: "cm", ZWE: "zw",
-  LBN: "lb", LCA: "lc", ARM: "am", BLZ: "bz", SLV: "sv", DZA: "dz", BWA: "bw",
-  UGA: "ug", BFA: "bf", TZA: "tz", XKX: "xk", BLR: "by", TKM: "tm", BRB: "bb",
-  BTN: "bt", MOZ: "mz", GAB: "ga", LAO: "la", BOL: "bo", GTM: "gt", MWI: "mw",
-  TCD: "td", LSO: "ls", TGO: "tg", CIV: "ci", SLE: "sl", GMB: "gm", SOM: "so",
-  HND: "hn", GIN: "gn", HTI: "ht", BDI: "bi", MLI: "ml", COD: "cd", LBR: "lr",
-  MMR: "mm", AFG: "af", CAF: "cf", ERI: "er", SSD: "ss",
-};
+/** @deprecated Import from `@/lib/geo-iso` — re-exported for backward compatibility. */
+export { iso3ToIso2 } from "@/lib/geo-iso";
 
 /**
  * Flag emoji by ISO3 code (Unicode regional indicator symbols).

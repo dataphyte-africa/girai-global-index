@@ -1,11 +1,21 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import {
+  Component,
+  type ErrorInfo,
+  type ReactNode,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { Color, Scene, Fog, PerspectiveCamera, Vector3, Group } from "three";
 import { CSS2DRenderer } from "three/examples/jsm/renderers/CSS2DRenderer.js";
 import ThreeGlobe from "three-globe";
 import { useThree, Canvas, extend, useFrame } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import countries from "@/data/globe.json";
+import { GlobeFallback } from "@/components/ui/globe-fallback";
+import { canUseWebGL } from "@/lib/webgl";
 declare module "@react-three/fiber" {
   interface ThreeElements {
     threeGlobe: ThreeElements["mesh"] & {
@@ -332,12 +342,53 @@ export function WebGLRendererConfig() {
   return null;
 }
 
-export function World(props: WorldProps) {
+class GlobeErrorBoundary extends Component<
+  { fallback: ReactNode; children: ReactNode },
+  { hasError: boolean }
+> {
+  state = { hasError: false };
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, info: ErrorInfo) {
+    console.warn("[Globe] WebGL render failed, using fallback.", error, info);
+  }
+
+  render() {
+    if (this.state.hasError) return this.props.fallback;
+    return this.props.children;
+  }
+}
+
+const canvasGl = {
+  antialias: true,
+  alpha: true,
+  powerPreference: "default" as const,
+  failIfMajorPerformanceCaveat: false,
+};
+
+function GlobeScene(props: WorldProps) {
   const { globeConfig } = props;
-  const scene = new Scene();
-  scene.fog = new Fog(0xffffff, 400, 2000);
+  const scene = useMemo(() => {
+    const s = new Scene();
+    s.fog = new Fog(0xffffff, 400, 2000);
+    return s;
+  }, []);
+  const camera = useMemo(
+    () => new PerspectiveCamera(50, aspect, 180, 1800),
+    [],
+  );
+
   return (
-    <Canvas scene={scene} camera={new PerspectiveCamera(50, aspect, 180, 1800)}>
+    <Canvas
+      scene={scene}
+      camera={camera}
+      gl={canvasGl}
+      dpr={[1, 2]}
+      style={{ width: "100%", height: "100%" }}
+    >
       <WebGLRendererConfig />
       <ambientLight color={globeConfig.ambientLight} intensity={0.6} />
       <directionalLight
@@ -365,6 +416,40 @@ export function World(props: WorldProps) {
         maxPolarAngle={Math.PI - Math.PI / 3}
       />
     </Canvas>
+  );
+}
+
+export function World(props: WorldProps) {
+  const markers = props.globeConfig.markers ?? [];
+  const fallback = <GlobeFallback markers={markers} />;
+  const [webglReady, setWebglReady] = useState(false);
+  const [webglOk, setWebglOk] = useState(true);
+
+  useEffect(() => {
+    setWebglOk(canUseWebGL());
+    setWebglReady(true);
+
+    const onError = (event: ErrorEvent) => {
+      if (/webgl/i.test(event.message ?? "")) setWebglOk(false);
+    };
+    const onRejection = (event: PromiseRejectionEvent) => {
+      if (/webgl/i.test(String(event.reason ?? ""))) setWebglOk(false);
+    };
+    window.addEventListener("error", onError);
+    window.addEventListener("unhandledrejection", onRejection);
+    return () => {
+      window.removeEventListener("error", onError);
+      window.removeEventListener("unhandledrejection", onRejection);
+    };
+  }, []);
+
+  if (!webglReady) return <div className="h-full w-full" aria-hidden />;
+  if (!webglOk) return fallback;
+
+  return (
+    <GlobeErrorBoundary fallback={fallback}>
+      <GlobeScene {...props} />
+    </GlobeErrorBoundary>
   );
 }
 

@@ -3,6 +3,7 @@ import React, { Suspense } from "react";
 import dynamic from "next/dynamic";
 import type { Country } from "@/data/countries";
 import type { ArcPosition } from "@/data/countries";
+import { cn } from "@/lib/utils";
 
 const World = dynamic(() => import("@/components/ui/globe").then((m) => m.World), {
   ssr: false,
@@ -11,9 +12,11 @@ const World = dynamic(() => import("@/components/ui/globe").then((m) => m.World)
 interface GlobeDemoProps {
   arcData: ArcPosition[];
   markers: Country[];
+  /** Override default container height (landing hero uses md:h-[40rem]). */
+  className?: string;
 }
 
-export function GlobeDemo({ arcData, markers }: GlobeDemoProps) {
+export function GlobeDemo({ arcData, markers, className }: GlobeDemoProps) {
   const globeConfig = {
     pointSize: 4,
     globeColor: "#7150F4",
@@ -46,10 +49,10 @@ export function GlobeDemo({ arcData, markers }: GlobeDemoProps) {
     })),
   };
   return (
-      <div className="max-w-7xl  mx-auto w-full relative overflow-hidden h-full md:h-[40rem] ">
+      <div className={cn("relative mx-auto h-full w-full max-w-7xl overflow-hidden md:h-[40rem]", className)}>
         
         
-        <div className="absolute w-full h-72 md:h-full z-10">
+        <div className="absolute z-10 h-72 w-full md:h-full">
           <Suspense fallback={null}>
             <World data={arcData} globeConfig={globeConfig} />
           </Suspense>

@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-05-15T08:14:31.457Z",
-  "sourceHash": "f09a9cd57f26c47c3e6fcefa910de1043d8a37c5df654c581022e374649ddb3d",
+  "generatedAt": "2026-06-05T11:45:48.786Z",
+  "sourceHash": "ea87a4164f58f0330a86eaebf998dd66d5c3c626ce2e3e2a2352b933405fd20d",
   "dimensions": [
     {
       "slug": "inclusion-diversity",
@@ -134,7 +134,8 @@
       "slug": "socioeconomic-inclusion-connectivity",
       "name": "Socioeconomic Inclusion in Connectivity",
       "aliases": [
-        "Socioeconomic Inclusion in Connectivity"
+        "Socioeconomic Inclusion in Connectivity",
+        "Device affordability"
       ],
       "dimension": "inclusion-diversity",
       "pillar": "enabling-conditions",
@@ -145,7 +146,8 @@
       "slug": "gender-inclusion-connectivity",
       "name": "Gender Inclusion in Connectivity",
       "aliases": [
-        "Gender Inclusion in Connectivity"
+        "Gender Inclusion in Connectivity",
+        "Gender gap in mobile internet"
       ],
       "dimension": "inclusion-diversity",
       "pillar": "enabling-conditions",
@@ -212,18 +214,8 @@
       "slug": "environmental-performance",
       "name": "Environmental Performance",
       "aliases": [
-        "Environmental Performance"
-      ],
-      "dimension": "ethics-sustainability",
-      "pillar": "enabling-conditions",
-      "family": "enabling-conditions",
-      "hasEvidence": false
-    },
-    {
-      "slug": "institutional-integrity",
-      "name": "Institutional Integrity",
-      "aliases": [
-        "Institutional Integrity"
+        "Environmental Performance",
+        "Low-Carbon Energy Share"
       ],
       "dimension": "ethics-sustainability",
       "pillar": "enabling-conditions",
@@ -282,7 +274,8 @@
       "slug": "labour-rights",
       "name": "Labour Rights",
       "aliases": [
-        "Labour Rights"
+        "Labour Rights",
+        "Labour Rights Compliance"
       ],
       "dimension": "labour-skills",
       "pillar": "enabling-conditions",
@@ -293,7 +286,8 @@
       "slug": "population-digital-readiness",
       "name": "Population Digital Readiness",
       "aliases": [
-        "Population Digital Readiness"
+        "Population Digital Readiness",
+        "Skills and Literacy"
       ],
       "dimension": "labour-skills",
       "pillar": "enabling-conditions",
@@ -470,7 +464,8 @@
       "slug": "civil-society-oversight",
       "name": "Civil Society Oversight",
       "aliases": [
-        "Civil Society Oversight"
+        "Civil Society Oversight",
+        "Civil Society Accountability"
       ],
       "dimension": "ai-use-public-service",
       "pillar": "enabling-conditions",
@@ -492,7 +487,8 @@
       "slug": "right-to-information",
       "name": "Right to Information",
       "aliases": [
-        "Right to Information"
+        "Right to Information",
+        "Access to Public Information"
       ],
       "dimension": "ai-use-public-service",
       "pillar": "enabling-conditions",
@@ -504,7 +500,8 @@
       "name": "Unacceptable Risks AI Systems",
       "aliases": [
         "Unacceptable Risks AI Systems",
-        "Unacceptable Risk AI Systems"
+        "Unacceptable Risk AI Systems",
+        "URAI Penalty"
       ],
       "dimension": "ai-use-public-service",
       "pillar": "enabling-conditions",

@@ -1,0 +1,109 @@
+{
+  "generatedAt": "2026-06-05T11:45:48.786Z",
+  "sourceHash": "ea87a4164f58f0330a86eaebf998dd66d5c3c626ce2e3e2a2352b933405fd20d",
+  "totalCountries": 135,
+  "frameworks": {
+    "gender-equality": {
+      "adopted": 55,
+      "draft": 6,
+      "notAdopted": 74,
+      "total": 135
+    },
+    "childrens-rights": {
+      "adopted": 55,
+      "draft": 3,
+      "notAdopted": 77,
+      "total": 135
+    },
+    "cultural-linguistic-diversity": {
+      "adopted": 47,
+      "draft": 9,
+      "notAdopted": 79,
+      "total": 135
+    },
+    "fairness-non-discrimination": {
+      "adopted": 71,
+      "draft": 16,
+      "notAdopted": 48,
+      "total": 135
+    },
+    "transparency-explainability": {
+      "adopted": 78,
+      "draft": 14,
+      "notAdopted": 43,
+      "total": 135
+    },
+    "human-oversight-determination": {
+      "adopted": 72,
+      "draft": 19,
+      "notAdopted": 44,
+      "total": 135
+    },
+    "environmental-impact": {
+      "adopted": 36,
+      "draft": 11,
+      "notAdopted": 88,
+      "total": 135
+    },
+    "labour-protections": {
+      "adopted": 39,
+      "draft": 5,
+      "notAdopted": 91,
+      "total": 135
+    },
+    "reskilling-upskilling-initiatives": {
+      "adopted": 72,
+      "draft": 11,
+      "notAdopted": 52,
+      "total": 135
+    },
+    "ai-literacy": {
+      "adopted": 71,
+      "draft": 12,
+      "notAdopted": 52,
+      "total": 135
+    },
+    "safety-security": {
+      "adopted": 69,
+      "draft": 15,
+      "notAdopted": 51,
+      "total": 135
+    },
+    "access-redress-remedy": {
+      "adopted": 58,
+      "draft": 12,
+      "notAdopted": 65,
+      "total": 135
+    },
+    "impact-assessments": {
+      "adopted": 66,
+      "draft": 13,
+      "notAdopted": 56,
+      "total": 135
+    },
+    "ai-facilitated-misinformation-violence": {
+      "adopted": 49,
+      "draft": 12,
+      "notAdopted": 74,
+      "total": 135
+    },
+    "public-sector-skills-development": {
+      "adopted": 66,
+      "draft": 6,
+      "notAdopted": 63,
+      "total": 135
+    },
+    "public-disclosure-government-algorithmic-systems": {
+      "adopted": 24,
+      "draft": 4,
+      "notAdopted": 107,
+      "total": 135
+    },
+    "public-procurement": {
+      "adopted": 35,
+      "draft": 2,
+      "notAdopted": 98,
+      "total": 135
+    }
+  }
+}

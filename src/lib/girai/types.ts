@@ -59,6 +59,22 @@ export interface CountryRanking {
   /** Number of URAI ("government misuse") evidence items recorded. */
   uraiCount: number;
 
+  /**
+   * Derived sub-score (0–100) of the AI Policy pillar. Computed as the mean
+   * of the country's framework thematic-element ratings (Yes=100, Partially=50,
+   * No=0) across every framework slot it has on AI Policy indicators.
+   * Captures *policy substance coverage*.
+   */
+  frameworkScore: number | null;
+  /**
+   * Derived sub-score (0–100) of the AI Policy pillar. 50% mean of the
+   * `plan`/`budget`/`monitoring` flags on the country's frameworks (Yes/
+   * Partially/No → 100/50/0), 50% initiative coverage rate (share of AI
+   * Policy indicators with at least one initiative on file). Captures
+   * *execution depth*.
+   */
+  implementationScore: number | null;
+
   /** Global rank by GIRAI score (1 = best). */
   rankGlobal: number | null;
   /** Rank within the country's region. */
@@ -74,6 +90,12 @@ export interface CountryRanking {
   dimensionRanksGlobal: Record<DimensionSlug, number | null>;
   dimensionRanksRegional: Record<DimensionSlug, number | null>;
   pillarRanksGlobal: Record<PillarSlug, number | null>;
+  pillarRanksRegional: Record<PillarSlug, number | null>;
+
+  frameworkRankGlobal: number | null;
+  frameworkRankRegional: number | null;
+  implementationRankGlobal: number | null;
+  implementationRankRegional: number | null;
 
   /** Per-indicator evidence counts (only populated for indicators with evidence). */
   evidenceCounts: Record<string, EvidenceCounts>;
@@ -85,6 +107,10 @@ export interface ScoreAggregates {
   dimensions: DimensionScores;
   pillars: PillarScores;
   indicators: IndicatorScores;
+  /** Mean of the derived `frameworkScore` across the slice. */
+  frameworkScore: number | null;
+  /** Mean of the derived `implementationScore` across the slice. */
+  implementationScore: number | null;
 }
 
 /** Top-level shape of `rankings.json`. */
@@ -176,15 +202,120 @@ export interface EvidenceItem {
   thematicElements?: EvidenceThematicElement[] | null;
 }
 
+/** Pathway ids used by the Evidence Hub picker (maps to kind groups in URL). */
+export type EvidencePathwayId = "frameworks" | "initiatives" | "nonGov" | "misuse";
+
 export interface EvidenceArtifact {
   generatedAt: string;
   sourceHash: string;
   totals: {
+    /** Raw row count: one row can represent one indicator covered by a framework. */
     items: number;
+    /** Display count of unique evidence identities, summed per kind. Frameworks are title-deduped. */
+    uniqueItems: number;
     byKind: Record<EvidenceKind, number>;
+    /** Display counts by kind. Non-framework kinds use URL when present, otherwise title. */
+    uniqueItemsByKind: Record<EvidenceKind, number>;
+    /** Display counts by kind, deduped by title only. Used for framework documents. */
+    uniqueTitlesByKind: Record<EvidenceKind, number>;
+    /** Countries in the indexed GIRAI country universe, including countries with zero evidence rows. */
+    countriesIndexed: number;
     countriesWithItems: number;
+    /** Distinct countries with at least one evidence item per pathway group. */
+    countriesByPathway: Record<EvidencePathwayId, number>;
   };
   items: EvidenceItem[];
+}
+
+export interface IndicatorAdoptionEntry {
+  adopted: number;
+  draft: number;
+  notAdopted: number;
+  total: number;
+}
+
+export interface IndicatorAdoptionArtifact {
+  generatedAt: string;
+  sourceHash: string;
+  totalCountries: number;
+  frameworks: Record<string, IndicatorAdoptionEntry>;
+}
+
+/** Three factual checklist lines for one pillar on the country drivers section. */
+export interface CountryPillarHighlight {
+  bullets: [string, string, string];
+}
+
+/** Per-country pillar highlights for "What Drives This Performance?" */
+export interface CountryPillarHighlightsEntry {
+  iso3: string;
+  pillars: Record<PillarSlug, CountryPillarHighlight>;
+}
+
+/** Top-level shape of `country-pillar-highlights.json`. */
+export interface CountryPillarHighlightsArtifact {
+  generatedAt: string;
+  sourceHash: string;
+  countries: CountryPillarHighlightsEntry[];
+}
+
+// ---------------------------------------------------------------------------
+// Evidence Explorer slim index
+//
+// `evidence-index.json` lives under `public/` and is a denormalised, slim
+// view of the evidence corpus optimised for client-side faceted search.
+// Holds only the fields needed to render an evidence row and drive the
+// filter/search UI in `<EvidenceExplorer />`. The full per-item record
+// stays in `evidence.json` / accessible at `/evidence/[itemId]`.
+//
+// Why slim:
+//   • Full evidence.json is ~7.3 MB (justifications, thematic elements,
+//     etc.). Shipping that to the browser for an in-page filter is wasteful.
+//   • The explorer never needs `justification` or thematic ratings until
+//     a row is expanded; even then it can lazy-fetch from the full
+//     artifact or rely on the detail page.
+
+export interface EvidenceIndexRow {
+  id: string;
+  kind: EvidenceKind;
+  title: string;
+  link: string | null;
+  type: string | null;
+  enforceability: string | null;
+  /** ISO 8601 date (yyyy-mm-dd) — frameworks only. */
+  approval: string | null;
+  country: {
+    iso3: string;
+    name: string;
+    region: string;
+    incomeGroup: string;
+  };
+  dimensionSlug: DimensionSlug;
+  pillarSlug: PillarSlug;
+  indicatorSlug: string;
+  /** Human-readable indicator name (cached so the client doesn't need the taxonomy). */
+  indicatorName: string;
+}
+
+export interface EvidenceIndexArtifact {
+  generatedAt: string;
+  sourceHash: string;
+  totals: {
+    items: number;
+    uniqueItems?: number;
+    byKind: Record<EvidenceKind, number>;
+    uniqueItemsByKind?: Record<EvidenceKind, number>;
+    uniqueTitlesByKind?: Record<EvidenceKind, number>;
+    countriesIndexed?: number;
+    countriesWithItems: number;
+    countriesByPathway?: Record<EvidencePathwayId, number>;
+  };
+  /** Pre-computed facet option lists (sorted, distinct). */
+  facets: {
+    regions: string[];
+    countries: Array<{ iso3: string; name: string }>;
+  };
+  rows: EvidenceIndexRow[];
 }
 
 /** Top-level shape of `countries.json` (basic country metadata, no scores). */

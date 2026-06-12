@@ -1,8 +1,23 @@
 import { notFound } from "next/navigation";
-import { getAllCountries, getCountryByIso3, getDatasetProvenance } from "@/lib/girai";
-import { CountryHero } from "@/components/country-story/country-hero";
-import { IndicatorStorySection } from "@/components/country-story/indicator-story";
-import { RegionalComparison } from "@/components/country-story/regional-comparison";
+import {
+  getAllCountries,
+  getCountryByIso3,
+  getDatasetProvenance,
+  getGovernmentMisuseByCountry,
+  getEvidenceByCountry,
+  getCountryPillarHighlights,
+  getRegionAverages,
+  getIncomeGroupAverages,
+  getRegions,
+} from "@/lib/girai";
+import { CountryScoreHero } from "@/components/country-story/country-score-hero";
+import { CountryPerformanceOverview } from "@/components/country-story/country-performance-overview";
+import {
+  CountryMisuseEvidenceSection,
+  CountryPerformanceDrivers,
+  CountryEvidenceExplorerSection,
+} from "@/components/country-story";
+import { ComparisonSection } from "@/components/comparison-section";
 import { Header } from "@/components/header";
 
 interface PageProps {
@@ -35,21 +50,51 @@ export default async function CountryStoryPage({ params }: PageProps) {
   const country = getCountryByIso3(iso3.toUpperCase());
   if (!country) notFound();
 
-  const regionalCountries = getAllCountries().filter(
-    (c) => c.region === country.region
-  );
+  const allCountries = getAllCountries();
+  const regions = getRegions();
+  const regionAverages = getRegionAverages();
+
+  const regionAggregates = regionAverages[country.region] ?? null;
+  const incomeGroupAggregates =
+    getIncomeGroupAverages()[country.incomeGroup] ?? null;
 
   const { generatedAt } = getDatasetProvenance();
+  const misuseEvidence = getGovernmentMisuseByCountry(country.iso3);
+  const pillarHighlights = getCountryPillarHighlights(country.iso3);
+  const countryEvidence = getEvidenceByCountry(country.iso3);
 
   return (
     <div className="flex flex-col min-h-screen bg-background font-sans dark:bg-black">
       <Header />
       <main className="flex-1">
-        <CountryHero country={country} />
-        <IndicatorStorySection country={country} />
-        <RegionalComparison
+        <CountryScoreHero country={country} />
+       { /* <IndicatorStorySection country={country} /> */}
+        <CountryPerformanceOverview
           country={country}
-          regionalCountries={regionalCountries}
+          regionAggregates={regionAggregates}
+          incomeGroupAggregates={incomeGroupAggregates}
+        />
+        <ComparisonSection
+          countries={allCountries}
+          regions={regions}
+          regionAverages={regionAverages}
+          initialSlots={[
+            { kind: "country", iso3: country.iso3 },
+            { kind: "region", name: country.region },
+          ]}
+        />
+        <CountryMisuseEvidenceSection items={misuseEvidence} />
+        {pillarHighlights ? (
+          <CountryPerformanceDrivers
+            country={country}
+            highlights={pillarHighlights}
+            allCountries={allCountries}
+          />
+        ) : null}
+        <CountryEvidenceExplorerSection
+          iso3={country.iso3}
+          countryName={country.name}
+          evidenceCount={countryEvidence.length}
         />
       </main>
 

@@ -112,7 +112,7 @@ export function RadialDimensionsChart({
       .select(svgRef.current)
       .attr("viewBox", [0, 0, size, size])
       .attr("width", "100%")
-      .attr("height", "auto")
+      .style("height", "auto")
       .style("max-width", "100%");
 
     const g = svg.append("g").attr("transform", `translate(${center},${center})`);

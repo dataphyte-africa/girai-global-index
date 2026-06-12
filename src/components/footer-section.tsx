@@ -3,19 +3,22 @@ import Link from "next/link";
 
 const results2024Links = [
   { label: "Results", href: "/" },
-  { label: "Top takeaways", href: "/" },
-  { label: "Countries", href: "/" },
+  { label: "Top takeaways", href: "/takeaways" },
+  { label: "Countries", href: "/countries" },
   { label: "Dimensions", href: "/" },
 ];
 
 const exploreRegionsLinks = [
-  { label: "Africa", href: "/" },
-  { label: "Asia and Oceania", href: "/" },
-  { label: "The Caribbean", href: "/" },
-  { label: "Europe", href: "/" },
-  { label: "Middle East", href: "/" },
-  { label: "North America", href: "/" },
-  { label: "South and Central America", href: "/" },
+  { label: "Africa", href: "/regions/africa" },
+  { label: "Asia and Oceania", href: "/regions/asia-and-oceania" },
+  { label: "The Caribbean", href: "/regions/caribbean" },
+  { label: "Europe", href: "/regions/europe" },
+  { label: "Middle East", href: "/regions/middle-east" },
+  { label: "North America", href: "/regions/northern-america" },
+  {
+    label: "South and Central America",
+    href: "/regions/south-and-central-america",
+  },
 ];
 
 const otherProjectsLinks = [

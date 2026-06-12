@@ -1,0 +1,9 @@
+export { AboutHero } from "./about-hero";
+export { AboutIntroSection } from "./about-intro-section";
+export { AboutWhyGiraiMattersSection } from "./about-why-girai-matters-section";
+export { AboutGcgLedSection } from "./about-gcg-led-section";
+export { AboutWhatIndexMeasuresSection } from "./about-what-index-measures-section";
+export { AboutContributorsSection } from "./about-contributors-section";
+export { AboutWhoGiraiIsForSection } from "./about-who-girai-is-for-section";
+export { AboutPeopleBehindResearchSection } from "./about-people-behind-research-section";
+export { AboutFooterHero } from "./about-footer-hero";

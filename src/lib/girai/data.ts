@@ -14,6 +14,7 @@ import rankingsData from "@/data/2026/generated/rankings.json";
 import taxonomyData from "@/data/2026/generated/taxonomy.json";
 import countriesData from "@/data/2026/generated/countries.json";
 import evidenceData from "@/data/2026/generated/evidence.json";
+import pillarHighlightsData from "@/data/2026/generated/country-pillar-highlights.json";
 import { DIMENSIONS, PILLARS, INDICATORS } from "@/data/2026/taxonomy";
 import type {
   CountryRanking,
@@ -27,6 +28,8 @@ import type {
   PillarSlug,
   ScoreAggregates,
   IndicatorDef,
+  CountryPillarHighlightsArtifact,
+  CountryPillarHighlightsEntry,
 } from "./types";
 
 // The JSON files are typed as `unknown`-ish by TypeScript; cast once at
@@ -35,6 +38,8 @@ const rankings = rankingsData as unknown as RankingsArtifact;
 const taxonomy = taxonomyData as unknown as TaxonomyArtifact;
 const countries = countriesData as unknown as CountriesArtifact;
 const evidence = evidenceData as unknown as EvidenceArtifact;
+const pillarHighlights =
+  pillarHighlightsData as unknown as CountryPillarHighlightsArtifact;
 
 /** All countries with full scores, ordered as they appear in the dataset. */
 export function getAllCountries(): CountryRanking[] {
@@ -44,6 +49,14 @@ export function getAllCountries(): CountryRanking[] {
 /** Look up a country by ISO3, returning `undefined` if missing. */
 export function getCountryByIso3(iso3: string): CountryRanking | undefined {
   return rankings.countries.find((c) => c.iso3 === iso3);
+}
+
+/** Pillar checklist bullets for the country "What Drives This Performance?" section. */
+export function getCountryPillarHighlights(
+  iso3: string
+): CountryPillarHighlightsEntry | undefined {
+  const code = iso3.toUpperCase();
+  return pillarHighlights.countries.find((c) => c.iso3 === code);
 }
 
 /** Distinct GIRAI regions present in the dataset, sorted alphabetically. */
@@ -233,6 +246,14 @@ export function getEvidenceByDimension(slug: DimensionSlug): EvidenceItem[] {
 
 export function getEvidenceByCountry(iso3: string): EvidenceItem[] {
   return evidence.items.filter((it) => it.country.iso3 === iso3);
+}
+
+/** URAI / government-misuse cases for a country (Unacceptable Risk AI Systems). */
+export function getGovernmentMisuseByCountry(iso3: string): EvidenceItem[] {
+  const code = iso3.toUpperCase();
+  return evidence.items.filter(
+    (it) => it.country.iso3 === code && it.kind === "government-misuse"
+  );
 }
 
 export function countEvidenceByIndicator(): Record<string, number> {

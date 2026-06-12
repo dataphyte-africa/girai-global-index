@@ -1,8 +1,15 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence, useInView } from "framer-motion";
-import { Check, ChevronDown, Plus, Search, X } from "lucide-react";
+import {
+  Check,
+  ChevronDown,
+  Filter,
+  Plus,
+  Search,
+  X,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
   Table,
@@ -19,14 +26,17 @@ import type {
 } from "@/lib/girai";
 import { countryFlags } from "@/data/countries";
 import { DIMENSIONS, INDICATORS, PILLARS } from "@/data/2026/taxonomy";
+import { getOrdinalSuffix } from "@/lib/narratives";
 
 // ---------------------------------------------------------------------------
 // Types
 
-type EntityRef =
+export type ComparisonEntityRef =
   | { kind: "country"; iso3: string }
   | { kind: "region"; name: string }
   | null;
+
+type EntityRef = ComparisonEntityRef;
 
 interface ResolvedEntity {
   id: string;
@@ -35,6 +45,8 @@ interface ResolvedEntity {
   sub?: string;
   flag?: string;
   girai: number | null;
+  rankGlobal?: number | null;
+  rankRegional?: number | null;
   dimensions: Record<string, number | null>;
   indicators: Record<string, number | null>;
 }
@@ -107,6 +119,34 @@ function refKey(ref: EntityRef): string {
   return `${ref.kind}:${ref.kind === "country" ? ref.iso3 : ref.name}`;
 }
 
+/** Fisher–Yates sample of up to `n` distinct items. */
+function sampleN<T>(items: T[], n: number): T[] {
+  const pool = [...items];
+  for (let i = pool.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
+  }
+  return pool.slice(0, n);
+}
+
+/** Two random distinct countries + one random region (entities with a score). */
+function buildRandomSlots(
+  countries: CountryRanking[],
+  regionAverages: Record<string, ScoreAggregates>
+): EntityRef[] {
+  const eligibleCountries = countries.filter((c) => c.girai !== null);
+  const eligibleRegions = Object.entries(regionAverages)
+    .filter(([, a]) => a.girai !== null)
+    .map(([name]) => name);
+  const [c1, c2] = sampleN(eligibleCountries, 2);
+  const [region] = sampleN(eligibleRegions, 1);
+  return [
+    c1 ? { kind: "country", iso3: c1.iso3 } : null,
+    c2 ? { kind: "country", iso3: c2.iso3 } : null,
+    region ? { kind: "region", name: region } : null,
+  ];
+}
+
 function resolveRef(
   ref: EntityRef,
   countryMap: Map<string, CountryRanking>,
@@ -123,6 +163,8 @@ function resolveRef(
       sub: c.region,
       flag: countryFlags[c.iso3] || "🏳️",
       girai: c.girai,
+      rankGlobal: c.rankGlobal,
+      rankRegional: c.rankRegional,
       dimensions: c.dimensionScores,
       indicators: c.indicatorScores,
     };
@@ -377,6 +419,83 @@ function EntitySelector({
 }
 
 // ---------------------------------------------------------------------------
+// Animated score stat cards — one horizontal card per selected entity. The
+// row wraps on desktop and scrolls horizontally on small screens, so adding
+// more comparators never breaks the layout.
+
+function StatCardStrip({ entities }: { entities: ResolvedEntity[] }) {
+  if (entities.length === 0) return null;
+  return (
+    <div className="mb-6 flex snap-x gap-3 overflow-x-auto pb-1 sm:flex-wrap sm:overflow-visible [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <AnimatePresence mode="popLayout" initial={false}>
+        {entities.map((e, idx) => {
+          const palette = SLOT_PALETTE[idx % SLOT_PALETTE.length];
+          return (
+            <motion.div
+              key={e.id}
+              layout
+              initial={{ opacity: 0, y: 14, scale: 0.96 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -10, scale: 0.96 }}
+              transition={{ duration: 0.28, ease: [0.25, 0.1, 0.25, 1] }}
+              className={cn(
+                "relative w-[210px] shrink-0 snap-start overflow-hidden rounded-2xl border bg-card p-4 shadow-sm sm:w-[200px] sm:flex-1 sm:basis-[180px]",
+                "before:absolute before:inset-x-0 before:top-0 before:h-1",
+                idx % SLOT_PALETTE.length === 0 && "before:bg-primary",
+                idx % SLOT_PALETTE.length === 1 && "before:bg-sky-500",
+                idx % SLOT_PALETTE.length === 2 && "before:bg-amber-500",
+                idx % SLOT_PALETTE.length === 3 && "before:bg-emerald-500",
+                idx % SLOT_PALETTE.length === 4 && "before:bg-rose-500"
+              )}
+            >
+              <div className="flex items-center gap-2">
+                {e.flag && (
+                  <span className="text-lg leading-none">{e.flag}</span>
+                )}
+                <span
+                  className={cn("h-2 w-2 shrink-0 rounded-full", palette.dot)}
+                />
+                <span className="truncate text-sm font-semibold" title={e.label}>
+                  {e.label}
+                </span>
+              </div>
+              <p
+                className={cn(
+                  "mt-3 text-3xl font-bold tabular-nums",
+                  palette.text
+                )}
+              >
+                {e.girai === null ? "—" : e.girai.toFixed(2)}
+              </p>
+              <div className="mt-2 flex flex-wrap gap-1.5">
+                {e.kind === "region" ? (
+                  <span className="rounded-full bg-muted px-2 py-0.5 text-[11px] font-medium text-muted-foreground">
+                    Regional average
+                  </span>
+                ) : (
+                  <>
+                    {e.rankGlobal != null && (
+                      <span className="rounded-full bg-muted px-2 py-0.5 text-[11px] font-medium text-muted-foreground">
+                        Global {getOrdinalSuffix(e.rankGlobal)}
+                      </span>
+                    )}
+                    {e.rankRegional != null && (
+                      <span className="rounded-full bg-muted px-2 py-0.5 text-[11px] font-medium text-muted-foreground">
+                        Regional {getOrdinalSuffix(e.rankRegional)}
+                      </span>
+                    )}
+                  </>
+                )}
+              </div>
+            </motion.div>
+          );
+        })}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
 // Dimension comparison card (left)
 
 function DimensionCard({
@@ -396,24 +515,27 @@ function DimensionCard({
                 {d.name}
               </span>
             </div>
-            <div className="space-y-1.5">
+            <div className="space-y-2">
               {entities.length === 0 && (
-                <div className="h-2 rounded-full bg-muted/60" />
+                <div className="h-7 rounded-full bg-muted/60" />
               )}
               {entities.map((e, slotIdx) => {
                 const palette = SLOT_PALETTE[slotIdx % SLOT_PALETTE.length];
                 const value = e.dimensions[d.slug] ?? null;
                 const pct = value === null ? 0 : Math.min(value, 100);
+                // Only render the label inside the bar when the fill is wide
+                // enough to hold it; otherwise keep it readable beside the dot.
+                const labelFitsInside = pct >= 22;
                 return (
                   <div
                     key={e.id}
                     className="flex items-center gap-3"
                     title={`${e.label}: ${value === null ? "—" : value.toFixed(1)}`}
                   >
-                    <div className="relative h-2.5 flex-1 overflow-hidden rounded-full bg-muted/60">
+                    <div className="relative h-7 flex-1 overflow-hidden rounded-full bg-muted/60">
                       <motion.div
                         className={cn(
-                          "absolute inset-y-0 left-0 rounded-full bg-linear-to-r",
+                          "absolute inset-y-0 left-0 flex items-center rounded-full bg-linear-to-r px-3",
                           palette.bar
                         )}
                         initial={{ width: 0 }}
@@ -424,7 +546,18 @@ function DimensionCard({
                           delay: idx * 0.05 + slotIdx * 0.08,
                           ease: [0.25, 0.1, 0.25, 1],
                         }}
-                      />
+                      >
+                        {labelFitsInside && (
+                          <span className="truncate text-xs font-semibold text-white [text-shadow:0_1px_2px_rgba(0,0,0,0.25)]">
+                            {e.label}
+                          </span>
+                        )}
+                      </motion.div>
+                      {!labelFitsInside && (
+                        <span className="absolute inset-y-0 left-3 flex items-center text-xs font-medium text-foreground/80">
+                          {e.label}
+                        </span>
+                      )}
                     </div>
                     <span
                       className={cn(
@@ -446,6 +579,138 @@ function DimensionCard({
 }
 
 // ---------------------------------------------------------------------------
+// Pillar multi-select filter (checkbox dropdown)
+
+function PillarFilter({
+  active,
+  onChange,
+}: {
+  active: Set<PillarSlug>;
+  onChange: (next: Set<PillarSlug>) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const handler = (e: MouseEvent) => {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(e.target as Node)
+      ) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [open]);
+
+  const toggle = (slug: PillarSlug) => {
+    const next = new Set(active);
+    // Keep at least one pillar selected.
+    if (next.has(slug)) {
+      if (next.size > 1) next.delete(slug);
+    } else {
+      next.add(slug);
+    }
+    onChange(next);
+  };
+
+  const allSelected = active.size === PILLARS.length;
+  const selectedPillars = PILLARS.filter((p) => active.has(p.slug));
+
+  return (
+    <div ref={containerRef} className="relative">
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        className={cn(
+          "flex h-9 items-center gap-2 rounded-full border bg-background pl-3 pr-2.5 text-sm transition-all",
+          "hover:border-foreground/30",
+          open && "ring-2 ring-offset-2 ring-primary/40"
+        )}
+      >
+        <Filter className="h-3.5 w-3.5 text-muted-foreground" />
+        {allSelected ? (
+          <span className="text-muted-foreground">All pillars</span>
+        ) : (
+          <span className="flex items-center gap-1">
+            {selectedPillars.map((p) => {
+              const badge = PILLAR_BADGES[p.slug];
+              return (
+                <span
+                  key={p.slug}
+                  className={cn(
+                    "rounded px-1.5 py-0.5 text-[10px] font-semibold leading-none",
+                    badge.className
+                  )}
+                >
+                  {badge.abbr}
+                </span>
+              );
+            })}
+          </span>
+        )}
+        <ChevronDown
+          className={cn(
+            "h-4 w-4 opacity-50 transition-transform",
+            open && "rotate-180"
+          )}
+        />
+      </button>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, y: -6, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -6, scale: 0.98 }}
+            transition={{ duration: 0.15 }}
+            className="absolute right-0 z-50 mt-2 w-[260px] origin-top-right rounded-xl border bg-popover p-1.5 text-popover-foreground shadow-xl"
+          >
+            <div className="px-2 pt-1.5 pb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+              Filter by pillar
+            </div>
+            {PILLARS.map((p) => {
+              const badge = PILLAR_BADGES[p.slug];
+              const checked = active.has(p.slug);
+              return (
+                <button
+                  key={p.slug}
+                  type="button"
+                  onClick={() => toggle(p.slug)}
+                  className="flex w-full items-center gap-2.5 rounded-md px-2 py-2 text-sm transition-colors hover:bg-accent"
+                >
+                  <span
+                    className={cn(
+                      "flex h-4 w-4 shrink-0 items-center justify-center rounded border transition-colors",
+                      checked
+                        ? "border-primary bg-primary text-primary-foreground"
+                        : "border-muted-foreground/40"
+                    )}
+                  >
+                    {checked && <Check className="h-3 w-3" />}
+                  </span>
+                  <span
+                    className={cn(
+                      "rounded px-1.5 py-0.5 text-[10px] font-semibold leading-none",
+                      badge.className
+                    )}
+                  >
+                    {badge.abbr}
+                  </span>
+                  <span className="flex-1 truncate text-left">{p.name}</span>
+                </button>
+              );
+            })}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
 // Indicator table (right)
 
 function IndicatorTable({
@@ -453,17 +718,44 @@ function IndicatorTable({
 }: {
   entities: ResolvedEntity[];
 }) {
+  const [activePillars, setActivePillars] = useState<Set<PillarSlug>>(
+    () => new Set(PILLARS.map((p) => p.slug))
+  );
+
+  const visibleIndicators = useMemo(
+    () => INDICATORS.filter((ind) => activePillars.has(ind.pillar)),
+    [activePillars]
+  );
+
+  // Group the visible indicators under their dimension, preserving the
+  // canonical dimension order and dropping dimensions with no rows.
+  const groupedByDimension = useMemo(
+    () =>
+      DIMENSIONS.map((dim) => ({
+        dimension: dim,
+        indicators: visibleIndicators.filter(
+          (ind) => ind.dimension === dim.slug
+        ),
+      })).filter((g) => g.indicators.length > 0),
+    [visibleIndicators]
+  );
+
+  // Indicator column + one column per entity (or the empty-state placeholder).
+  const columnCount = 1 + (entities.length === 0 ? 1 : entities.length);
+
   return (
     <div className="bg-card border rounded-2xl shadow-sm overflow-hidden">
-      <div className="px-5 py-4 border-b flex items-center justify-between">
-        <h4 className="text-base font-semibold">Indicators</h4>
-        <span className="text-xs text-muted-foreground">
-          {INDICATORS.length} indicators
-        </span>
+      <div className="px-5 py-4 border-b flex flex-wrap items-center justify-between gap-3">
+        <div className="flex items-center gap-2.5">
+          <h4 className="text-base font-semibold">Indicators</h4>
+          <span className="text-xs text-muted-foreground">
+            {visibleIndicators.length} of {INDICATORS.length}
+          </span>
+        </div>
+        <PillarFilter active={activePillars} onChange={setActivePillars} />
       </div>
-      <div className="max-h-[640px] overflow-y-auto">
-        <Table>
-          <TableHeader className="sticky top-0 bg-card z-10 shadow-[0_1px_0_var(--border)]">
+      <Table containerClassName="max-h-[640px] overflow-auto">
+        <TableHeader className="sticky top-0 z-10 [&_th]:bg-card [&_th]:shadow-[0_1px_0_var(--border)]">
             <TableRow className="hover:bg-transparent">
               <TableHead className="min-w-[200px]">Indicator</TableHead>
               {entities.length === 0 && (
@@ -487,54 +779,100 @@ function IndicatorTable({
             </TableRow>
           </TableHeader>
           <TableBody>
-            {INDICATORS.map((ind) => {
-              const badge = PILLAR_BADGES[ind.pillar];
-              return (
-                <TableRow key={ind.slug}>
-                  <TableCell className="whitespace-normal">
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm">{ind.name}</span>
-                      <span
-                        className={cn(
-                          "shrink-0 rounded px-1.5 py-0.5 text-[10px] font-semibold leading-none",
-                          badge.className
-                        )}
-                      >
-                        {badge.abbr}
+            {groupedByDimension.map(({ dimension, indicators }) => (
+              <Fragment key={dimension.slug}>
+                <TableRow className="hover:bg-transparent">
+                  <TableCell
+                    colSpan={columnCount}
+                    className="sticky top-10 z-[5] border-y bg-muted/70 py-2 backdrop-blur-sm"
+                  >
+                    <span className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                      {dimension.name}
+                      <span className="rounded-full bg-background px-1.5 py-0.5 text-[10px] font-medium normal-case tabular-nums text-muted-foreground/80">
+                        {indicators.length}
                       </span>
-                    </div>
+                    </span>
                   </TableCell>
-                  {entities.length === 0 && <TableCell />}
-                  {entities.map((e, idx) => {
-                    const palette = SLOT_PALETTE[idx % SLOT_PALETTE.length];
-                    const value = e.indicators[ind.slug] ?? null;
-                    return (
-                      <TableCell
-                        key={e.id}
-                        className={cn(
-                          "text-right tabular-nums font-medium",
-                          palette.text
-                        )}
-                      >
-                        {value === null ? (
-                          <span className="text-muted-foreground/60">—</span>
-                        ) : (
-                          value.toFixed(1)
-                        )}
-                      </TableCell>
-                    );
-                  })}
                 </TableRow>
-              );
-            })}
+                {indicators.map((ind) => {
+                  const badge = PILLAR_BADGES[ind.pillar];
+                  const rowValues = entities.map(
+                    (e) => e.indicators[ind.slug] ?? null
+                  );
+                  const numeric = rowValues.filter(
+                    (v): v is number => v !== null
+                  );
+                  // Only highlight a leader when at least two entities have
+                  // values and there's a real spread (not everyone tied).
+                  const maxValue =
+                    numeric.length >= 2 ? Math.max(...numeric) : null;
+                  const hasLeader =
+                    maxValue !== null && numeric.some((v) => v < maxValue);
+                  return (
+                    <TableRow key={ind.slug}>
+                      <TableCell className="whitespace-normal">
+                        <div className="flex items-center gap-2 pl-2">
+                          <span
+                            className={cn(
+                              "shrink-0 rounded px-1.5 py-0.5 text-[10px] font-semibold leading-none",
+                              badge.className
+                            )}
+                          >
+                            {badge.abbr}
+                          </span>
+                          <span className="text-sm">{ind.name}</span>
+                        </div>
+                      </TableCell>
+                      {entities.length === 0 && <TableCell />}
+                      {entities.map((e, idx) => {
+                        const palette = SLOT_PALETTE[idx % SLOT_PALETTE.length];
+                        const value = rowValues[idx];
+                        const isLeader =
+                          hasLeader && value !== null && value === maxValue;
+                        return (
+                          <TableCell
+                            key={e.id}
+                            className={cn(
+                              "text-right tabular-nums font-medium",
+                              palette.text,
+                              isLeader && "font-bold"
+                            )}
+                          >
+                            {value === null ? (
+                              <span className="text-muted-foreground/60">—</span>
+                            ) : isLeader ? (
+                              <span
+                                className={cn(
+                                  "inline-flex items-center gap-1 rounded-md px-1.5 py-0.5",
+                                  palette.soft
+                                )}
+                              >
+                                <span
+                                  aria-hidden
+                                  className="text-[11px] leading-none"
+                                >
+                                  ⭐
+                                </span>
+                                {value.toFixed(1)}
+                              </span>
+                            ) : (
+                              value.toFixed(1)
+                            )}
+                          </TableCell>
+                        );
+                      })}
+                    </TableRow>
+                  );
+                })}
+              </Fragment>
+            ))}
           </TableBody>
         </Table>
-      </div>
-      <div className="px-5 py-3 border-t flex flex-wrap items-center gap-3 text-[11px] text-muted-foreground">
+      <div className="border-t bg-card/95 backdrop-blur-sm px-5 py-3 flex flex-wrap items-center gap-x-4 gap-y-2">
         {PILLARS.map((p) => {
           const badge = PILLAR_BADGES[p.slug];
           return (
-            <span key={p.slug} className="inline-flex items-center gap-1.5">
+            <div key={p.slug} className="flex items-center gap-1.5">
               <span
                 className={cn(
                   "rounded px-1.5 py-0.5 text-[10px] font-semibold leading-none",
@@ -543,8 +881,8 @@ function IndicatorTable({
               >
                 {badge.abbr}
               </span>
-              <span>{p.name}</span>
-            </span>
+              <span className="text-xs text-muted-foreground">{p.name}</span>
+            </div>
           );
         })}
       </div>
@@ -561,12 +899,21 @@ export interface ComparisonSectionProps {
   countries: CountryRanking[];
   regions: string[];
   regionAverages: Record<string, ScoreAggregates>;
+  /** When set, replaces the homepage default slot selection. */
+  initialSlots?: ComparisonEntityRef[];
+  /** Optional heading override (JSX so callers can highlight a word). */
+  heading?: React.ReactNode;
+  /** Optional subheading copy override. */
+  subheading?: React.ReactNode;
 }
 
 export function ComparisonSection({
   countries,
   regions,
   regionAverages,
+  initialSlots,
+  heading,
+  subheading,
 }: ComparisonSectionProps) {
   const headingRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(headingRef, { once: false, amount: 0.4 });
@@ -582,9 +929,11 @@ export function ComparisonSection({
     return m;
   }, [regionAverages]);
 
-  // Sensible default: top country, second country, and the region with the
-  // highest GIRAI average. Falls back gracefully on small datasets.
+  // Deterministic default for the server render (top two countries + highest
+  // scoring region) to avoid a hydration mismatch; the selection is then
+  // randomized once on mount below.
   const [slots, setSlots] = useState<EntityRef[]>(() => {
+    if (initialSlots?.length) return initialSlots;
     const sortedCountries = [...countries]
       .filter((c) => c.girai !== null)
       .sort((a, b) => (b.girai ?? 0) - (a.girai ?? 0));
@@ -601,6 +950,14 @@ export function ComparisonSection({
       topRegion ? { kind: "region", name: topRegion } : null,
     ];
   });
+
+  // Randomize the pre-selection once after mount (skipped when explicit
+  // initial slots are provided). Running client-side keeps SSR output stable.
+  useEffect(() => {
+    if (initialSlots?.length) return;
+    setSlots(buildRandomSlots(countries, regionAverages));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const resolved = useMemo(
     () =>
@@ -639,8 +996,12 @@ export function ComparisonSection({
             transition={{ duration: 0.6, ease: "easeOut" }}
             className="text-3xl font-bold tracking-tight md:text-4xl"
           >
-            Compare responsible AI{" "}
-            <span className="text-primary">performance</span>
+            {heading ?? (
+              <>
+                Compare responsible AI{" "}
+                <span className="text-primary">performance</span>
+              </>
+            )}
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 16 }}
@@ -648,8 +1009,8 @@ export function ComparisonSection({
             transition={{ duration: 0.6, delay: 0.15, ease: "easeOut" }}
             className="mt-3 text-muted-foreground max-w-2xl mx-auto"
           >
-            Explore how countries and regions perform across GIRAI&apos;s
-            governance dimensions, scores, and structural indicators.
+            {subheading ??
+              "Explore how countries and regions perform across GIRAI's governance dimensions, scores, and structural indicators."}
           </motion.p>
         </div>
 
@@ -708,6 +1069,9 @@ export function ComparisonSection({
             </motion.button>
           )}
         </motion.div>
+
+        {/* Animated per-entity score cards */}
+        <StatCardStrip entities={resolved} />
 
         {/* Left: dimensions card; Right: indicators table */}
         <motion.div

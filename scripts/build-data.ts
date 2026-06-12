@@ -7,6 +7,8 @@
  *   src/data/2026/generated/countries.json
  *   src/data/2026/generated/rankings.json
  *   public/data/2026/evidence.json
+ *   public/data/2026/indicator-adoption.json
+ *   public/data/2026/country-pillar-highlights.json
  *   public/data/2026/csv/{frameworks,initiatives,cse_initiatives,gmc_cse,urai,all_evidences,ranking_and_scores}.csv
  *   public/data/2026/csv/link-template.csv
  *
@@ -38,12 +40,9 @@ const OUT_GENERATED = path.join(ROOT, "src/data/2026/generated");
 const OUT_PUBLIC = path.join(ROOT, "public/data/2026");
 const OUT_CSV = path.join(OUT_PUBLIC, "csv");
 
-const DATASET_FILE = path.join(SRC_DIR, "20260505_girai_dataset.xlsx");
-const SCORING_FILE = path.join(SRC_DIR, "20260505_GIRAI_scoring_output.xlsx");
-const DICTIONARY_FILE = path.join(
-  SRC_DIR,
-  "girai_dataset_data_dictionary(working_version_2).xlsx"
-);
+const DATASET_FILE = path.join(SRC_DIR, "GIRAI_dataset.xlsx");
+const SCORING_FILE = path.join(SRC_DIR, "scoring_output.xlsx");
+const DICTIONARY_FILE = path.join(SRC_DIR, "GIRAI_dataset_data_dictionary.xlsx");
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -180,7 +179,7 @@ const RankingRow = z.object({
   developing: z.string(),
   WB_region: z.string(),
   WB_income_group: z.string(),
-  "GDP per capita PPP": z.union([z.number(), z.string()]).nullable().optional(),
+  GDP_per_capita_PPP: z.union([z.number(), z.string()]).nullable().optional(),
   girai: z.coerce.number().nullable().optional(),
   girai_raw: z.coerce.number().nullable().optional(),
   urai_penalty: z.coerce.number().nullable().optional(),
@@ -312,7 +311,7 @@ const countriesArr = rankingRowsRaw.map((row) => {
     developing: parsed.developing,
     wbRegion: parsed.WB_region,
     incomeGroup: parsed.WB_income_group,
-    gdpPerCapitaPpp: num(row["GDP per capita PPP"]),
+    gdpPerCapitaPpp: num(row["GDP_per_capita_PPP"] ?? row["GDP per capita PPP"]),
 
     girai: parsed.girai ?? null,
     giraiRaw: parsed.girai_raw ?? null,
@@ -327,6 +326,133 @@ const countriesArr = rankingRowsRaw.map((row) => {
     evidenceCounts,
   };
 });
+
+// ---------------------------------------------------------------------------
+// Derived AI-Policy sub-scores: Framework + Implementation.
+//
+// The dataset publishes pillar-level scores (AI Policy / CSO Engagement /
+// Enabling Conditions) but not the two informal halves of AI Policy that
+// the country-overview surface wants to display side-by-side:
+//
+//   • Framework score      → how thoroughly the country's documented
+//     frameworks cover indicator substance. Mean of every thematic-element
+//     rating attached to the country's frameworks on AI Policy indicators
+//     (Yes=100, Partially=50, No=0).
+//
+//   • Implementation score → how concretely the policy is being executed.
+//     50% mean of `plan`/`budget`/`monitoring` flags across the country's
+//     frameworks (Yes/Partially/No → 100/50/0); 50% initiative coverage —
+//     share of the country's AI Policy indicators with at least one
+//     initiative on file.
+//
+// These are *display-only* aggregates, not part of the official GIRAI
+// methodology. If GIRAI ever publishes its own decomposition, replace
+// these formulas with the official numbers.
+
+function ynpToScore(v: string | null | undefined): number | null {
+  if (!v) return null;
+  const s = v.trim().toLowerCase();
+  if (s === "yes") return 100;
+  if (s === "partially" || s === "partial") return 50;
+  if (s === "no") return 0;
+  return null;
+}
+
+const AI_POLICY_INDICATORS = INDICATORS.filter((i) => i.pillar === "ai-policy");
+const AI_POLICY_INDICATOR_NAMES = new Set(
+  AI_POLICY_INDICATORS.flatMap((i) => [i.name, ...i.aliases])
+);
+
+const _frameworksRows = readSheet(DATASET_FILE, "frameworks");
+const _thematicRows = readSheet(DATASET_FILE, "thematic_coverage");
+const _initiativesRows = readSheet(DATASET_FILE, "initiatives");
+
+const _thematicByKey = new Map<string, (string | null)[]>();
+for (const row of _thematicRows) {
+  const ik = str(row["interview_key"]);
+  const source = str(row["source"]);
+  if (!ik || !source) continue;
+  const values: (string | null)[] = [];
+  for (let i = 1; i <= 4; i++) values.push(str(row[`element${i}_value`]));
+  _thematicByKey.set(`${ik}::${source}`, values);
+}
+
+{
+  const thematicSamples = new Map<string, number[]>();
+  const execSamples = new Map<string, number[]>();
+  const indicatorsWithInit = new Map<string, Set<string>>();
+
+  const pushVal = (map: Map<string, number[]>, iso3: string, v: number) => {
+    if (!map.has(iso3)) map.set(iso3, []);
+    map.get(iso3)!.push(v);
+  };
+
+  for (const row of _frameworksRows) {
+    const ik = str(row["interview_key"]);
+    const iso3 = str(row["ISO3"]);
+    const indicatorName = str(row["indicator"]);
+    if (!ik || !iso3 || !indicatorName) continue;
+    if (!AI_POLICY_INDICATOR_NAMES.has(indicatorName)) continue;
+
+    for (const slot of [1, 2] as const) {
+      const title = str(row[`fr${slot}_title`]);
+      if (!title) continue;
+      const thematic = _thematicByKey.get(`${ik}::fr${slot}`) ?? [];
+      for (const v of thematic) {
+        const s = ynpToScore(v);
+        if (s !== null) pushVal(thematicSamples, iso3, s);
+      }
+      for (const field of ["plan", "budget", "monitoring"] as const) {
+        const s = ynpToScore(str(row[`fr${slot}_${field}`]));
+        if (s !== null) pushVal(execSamples, iso3, s);
+      }
+    }
+  }
+
+  for (const row of _initiativesRows) {
+    const iso3 = str(row["ISO3"]);
+    const indicatorName = str(row["indicator"]);
+    if (!iso3 || !indicatorName) continue;
+    if (!AI_POLICY_INDICATOR_NAMES.has(indicatorName)) continue;
+    const ind = findIndicator(indicatorName);
+    if (!ind) continue;
+    let hasInit = false;
+    outer: for (const body of [1, 2] as const) {
+      for (const item of [1, 2, 3] as const) {
+        if (str(row[`init${body}_name${item}`])) {
+          hasInit = true;
+          break outer;
+        }
+      }
+    }
+    if (!hasInit) continue;
+    if (!indicatorsWithInit.has(iso3)) indicatorsWithInit.set(iso3, new Set());
+    indicatorsWithInit.get(iso3)!.add(ind.slug);
+  }
+
+  const aiPolicyCount = AI_POLICY_INDICATORS.length;
+  for (const c of countriesArr) {
+    const iso3 = c.iso3;
+    const them = thematicSamples.get(iso3) ?? [];
+    const exec = execSamples.get(iso3) ?? [];
+    const initSet = indicatorsWithInit.get(iso3) ?? new Set<string>();
+
+    const framework =
+      them.length > 0 ? them.reduce((a, b) => a + b, 0) / them.length : null;
+    const execMean =
+      exec.length > 0 ? exec.reduce((a, b) => a + b, 0) / exec.length : null;
+    const coverage = aiPolicyCount > 0 ? (initSet.size / aiPolicyCount) * 100 : null;
+
+    let impl: number | null;
+    if (execMean === null && coverage === null) impl = null;
+    else if (execMean === null) impl = coverage;
+    else if (coverage === null) impl = execMean;
+    else impl = 0.5 * execMean + 0.5 * coverage;
+
+    (c as unknown as { frameworkScore: number | null }).frameworkScore = framework;
+    (c as unknown as { implementationScore: number | null }).implementationScore = impl;
+  }
+}
 
 // Compute regional / income / global aggregates and per-country ranks.
 function buildRanks(values: { iso3: string; v: number | null }[]) {
@@ -397,6 +523,42 @@ for (const dim of DIMENSIONS) {
   }
 }
 
+// Per-pillar regional ranks.
+const regionalPillarRanks: Record<PillarSlug, Map<string, number>> = {} as never;
+for (const pillar of PILLARS) {
+  regionalPillarRanks[pillar.slug] = new Map();
+  for (const [, group] of byRegion) {
+    const ranks = buildRanks(
+      group.map((c) => ({ iso3: c.iso3, v: c.pillarScores[pillar.slug] }))
+    );
+    for (const [iso3, r] of ranks) regionalPillarRanks[pillar.slug].set(iso3, r);
+  }
+}
+
+// Framework / Implementation ranks (global + regional).
+type WithDerived = (typeof countriesArr)[number] & {
+  frameworkScore: number | null;
+  implementationScore: number | null;
+};
+const countriesWithDerived = countriesArr as WithDerived[];
+const globalFrameworkRanks = buildRanks(
+  countriesWithDerived.map((c) => ({ iso3: c.iso3, v: c.frameworkScore }))
+);
+const globalImplementationRanks = buildRanks(
+  countriesWithDerived.map((c) => ({ iso3: c.iso3, v: c.implementationScore }))
+);
+const regionalFrameworkRanks = new Map<string, number>();
+const regionalImplementationRanks = new Map<string, number>();
+for (const [, group] of byRegion) {
+  const groupTyped = group as WithDerived[];
+  const fr = buildRanks(groupTyped.map((c) => ({ iso3: c.iso3, v: c.frameworkScore })));
+  const im = buildRanks(
+    groupTyped.map((c) => ({ iso3: c.iso3, v: c.implementationScore }))
+  );
+  for (const [iso3, r] of fr) regionalFrameworkRanks.set(iso3, r);
+  for (const [iso3, r] of im) regionalImplementationRanks.set(iso3, r);
+}
+
 // Aggregate averages.
 function aggAverages(group: typeof countriesArr) {
   const dimensions: Record<DimensionSlug, number | null> = {} as never;
@@ -411,11 +573,14 @@ function aggAverages(group: typeof countriesArr) {
   for (const ind of INDICATORS) {
     indicators[ind.slug] = average(group.map((c) => c.indicatorScores[ind.slug] ?? null));
   }
+  const groupTyped = group as WithDerived[];
   return {
     girai: average(group.map((c) => c.girai)),
     dimensions,
     pillars,
     indicators,
+    frameworkScore: average(groupTyped.map((c) => c.frameworkScore)),
+    implementationScore: average(groupTyped.map((c) => c.implementationScore)),
   };
 }
 
@@ -443,6 +608,13 @@ const countriesFinal = countriesArr.map((c) => ({
   pillarRanksGlobal: Object.fromEntries(
     PILLARS.map((p) => [p.slug, globalPillarRanks[p.slug].get(c.iso3) ?? null])
   ) as Record<PillarSlug, number | null>,
+  pillarRanksRegional: Object.fromEntries(
+    PILLARS.map((p) => [p.slug, regionalPillarRanks[p.slug].get(c.iso3) ?? null])
+  ) as Record<PillarSlug, number | null>,
+  frameworkRankGlobal: globalFrameworkRanks.get(c.iso3) ?? null,
+  frameworkRankRegional: regionalFrameworkRanks.get(c.iso3) ?? null,
+  implementationRankGlobal: globalImplementationRanks.get(c.iso3) ?? null,
+  implementationRankRegional: regionalImplementationRanks.get(c.iso3) ?? null,
 }));
 
 const countriesJson = {
@@ -558,6 +730,19 @@ for (const row of thematicRows) {
   if (elems.length) thematicByKey.set(key, elems);
 }
 
+// Framework adoption status per indicator (includes "No framework" rows).
+type FrameworkAdoptionCounts = {
+  adopted: number;
+  draft: number;
+  notAdopted: number;
+  total: number;
+};
+const frameworkAdoptionBySlug = new Map<string, FrameworkAdoptionCounts>();
+for (const ind of INDICATORS.filter((i) => i.family === "ai-policy")) {
+  frameworkAdoptionBySlug.set(ind.slug, { adopted: 0, draft: 0, notAdopted: 0, total: 0 });
+}
+const frameworkCountryIso3 = new Set<string>();
+
 for (const row of frameworksRows) {
   const ik = str(row["interview_key"]);
   const iso3 = str(row["ISO3"]);
@@ -569,6 +754,14 @@ for (const row of frameworksRows) {
       `Unknown indicator in frameworks: ${JSON.stringify(indicatorName)} (interview_key=${ik})`
     );
   }
+  frameworkCountryIso3.add(iso3);
+  const frStatus = str(row["fr_status"]);
+  const adoption = frameworkAdoptionBySlug.get(ind.slug)!;
+  adoption.total += 1;
+  if (frStatus === "Adopted") adoption.adopted += 1;
+  else if (frStatus === "Draft") adoption.draft += 1;
+  else if (frStatus === "No framework") adoption.notAdopted += 1;
+
   const country = countryRef(iso3);
 
   for (const slot of [1, 2] as const) {
@@ -784,24 +977,276 @@ for (const row of uraiRows) {
   }
 }
 
+// ---------------------------------------------------------------------------
+// 3e½. Country pillar highlights (country page "What Drives This Performance?")
+
+const CSO_PILLAR_INDICATORS = INDICATORS.filter((i) => i.pillar === "cso-engagement");
+const ENABLING_PILLAR_INDICATORS = INDICATORS.filter((i) => i.pillar === "enabling-conditions");
+const GMC_EVIDENCE_KINDS = new Set([
+  "gmc-consultation",
+  "gmc-provision",
+  "gmc-mechanism",
+]);
+
+function pluralWord(count: number, singular: string, plural: string): string {
+  return count === 1 ? singular : plural;
+}
+
+function evidenceByIso(iso3: string) {
+  return evidence.filter((e) => e.country.iso3 === iso3);
+}
+
+const countryPillarHighlights = countriesArr.map((country) => {
+  const iso = country.iso3;
+  const items = evidenceByIso(iso);
+
+  const aiPolicyItems = items.filter((e) => e.pillarSlug === "ai-policy");
+  const frameworkDocs = aiPolicyItems.filter((e) => e.kind === "framework").length;
+  const initiatives = aiPolicyItems.filter((e) => e.kind === "initiative").length;
+  const implementingBodies = aiPolicyItems.filter(
+    (e) => e.kind === "framework" && e.body?.exists === "Yes"
+  ).length;
+
+  const aiPolicyBullets: [string, string, string] = [
+    `${frameworkDocs} AI policy ${pluralWord(frameworkDocs, "framework", "frameworks")} documented`,
+    `${initiatives} government ${pluralWord(initiatives, "initiative", "initiatives")} documented`,
+    implementingBodies > 0
+      ? `Dedicated implementing body on ${implementingBodies} ${pluralWord(implementingBodies, "framework", "frameworks")}`
+      : "No dedicated implementing bodies identified on frameworks",
+  ];
+
+  const csoItems = items.filter((e) => e.pillarSlug === "cso-engagement");
+  const csoInitiatives = csoItems.filter((e) => e.kind === "cso-initiative").length;
+  const gmcItems = csoItems.filter((e) => GMC_EVIDENCE_KINDS.has(e.kind)).length;
+  const csoIndicatorsWithEvidence = CSO_PILLAR_INDICATORS.filter(
+    (ind) => country.evidenceCounts[ind.slug]
+  ).length;
+
+  const csoBullets: [string, string, string] = [
+    `${csoInitiatives} civil society ${pluralWord(csoInitiatives, "initiative", "initiatives")} on file`,
+    `${gmcItems} multi-stakeholder governance ${pluralWord(gmcItems, "item", "items")} documented`,
+    `${csoIndicatorsWithEvidence} of ${CSO_PILLAR_INDICATORS.length} civil society indicators with documented engagement`,
+  ];
+
+  const topEnabling = ENABLING_PILLAR_INDICATORS.map((ind) => ({
+    name: ind.name,
+    score: country.indicatorScores[ind.slug],
+  }))
+    .filter((row): row is { name: string; score: number } => row.score !== null)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 3);
+
+  const enablingFallback = (index: number): string => {
+    const row = topEnabling[index];
+    if (!row) return "No scored country context indicators in this tier";
+    return `${row.name} (${row.score.toFixed(1)})`;
+  };
+
+  const enablingBullets: [string, string, string] = [
+    topEnabling[0]
+      ? `Strongest context signal: ${topEnabling[0].name} (${topEnabling[0].score.toFixed(1)})`
+      : enablingFallback(0),
+    enablingFallback(1),
+    enablingFallback(2),
+  ];
+
+  return {
+    iso3: iso,
+    pillars: {
+      "ai-policy": { bullets: aiPolicyBullets },
+      "cso-engagement": { bullets: csoBullets },
+      "enabling-conditions": { bullets: enablingBullets },
+    },
+  };
+});
+
+// Sanity: bullets must match evidence corpus counts (what the explorer indexes).
+for (const entry of countryPillarHighlights) {
+  const items = evidenceByIso(entry.iso3);
+  const ai = items.filter((e) => e.pillarSlug === "ai-policy");
+  const fw = ai.filter((e) => e.kind === "framework").length;
+  const init = ai.filter((e) => e.kind === "initiative").length;
+  const bodies = ai.filter((e) => e.kind === "framework" && e.body?.exists === "Yes").length;
+  const [b0, b1, b2] = entry.pillars["ai-policy"].bullets;
+  if (b0 !== `${fw} AI policy ${pluralWord(fw, "framework", "frameworks")} documented`) {
+    throw new Error(`[build-data] ai-policy framework bullet mismatch for ${entry.iso3}`);
+  }
+  if (b1 !== `${init} government ${pluralWord(init, "initiative", "initiatives")} documented`) {
+    throw new Error(`[build-data] ai-policy initiative bullet mismatch for ${entry.iso3}`);
+  }
+  const bodyBullet =
+    bodies > 0
+      ? `Dedicated implementing body on ${bodies} ${pluralWord(bodies, "framework", "frameworks")}`
+      : "No dedicated implementing bodies identified on frameworks";
+  if (b2 !== bodyBullet) {
+    throw new Error(`[build-data] ai-policy body bullet mismatch for ${entry.iso3}`);
+  }
+
+  const cso = items.filter((e) => e.pillarSlug === "cso-engagement");
+  const csoInit = cso.filter((e) => e.kind === "cso-initiative").length;
+  const gmc = cso.filter((e) => GMC_EVIDENCE_KINDS.has(e.kind)).length;
+  const [c0, c1] = entry.pillars["cso-engagement"].bullets;
+  if (c0 !== `${csoInit} civil society ${pluralWord(csoInit, "initiative", "initiatives")} on file`) {
+    throw new Error(`[build-data] cso initiative bullet mismatch for ${entry.iso3}`);
+  }
+  if (c1 !== `${gmc} multi-stakeholder governance ${pluralWord(gmc, "item", "items")} documented`) {
+    throw new Error(`[build-data] cso gmc bullet mismatch for ${entry.iso3}`);
+  }
+}
+
+const countryPillarHighlightsJson = {
+  ...PROVENANCE,
+  countries: countryPillarHighlights,
+};
+writeJson(path.join(OUT_PUBLIC, "country-pillar-highlights.json"), countryPillarHighlightsJson);
+writeJson(path.join(OUT_GENERATED, "country-pillar-highlights.json"), countryPillarHighlightsJson);
+console.log(
+  `[build-data] wrote country-pillar-highlights.json (${countryPillarHighlights.length} countries)`
+);
+
+const byKind = evidence.reduce<Record<string, number>>((acc, e) => {
+  acc[e.kind] = (acc[e.kind] ?? 0) + 1;
+  return acc;
+}, {});
+
+function normalizeEvidenceText(value: string | null | undefined): string {
+  return (value ?? "").trim().toLowerCase().replace(/\s+/g, " ");
+}
+
+function normalizeEvidenceUrl(value: string | null | undefined): string {
+  return normalizeEvidenceText(value)
+    .replace(/^https?:\/\/(www\.)?/, "")
+    .replace(/[#?].*$/, "")
+    .replace(/\/$/, "");
+}
+
+function uniqueCountByKind(resolve: (item: EvidenceItem) => string): Record<string, number> {
+  const groups = new Map<string, Set<string>>();
+  for (const item of evidence) {
+    const key = resolve(item);
+    if (!key) continue;
+    const values = groups.get(item.kind) ?? new Set<string>();
+    values.add(key);
+    groups.set(item.kind, values);
+  }
+  return Object.fromEntries(
+    Array.from(groups.entries()).map(([kind, values]) => [kind, values.size])
+  );
+}
+
+const uniqueTitlesByKind = uniqueCountByKind((item) => normalizeEvidenceText(item.title));
+const uniqueUrlOrTitleByKind = uniqueCountByKind((item) => {
+  const url = normalizeEvidenceUrl(item.link);
+  return url || normalizeEvidenceText(item.title);
+});
+const uniqueItemsByKind = {
+  ...uniqueUrlOrTitleByKind,
+  framework: uniqueTitlesByKind.framework ?? uniqueUrlOrTitleByKind.framework ?? 0,
+};
+const uniqueEvidenceItems = Object.values(uniqueItemsByKind).reduce(
+  (sum, count) => sum + count,
+  0
+);
+
+function distinctCountriesForKinds(kinds: string[]): number {
+  return new Set(
+    evidence.filter((e) => kinds.includes(e.kind)).map((e) => e.country.iso3)
+  ).size;
+}
+
+const PATHWAY_KIND_GROUPS = {
+  frameworks: ["framework"],
+  initiatives: ["initiative"],
+  nonGov: ["cso-initiative", "gmc-consultation", "gmc-provision", "gmc-mechanism"],
+  misuse: ["government-misuse"],
+} as const;
+
+const countriesByPathway = Object.fromEntries(
+  Object.entries(PATHWAY_KIND_GROUPS).map(([pathway, kinds]) => [
+    pathway,
+    distinctCountriesForKinds([...kinds]),
+  ])
+);
+
 const evidenceJson = {
   ...PROVENANCE,
   totals: {
     items: evidence.length,
-    byKind: evidence.reduce<Record<string, number>>((acc, e) => {
-      acc[e.kind] = (acc[e.kind] ?? 0) + 1;
-      return acc;
-    }, {}),
+    uniqueItems: uniqueEvidenceItems,
+    byKind,
+    uniqueItemsByKind,
+    uniqueTitlesByKind,
+    countriesIndexed: countriesArr.length,
     countriesWithItems: new Set(evidence.map((e) => e.country.iso3)).size,
+    countriesByPathway,
   },
   items: evidence,
 };
 writeJson(path.join(OUT_PUBLIC, "evidence.json"), evidenceJson);
+
+const indicatorAdoptionJson = {
+  ...PROVENANCE,
+  totalCountries: frameworkCountryIso3.size,
+  frameworks: Object.fromEntries(frameworkAdoptionBySlug),
+};
+writeJson(path.join(OUT_PUBLIC, "indicator-adoption.json"), indicatorAdoptionJson);
+console.log(
+  `[build-data] wrote indicator-adoption.json (${frameworkAdoptionBySlug.size} indicators, ${frameworkCountryIso3.size} countries)`
+);
 // Also mirror to src/data/2026/generated so we can statically import it
 // from the data-access module (next/static SSG-friendly, type-safe).
 writeJson(path.join(OUT_GENERATED, "evidence.json"), evidenceJson);
 console.log(
   `[build-data] wrote evidence.json (${evidence.length} items, ${evidenceJson.totals.countriesWithItems} countries)`
+);
+
+// ---------------------------------------------------------------------------
+// 3f. Evidence Explorer slim index (`evidence-index.json`)
+//
+// Denormalised, ~7× smaller view used by the client-side <EvidenceExplorer />
+// for fuzzy search + faceted filter without shipping the full corpus.
+
+const indicatorNameBySlug = new Map<string, string>();
+for (const ind of INDICATORS) indicatorNameBySlug.set(ind.slug, ind.name);
+
+const evidenceIndexRows = evidence.map((e) => ({
+  id: e.id,
+  kind: e.kind,
+  title: e.title,
+  link: e.link ?? null,
+  type: e.type ?? null,
+  enforceability: e.enforceability ?? null,
+  approval: e.approval ?? null,
+  country: {
+    iso3: e.country.iso3,
+    name: e.country.name,
+    region: e.country.region,
+    incomeGroup: e.country.incomeGroup,
+  },
+  dimensionSlug: e.dimensionSlug,
+  pillarSlug: e.pillarSlug,
+  indicatorSlug: e.indicatorSlug,
+  indicatorName: indicatorNameBySlug.get(e.indicatorSlug) ?? e.indicatorSlug,
+}));
+
+const evidenceIndexJson = {
+  ...PROVENANCE,
+  totals: evidenceJson.totals,
+  facets: {
+    regions: Array.from(new Set(evidenceIndexRows.map((r) => r.country.region)))
+      .filter(Boolean)
+      .sort(),
+    countries: Array.from(
+      new Map(
+        evidenceIndexRows.map((r) => [r.country.iso3, { iso3: r.country.iso3, name: r.country.name }])
+      ).values()
+    ).sort((a, b) => a.name.localeCompare(b.name)),
+  },
+  rows: evidenceIndexRows,
+};
+writeJson(path.join(OUT_PUBLIC, "evidence-index.json"), evidenceIndexJson);
+console.log(
+  `[build-data] wrote evidence-index.json (${evidenceIndexRows.length} rows, ${evidenceIndexJson.facets.countries.length} countries, ${evidenceIndexJson.facets.regions.length} regions)`
 );
 
 // ---------------------------------------------------------------------------

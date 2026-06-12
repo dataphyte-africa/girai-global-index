@@ -1,11 +1,22 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { LayoutGrid, Map as MapIcon } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ChoroplethMapClient } from "@/components/choropleth-map-client";
 import { RankingDataTable } from "@/components/ranking-data-table";
+import {
+  PerformanceFilterBar,
+  applyPerformanceFilter,
+  getPerformanceFilterOptions,
+  EMPTY_PERFORMANCE_FILTER,
+  type PerformanceFilterState,
+} from "@/components/geo-filter-bar";
+import {
+  buildScoreRankMap,
+  resolvePerformanceScore,
+} from "@/lib/performance-score";
 import type { CountryRanking } from "@/lib/girai";
 
 export function CountryPerformanceTabs({
@@ -15,7 +26,39 @@ export function CountryPerformanceTabs({
 }) {
   const headingRef = useRef(null);
   const isInView = useInView(headingRef, { once: false, amount: 0.4 });
-  const [tab, setTab] = useState<"map" | "list">("map");
+  const [tab, setTab] = useState<"map" | "list">("list");
+  // The map keeps its own filter, independent of the table's built-in filters.
+  const [mapFilter, setMapFilter] = useState<PerformanceFilterState>(
+    EMPTY_PERFORMANCE_FILTER
+  );
+
+  const options = useMemo(
+    () => getPerformanceFilterOptions(rankingData),
+    [rankingData]
+  );
+  const mapData = useMemo(
+    () => applyPerformanceFilter(rankingData, mapFilter),
+    [rankingData, mapFilter]
+  );
+
+  const getScore = useCallback(
+    (c: CountryRanking) =>
+      resolvePerformanceScore(c, {
+        dimensions: mapFilter.dimensions,
+        pillars: mapFilter.pillars,
+      }),
+    [mapFilter.dimensions, mapFilter.pillars]
+  );
+
+  const rankMap = useMemo(
+    () => buildScoreRankMap(mapData, getScore),
+    [mapData, getScore]
+  );
+
+  const getRank = useCallback(
+    (c: CountryRanking) => rankMap.get(c.iso3) ?? c.rankGlobal ?? null,
+    [rankMap]
+  );
 
   return (
     <Tabs value={tab} onValueChange={(v) => setTab(v as "map" | "list")} className="w-full">
@@ -39,7 +82,7 @@ export function CountryPerformanceTabs({
             transition={{ duration: 0.6, delay: 0.15, ease: "easeOut" }}
             className="max-w-xl text-muted-foreground"
           >
-            Switch between an interactive map and a full ranking to explore
+            Switch between an interactive map and a full list to explore
             dimension and pillar scores for every country in the 2026 GIRAI
             edition.
           </motion.p>
@@ -64,7 +107,20 @@ export function CountryPerformanceTabs({
       </div>
 
       <TabsContent value="map" className="mt-0">
-        <ChoroplethMapClient rankingData={rankingData} />
+        <div className="mb-4">
+          <PerformanceFilterBar
+            options={options}
+            value={mapFilter}
+            onChange={setMapFilter}
+            matchCount={mapData.length}
+            totalCount={rankingData.length}
+          />
+        </div>
+        <ChoroplethMapClient
+          rankingData={mapData}
+          getScore={getScore}
+          getRank={getRank}
+        />
       </TabsContent>
 
       <TabsContent value="list" className="mt-0">

@@ -1,5 +1,10 @@
 export { CountryHero } from "./country-hero";
+export { CountryScoreHero } from "./country-score-hero";
 export { IndicatorStorySection } from "./indicator-story";
+export { CountryPerformanceOverview } from "./country-performance-overview";
+export { CountryMisuseEvidenceSection } from "./country-misuse-evidence-section";
+export { CountryPerformanceDrivers } from "./country-performance-drivers";
+export { CountryEvidenceExplorerSection } from "./country-evidence-explorer-section";
 export { RegionalComparison } from "./regional-comparison";
 export { CountryMapSVG, CountryMapWithGradient } from "./country-map-svg";
 export { DimensionIllustration } from "./indicator-illustrations";

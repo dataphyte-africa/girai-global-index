@@ -31,26 +31,29 @@ const desktopNavLinkClass = cn(
 );
 
 const exploreLinks = [
-  { label: "Indicators", href: "/#indicators" },
-  { label: "Evidence Explorer", href: "/#indicators" },
-  { label: "Top Takeaway", href: "/#top-takeaways" },
+  { label: "Indicators", href: "/indicators" },
+  { label: "Evidence Explorer", href: "/evidence" },
+  { label: "Top Takeaway", href: "/takeaways" },
   { label: "2025 results", href: "/#results" },
   { label: "2024 results", href: "/#results" },
 ];
 
 const regionLinks = [
-  { label: "Africa", href: "/#regions" },
-  { label: "Asia and Oceania", href: "/#regions" },
-  { label: "The Caribbean", href: "/#regions" },
-  { label: "Europe", href: "/#regions" },
-  { label: "Middle East", href: "/#regions" },
-  { label: "North America", href: "/#regions" },
-  { label: "South and Central America", href: "/#regions" },
+  { label: "Africa", href: "/regions/africa" },
+  { label: "Asia and Oceania", href: "/regions/asia-and-oceania" },
+  { label: "The Caribbean", href: "/regions/caribbean" },
+  { label: "Europe", href: "/regions/europe" },
+  { label: "Middle East", href: "/regions/middle-east" },
+  { label: "North America", href: "/regions/northern-america" },
+  {
+    label: "South and Central America",
+    href: "/regions/south-and-central-america",
+  },
 ];
 
 const dimensionLinks = DIMENSIONS.map((dimension) => ({
   label: dimension.name,
-  href: "/#dimensions",
+  href: `/dimensions/${dimension.id}`,
 }));
 
 const indicatorLinks = [
@@ -64,7 +67,7 @@ const indicatorLinks = [
 ];
 
 const primaryNavItems = [
-  { label: "Countries", href: "/#countries" },
+  { label: "Countries", href: "/countries" },
   { label: "Methodology", href: "/methodology" },
   { label: "Updates", href: "/updates" },
   { label: "About", href: "/about" },
@@ -110,7 +113,7 @@ export const Header = () => {
                       links={indicatorLinks}
                       footerLink={{
                         label: "View all",
-                        href: "/#indicators",
+                        href: "/indicators",
                       }}
                     />
                   </div>
@@ -133,7 +136,13 @@ export const Header = () => {
             href="/"
             className="hidden items-center gap-3 text-left transition-colors hover:bg-muted/60 xl:flex"
           >
-            <Image src="/gcg-logo.png" alt="GCG logo" width={230} height={30} />
+            <Image
+              src="/gcg-logo.png"
+              alt="GCG logo"
+              width={230}
+              height={30}
+              className="h-[30px] w-auto dark:brightness-0 dark:invert"
+            />
           </Link>
 
           <div className="hidden lg:block">

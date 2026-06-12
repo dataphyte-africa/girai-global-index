@@ -366,6 +366,24 @@
   }
 }
 
+/* Choropleth map — contain Leaflet’s 400–1000 z-index panes within the map block */
+.choropleth-map .leaflet-container {
+  z-index: 0;
+}
+.choropleth-map .leaflet-pane {
+  z-index: 1 !important;
+}
+.choropleth-map .leaflet-top,
+.choropleth-map .leaflet-bottom {
+  z-index: 2 !important;
+}
+.choropleth-map .leaflet-control {
+  z-index: 2 !important;
+}
+.choropleth-map .leaflet-tooltip-pane {
+  z-index: 3 !important;
+}
+
 /* Choropleth map tooltip */
 .choropleth-tooltip {
   background: hsl(var(--background)) !important;

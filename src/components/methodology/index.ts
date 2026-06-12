@@ -1,0 +1,12 @@
+export { MethodologyHero } from "./methodology-hero";
+export { MethodologyIntroSection } from "./methodology-intro-section";
+export { MethodologyPrinciplesSection } from "./methodology-principles-section";
+export { MethodologyWhatMeasuresSection } from "./methodology-what-measures-section";
+export { MethodologyFrameworkEvolutionSection } from "./methodology-framework-evolution-section";
+export { MethodologyFrameworkRefinedSection } from "./methodology-framework-refined-section";
+export { MethodologyEditionChangesSection } from "./methodology-edition-changes-section";
+export { MethodologyKeyTermsSection } from "./methodology-key-terms-section";
+export { MethodologyEvidenceStandardsSection } from "./methodology-evidence-standards-section";
+export { MethodologyAccessDataSection } from "./methodology-access-data-section";
+export { MethodologyResearchProcessSection } from "./methodology-research-process-section";
+export { MethodologyFooterHero } from "./methodology-footer-hero";

@@ -4,15 +4,14 @@ import { useEffect, useMemo, useState } from "react";
 import { MapContainer, GeoJSON, useMap } from "react-leaflet";
 import L from "leaflet";
 import type { CountryRanking } from "@/lib/girai";
+import {
+  resolveGeoIso2,
+  resolveGeoIso3,
+  type GeoAdminProperties,
+} from "@/lib/geo-iso";
 import { CountryDrawer } from "./country-drawer";
 import { Lock, Unlock } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
-interface GeoJSONFeatureProps {
-  admin?: string;
-  iso_a3?: string;
-  iso_a2?: string;
-}
 
 function hexToRgb(hex: string): { r: number; g: number; b: number } {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -46,8 +45,12 @@ function interpolateColor(color1: string, color2: string, t: number): string {
   return rgbToHex(r, g, b);
 }
 
+// No country currently scores above this, so the gradient and tiers are
+// scaled to it rather than a theoretical 100 (which would never be reached).
+const MAX_SCORE = 80;
+
 function getColor(score: number): string {
-  const normalized = Math.min(100, Math.max(0, score)) / 100;
+  const normalized = Math.min(MAX_SCORE, Math.max(0, score)) / MAX_SCORE;
   // Inverted: high score (1.0) = #5200FF (purple), low score (0) = #FAF5FF (light)
   if (normalized < 0.5) {
     return interpolateColor("#D3C9FC", "#A08AF8", normalized * 2);
@@ -57,7 +60,6 @@ function getColor(score: number): string {
 
 // Score tier ranges (leader → nascent) for legend; colors from getColor()
 const TIER_LEGEND: { label: string; min: number; max: number }[] = [
-  { label: "Global Leader", min: 80, max: 100 },
   { label: "Advanced", min: 60, max: 80 },
   { label: "Developing", min: 40, max: 60 },
   { label: "Emerging", min: 20, max: 40 },
@@ -134,13 +136,22 @@ function buildTooltipContent(
 
 export function ChoroplethMap({
   rankingData,
+  getScore,
+  getRank,
 }: {
   rankingData: CountryRanking[];
+  /** Score used to colour each country. Defaults to the overall GIRAI score. */
+  getScore?: (c: CountryRanking) => number | null;
+  /** Rank shown in the tooltip. Defaults to the global GIRAI rank. */
+  getRank?: (c: CountryRanking) => number | null;
 }) {
   const [geojson, setGeojson] = useState<GeoJSON.GeoJsonObject | null>(null);
   const [selectedCountry, setSelectedCountry] =
     useState<CountryRanking | null>(null);
   const [isLocked, setIsLocked] = useState(true);
+
+  const resolveScore = getScore ?? ((c: CountryRanking) => c.girai);
+  const resolveRank = getRank ?? ((c: CountryRanking) => c.rankGlobal);
 
   const rankingByIso3 = useMemo(
     () => new Map(rankingData.map((r) => [r.iso3, r])),
@@ -154,12 +165,13 @@ export function ChoroplethMap({
       .catch(console.error);
   }, []);
 
-  const style = (feature?: { properties?: GeoJSONFeatureProps }) => {
-    const iso3 = feature?.properties?.iso_a3;
+  const style = (feature?: { properties?: GeoAdminProperties }) => {
+    const iso3 = resolveGeoIso3(feature?.properties);
     const countryData = iso3 ? rankingByIso3.get(iso3) : undefined;
+    const score = countryData ? resolveScore(countryData) : null;
     return {
-      fillColor: countryData && countryData.girai !== null
-        ? getColor(countryData.girai)
+      fillColor: score !== null && score !== undefined
+        ? getColor(score)
         : "var(--background)",
       weight: 1,
       opacity: 1,
@@ -169,20 +181,20 @@ export function ChoroplethMap({
   };
 
   const onEachFeature = (
-    feature: { properties?: GeoJSONFeatureProps },
+    feature: { properties?: GeoAdminProperties },
     layer: L.Layer
   ) => {
-    const iso3 = feature.properties?.iso_a3;
-    const iso2 = feature.properties?.iso_a2 ?? iso3?.slice(0, 2) ?? "";
+    const iso3 = resolveGeoIso3(feature.properties);
+    const iso2 = resolveGeoIso2(feature.properties) ?? "";
     const name = feature.properties?.admin ?? "";
     const countryData = iso3 ? rankingByIso3.get(iso3) : undefined;
 
-    if (countryData && iso2 && iso2 !== "-99") {
+    if (countryData && iso2) {
       const content = buildTooltipContent(
         countryData.name || name,
         iso2,
-        countryData.rankGlobal ?? 0,
-        countryData.girai ?? 0
+        resolveRank(countryData) ?? 0,
+        resolveScore(countryData) ?? 0
       );
       layer.bindTooltip(content, {
         sticky: true,
@@ -203,7 +215,7 @@ export function ChoroplethMap({
 
   return (
     <>
-      <div className="relative">
+      <div className="choropleth-map relative isolate z-0">
       <div className="my-5 flex flex-wrap items-center gap-x-6 gap-y-2 rounded-lg border bg-background/95 px-4 py-3 shadow-sm">
           <span className="text-muted-foreground text-sm font-medium">Score tier</span>
           {TIER_LEGEND.map(({ label, min, max }) => {
@@ -232,6 +244,7 @@ export function ChoroplethMap({
           touchZoom={!isLocked}
           boxZoom={!isLocked}
           keyboard={!isLocked}
+          attributionControl={false}
           style={{ backgroundColor: "rgba(var(--background), 0.5)" }}
         >
           <GeoJSON
@@ -241,7 +254,11 @@ export function ChoroplethMap({
           />
           <MapLockControl isLocked={isLocked} onToggle={() => setIsLocked(!isLocked)} />
         </MapContainer>
-       
+        <p className="text-muted-foreground/70 mt-2 text-xs leading-relaxed">
+          Boundaries and country names shown on this map are for illustrative
+          purposes only and do not imply any judgement or endorsement regarding
+          the legal status of any territory or its borders.
+        </p>
       </div>
       <CountryDrawer
         country={selectedCountry}

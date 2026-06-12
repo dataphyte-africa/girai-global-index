@@ -155,7 +155,7 @@ export const INDICATORS: IndicatorDef[] = [
   {
     slug: "socioeconomic-inclusion-connectivity",
     name: "Socioeconomic Inclusion in Connectivity",
-    aliases: ["Socioeconomic Inclusion in Connectivity"],
+    aliases: ["Socioeconomic Inclusion in Connectivity", "Device affordability"],
     dimension: "inclusion-diversity",
     pillar: "enabling-conditions",
     family: "enabling-conditions",
@@ -164,7 +164,7 @@ export const INDICATORS: IndicatorDef[] = [
   {
     slug: "gender-inclusion-connectivity",
     name: "Gender Inclusion in Connectivity",
-    aliases: ["Gender Inclusion in Connectivity"],
+    aliases: ["Gender Inclusion in Connectivity", "Gender gap in mobile internet"],
     dimension: "inclusion-diversity",
     pillar: "enabling-conditions",
     family: "enabling-conditions",
@@ -220,16 +220,7 @@ export const INDICATORS: IndicatorDef[] = [
   {
     slug: "environmental-performance",
     name: "Environmental Performance",
-    aliases: ["Environmental Performance"],
-    dimension: "ethics-sustainability",
-    pillar: "enabling-conditions",
-    family: "enabling-conditions",
-    hasEvidence: false,
-  },
-  {
-    slug: "institutional-integrity",
-    name: "Institutional Integrity",
-    aliases: ["Institutional Integrity"],
+    aliases: ["Environmental Performance", "Low-Carbon Energy Share"],
     dimension: "ethics-sustainability",
     pillar: "enabling-conditions",
     family: "enabling-conditions",
@@ -281,7 +272,7 @@ export const INDICATORS: IndicatorDef[] = [
   {
     slug: "labour-rights",
     name: "Labour Rights",
-    aliases: ["Labour Rights"],
+    aliases: ["Labour Rights", "Labour Rights Compliance"],
     dimension: "labour-skills",
     pillar: "enabling-conditions",
     family: "enabling-conditions",
@@ -290,7 +281,7 @@ export const INDICATORS: IndicatorDef[] = [
   {
     slug: "population-digital-readiness",
     name: "Population Digital Readiness",
-    aliases: ["Population Digital Readiness"],
+    aliases: ["Population Digital Readiness", "Skills and Literacy"],
     dimension: "labour-skills",
     pillar: "enabling-conditions",
     family: "enabling-conditions",
@@ -441,7 +432,7 @@ export const INDICATORS: IndicatorDef[] = [
   {
     slug: "civil-society-oversight",
     name: "Civil Society Oversight",
-    aliases: ["Civil Society Oversight"],
+    aliases: ["Civil Society Oversight", "Civil Society Accountability"],
     dimension: "ai-use-public-service",
     pillar: "enabling-conditions",
     family: "enabling-conditions",
@@ -459,7 +450,7 @@ export const INDICATORS: IndicatorDef[] = [
   {
     slug: "right-to-information",
     name: "Right to Information",
-    aliases: ["Right to Information"],
+    aliases: ["Right to Information", "Access to Public Information"],
     dimension: "ai-use-public-service",
     pillar: "enabling-conditions",
     family: "enabling-conditions",
@@ -468,7 +459,11 @@ export const INDICATORS: IndicatorDef[] = [
   {
     slug: "unacceptable-risks-ai-systems",
     name: "Unacceptable Risks AI Systems",
-    aliases: ["Unacceptable Risks AI Systems", "Unacceptable Risk AI Systems"],
+    aliases: [
+      "Unacceptable Risks AI Systems",
+      "Unacceptable Risk AI Systems",
+      "URAI Penalty",
+    ],
     dimension: "ai-use-public-service",
     pillar: "enabling-conditions",
     family: "enabling-conditions",

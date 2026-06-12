@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { BookOpen, Share2 } from "lucide-react";
+import { BookOpen, CircleCheck, Share2 } from "lucide-react";
 import {
   Card,
   CardHeader,
@@ -49,16 +49,37 @@ export function DimensionCard({ dimension }: DimensionCardProps) {
                 </CardDescription>
               </div>
             </CardHeader>
-            <CardContent className="space-y-4 pt-6">
-              <p className="text-sm leading-relaxed text-muted-foreground whitespace-pre-line">
-                {dimension.description}
-              </p>
+            <CardContent className="space-y-5 pt-6">
+              <h3 className="text-base font-semibold leading-snug">
+                See how indicators are distributed across the{" "}
+                {dimension.pillarGroups.length} pillars
+              </h3>
+              <div className="space-y-5">
+                {dimension.pillarGroups.map((group) => (
+                  <div key={group.slug} className="space-y-2.5">
+                    <p className="text-sm font-semibold text-foreground">
+                      {group.label}
+                    </p>
+                    <ul className="space-y-2">
+                      {group.indicators.map((indicator) => (
+                        <li
+                          key={indicator}
+                          className="flex items-start gap-2.5 text-sm text-muted-foreground"
+                        >
+                          <CircleCheck className="mt-0.5 size-4 shrink-0 text-primary" />
+                          <span>{indicator}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
             </CardContent>
             <CardFooter className="flex gap-3 pt-2">
               <Link href={`/dimensions/${dimension.id}`}>
-                <Button variant="default" size="sm">
+                <Button variant="outline" size="sm">
                   <BookOpen className="size-4" />
-                  View dimension
+                  Read more
                 </Button>
               </Link>
               <Button variant="outline" size="sm">

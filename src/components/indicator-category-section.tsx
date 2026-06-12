@@ -1,59 +1,112 @@
 "use client";
+
 import React from "react";
-import { CategoryStickScroll } from "./category-stick-scroll";
+import Image from "next/image";
+import { motion, useInView } from "motion/react";
 import { PILLARS } from "@/data/2026/taxonomy";
+import { PILLAR_COPY } from "@/lib/pillar-copy";
 
-/**
- * High-level summary copy for each of the three GIRAI pillars. The labels
- * track `taxonomy.PILLARS` so renames flow through; the editorial body
- * stays in this file until Sanity authoring lands (ADR 0004).
- */
-const PILLAR_COPY: Record<string, { heading: string; body: string; image: string }> = {
-  "ai-policy": {
-    heading: "AI Policy",
-    body: "This pillar assesses whether governments have established laws, strategies, guidelines, and other formal frameworks to guide the responsible development and use of AI. It looks not only at the existence of those frameworks, but also how they are implemented in practice — through designated bodies, plans, budgets, monitoring, and concrete initiatives.",
-    image: "/categories/government.png",
-  },
-  "cso-engagement": {
-    heading: "CSO Engagement",
-    body: "This pillar examines how civil society organisations, academic institutions, and other non-state actors contribute to AI governance through policy input, advocacy, research, oversight, and public engagement. It also captures the government mechanisms that make CSO participation meaningful, ongoing, and influential rather than one-off or symbolic.",
-    image: "/categories/cso-engagement.png",
-  },
-  "enabling-conditions": {
-    heading: "Enabling Conditions",
-    body: "This pillar reflects the broader national conditions that shape how AI is developed and governed — institutional integrity, rule of law, data protection, cybersecurity, digital readiness, and labour rights. These contextual indicators (drawn from established external data sources) help explain why countries differ in their ability to implement responsible AI practices.",
-    image: "/categories/country-context.png",
-  },
-};
+function CategoryColumn({
+  heading,
+  body,
+  image,
+  index,
+}: {
+  heading: string;
+  body: string;
+  image: string;
+  index: number;
+}) {
+  const ref = React.useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
 
-const content = PILLARS.map((pillar) => {
-  const copy = PILLAR_COPY[pillar.slug];
-  return {
-    title: copy.heading,
-    description: "",
-    content: (
-      <div className="flex flex-col h-full w-full items-center justify-center p-4 bg-muted rounded-md">
-        <img
-          src={copy.image}
-          className="w-full h-[300px] object-cover rounded-sm"
-          alt={copy.heading}
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 24 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+      transition={{ duration: 0.55, ease: "easeOut", delay: index * 0.08 }}
+      className="flex flex-col gap-4"
+    >
+      <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl">
+        <Image
+          src={image}
+          alt={heading}
+          fill
+          className="object-cover"
+          sizes="(max-width: 768px) 100vw, 33vw"
         />
-        <div className="flex flex-col gap-2 mt-2">
-          <h2 className="text-2xl font-bold">{copy.heading}</h2>
-          <p className="text-sm text-muted-foreground">{copy.body}</p>
-        </div>
       </div>
-    ),
-  };
-});
+      <h3 className="text-lg font-semibold text-foreground md:text-xl">
+        {heading}
+      </h3>
+      <p className="text-sm leading-relaxed text-muted-foreground">{body}</p>
+    </motion.div>
+  );
+}
 
 export function IndicatorCategorySection() {
+  const sectionRef = React.useRef<HTMLDivElement>(null);
+  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+
   return (
-    <section id="indicators" className="w-full">
-      <CategoryStickScroll
-        content={content}
-        backgroundColors={["#C8DBFF", "#D6FBC6", "#D8C7E4"]}
+    <section
+      id="indicators"
+      ref={sectionRef}
+      className="relative w-full overflow-hidden py-20 md:py-28"
+    >
+      <Image
+        src="/impact/circular-rings.svg"
+        alt=""
+        aria-hidden
+        width={398}
+        height={479}
+        className="pointer-events-none absolute -right-56 -top-50 w-[260px] opacity-90 md:w-[340px] lg:w-[400px]"
       />
+      <Image
+        src="/impact/circular-rings.svg"
+        alt=""
+        aria-hidden
+        width={398}
+        height={479}
+        className="pointer-events-none absolute -bottom-56 -left-36 w-[220px] rotate-180 opacity-90 md:w-[300px] lg:w-[360px]"
+      />
+
+      <div className="relative mx-auto max-w-6xl px-4 md:px-6">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="mx-auto mb-12 flex max-w-3xl flex-col items-center gap-4 text-center md:mb-16"
+        >
+          <h2 className="text-3xl font-bold leading-[1.1] tracking-tight md:text-4xl lg:text-5xl">
+            <span className="text-primary">Three Categories</span>
+            <span className="text-foreground">
+              {" "}
+              of Responsible AI Indicators
+            </span>
+          </h2>
+          <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground md:text-base">
+            To provide a comprehensive picture, the indicators for the Global
+            Index of Responsible AI are grouped into three categories
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-3 md:gap-6 lg:gap-8">
+          {PILLARS.map((pillar, index) => {
+            const copy = PILLAR_COPY[pillar.slug];
+            return (
+              <CategoryColumn
+                key={pillar.slug}
+                heading={copy.heading}
+                body={copy.body}
+                image={copy.image}
+                index={index}
+              />
+            );
+          })}
+        </div>
+      </div>
     </section>
   );
 }

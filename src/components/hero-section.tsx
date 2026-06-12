@@ -1,5 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { GlobeDemo } from './hero-globe'
 import { ArcPosition, Country } from '@/data/countries'
 import { Button } from './ui/button'
@@ -56,8 +57,8 @@ export const HeroSection = ( { arcData, markers }: { arcData: ArcPosition[], mar
         </p>
       </div>
       <div className="flex flex-row gap-2 justify-center md:justify-start">
-        <Button variant="default" size="lg">
-          Explore Index
+        <Button variant="default" size="lg" asChild>
+          <Link href="/evidence">Explore Index</Link>
         </Button>
       </div>
       </div>

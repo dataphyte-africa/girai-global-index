@@ -67,7 +67,7 @@ export function EvidenceExplorerSection({
               size="lg"
               className="rounded-full bg-primary px-6 text-primary-foreground shadow-lg shadow-primary/25 hover:bg-primary/90"
             >
-              <a href="#evidence-explorer">
+              <a href="/evidence">
                 Explore Evidence Explorer
                 <ArrowRight className="h-4 w-4" aria-hidden />
               </a>

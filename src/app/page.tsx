@@ -85,8 +85,8 @@ export default async function Home() {
       <DimensionsSection />
       <ReportDownloadSection />
       <TopTakeawaysSection />
-      <ChoroplethMapSection />
       <EvidenceExplorerSection stats={evidenceStats} />
+      <ChoroplethMapSection />
       <ComparisonSection
         countries={allCountries}
         regions={regions}
@@ -95,14 +95,14 @@ export default async function Home() {
       <IndicatorCategorySection />
       <LimitsOfMeasurementSection />
       <OurImpactSection />
-      <WhatMotivatedUsSection />
+     {/* { <WhatMotivatedUsSection /> */}
      {/* <WhyGIRAIMattersSection /> */}
       <ShapingIntelligenceSection />
 
-      <GlobalPerformanceSection
+      {/* <GlobalPerformanceSection
         topCountries={topCountries}
         bottomCountries={bottomCountries}
-      />
+      /> */}
 
       <FooterSection />
     </div>

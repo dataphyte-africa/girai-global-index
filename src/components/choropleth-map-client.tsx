@@ -13,8 +13,18 @@ const ChoroplethMap = dynamic(
 
 export function ChoroplethMapClient({
   rankingData,
+  getScore,
+  getRank,
 }: {
   rankingData: CountryRanking[];
+  getScore?: (c: CountryRanking) => number | null;
+  getRank?: (c: CountryRanking) => number | null;
 }) {
-  return <ChoroplethMap rankingData={rankingData} />;
+  return (
+    <ChoroplethMap
+      rankingData={rankingData}
+      getScore={getScore}
+      getRank={getRank}
+    />
+  );
 }
