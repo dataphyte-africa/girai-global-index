@@ -11,9 +11,14 @@ not available to this project and there is no commitment to acquire it.
 
 ## Decision
 
-The site supports a single edition (2026) only. The
-"Comparing Results Across Editions" section is dropped from the country
-page. In its place we surface **report download links** so visitors can
+The site supports a single edition (2026) for **scores and rankings**.
+The country page additionally surfaces **evidence-status comparison**
+between the 2024 and 2026 editions (framework / government-led / CSO
+pathways). See `docs/edition-indicator-mapping.md` and
+`country-edition-evidence-status.json`.
+
+Score-level edition comparison remains out of scope. In place of full
+historical score data we surface **report download links** so visitors can
 fetch the underlying GIRAI publications directly.
 
 The build pipeline therefore does not model `editions[]`; `rankings.json`

@@ -9,6 +9,8 @@ import {
   getRegionAverages,
   getIncomeGroupAverages,
   getRegions,
+  getCountryEditionEvidenceStatus,
+  getEditionEvidenceStatusArtifact,
 } from "@/lib/girai";
 import { CountryScoreHero } from "@/components/country-story/country-score-hero";
 import { CountryPerformanceOverview } from "@/components/country-story/country-performance-overview";
@@ -16,6 +18,7 @@ import {
   CountryMisuseEvidenceSection,
   CountryPerformanceDrivers,
   CountryEvidenceExplorerSection,
+  CountryEditionComparisonSection,
 } from "@/components/country-story";
 import { ComparisonSection } from "@/components/comparison-section";
 import { Header } from "@/components/header";
@@ -62,6 +65,8 @@ export default async function CountryStoryPage({ params }: PageProps) {
   const misuseEvidence = getGovernmentMisuseByCountry(country.iso3);
   const pillarHighlights = getCountryPillarHighlights(country.iso3);
   const countryEvidence = getEvidenceByCountry(country.iso3);
+  const editionStatus = getCountryEditionEvidenceStatus(country.iso3);
+  const editionArtifact = getEditionEvidenceStatusArtifact();
 
   return (
     <div className="flex flex-col min-h-screen bg-background font-sans dark:bg-black">
@@ -74,6 +79,14 @@ export default async function CountryStoryPage({ params }: PageProps) {
           regionAggregates={regionAggregates}
           incomeGroupAggregates={incomeGroupAggregates}
         />
+        {editionStatus ? (
+          <CountryEditionComparisonSection
+            countryName={country.name}
+            editionStatus={editionStatus}
+            indicatorCount={editionArtifact.indicatorCount}
+            indicators={editionArtifact.indicators}
+          />
+        ) : null}
         <ComparisonSection
           countries={allCountries}
           regions={regions}

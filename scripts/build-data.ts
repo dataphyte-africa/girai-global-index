@@ -6,6 +6,7 @@
  *   src/data/2026/generated/taxonomy.json
  *   src/data/2026/generated/countries.json
  *   src/data/2026/generated/rankings.json
+ *   src/data/2026/generated/country-edition-evidence-status.json
  *   public/data/2026/evidence.json
  *   public/data/2026/indicator-adoption.json
  *   public/data/2026/country-pillar-highlights.json
@@ -30,6 +31,7 @@ import {
   type DimensionSlug,
   type PillarSlug,
 } from "../src/data/2026/taxonomy.js";
+import { buildEditionComparisonArtifact } from "./build-edition-comparison.js";
 
 // ---------------------------------------------------------------------------
 // Paths
@@ -1333,5 +1335,54 @@ const linkTemplate = [
 ];
 writeCsv(path.join(OUT_CSV, "link-template.csv"), linkTemplate);
 console.log(`[build-data] wrote link-template.csv`);
+
+// ---------------------------------------------------------------------------
+// 6. Edition evidence-status comparison (2024 vs 2026)
+
+const AI_POLICY_SLUGS = new Set(
+  INDICATORS.filter((i) => i.family === "ai-policy").map((i) => i.slug)
+);
+
+const editionFrameworkRows = frameworksRows
+  .map((row) => {
+    const iso3 = str(row["ISO3"]);
+    const indicatorName = str(row["indicator"]);
+    if (!iso3 || !indicatorName) return null;
+    const ind = findIndicator(indicatorName);
+    if (!ind || ind.family !== "ai-policy") return null;
+    const enforceability =
+      str(row["fr1_enforceability"]) ?? str(row["fr2_enforceability"]) ?? "";
+    return {
+      iso3,
+      indicatorSlug: ind.slug,
+      frStatus: strOr(row["fr_status"]),
+      enforceability,
+    };
+  })
+  .filter((r): r is NonNullable<typeof r> => r !== null);
+
+const editionInitCounts = Array.from(evCountsByIsoIndicator.entries())
+  .map(([key, counts]) => {
+    const [iso3, indicatorSlug] = key.split("::");
+    if (!AI_POLICY_SLUGS.has(indicatorSlug)) return null;
+    return { iso3, indicatorSlug, initCount: counts.init };
+  })
+  .filter((r): r is NonNullable<typeof r> => r !== null);
+
+const editionCsoContributions = evidence
+  .filter((e) => e.kind === "cso-initiative" && e.contributesTo?.length)
+  .map((e) => ({
+    iso3: e.country.iso3,
+    contributesTo: e.contributesTo ?? [],
+  }));
+
+buildEditionComparisonArtifact({
+  generatedAt: GENERATED_AT,
+  sourceHash: SOURCE_HASH,
+  iso3List: countriesArr.map((c) => c.iso3),
+  frameworkRows2026: editionFrameworkRows,
+  initCounts2026: editionInitCounts,
+  csoContributions2026: editionCsoContributions,
+});
 
 console.log(`[build-data] done.`);

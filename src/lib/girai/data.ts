@@ -15,6 +15,7 @@ import taxonomyData from "@/data/2026/generated/taxonomy.json";
 import countriesData from "@/data/2026/generated/countries.json";
 import evidenceData from "@/data/2026/generated/evidence.json";
 import pillarHighlightsData from "@/data/2026/generated/country-pillar-highlights.json";
+import editionEvidenceStatusData from "@/data/2026/generated/country-edition-evidence-status.json";
 import { DIMENSIONS, PILLARS, INDICATORS } from "@/data/2026/taxonomy";
 import type {
   CountryRanking,
@@ -30,6 +31,9 @@ import type {
   IndicatorDef,
   CountryPillarHighlightsArtifact,
   CountryPillarHighlightsEntry,
+  CountryEditionEvidenceStatusArtifact,
+  CountryEditionEvidenceStatusEntry,
+  EditionPathwayId,
 } from "./types";
 
 // The JSON files are typed as `unknown`-ish by TypeScript; cast once at
@@ -40,6 +44,8 @@ const countries = countriesData as unknown as CountriesArtifact;
 const evidence = evidenceData as unknown as EvidenceArtifact;
 const pillarHighlights =
   pillarHighlightsData as unknown as CountryPillarHighlightsArtifact;
+const editionEvidenceStatus =
+  editionEvidenceStatusData as unknown as CountryEditionEvidenceStatusArtifact;
 
 /** All countries with full scores, ordered as they appear in the dataset. */
 export function getAllCountries(): CountryRanking[] {
@@ -267,4 +273,16 @@ export function countEvidenceByIndicator(): Record<string, number> {
 /** Total evidence items keyed by kind (mirror of `evidence.totals.byKind`). */
 export function getEvidenceTotals(): Record<EvidenceKind, number> {
   return evidence.totals.byKind;
+}
+
+/** Full edition-comparison artifact (2024 vs 2026 evidence status). */
+export function getEditionEvidenceStatusArtifact(): CountryEditionEvidenceStatusArtifact {
+  return editionEvidenceStatus;
+}
+
+/** Per-country 2024/2026 evidence status for the edition-comparison table. */
+export function getCountryEditionEvidenceStatus(
+  iso3: string
+): CountryEditionEvidenceStatusEntry | undefined {
+  return editionEvidenceStatus.countries[iso3.toUpperCase()];
 }

@@ -5,6 +5,7 @@ export { CountryPerformanceOverview } from "./country-performance-overview";
 export { CountryMisuseEvidenceSection } from "./country-misuse-evidence-section";
 export { CountryPerformanceDrivers } from "./country-performance-drivers";
 export { CountryEvidenceExplorerSection } from "./country-evidence-explorer-section";
+export { CountryEditionComparisonSection } from "./country-edition-comparison-section";
 export { RegionalComparison } from "./regional-comparison";
 export { CountryMapSVG, CountryMapWithGradient } from "./country-map-svg";
 export { DimensionIllustration } from "./indicator-illustrations";

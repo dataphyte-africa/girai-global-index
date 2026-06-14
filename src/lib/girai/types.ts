@@ -336,3 +336,50 @@ export interface CountriesArtifact {
     >
   >;
 }
+
+// ---------------------------------------------------------------------------
+// Edition evidence-status comparison (2024 vs 2026)
+
+export type EditionPathwayId = "frameworks" | "initiatives" | "cso";
+
+export type FrameworkDisplayStatus =
+  | "No Framework"
+  | "Binding Framework"
+  | "Non-Binding Framework"
+  | "Draft";
+
+export type YesNoDisplayStatus = "Yes" | "No";
+
+export type EditionDisplayStatus = FrameworkDisplayStatus | YesNoDisplayStatus;
+
+export type EditionPathwayStatuses = Record<
+  EditionPathwayId,
+  Record<string, EditionDisplayStatus | null>
+>;
+
+export interface CountryEditionEvidenceStatusEntry {
+  /** True when the country appears in the 2024 workbook `Data` sheet. */
+  has2024Coverage: boolean;
+  "2024": EditionPathwayStatuses;
+  "2026": EditionPathwayStatuses;
+}
+
+export interface CountryEditionEvidenceStatusArtifact {
+  generatedAt: string;
+  sourceHash: string;
+  editions: readonly ["2024", "2026"];
+  indicatorCount: number;
+  pathways: Record<
+    EditionPathwayId,
+    { label: string; statusType: "framework" | "yesNo" }
+  >;
+  mapping: {
+    crosswalk: Record<string, string>;
+    unmapped2026Indicators: Array<{ slug: string; name: string; reason: string }>;
+    unmapped2024ThematicAreas: Array<{ thematicArea: string; note: string }>;
+  };
+  /** ISO3 codes present in 2026 but absent from the 2024 dataset. */
+  countriesWithout2024Coverage: string[];
+  indicators: Array<{ slug: string; name: string }>;
+  countries: Record<string, CountryEditionEvidenceStatusEntry>;
+}
