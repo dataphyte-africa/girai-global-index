@@ -11,7 +11,10 @@
       ".DS_Store",
       "firebase-debug.log",
       "firebase-debug.*.log",
-      "functions"
+      "functions",
+      "public/data/2026",
+      "src/data/2026/generated",
+      "src/data/countries.json"
     ]
   }
 }

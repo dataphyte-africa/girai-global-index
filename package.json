@@ -5,7 +5,7 @@
   "packageManager": "pnpm@10.34.1",
   "scripts": {
     "dev": "next dev",
-    "prebuild": "pnpm build:data",
+    "prebuild": "pnpm build:data && pnpm build:narratives:deterministic",
     "build": "next build",
     "build:data": "tsx scripts/build-data.ts",
     "build:narratives": "tsx scripts/build-narratives.ts",
