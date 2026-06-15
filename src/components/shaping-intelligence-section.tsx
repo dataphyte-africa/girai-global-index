@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { motion, useInView } from "motion/react";
 import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation";
 
@@ -13,8 +14,18 @@ export function ShapingIntelligenceSection() {
       ref={sectionRef}
       className="relative flex items-center justify-center overflow-hidden py-32 md:py-44 lg:py-56"
     >
+      {/* Background image */}
+      <Image
+        src="/shaping-intelligence.png"
+        alt=""
+        fill
+        priority
+        sizes="100vw"
+        className="absolute inset-0 z-0 object-cover object-center select-none pointer-events-none dark:invert dark:hue-rotate-180 dark:brightness-[0.45] dark:contrast-125 dark:opacity-80 mix-blend-multiply dark:mix-blend-screen"
+      />
+
       {/* Animated gradient background */}
-      <BackgroundGradientAnimation
+      {/* <BackgroundGradientAnimation
         // Light mode: softer gradient, Dark mode: richer gradient
         gradientBackgroundStart="rgb(250, 245, 255)" // Light lavender for light mode base
         gradientBackgroundEnd="rgb(240, 253, 250)" // Light teal tint for light mode
@@ -34,10 +45,10 @@ export function ShapingIntelligenceSection() {
         interactive={true}
         containerClassName="!h-full !w-full !absolute !inset-0 dark:!bg-[linear-gradient(40deg,rgb(30,10,60),rgb(10,30,50))]"
         className="absolute inset-0 z-10"
-      />
+      /> */}
 
       {/* Radial fade overlay for smooth edge blending */}
-      <div className="absolute inset-0 shaping-vignette pointer-events-none z-20" />
+      {/* <div className="absolute inset-0 shaping-vignette pointer-events-none z-20" /> */}
 
       {/* Text content */}
       <motion.div
@@ -46,7 +57,7 @@ export function ShapingIntelligenceSection() {
         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
         transition={{ duration: 0.7, ease: "easeOut" }}
       >
-        <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight text-foreground drop-shadow-sm">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.1] tracking-tight text-foreground drop-shadow-sm">
           Shaping
           <br />
           Responsible

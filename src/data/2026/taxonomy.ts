@@ -471,6 +471,9 @@ export const INDICATORS: IndicatorDef[] = [
   },
 ];
 
+/** URAI penalty indicator — applied after aggregation, not a regular pillar score. */
+export const URAI_INDICATOR_SLUG = "unacceptable-risks-ai-systems";
+
 /**
  * Lookup tables built once. Keys include the canonical slug, the
  * canonical name, and every declared alias — all lower-cased and

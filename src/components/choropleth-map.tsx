@@ -100,7 +100,7 @@ function MapLockControl({ isLocked, onToggle }: { isLocked: boolean; onToggle: (
           variant="ghost"
           size="icon-sm"
           onClick={onToggle}
-          className="h-9 w-9 border-none outline-0 rounded-md border bg-background shadow-sm hover:bg-accent"
+          className="h-9 w-9 border-none outline-0 border bg-background shadow-sm hover:bg-accent"
           aria-label={isLocked ? "Unlock map" : "Lock map"}
         >
           {isLocked ? (

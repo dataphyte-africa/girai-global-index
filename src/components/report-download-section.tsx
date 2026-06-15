@@ -50,7 +50,7 @@ export function ReportDownloadSection() {
                 width={420}
                 height={560}
                 priority={false}
-                className="h-auto w-[260px] rounded-md shadow-2xl shadow-primary/20 ring-1 ring-black/5 sm:w-[320px] md:w-[360px] lg:w-[400px] dark:ring-white/10"
+                className="h-auto w-[260px] rounded-md  sm:w-[320px] md:w-[360px] lg:w-[400px] dark:ring-white/10"
               />
             </div>
           </motion.div>
@@ -84,7 +84,7 @@ export function ReportDownloadSection() {
               <Button
                 asChild
                 size="lg"
-                className="rounded-full bg-primary px-6 text-primary-foreground shadow-lg shadow-primary/25 hover:bg-primary/90"
+                className="bg-primary px-6 text-primary-foreground shadow-lg shadow-primary/25 hover:bg-primary/90"
               >
                 <a href="#download-report">
                   <Download className="h-4 w-4" aria-hidden />
@@ -96,7 +96,7 @@ export function ReportDownloadSection() {
                 asChild
                 variant="outline"
                 size="lg"
-                className="rounded-full border-primary/40 bg-background/60 px-6 text-primary hover:bg-primary/5 hover:text-primary dark:bg-background/30 dark:hover:bg-primary/10"
+                className="border-primary/40 bg-background/60 px-6 text-primary hover:bg-primary/5 hover:text-primary dark:bg-background/30 dark:hover:bg-primary/10"
               >
                 <a href="#download-2025">
                   <Download className="h-4 w-4" aria-hidden />

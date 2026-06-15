@@ -73,7 +73,7 @@ export function AboutWhyGiraiMattersSection() {
         <header className="mx-auto mb-12 flex max-w-2xl flex-col items-center text-center md:mb-14 lg:mb-16">
           <SectionAccent color="blue" className="mb-5" />
 
-          <h2 className="text-3xl font-bold tracking-tight md:text-4xl lg:text-[2.75rem] lg:leading-[1.12]">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight lg:leading-[1.12]">
             <span style={{ color: HEADING_DARK }}>Why </span>
             <span style={{ color: PURPLE }}>GIRAI</span>
             <span style={{ color: HEADING_DARK }}> Matters</span>

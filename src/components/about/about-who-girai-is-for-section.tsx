@@ -83,7 +83,7 @@ export function AboutWhoGiraiIsForSection() {
     <section className="w-full bg-white px-4 py-16 md:px-6 md:py-24 lg:py-28">
       <div className="mx-auto max-w-7xl">
         <header className="mx-auto mb-12 max-w-3xl text-center md:mb-14 lg:mb-16">
-          <h2 className="text-[1.75rem] font-bold leading-[1.18] tracking-tight md:text-4xl md:leading-[1.15] lg:text-[2.75rem]">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.18] tracking-tight md:leading-[1.15]">
             <span style={{ color: HEADING_DARK }}>Who GIRAI Is For in a </span>
             <span style={{ color: PURPLE }}>World Shaped by AI</span>
           </h2>

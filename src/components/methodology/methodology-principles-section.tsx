@@ -123,7 +123,7 @@ export function MethodologyPrinciplesSection() {
                 Methodological Principles
               </span>
 
-              <h2 className="mt-5 text-[1.75rem] font-bold leading-[1.18] tracking-tight md:text-4xl md:leading-[1.15] lg:text-[2.5rem]">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl mt-5 font-bold leading-[1.18] tracking-tight md:leading-[1.15]">
                 <span style={{ color: PURPLE }}>Built for Trust</span>
                 <span style={{ color: HEADING_DARK }}>
                   , Rigor, and Fair Comparison

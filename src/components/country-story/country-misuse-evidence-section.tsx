@@ -35,7 +35,7 @@ export function CountryMisuseEvidenceSection({
             <div className="space-y-3">
               <h2
                 id="country-misuse-evidence-heading"
-                className="text-3xl font-bold tracking-tight text-[#1e1b4b] dark:text-foreground md:text-4xl"
+                className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-[#1e1b4b] dark:text-foreground"
               >
                 Unacceptable Risk AI Systems
               </h2>
@@ -48,7 +48,7 @@ export function CountryMisuseEvidenceSection({
             <Button
               asChild
               size="lg"
-              className="w-fit rounded-full bg-primary px-6 text-primary-foreground shadow-md shadow-primary/20 hover:bg-primary/90"
+              className="w-fit bg-primary px-6 text-primary-foreground shadow-md shadow-primary/20 hover:bg-primary/90"
             >
               <a href={`mailto:${CONTACT_EMAIL}`}>Contact GIRAI</a>
             </Button>

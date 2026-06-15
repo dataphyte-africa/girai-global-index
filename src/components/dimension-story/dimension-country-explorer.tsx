@@ -69,7 +69,7 @@ export function DimensionCountryExplorer({
     <section className="w-full bg-[#f8f9ff] px-4 py-16 dark:bg-muted/20 md:px-8 md:py-24">
       <div className="mx-auto max-w-6xl">
         <div className="mx-auto mb-12 max-w-2xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight">
             <span className="text-primary">Explore</span>{" "}
             <span className="text-foreground">a Country&apos;s Performance</span>
           </h2>

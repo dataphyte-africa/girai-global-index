@@ -65,7 +65,7 @@ export function EvidenceExplorerSection({
             <Button
               asChild
               size="lg"
-              className="rounded-full bg-primary px-6 text-primary-foreground shadow-lg shadow-primary/25 hover:bg-primary/90"
+              className="bg-primary px-6 text-primary-foreground shadow-lg shadow-primary/25 hover:bg-primary/90"
             >
               <a href="/evidence">
                 Explore Evidence Explorer

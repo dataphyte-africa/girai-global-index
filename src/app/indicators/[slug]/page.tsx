@@ -114,7 +114,7 @@ export default async function IndicatorPage({ params }: PageProps) {
 
         {/* <div className="container mx-auto grid grid-cols-1 gap-10 px-4 py-12 lg:grid-cols-3 lg:gap-12">
           <section className="lg:col-span-2">
-            <h2 className="mb-4 text-xl font-semibold">Top countries</h2>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl mb-4 font-semibold">Top countries</h2>
             <ScoreLeaderboard entries={leaderboard} limit={20} />
             <p className="mt-3 text-sm text-muted-foreground">
               Showing the top {Math.min(20, leaderboard.length)} of{" "}

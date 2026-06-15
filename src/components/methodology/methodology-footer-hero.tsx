@@ -32,7 +32,7 @@ export function MethodologyFooterHero() {
         />
 
         <div className="relative z-10 flex min-h-[360px] flex-col justify-center px-8 py-14 sm:px-12 md:min-h-[480px] md:px-14 md:py-16 lg:min-h-[565px] lg:max-w-[56%] lg:px-16">
-          <h2 className="max-w-lg text-[2rem] font-bold leading-[1.12] tracking-tight md:text-4xl md:leading-[1.1] lg:text-[2.75rem]">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl max-w-lg font-bold leading-[1.12] tracking-tight md:leading-[1.1]">
             <span className="text-white">Download GIRAI Research</span>
             <br />
             <span style={{ color: TITLE_ACCENT }}>Methodology Handbook</span>

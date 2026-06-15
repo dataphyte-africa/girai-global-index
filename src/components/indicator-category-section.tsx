@@ -53,7 +53,7 @@ export function IndicatorCategorySection() {
     <section
       id="indicators"
       ref={sectionRef}
-      className="relative w-full overflow-hidden py-20 md:py-28"
+      className="relative w-full overflow-hidden py-20 md:py-20"
     >
       <Image
         src="/impact/circular-rings.svg"
@@ -61,7 +61,7 @@ export function IndicatorCategorySection() {
         aria-hidden
         width={398}
         height={479}
-        className="pointer-events-none absolute -right-56 -top-50 w-[260px] opacity-90 md:w-[340px] lg:w-[400px]"
+        className="pointer-events-none absolute rotate-180 right-0 top-[0px] w-[260px] opacity-90 md:w-[340px] lg:w-[340px]"
       />
       <Image
         src="/impact/circular-rings.svg"
@@ -69,17 +69,17 @@ export function IndicatorCategorySection() {
         aria-hidden
         width={398}
         height={479}
-        className="pointer-events-none absolute -bottom-56 -left-36 w-[220px] rotate-180 opacity-90 md:w-[300px] lg:w-[360px]"
+        className="pointer-events-none absolute -bottom-16 -left-16 w-[220px]  opacity-90 md:w-[300px] lg:w-[360px]"
       />
 
-      <div className="relative mx-auto max-w-6xl px-4 md:px-6">
+      <div className="relative mx-auto max-w-6xl px-3 md:px-1">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="mx-auto mb-12 flex max-w-3xl flex-col items-center gap-4 text-center md:mb-16"
         >
-          <h2 className="text-3xl font-bold leading-[1.1] tracking-tight md:text-4xl lg:text-5xl">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.1] tracking-tight">
             <span className="text-primary">Three Categories</span>
             <span className="text-foreground">
               {" "}

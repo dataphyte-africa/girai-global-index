@@ -1,21 +1,36 @@
 import { PILLARS, type PillarSlug } from "@/data/2026/taxonomy";
 import type { PillarScores } from "./types";
 
-/** Score-mix share: each pillar's contribution to the pillar score total (sums to 100). */
+/** Official GIRAI pillar weights used in the composite score. */
+export const PILLAR_WEIGHTS: Record<PillarSlug, number> = {
+  "ai-policy": 0.6,
+  "cso-engagement": 0.1,
+  "enabling-conditions": 0.3,
+};
+
+/** Weighted share: each pillar's contribution to the weighted pillar total (sums to 100). */
 export function computePillarContributionMix(
   pillarScores: PillarScores
 ): Record<PillarSlug, number | null> {
-  const sum = PILLARS.reduce((acc, p) => acc + (pillarScores[p.slug] ?? 0), 0);
-  if (sum <= 0) {
+  const weightedSum = PILLARS.reduce((acc, p) => {
+    const score = pillarScores[p.slug];
+    if (score === null) return acc;
+    return acc + score * PILLAR_WEIGHTS[p.slug];
+  }, 0);
+
+  if (weightedSum <= 0) {
     return Object.fromEntries(PILLARS.map((p) => [p.slug, null])) as Record<
       PillarSlug,
       number | null
     >;
   }
+
   return Object.fromEntries(
     PILLARS.map((p) => {
       const score = pillarScores[p.slug];
-      return [p.slug, score !== null ? (score / sum) * 100 : null];
+      if (score === null) return [p.slug, null];
+      const weighted = score * PILLAR_WEIGHTS[p.slug];
+      return [p.slug, (weighted / weightedSum) * 100];
     })
   ) as Record<PillarSlug, number | null>;
 }

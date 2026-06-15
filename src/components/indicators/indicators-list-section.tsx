@@ -33,7 +33,7 @@ export function IndicatorsListSection() {
           return (
             <div key={dimension.slug}>
               <h2
-                className="text-2xl font-bold tracking-tight md:text-3xl lg:text-[2rem]"
+                className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight"
                 style={{ color: HEADING_DARK }}
               >
                 {dimensionDisplayName(dimension)}

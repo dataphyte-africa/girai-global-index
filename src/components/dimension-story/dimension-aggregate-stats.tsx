@@ -17,7 +17,7 @@ export function DimensionAggregateStatsSection({
   return (
     <section className="w-full px-4 pt-16 md:px-8 md:pt-24">
       <div className="mx-auto max-w-5xl">
-        <h2 className="mb-10 text-center text-3xl font-bold tracking-tight md:text-4xl">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl mb-10 text-center font-bold tracking-tight">
           <span className="text-primary">Global</span>{" "}
           <span className="text-foreground">Aggregate Statistics</span>
         </h2>

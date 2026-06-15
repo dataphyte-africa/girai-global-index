@@ -4,7 +4,7 @@ import { Check } from "lucide-react";
 import { motion } from "motion/react";
 import { PILLARS } from "@/data/2026/taxonomy";
 import { PILLAR_COPY } from "@/lib/pillar-copy";
-import { getPillarNarrative } from "@/lib/narratives";
+import { getCountryPillarNarrative } from "@/lib/country-narratives";
 import {
   computePillarContributionMix,
   computePillarMedians,
@@ -43,7 +43,7 @@ export function CountryPerformanceDrivers({
         >
           <h2
             id="country-performance-drivers-heading"
-            className="text-3xl font-bold tracking-tight md:text-4xl"
+            className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight"
           >
             <span className="text-[#6c5cff]">What Drives</span>{" "}
             <span className="text-foreground">This Performance?</span>
@@ -65,10 +65,9 @@ export function CountryPerformanceDrivers({
               score !== null &&
               median !== null &&
               score >= median;
-            const callout = getPillarNarrative(
-              pillar.slug,
-              country.name,
-              score ?? 0
+            const calloutText = getCountryPillarNarrative(
+              country.iso3,
+              pillar.slug
             );
 
             return (
@@ -80,7 +79,7 @@ export function CountryPerformanceDrivers({
                 contributionPct={contribution}
                 bullets={pillarHighlight.bullets}
                 calloutLabel={isStrength ? "Strengths" : "Focus area"}
-                calloutText={callout.narrative}
+                calloutText={calloutText}
               />
             );
           })}

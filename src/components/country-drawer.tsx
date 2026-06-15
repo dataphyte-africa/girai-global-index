@@ -239,7 +239,7 @@ export function CountryDrawer({
 
         <SheetFooter className="border-t pt-4">
           <Link href={`/countries/${country.iso3}`} className="w-full">
-            <Button className="w-full rounded-full" size="lg">
+            <Button className="w-full" size="lg">
               View country page
             </Button>
           </Link>

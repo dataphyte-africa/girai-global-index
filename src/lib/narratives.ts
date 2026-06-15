@@ -10,6 +10,7 @@
 
 import type { DimensionSlug, PillarSlug } from "@/data/2026/taxonomy";
 import { getDimension, getPillar } from "@/data/2026/taxonomy";
+import { getOrdinalSuffix } from "./narratives/ordinal";
 
 // ---------------------------------------------------------------------------
 // Score tiers
@@ -162,39 +163,9 @@ export const pillarColors: Record<PillarSlug, string> = {
 };
 
 // ---------------------------------------------------------------------------
-// Country × dimension narrative
-//
-// Used by the country-performance-overview surface. Shaped to make the
-// future Sanity swap a one-line change: callers always invoke
-// `getCountryDimensionNarrative` and the implementation here is the
-// hard-coded fallback tier (ADR 0004). When the CMS + AI-generated
-// artifact arrives, swap this body to:
-//
-//   sanityCopy(iso3, slug) ?? generatedCopy(iso3, slug) ?? fallback()
-//
-// without touching any consumer.
-
-export function getCountryDimensionNarrative(args: {
-  iso3: string;
-  countryName: string;
-  slug: DimensionSlug;
-  score: number | null;
-}): string {
-  if (args.score === null) {
-    const dim = getDimension(args.slug);
-    return `${args.countryName} does not yet have a published score for ${dim.name}.`;
-  }
-  return getDimensionNarrative(args.slug, args.countryName, args.score).narrative;
-}
-
-// ---------------------------------------------------------------------------
 // Misc helpers
 
-export function getOrdinalSuffix(n: number): string {
-  const s = ["th", "st", "nd", "rd"];
-  const v = n % 100;
-  return n + (s[(v - 20) % 10] || s[v] || s[0]);
-}
+export { getOrdinalSuffix } from "./narratives/ordinal";
 
 export function getRegionalComparisonNarrative(
   country: string,

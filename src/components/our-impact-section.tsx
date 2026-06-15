@@ -54,7 +54,7 @@ function ImpactCardItem({ item, index }: { item: ImpactCard; index: number }) {
         <Button
           asChild
           size="sm"
-          className="rounded-md bg-primary px-4 text-primary-foreground hover:bg-primary/90"
+          className="bg-primary px-4 text-primary-foreground hover:bg-primary/90"
         >
           <a href={item.href}>Read more</a>
         </Button>

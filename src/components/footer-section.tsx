@@ -34,7 +34,7 @@ export function FooterSection() {
         <div className="bg-[#241960] rounded-2xl p-8 md:p-12 flex flex-col md:flex-row gap-8 md:gap-16 items-start">
           {/* Left - Subscribe text */}
           <div className="flex-1">
-            <h2 className="text-4xl md:text-5xl font-bold italic mb-4">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold italic mb-4">
               Subscribe
             </h2>
             <p className="text-white/70 text-sm max-w-xs">

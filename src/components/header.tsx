@@ -103,7 +103,7 @@ export const Header = () => {
                 <NavigationMenuTrigger className={desktopNavLinkClass}>
                   Explore
                 </NavigationMenuTrigger>
-                <NavigationMenuContent className="w-[min(92vw,58rem)] rounded-[1.75rem] border-border/60 bg-background/95 p-6 shadow-[0_32px_90px_-40px_rgba(15,23,42,0.45)] backdrop-blur-xl">
+                <NavigationMenuContent className="fixed! left-1/2! top-[calc(var(--header-height,4rem)+0.5rem)]! mt-0! w-[75vw]! max-w-[90rem]! -translate-x-1/2 rounded-[1.75rem] border-border/60 bg-background/95 p-6 shadow-[0_32px_90px_-40px_rgba(15,23,42,0.45)] backdrop-blur-xl">
                   <div className="grid gap-8 md:grid-cols-[0.9fr_1fr_1.15fr_1.35fr]">
                     <MenuColumn title="Explore" links={exploreLinks} />
                     <MenuColumn title="Regions" links={regionLinks} />
@@ -149,7 +149,7 @@ export const Header = () => {
             <ThemeSwitcher />
           </div>
 
-          <Button asChild className="hidden rounded-full px-5 shadow-sm sm:inline-flex">
+          <Button asChild className="hidden px-5 shadow-sm sm:inline-flex">
             <Link href="/data">
               <Download data-icon="inline-start" />
               Download Data
@@ -221,7 +221,7 @@ export const Header = () => {
                     <ThemeSwitcher />
                   </div>
 
-                  <Button asChild className="w-full rounded-full">
+                  <Button asChild className="w-full">
                     <Link href="/data" onClick={() => setSheetOpen(false)}>
                       <Download data-icon="inline-start" />
                       Download Data

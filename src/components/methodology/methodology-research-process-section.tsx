@@ -158,7 +158,7 @@ export function MethodologyResearchProcessSection() {
 
       <div className="relative mx-auto max-w-7xl">
         <header className="mx-auto max-w-3xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight md:text-4xl lg:text-[2.75rem] lg:leading-[1.12]">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight lg:leading-[1.12]">
             <span style={{ color: HEADING_DARK }}>Research and </span>
             <span style={{ color: PURPLE }}>Review Process</span>
           </h2>

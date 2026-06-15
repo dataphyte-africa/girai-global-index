@@ -8,6 +8,9 @@
     "prebuild": "pnpm build:data",
     "build": "next build",
     "build:data": "tsx scripts/build-data.ts",
+    "build:narratives": "tsx scripts/build-narratives.ts",
+    "build:narratives:llm": "tsx scripts/build-narratives.ts --llm",
+    "build:narratives:deterministic": "tsx scripts/build-narratives.ts --deterministic",
     "start": "next start",
     "lint": "eslint"
   },

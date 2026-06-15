@@ -1,5 +1,7 @@
 # Country page narrative templates (client review)
 
+> **Superseded for live country pages.** Editorial copy now comes from evidence-grounded fact bundles and generated narratives. See **[country-narratives.md](./country-narratives.md)** and the auto-generated **[country-narratives-index.md](./country-narratives-index.md)**. This document is retained as a record of the former score-tier templates.
+
 This document lists the **full editorial copy** used on GIRAI country pages for score-based narratives. Copy is generated from a country’s numeric score: the same template applies to every country in that score band.
 
 Templates use placeholders:
@@ -177,33 +179,41 @@ Each pillar card in "What drives this performance?" shows a **Contribution to ov
 
 ### What it represents
 
-It is each pillar's **share of the country's three pillar scores combined**. The three cards (AI Policy, CSO Engagement, Enabling Conditions) together add up to roughly 100% (subject to rounding).
+It is each pillar's **weighted share of the country's composite pillar contribution**. The three cards (AI Policy, CSO Engagement, Enabling Conditions) together add up to roughly 100% (subject to rounding).
 
 ### How it is calculated
 
-For a given country, every pillar has a score on a 0–100 scale.
+For a given country, every pillar has a score on a 0–100 scale and an official GIRAI weight:
 
-1. **Add up** the three pillar scores to get a total.
-2. For each pillar, **divide** its score by that total and multiply by 100.
-3. **Round** the result to a whole number for display.
+| Pillar | Weight |
+|--------|--------|
+| AI Policy | 0.6 |
+| CSO Engagement | 0.1 |
+| Enabling Conditions | 0.3 |
 
-So: `pillar contribution % = (pillar score ÷ sum of all three pillar scores) × 100`.
+1. For each pillar, compute **weighted contribution** = pillar score × pillar weight.
+2. **Add up** the weighted contributions to get a total.
+3. For each pillar, **divide** its weighted contribution by that total and multiply by 100.
+4. **Round** the result to a whole number for display.
+
+So: `pillar contribution % = (pillar score × pillar weight ÷ sum of weighted contributions) × 100`.
 
 ### Worked example
 
 If a country's pillar scores are AI Policy = 60, CSO Engagement = 30, Enabling Conditions = 50:
 
-- Total = 60 + 30 + 50 = 140
-- AI Policy → 60 ÷ 140 × 100 ≈ **43%**
-- CSO Engagement → 30 ÷ 140 × 100 ≈ **21%**
-- Enabling Conditions → 50 ÷ 140 × 100 ≈ **36%**
+- AI Policy weighted contribution = 60 × 0.6 = 36
+- CSO Engagement weighted contribution = 30 × 0.1 = 3
+- Enabling Conditions weighted contribution = 50 × 0.3 = 15
+- Total = 36 + 3 + 15 = 54
+- AI Policy → 36 ÷ 54 × 100 ≈ **67%**
+- CSO Engagement → 3 ÷ 54 × 100 ≈ **6%**
+- Enabling Conditions → 15 ÷ 54 × 100 ≈ **28%**
 
 ### Edge cases
 
-- If the three pillar scores add up to zero (or less), every card shows **—** instead of a percentage.
-- A pillar with no published score does not add to the total and shows **—** on its own card.
-
-**Note for reviewers:** This percentage is a **relative share of the three pillar scores** (a normalised score-mix), which is an intuitive proxy for "what's driving the result." It is not necessarily the exact weighted contribution to GIRAI's official composite/overall index value if that composite applies different pillar weights.
+- If the weighted contributions add up to zero (or less), every card shows **—** instead of a percentage.
+- A pillar with no published score does not add to the weighted total and shows **—** on its own card.
 
 ---
 

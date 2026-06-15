@@ -665,7 +665,7 @@ function PaginationControls({
         onClick={() => table.previousPage()}
         disabled={!table.getCanPreviousPage()}
         aria-label="Previous page"
-        className="size-8 rounded-lg border border-border bg-background"
+        className="size-8 border border-border bg-background"
       >
         <ChevronLeft className="size-4" />
       </Button>
@@ -684,7 +684,7 @@ function PaginationControls({
             size="icon-sm"
             onClick={() => table.setPageIndex(p - 1)}
             className={cn(
-              "size-8 rounded-lg text-sm tabular-nums",
+              "size-8 text-sm tabular-nums",
               p - 1 === pageIndex
                 ? "bg-primary text-primary-foreground hover:bg-primary/90"
                 : "text-muted-foreground hover:bg-muted"
@@ -700,7 +700,7 @@ function PaginationControls({
         onClick={() => table.nextPage()}
         disabled={!table.getCanNextPage()}
         aria-label="Next page"
-        className="size-8 rounded-lg border border-border bg-background"
+        className="size-8 border border-border bg-background"
       >
         <ChevronRight className="size-4" />
       </Button>

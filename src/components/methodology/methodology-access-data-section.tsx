@@ -35,7 +35,7 @@ export function MethodologyAccessDataSection() {
             OPEN DATA
           </span>
 
-          <h2 className="text-[1.75rem] font-bold leading-[1.18] tracking-tight md:text-4xl md:leading-[1.15] lg:text-[2.5rem]">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.18] tracking-tight md:leading-[1.15]">
             <span style={{ color: PURPLE }}>Access the Data</span>
             <br />
             <span style={{ color: HEADING_DARK }}>Behind the Index</span>

@@ -46,7 +46,7 @@ export function PathwayPicker({ totals }: PathwayPickerProps) {
   return (
     <section className="border-b border-border/60 bg-background py-12 md:py-16">
       <div className="mx-auto max-w-6xl px-4 md:px-6">
-        <h2 className="text-center text-2xl font-bold tracking-tight text-foreground md:text-3xl">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl text-center font-bold tracking-tight text-foreground">
           What would you like to explore?
         </h2>
         <p className="mx-auto mt-2 max-w-xl text-center text-sm text-muted-foreground md:text-base">

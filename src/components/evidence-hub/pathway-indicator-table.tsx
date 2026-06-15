@@ -240,7 +240,7 @@ export function PathwayIndicatorTable() {
   return (
     <section className="bg-muted/30 py-12 md:py-16">
       <div className="mx-auto max-w-6xl px-4 md:px-6">
-        <h2 className="text-2xl font-bold tracking-tight text-foreground md:text-3xl">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-foreground">
           {prefix ? (
             <>
               {prefix}{" "}
@@ -424,7 +424,7 @@ function IndicatorTableRow({
           variant="outline"
           size="sm"
           onClick={onExplore}
-          className="rounded-full border-primary/30 text-primary hover:bg-primary/5"
+          className="border-primary/30 text-primary hover:bg-primary/5"
         >
           Explore
           <ArrowRight className="ml-1 h-3.5 w-3.5" aria-hidden />

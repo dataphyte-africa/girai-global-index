@@ -125,7 +125,7 @@ export function DimensionKeyIndicators({
     <section className="w-full px-4 py-16 md:px-8 md:py-24">
       <div className="mx-auto max-w-6xl">
         <div className="mx-auto mb-12 max-w-2xl text-center md:mb-16">
-          <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight">
             <span className="text-primary">Key Indicators</span>{" "}
             <span className="text-foreground">Within This Dimension</span>
           </h2>

@@ -76,7 +76,7 @@ export function RegionsPerformanceOverview({
       <div className="mx-auto max-w-6xl">
         <header className="mx-auto mb-10 max-w-2xl text-center md:mb-12">
           <h2
-            className="text-3xl font-bold tracking-tight md:text-4xl"
+            className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight"
             style={{ color: HEADING_DARK }}
           >
             Regional Performance Overview

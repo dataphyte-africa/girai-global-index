@@ -176,7 +176,7 @@ function PublicCard({ item }: { item: EvidenceItem }) {
         </div>
       ) : null}
 
-      <h2 className="mb-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+      <h2 className="text-3xl md:text-4xl lg:text-5xl mb-3 font-semibold uppercase tracking-wide text-muted-foreground">
         Justification
       </h2>
       <p className="whitespace-pre-line text-sm leading-relaxed text-foreground">
@@ -226,7 +226,7 @@ function ThematicCoverageCard({
 }) {
   return (
     <article className="rounded-2xl border border-border bg-card p-6 shadow-sm">
-      <h2 className="mb-4 text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+      <h2 className="text-3xl md:text-4xl lg:text-5xl mb-4 font-semibold uppercase tracking-wide text-muted-foreground">
         Thematic coverage
       </h2>
       <ul className="space-y-3">
@@ -268,7 +268,7 @@ function ValidationPanel({
   return (
     <div className="rounded-2xl border border-border bg-card shadow-sm">
       <div className="border-b border-border px-4 py-3">
-        <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold uppercase tracking-wide text-muted-foreground">
           Validation
         </h2>
       </div>

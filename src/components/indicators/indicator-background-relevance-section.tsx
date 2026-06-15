@@ -49,7 +49,7 @@ function Column({
   return (
     <div>
       <h2
-        className="text-[1.75rem] font-bold leading-[1.2] tracking-tight md:text-[2rem] md:leading-[1.18]"
+        className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.2] tracking-tight md:leading-[1.18]"
         style={{ color: HEADING_DARK }}
       >
         {label}{" "}

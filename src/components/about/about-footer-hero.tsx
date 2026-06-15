@@ -30,7 +30,7 @@ export function AboutFooterHero() {
         />
 
         <div className="relative z-10 flex min-h-[340px] flex-col justify-center px-8 py-14 sm:px-12 md:min-h-[420px] md:px-14 md:py-16 lg:min-h-[480px] lg:max-w-[52%] lg:px-16">
-          <h2 className="max-w-md text-[2rem] font-bold leading-[1.12] tracking-tight text-white md:text-4xl md:leading-[1.1] lg:text-[2.75rem]">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl max-w-md font-bold leading-[1.12] tracking-tight text-white md:leading-[1.1]">
             Discover How AI Is Governed
           </h2>
 

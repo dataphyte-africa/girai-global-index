@@ -41,7 +41,7 @@ export function CountryEvidenceExplorerSection(
       className="scroll-mt-20 border-t border-border/60 bg-background py-16 md:py-24"
     >
       <div className="container mx-auto max-w-6xl px-4 md:px-6">
-        <h2 id="country-evidence-heading" className="sr-only">
+        <h2 id="country-evidence-heading" className="text-3xl md:text-4xl lg:text-5xl sr-only">
           Evidence for {props.countryName}
         </h2>
         <Suspense

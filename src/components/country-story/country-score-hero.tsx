@@ -2,7 +2,8 @@
 
 import { CountryMapSVG } from "./country-map-svg";
 import { iso3ToIso2 } from "@/data/countries";
-import { getIndexNarrative, getOrdinalSuffix } from "@/lib/narratives";
+import { getCountryHeroNarrative } from "@/lib/country-narratives";
+import { getOrdinalSuffix } from "@/lib/narratives/ordinal";
 import type { CountryRanking } from "@/lib/girai";
 import { cn } from "@/lib/utils";
 
@@ -54,7 +55,7 @@ export function CountryScoreHero({ country, className }: CountryScoreHeroProps) 
   const flagUrl = `https://flagcdn.com/w160/${iso2}.png`;
 
   const indexScore = country.girai ?? 0;
-  const indexNarrative = getIndexNarrative(country.name, indexScore);
+  const heroNarrative = getCountryHeroNarrative(country.iso3);
 
   return (
     <section
@@ -119,7 +120,7 @@ export function CountryScoreHero({ country, className }: CountryScoreHeroProps) 
         </div>
 
         <p className="max-w-lg text-sm leading-relaxed text-[#374151] dark:text-foreground/75 md:text-[15px] md:leading-7">
-          {indexNarrative.narrative}
+          {heroNarrative}
         </p>
       </div>
     </section>

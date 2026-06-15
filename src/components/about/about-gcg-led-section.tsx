@@ -25,7 +25,7 @@ export function AboutGcgLedSection() {
           </span>
 
           <h2
-            className="text-[1.75rem] font-bold leading-[1.18] tracking-tight md:text-4xl md:leading-[1.15] lg:text-[2.5rem]"
+            className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.18] tracking-tight md:leading-[1.15]"
             style={{ color: HEADING_DARK }}
           >
             GIRAI is led by the Global Center on AI Governance (GCG)

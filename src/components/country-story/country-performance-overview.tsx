@@ -17,14 +17,15 @@
  * regional aggregate for "Avrg. Dimension score", and the income-group
  * aggregate for the Income Group card's peer-average reference).
  *
- * Narrative copy is sourced via `getCountryDimensionNarrative` so a future
- * Sanity swap (per ADR 0004) is a one-line change inside that helper.
+ * Narrative copy is sourced via `@/lib/country-narratives` (fact bundles →
+ * generated/deterministic fallback per ADR 0004).
  */
 
 import { motion } from "motion/react";
 import type { CountryRanking, ScoreAggregates } from "@/lib/girai";
 import { DIMENSIONS } from "@/data/2026/taxonomy";
-import { getCountryDimensionNarrative, getOrdinalSuffix } from "@/lib/narratives";
+import { getCountryDimensionNarrative } from "@/lib/country-narratives";
+import { getOrdinalSuffix } from "@/lib/narratives/ordinal";
 
 interface Props {
   country: CountryRanking;
@@ -83,7 +84,7 @@ export function CountryPerformanceOverview({
           transition={{ duration: 0.6 }}
           className="text-center mb-12 md:mb-16 max-w-3xl mx-auto"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground tracking-tight">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground tracking-tight">
             How <span className="text-[#6c5cff]">{country.name}</span> Performs
             Across the Five Dimensions
           </h2>
@@ -111,12 +112,7 @@ export function CountryPerformanceOverview({
               const avg = regionAggregates?.dimensions[dim.slug] ?? null;
               const rankG = country.dimensionRanksGlobal[dim.slug];
               const rankR = country.dimensionRanksRegional[dim.slug];
-              const blurb = getCountryDimensionNarrative({
-                iso3: country.iso3,
-                countryName: country.name,
-                slug: dim.slug,
-                score,
-              });
+              const blurb = getCountryDimensionNarrative(country.iso3, dim.slug);
               return (
                 <DimensionCardView
                   key={dim.slug}

@@ -1,7 +1,8 @@
 "use client";
 
 import React from "react";
-import { motion, useInView } from "motion/react";
+import { AnimatePresence, motion, useInView } from "motion/react";
+import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 type Takeaway = {
@@ -71,33 +72,75 @@ const takeaways: Takeaway[] = [
   },
 ];
 
-function TakeawayCard({ item, index }: { item: Takeaway; index: number }) {
+function TakeawayAccordionItem({
+  item,
+  index,
+  isOpen,
+  onToggle,
+}: {
+  item: Takeaway;
+  index: number;
+  isOpen: boolean;
+  onToggle: () => void;
+}) {
   const ref = React.useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const isInView = useInView(ref, { once: true, margin: "-60px" });
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 24 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+      initial={{ opacity: 0, y: 16 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
       transition={{
-        duration: 0.5,
+        duration: 0.45,
         ease: "easeOut",
-        delay: (index % 2) * 0.05 + Math.floor(index / 2) * 0.06,
+        delay: index * 0.04,
       }}
-      className="group flex gap-4 rounded-xl border border-border/60 bg-card/70 p-5 backdrop-blur-sm transition-colors hover:border-primary/40 hover:bg-card md:p-6 dark:bg-card/40 dark:hover:bg-card/70"
+      className="rounded-2xl bg-white/90 shadow-[0_1px_2px_rgba(15,23,42,0.04),0_8px_24px_-12px_rgba(76,29,149,0.18)] ring-1 ring-black/4 backdrop-blur-sm dark:bg-card/60 dark:ring-white/10"
     >
-      <span className="font-mono text-xs font-medium tabular-nums text-muted-foreground/80 pt-0.5 select-none">
-        {String(index + 1).padStart(2, "0")}
-      </span>
-      <div className="flex flex-col gap-2">
-        <h3 className="text-base md:text-lg font-semibold leading-snug text-foreground">
+      <button
+        type="button"
+        onClick={onToggle}
+        aria-expanded={isOpen}
+        className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left md:px-6 md:py-5"
+      >
+        <span className="text-sm md:text-base font-medium leading-snug text-foreground">
           {item.title}
-        </h3>
-        <p className="text-sm leading-relaxed text-muted-foreground">
-          {item.description}
-        </p>
-      </div>
+        </span>
+        <span
+          className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors ${
+            isOpen ? "bg-primary/10 text-primary" : "bg-transparent"
+          }`}
+        >
+          <motion.span
+            animate={{ rotate: isOpen ? 45 : 0 }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
+            className="flex"
+          >
+            <Plus className="h-4 w-4" strokeWidth={2} />
+          </motion.span>
+        </span>
+      </button>
+
+      <AnimatePresence initial={false}>
+        {isOpen ? (
+          <motion.div
+            key="content"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            className="overflow-hidden"
+          >
+            <div className="px-5 pb-5 md:px-6 md:pb-6">
+              <div className="h-px w-full bg-border/60" />
+              <p className="pt-4 text-sm leading-relaxed text-muted-foreground">
+                {item.description}
+              </p>
+            </div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </motion.div>
   );
 }
@@ -113,6 +156,7 @@ export function TopTakeawaysSection({
 }: TopTakeawaysSectionProps = {}) {
   const sectionRef = React.useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+  const [openIndex, setOpenIndex] = React.useState<number | null>(0);
 
   return (
     <section
@@ -120,7 +164,6 @@ export function TopTakeawaysSection({
       ref={sectionRef}
       className="relative overflow-hidden py-20 md:py-28"
     >
-      {/* Soft lavender gradient background — light/dark aware */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-violet-50/80 via-background to-background dark:from-violet-950/30 dark:via-background dark:to-background"
@@ -134,29 +177,35 @@ export function TopTakeawaysSection({
         }}
       />
 
-      <div className="relative mx-auto max-w-6xl px-4 md:px-6">
+      <div className="relative mx-auto max-w-3xl px-4 md:px-6">
         {showHeader ? (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="mx-auto mb-12 flex max-w-2xl flex-col items-center gap-4 text-center md:mb-16"
+            className="mx-auto mb-10 flex max-w-2xl flex-col items-center gap-3 text-center md:mb-14"
           >
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight">
-              <span className="text-primary">Key</span>{" "}
-              <span className="text-foreground">Findings</span>
+              <span className="text-primary">Top 10</span>{" "}
+              <span className="text-foreground">take away</span>
             </h2>
             <p className="text-sm md:text-base text-muted-foreground leading-relaxed max-w-xl">
-              What the data from 135 countries and jurisdictions reveals about
-              the state of AI governance worldwide.
+              Strengthening Clarity, Comparability, and Implementation Focus
             </p>
           </motion.div>
         ) : null}
 
-        {/* Grid of takeaways */}
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5">
+        <div className="flex flex-col gap-3 md:gap-4">
           {takeaways.map((item, index) => (
-            <TakeawayCard key={item.title} item={item} index={index} />
+            <TakeawayAccordionItem
+              key={item.title}
+              item={item}
+              index={index}
+              isOpen={openIndex === index}
+              onToggle={() =>
+                setOpenIndex((current) => (current === index ? null : index))
+              }
+            />
           ))}
         </div>
 
@@ -171,7 +220,7 @@ export function TopTakeawaysSection({
               asChild
               variant="outline"
               size="lg"
-              className="rounded-full border-primary/40 bg-background/60 px-8 text-primary hover:bg-primary/5 hover:text-primary dark:bg-background/30 dark:hover:bg-primary/10"
+              className="border-primary/40 bg-background/60 px-8 text-primary hover:bg-primary/5 hover:text-primary dark:bg-background/30 dark:hover:bg-primary/10"
             >
               <a href="/takeaways">View All Takeaways</a>
             </Button>

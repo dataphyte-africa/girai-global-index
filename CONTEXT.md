@@ -107,7 +107,9 @@ indicator. The site places URAI under
 `(ai-use-public-service, enabling-conditions)` — the closest semantic
 fit, since URAI is about government deployment of unacceptable AI. This
 is a pragmatic choice; if GIRAI publishes an official placement in a
-later edition, update `taxonomy.ts` accordingly.
+later edition, update `taxonomy.ts` accordingly. The comparison tool
+surfaces URAI separately from pillar indicators as a post-aggregation
+score adjustment.
 
 ### Government Misuse (URAI evidence)
 The user-facing label for the `urai` evidence sheet — documented cases of

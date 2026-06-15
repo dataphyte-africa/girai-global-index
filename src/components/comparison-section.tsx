@@ -6,6 +6,7 @@ import {
   Check,
   ChevronDown,
   Filter,
+  Info,
   Plus,
   Search,
   X,
@@ -19,13 +20,23 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import type {
   CountryRanking,
   PillarSlug,
   ScoreAggregates,
 } from "@/lib/girai";
 import { countryFlags } from "@/data/countries";
-import { DIMENSIONS, INDICATORS, PILLARS } from "@/data/2026/taxonomy";
+import {
+  DIMENSIONS,
+  INDICATORS,
+  PILLARS,
+  URAI_INDICATOR_SLUG,
+} from "@/data/2026/taxonomy";
 import { getOrdinalSuffix } from "@/lib/narratives";
 
 // ---------------------------------------------------------------------------
@@ -38,6 +49,13 @@ export type ComparisonEntityRef =
 
 type EntityRef = ComparisonEntityRef;
 
+type BreakdownMode = "dimensions" | "pillars";
+
+/** Indicators scored on the 0–100 framework matrix (excludes URAI penalty). */
+const REGULAR_INDICATORS = INDICATORS.filter(
+  (ind) => ind.slug !== URAI_INDICATOR_SLUG
+);
+
 interface ResolvedEntity {
   id: string;
   kind: "country" | "region";
@@ -48,7 +66,12 @@ interface ResolvedEntity {
   rankGlobal?: number | null;
   rankRegional?: number | null;
   dimensions: Record<string, number | null>;
+  pillars: Record<string, number | null>;
   indicators: Record<string, number | null>;
+  /** Country-only: URAI penalty multiplier (1.0 = none). */
+  uraiPenalty?: number | null;
+  /** Country-only: government-misuse evidence count. */
+  uraiCount?: number;
 }
 
 // Palette per slot index — must stay stable as slots are added/removed.
@@ -114,6 +137,49 @@ const PILLAR_BADGES: Record<
 // ---------------------------------------------------------------------------
 // Helpers
 
+function ComparisonHelpTip({ content }: { content: string }) {
+  return (
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <button
+          type="button"
+          className="inline-flex shrink-0 rounded-full p-0.5 text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          aria-label="More information"
+        >
+          <Info className="h-3.5 w-3.5" />
+        </button>
+      </TooltipTrigger>
+      <TooltipContent side="top" className="max-w-xs text-left">
+        {content}
+      </TooltipContent>
+    </Tooltip>
+  );
+}
+
+function formatUraiPenalty(entity: ResolvedEntity): {
+  label: string;
+  detail?: string;
+} {
+  if (entity.kind === "country") {
+    const penalty = entity.uraiPenalty;
+    if (penalty !== null && penalty !== undefined && penalty < 1) {
+      const count = entity.uraiCount ?? 0;
+      return {
+        label: `×${penalty.toFixed(2)}`,
+        detail:
+          count > 0
+            ? `${count} government-misuse ${count === 1 ? "item" : "items"}`
+            : undefined,
+      };
+    }
+    return { label: "No penalty" };
+  }
+  const avg = entity.indicators[URAI_INDICATOR_SLUG] ?? null;
+  if (avg === null) return { label: "—" };
+  if (avg >= 0.999) return { label: "No penalty" };
+  return { label: `×${avg.toFixed(2)}`, detail: "Regional average" };
+}
+
 function refKey(ref: EntityRef): string {
   if (!ref) return "none";
   return `${ref.kind}:${ref.kind === "country" ? ref.iso3 : ref.name}`;
@@ -166,7 +232,10 @@ function resolveRef(
       rankGlobal: c.rankGlobal,
       rankRegional: c.rankRegional,
       dimensions: c.dimensionScores,
+      pillars: c.pillarScores,
       indicators: c.indicatorScores,
+      uraiPenalty: c.uraiPenalty,
+      uraiCount: c.uraiCount,
     };
   }
   const agg = regionMap.get(ref.name);
@@ -178,6 +247,7 @@ function resolveRef(
     sub: "Regional average",
     girai: agg.girai,
     dimensions: agg.dimensions,
+    pillars: agg.pillars,
     indicators: agg.indicators,
   };
 }
@@ -496,23 +566,68 @@ function StatCardStrip({ entities }: { entities: ResolvedEntity[] }) {
 }
 
 // ---------------------------------------------------------------------------
-// Dimension comparison card (left)
+// Score breakdown card (left) — dimensions or pillars
 
-function DimensionCard({
+function ScoreBreakdownCard({
   entities,
 }: {
   entities: ResolvedEntity[];
 }) {
+  const [mode, setMode] = useState<BreakdownMode>("dimensions");
+
+  const categories =
+    mode === "dimensions"
+      ? DIMENSIONS.map((d) => ({ slug: d.slug, name: d.name }))
+      : PILLARS.map((p) => ({ slug: p.slug, name: p.name }));
+
+  const getValue = (entity: ResolvedEntity, slug: string) =>
+    mode === "dimensions"
+      ? (entity.dimensions[slug] ?? null)
+      : (entity.pillars[slug] ?? null);
+
   return (
     <div className="bg-card border rounded-2xl p-5 md:p-6 shadow-sm">
-      <h4 className="text-base font-semibold mb-6">Dimension scores</h4>
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+        <div className="flex items-center gap-2">
+          <h4 className="text-base font-semibold">
+            {mode === "dimensions" ? "Dimension scores" : "Pillar scores"}
+          </h4>
+          <ComparisonHelpTip content="Switch between dimension-level and pillar-level aggregate scores for the selected countries or regions." />
+        </div>
+        <div className="inline-flex rounded-full border bg-muted/50 p-1 text-sm">
+          <button
+            type="button"
+            onClick={() => setMode("dimensions")}
+            className={cn(
+              "rounded-full px-3 py-1 font-medium transition-all",
+              mode === "dimensions"
+                ? "bg-background text-foreground shadow-sm"
+                : "text-muted-foreground hover:text-foreground"
+            )}
+          >
+            Dimensions
+          </button>
+          <button
+            type="button"
+            onClick={() => setMode("pillars")}
+            className={cn(
+              "rounded-full px-3 py-1 font-medium transition-all",
+              mode === "pillars"
+                ? "bg-background text-foreground shadow-sm"
+                : "text-muted-foreground hover:text-foreground"
+            )}
+          >
+            Pillars
+          </button>
+        </div>
+      </div>
 
       <div className="space-y-7">
-        {DIMENSIONS.map((d, idx) => (
-          <div key={d.slug}>
+        {categories.map((cat, idx) => (
+          <div key={cat.slug}>
             <div className="flex items-center justify-between mb-2.5">
               <span className="text-sm font-medium text-foreground">
-                {d.name}
+                {cat.name}
               </span>
             </div>
             <div className="space-y-2">
@@ -521,10 +636,8 @@ function DimensionCard({
               )}
               {entities.map((e, slotIdx) => {
                 const palette = SLOT_PALETTE[slotIdx % SLOT_PALETTE.length];
-                const value = e.dimensions[d.slug] ?? null;
+                const value = getValue(e, cat.slug);
                 const pct = value === null ? 0 : Math.min(value, 100);
-                // Only render the label inside the bar when the fill is wide
-                // enough to hold it; otherwise keep it readable beside the dot.
                 const labelFitsInside = pct >= 22;
                 return (
                   <div
@@ -723,7 +836,7 @@ function IndicatorTable({
   );
 
   const visibleIndicators = useMemo(
-    () => INDICATORS.filter((ind) => activePillars.has(ind.pillar)),
+    () => REGULAR_INDICATORS.filter((ind) => activePillars.has(ind.pillar)),
     [activePillars]
   );
 
@@ -748,11 +861,15 @@ function IndicatorTable({
       <div className="px-5 py-4 border-b flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2.5">
           <h4 className="text-base font-semibold">Indicators</h4>
+          <ComparisonHelpTip content="Scores are 0–100. The star marks the highest score among selected entities when values differ." />
           <span className="text-xs text-muted-foreground">
-            {visibleIndicators.length} of {INDICATORS.length}
+            {visibleIndicators.length} of {REGULAR_INDICATORS.length}
           </span>
         </div>
-        <PillarFilter active={activePillars} onChange={setActivePillars} />
+        <div className="flex items-center gap-1.5">
+          <ComparisonHelpTip content="Show or hide indicator rows by pillar: AI Policy, CSO Engagement, and Enabling Conditions." />
+          <PillarFilter active={activePillars} onChange={setActivePillars} />
+        </div>
       </div>
       <Table containerClassName="max-h-[640px] overflow-auto">
         <TableHeader className="sticky top-0 z-10 [&_th]:bg-card [&_th]:shadow-[0_1px_0_var(--border)]">
@@ -868,6 +985,63 @@ function IndicatorTable({
             ))}
           </TableBody>
         </Table>
+      {entities.length > 0 && (
+        <div className="border-t px-5 py-4">
+          <div className="flex items-center gap-2 mb-3">
+            <h5 className="text-sm font-semibold">URAI score adjustment</h5>
+            <ComparisonHelpTip content="URAI is not a dimension or pillar score. It is a multiplier applied to the overall GIRAI score after aggregation when government misuse evidence is on file." />
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="text-xs text-muted-foreground">
+                  <th className="pb-2 text-left font-medium">Adjustment</th>
+                  {entities.map((e, idx) => {
+                    const palette = SLOT_PALETTE[idx % SLOT_PALETTE.length];
+                    return (
+                      <th key={e.id} className="pb-2 text-right font-medium">
+                        <span className="inline-flex items-center justify-end gap-1.5">
+                          <span
+                            className={cn("h-2 w-2 rounded-full", palette.dot)}
+                          />
+                          <span className="truncate max-w-[120px]">{e.label}</span>
+                        </span>
+                      </th>
+                    );
+                  })}
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className="py-1 text-muted-foreground">
+                    Unacceptable Risks AI Systems
+                  </td>
+                  {entities.map((e, idx) => {
+                    const palette = SLOT_PALETTE[idx % SLOT_PALETTE.length];
+                    const { label, detail } = formatUraiPenalty(e);
+                    return (
+                      <td
+                        key={e.id}
+                        className={cn(
+                          "py-1 text-right tabular-nums font-medium",
+                          palette.text
+                        )}
+                      >
+                        <span>{label}</span>
+                        {detail && (
+                          <span className="mt-0.5 block text-[11px] font-normal text-muted-foreground">
+                            {detail}
+                          </span>
+                        )}
+                      </td>
+                    );
+                  })}
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
       <div className="border-t bg-card/95 backdrop-blur-sm px-5 py-3 flex flex-wrap items-center gap-x-4 gap-y-2">
         {PILLARS.map((p) => {
           const badge = PILLAR_BADGES[p.slug];
@@ -1022,6 +1196,12 @@ export function ComparisonSection({
           transition={{ duration: 0.5 }}
           className="mb-8 flex flex-wrap items-center gap-3"
         >
+          <div className="flex w-full items-center gap-2 sm:w-auto">
+            <span className="text-sm font-medium text-muted-foreground">
+              Compare
+            </span>
+            <ComparisonHelpTip content="Select up to 4 countries or regional averages to compare side by side." />
+          </div>
           <AnimatePresence mode="popLayout" initial={false}>
             {slots.map((ref, idx) => (
               <motion.div
@@ -1056,17 +1236,20 @@ export function ComparisonSection({
           </AnimatePresence>
 
           {slots.length < MAX_SLOTS && (
-            <motion.button
-              layout
-              type="button"
-              onClick={addSlot}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="inline-flex h-11 items-center gap-1.5 rounded-full border-2 border-dashed border-muted-foreground/30 px-4 text-sm font-medium text-muted-foreground hover:border-primary hover:text-primary transition-colors"
-            >
-              <Plus className="h-4 w-4" />
-              Add filter
-            </motion.button>
+            <motion.div layout className="flex items-center gap-1">
+              <motion.button
+                layout
+                type="button"
+                onClick={addSlot}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="inline-flex h-11 items-center gap-1.5 rounded-full border-2 border-dashed border-muted-foreground/30 px-4 text-sm font-medium text-muted-foreground hover:border-primary hover:text-primary transition-colors"
+              >
+                <Plus className="h-4 w-4" />
+                Add filter
+              </motion.button>
+              <ComparisonHelpTip content="Add another country or region to the comparison (max 4)." />
+            </motion.div>
           )}
         </motion.div>
 
@@ -1082,7 +1265,7 @@ export function ComparisonSection({
           className="grid grid-cols-1 lg:grid-cols-12 gap-6"
         >
           <div className="lg:col-span-5">
-            <DimensionCard entities={resolved} />
+            <ScoreBreakdownCard entities={resolved} />
           </div>
           <div className="lg:col-span-7">
             <IndicatorTable entities={resolved} />

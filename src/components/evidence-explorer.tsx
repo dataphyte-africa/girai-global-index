@@ -103,7 +103,7 @@ const FACET_KEYS = [
   "dimension",
 ] as const;
 type FacetKey = (typeof FACET_KEYS)[number];
-const FILTER_KEYS = [...FACET_KEYS, "type"] as const;
+const FILTER_KEYS = [...FACET_KEYS, "type", "kind"] as const;
 type FilterKey = (typeof FILTER_KEYS)[number];
 
 interface FilterSpec<TKey extends FilterKey = FilterKey> {
@@ -165,7 +165,21 @@ const TYPE_FILTER: FilterSpec<"type"> = {
   resolve: (r) => r.type ?? "",
 };
 
-const FILTERS: FilterSpec[] = [...FACETS, TYPE_FILTER];
+/**
+ * Evidence-kind filter. Has no standalone dropdown of its own — it is
+ * driven by the nested Pillar tree (see `NestedPillarKindDropdown`). The
+ * spec lives in FILTERS so that `applyFacets`, `ActiveChips`, and the
+ * cascading-count logic pick it up transparently.
+ */
+const KIND_FILTER: FilterSpec<"kind"> = {
+  key: "kind",
+  label: "TYPE",
+  chipLabel: "Type",
+  placeholder: "All types",
+  resolve: (r) => r.kind,
+};
+
+const FILTERS: FilterSpec[] = [...FACETS, TYPE_FILTER, KIND_FILTER];
 
 // ---------------------------------------------------------------------------
 // URL state helpers
@@ -345,6 +359,15 @@ interface FacetOption {
   count: number;
 }
 
+/** A single Pillar row in the nested Pillar/Kind dropdown, with its
+ *  cascading evidence-kind children. */
+interface PillarTreeOption {
+  slug: string;
+  label: string;
+  count: number;
+  kinds: { kind: EvidenceKind; label: string; count: number }[];
+}
+
 function buildOptions(
   facet: FacetSpec,
   /** Rows pre-filtered by *every other* facet (cascading). */
@@ -520,6 +543,56 @@ export function EvidenceExplorer({
 
   const allRows = React.useMemo(() => index?.rows ?? [], [index]);
 
+  // Cascading nested options for the Pillar tree. Pre-filters rows by every
+  // facet *except* `pillar` and `kind`, then groups by pillarSlug → kind.
+  // Ensures toggling either dimension inside the tree doesn't make options
+  // vanish out from under the user. Zero-count combinations are omitted.
+  const pillarTreeOptions = React.useMemo<PillarTreeOption[]>(() => {
+    const rowsForTree = allRows.filter((row) => {
+      for (const f of FILTERS) {
+        if (f.key === "pillar" || f.key === "kind") continue;
+        const active = urlState.facets[f.key];
+        if (active.length === 0) continue;
+        const v = f.resolve(row);
+        const values = Array.isArray(v) ? v : [v];
+        if (!values.some((x) => x && active.includes(x))) return false;
+      }
+      return true;
+    });
+
+    const byPillar = new Map<
+      string,
+      { count: number; kinds: Map<EvidenceKind, number> }
+    >();
+    for (const row of rowsForTree) {
+      const entry =
+        byPillar.get(row.pillarSlug) ??
+        { count: 0, kinds: new Map<EvidenceKind, number>() };
+      entry.count += 1;
+      entry.kinds.set(row.kind, (entry.kinds.get(row.kind) ?? 0) + 1);
+      byPillar.set(row.pillarSlug, entry);
+    }
+
+    // Iterate PILLARS for stable display order (matches taxonomy).
+    return PILLARS.map((p) => {
+      const entry = byPillar.get(p.slug);
+      if (!entry) return null;
+      const kinds = Array.from(entry.kinds.entries())
+        .map(([kind, count]) => ({
+          kind,
+          label: KIND_LABELS[kind],
+          count,
+        }))
+        .sort((a, b) => a.label.localeCompare(b.label));
+      return {
+        slug: p.slug,
+        label: p.name,
+        count: entry.count,
+        kinds,
+      };
+    }).filter((x) => x !== null) as PillarTreeOption[];
+  }, [allRows, urlState.facets]);
+
   // Cascading facet option lists (each excludes its own active values).
   const facetOptions = React.useMemo(() => {
     const out = {} as Record<FacetKey, FacetOption[]>;
@@ -597,6 +670,151 @@ export function EvidenceExplorer({
     [urlState, writeState]
   );
 
+  /**
+   * Toggle a single (pillar, kind) leaf in the Pillar tree.
+   *
+   * Independent semantics: ticking the leaf adds the pillar to `pillar` and
+   * the kind to `kind`. The two sets are AND-combined globally, so ticking
+   * (AI Policy, Framework) + (CSO Engagement, Initiative) also matches
+   * AI-policy initiatives and CSO frameworks. This was an explicit design
+   * choice — the alternative (pillar,kind tuples) was rejected.
+   *
+   * When unticking, we drop the kind globally; if the pillar then has no
+   * remaining ticked children among its currently visible kinds, we also
+   * drop the pillar so it doesn't silently keep filtering rows.
+   */
+  const togglePillarKindLeaf = React.useCallback(
+    (
+      pillarSlug: string,
+      kind: EvidenceKind,
+      visibleKinds: EvidenceKind[]
+    ) => {
+      const pillars = urlState.facets.pillar;
+      const kinds = urlState.facets.kind;
+      const isPillarOn = pillars.includes(pillarSlug);
+      const isKindOn = kinds.includes(kind);
+
+      // Symmetrical filter semantics: an empty `pillar` or `kind` set is a
+      // vacuous match (every value passes). A leaf is therefore "checked"
+      // iff the pillar filter passes its pillar, the kind filter passes its
+      // kind, AND at least one of the two is actually narrowing — otherwise
+      // *all* leaves would read as checked while showing no active filter.
+      const pillarNarrowing = pillars.length > 0;
+      const kindNarrowing = kinds.length > 0;
+      const noNarrowing = !pillarNarrowing && !kindNarrowing;
+      const pillarPasses = !pillarNarrowing || isPillarOn;
+      const kindPasses = !kindNarrowing || isKindOn;
+      const wasChecked = !noNarrowing && pillarPasses && kindPasses;
+
+      let nextPillars = pillars;
+      let nextKinds = kinds;
+      if (wasChecked) {
+        // Make the leaf fail at least one filter. Prefer narrowing the
+        // dimension that's already narrowed; if only the other is narrowed,
+        // introduce narrowing in this one too.
+        if (kindNarrowing) {
+          nextKinds = kinds.filter((k) => k !== kind);
+        } else {
+          // pillarNarrowing must be true (noNarrowing was excluded). Kind
+          // filter is vacuous — we need to add narrowing on kind. Expand to
+          // the visible subset minus this kind, unless the pillar only
+          // shows one kind, in which case removing the pillar is cleaner.
+          if (visibleKinds.length <= 1) {
+            nextPillars = pillars.filter((p) => p !== pillarSlug);
+          } else {
+            nextKinds = visibleKinds.filter((k) => k !== kind);
+          }
+        }
+      } else {
+        // User wants to tick this leaf. Add the pillar and kind to their
+        // respective sets so the leaf passes both filters. This may convert
+        // vacuous narrowing into explicit narrowing on the other dimension,
+        // which is intentional — the user just expressed a positive choice.
+        if (!isPillarOn) nextPillars = [...pillars, pillarSlug];
+        if (!isKindOn) nextKinds = [...kinds, kind];
+      }
+      writeState({
+        ...urlState,
+        facets: {
+          ...urlState.facets,
+          pillar: nextPillars,
+          kind: nextKinds,
+        },
+        page: 1,
+      });
+    },
+    [urlState, writeState]
+  );
+
+  /**
+   * Toggle a whole Pillar group. Tri-state semantics:
+   *   - all visible children checked  → uncheck:   drop the pillar, drop
+   *                                                every visible kind
+   *   - indeterminate / unchecked      → check:    add the pillar, add
+   *                                                every visible kind
+   */
+  const togglePillarGroup = React.useCallback(
+    (pillarSlug: string, visibleKinds: EvidenceKind[]) => {
+      const pillars = urlState.facets.pillar;
+      const kinds = urlState.facets.kind;
+      const isPillarOn = pillars.includes(pillarSlug);
+      // Mirror the render-time derivation: with both filter sets vacuous
+      // nothing is checked, so an "uncheck" branch is impossible.
+      const pillarNarrowing = pillars.length > 0;
+      const kindNarrowing = kinds.length > 0;
+      const noNarrowing = !pillarNarrowing && !kindNarrowing;
+      const pillarPasses = !pillarNarrowing || isPillarOn;
+      const allKindsPass =
+        !kindNarrowing || visibleKinds.every((k) => kinds.includes(k));
+      const allChecked = !noNarrowing && pillarPasses && allKindsPass;
+
+      let nextPillars: string[] = pillars;
+      let nextKinds: string[] = kinds;
+      if (allChecked) {
+        // Strip this pillar from both filters where it has an explicit
+        // presence. We only remove kinds when kind narrowing is active —
+        // otherwise we'd convert a vacuous kind set into a narrowing one.
+        if (isPillarOn) {
+          nextPillars = pillars.filter((p) => p !== pillarSlug);
+        }
+        if (kindNarrowing) {
+          nextKinds = kinds.filter(
+            (k) => !visibleKinds.includes(k as EvidenceKind)
+          );
+        }
+      } else {
+        if (!isPillarOn) nextPillars = [...pillars, pillarSlug];
+        // If kind narrowing is active, ensure this pillar's visible kinds
+        // are all included so all children render as checked. If it's
+        // vacuous we leave it that way — pillar narrowing alone suffices.
+        if (kindNarrowing) {
+          const kindSet = new Set(kinds);
+          for (const k of visibleKinds) kindSet.add(k);
+          nextKinds = Array.from(kindSet);
+        }
+      }
+      writeState({
+        ...urlState,
+        facets: {
+          ...urlState.facets,
+          pillar: nextPillars,
+          kind: nextKinds,
+        },
+        page: 1,
+      });
+    },
+    [urlState, writeState]
+  );
+
+  /** Clear all Pillar + Kind selections in one go (used by the tree's footer). */
+  const clearPillarTree = React.useCallback(() => {
+    writeState({
+      ...urlState,
+      facets: { ...urlState.facets, pillar: [], kind: [] },
+      page: 1,
+    });
+  }, [urlState, writeState]);
+
   const clearFacet = React.useCallback(
     (key: FilterKey, value?: string) => {
       const next = value === undefined ? [] : urlState.facets[key].filter((v) => v !== value);
@@ -663,7 +881,7 @@ export function EvidenceExplorer({
     >
       {/* Heading */}
       <div className="mx-auto mb-8 max-w-3xl text-center md:mb-10">
-        <h2 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl lg:text-5xl">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-foreground">
           {heading}
         </h2>
         <p className="mt-3 text-sm text-muted-foreground md:text-base">
@@ -692,16 +910,29 @@ export function EvidenceExplorer({
 
       {/* Filters — desktop inline */}
       <div className="mb-3 hidden grid-cols-2 gap-3 md:grid md:grid-cols-3 lg:grid-cols-5">
-        {FACETS.map((facet) => (
-          <FacetDropdown
-            key={facet.key}
-            facet={facet}
-            selected={urlState.facets[facet.key]}
-            options={facetOptions[facet.key]}
-            onToggle={(v) => toggleFacet(facet.key, v)}
-            onClear={() => clearFacet(facet.key)}
-          />
-        ))}
+        {FACETS.map((facet) =>
+          facet.key === "pillar" ? (
+            <NestedPillarKindDropdown
+              key={facet.key}
+              facet={facet}
+              tree={pillarTreeOptions}
+              selectedPillars={urlState.facets.pillar}
+              selectedKinds={urlState.facets.kind as EvidenceKind[]}
+              onToggleLeaf={togglePillarKindLeaf}
+              onToggleGroup={togglePillarGroup}
+              onClear={clearPillarTree}
+            />
+          ) : (
+            <FacetDropdown
+              key={facet.key}
+              facet={facet}
+              selected={urlState.facets[facet.key]}
+              options={facetOptions[facet.key]}
+              onToggle={(v) => toggleFacet(facet.key, v)}
+              onClear={() => clearFacet(facet.key)}
+            />
+          )
+        )}
       </div>
 
       {/* Filters — mobile sheet trigger */}
@@ -712,6 +943,11 @@ export function EvidenceExplorer({
           options={facetOptions}
           onToggle={toggleFacet}
           onClear={clearFacet}
+          pillarTree={pillarTreeOptions}
+          selectedKinds={urlState.facets.kind as EvidenceKind[]}
+          onTogglePillarLeaf={togglePillarKindLeaf}
+          onTogglePillarGroup={togglePillarGroup}
+          onClearPillarTree={clearPillarTree}
           activeCount={FILTER_KEYS.reduce((sum, k) => sum + urlState.facets[k].length, 0)}
         />
         {hasActiveFilters && (
@@ -840,6 +1076,9 @@ function ActiveChips({
           break;
         case "country":
           display = countryLookup.get(value) ?? value;
+          break;
+        case "kind":
+          display = KIND_LABELS[value as EvidenceKind] ?? value;
           break;
       }
       chips.push({
@@ -1043,6 +1282,11 @@ function MobileFilterSheet({
   options,
   onToggle,
   onClear,
+  pillarTree,
+  selectedKinds,
+  onTogglePillarLeaf,
+  onTogglePillarGroup,
+  onClearPillarTree,
   activeCount,
 }: {
   facets: FacetSpec[];
@@ -1050,6 +1294,15 @@ function MobileFilterSheet({
   options: Record<FacetKey, FacetOption[]>;
   onToggle: (key: FacetKey, value: string) => void;
   onClear: (key: FacetKey) => void;
+  pillarTree: PillarTreeOption[];
+  selectedKinds: EvidenceKind[];
+  onTogglePillarLeaf: (
+    pillarSlug: string,
+    kind: EvidenceKind,
+    visibleKinds: EvidenceKind[]
+  ) => void;
+  onTogglePillarGroup: (pillarSlug: string, visibleKinds: EvidenceKind[]) => void;
+  onClearPillarTree: () => void;
   activeCount: number;
 }) {
   return (
@@ -1072,19 +1325,270 @@ function MobileFilterSheet({
           </SheetTitle>
         </SheetHeader>
         <div className="space-y-4 overflow-y-auto p-4 pt-0">
-          {facets.map((facet) => (
-            <FacetDropdown
-              key={facet.key}
-              facet={facet}
-              selected={selected[facet.key]}
-              options={options[facet.key]}
-              onToggle={(v) => onToggle(facet.key, v)}
-              onClear={() => onClear(facet.key)}
-            />
-          ))}
+          {facets.map((facet) =>
+            facet.key === "pillar" ? (
+              <NestedPillarKindDropdown
+                key={facet.key}
+                facet={facet}
+                tree={pillarTree}
+                selectedPillars={selected.pillar}
+                selectedKinds={selectedKinds}
+                onToggleLeaf={onTogglePillarLeaf}
+                onToggleGroup={onTogglePillarGroup}
+                onClear={onClearPillarTree}
+              />
+            ) : (
+              <FacetDropdown
+                key={facet.key}
+                facet={facet}
+                selected={selected[facet.key]}
+                options={options[facet.key]}
+                onToggle={(v) => onToggle(facet.key, v)}
+                onClear={() => onClear(facet.key)}
+              />
+            )
+          )}
         </div>
       </SheetContent>
     </Sheet>
+  );
+}
+
+/**
+ * Nested Pillar → Evidence-kind dropdown.
+ *
+ * Visual: same trigger styling as `FacetDropdown`, but the popover body
+ * shows each pillar as a parent checkbox row with its evidence-kind
+ * children indented below. Parents are tri-state (checked / indeterminate
+ * / unchecked) — see `togglePillarGroup` / `togglePillarKindLeaf` for the
+ * exact semantics.
+ *
+ * Selection state is read from two URL params (`pillar` and `kind`) which
+ * are AND-combined with the rest of the facets globally. A leaf is
+ * rendered as checked iff its pillar and its kind are both currently
+ * selected; this means selecting two leaves with the same kind under
+ * different pillars implicitly also matches that kind under any other
+ * selected pillar (intentional — "independent" semantics).
+ */
+function NestedPillarKindDropdown({
+  facet,
+  tree,
+  selectedPillars,
+  selectedKinds,
+  onToggleLeaf,
+  onToggleGroup,
+  onClear,
+}: {
+  facet: FacetSpec;
+  tree: PillarTreeOption[];
+  selectedPillars: string[];
+  selectedKinds: EvidenceKind[];
+  onToggleLeaf: (
+    pillarSlug: string,
+    kind: EvidenceKind,
+    visibleKinds: EvidenceKind[]
+  ) => void;
+  onToggleGroup: (pillarSlug: string, visibleKinds: EvidenceKind[]) => void;
+  onClear: () => void;
+}) {
+  const [open, setOpen] = React.useState(false);
+  const containerRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    if (!open) return;
+    const onClick = (e: MouseEvent) => {
+      if (!containerRef.current?.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("mousedown", onClick);
+    return () => document.removeEventListener("mousedown", onClick);
+  }, [open]);
+
+  const totalSelected = selectedPillars.length + selectedKinds.length;
+  const triggerLabel = (() => {
+    if (totalSelected === 0) return facet.placeholder;
+    // Prefer the human pillar name when exactly one pillar (and no kind
+    // narrowing) is in effect — most legible case.
+    if (selectedPillars.length === 1 && selectedKinds.length === 0) {
+      return PILLARS.find((p) => p.slug === selectedPillars[0])?.name ?? selectedPillars[0];
+    }
+    if (selectedPillars.length === 0 && selectedKinds.length === 1) {
+      return KIND_LABELS[selectedKinds[0]];
+    }
+    return `${totalSelected} selected`;
+  })();
+
+  return (
+    <div ref={containerRef} className="relative">
+      <label className="mb-1 block text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+        {facet.label}
+      </label>
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        className={cn(
+          "flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 text-sm shadow-sm transition-colors",
+          "hover:bg-muted/30 focus:outline-none focus:ring-2 focus:ring-primary",
+          open && "ring-2 ring-primary"
+        )}
+      >
+        <span
+          className={cn(
+            "truncate",
+            totalSelected === 0 && "text-muted-foreground"
+          )}
+        >
+          {triggerLabel}
+        </span>
+        <ChevronDown
+          className={cn(
+            "h-4 w-4 shrink-0 opacity-60 transition-transform",
+            open && "rotate-180"
+          )}
+          aria-hidden
+        />
+      </button>
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.12 }}
+            className="absolute z-40 mt-1 w-[min(22rem,calc(100vw-2rem))] rounded-md border bg-popover shadow-lg"
+          >
+            <div className="max-h-112 overflow-y-auto p-1">
+              {tree.length === 0 ? (
+                <div className="py-4 text-center text-sm text-muted-foreground">
+                  No matches
+                </div>
+              ) : (
+                tree.map((pillar) => {
+                  const visibleKinds = pillar.kinds.map((k) => k.kind);
+                  const pillarOn = selectedPillars.includes(pillar.slug);
+                  // Both filter sets are vacuous when empty — they match
+                  // everything. So a leaf is "checked" iff (a) the pillar
+                  // filter passes this pillar AND (b) the kind filter passes
+                  // its kind AND (c) at least one of the two filters is
+                  // actually narrowing. Without (c) every leaf would appear
+                  // checked even when no filters are set, which is wrong.
+                  const pillarNarrowing = selectedPillars.length > 0;
+                  const kindNarrowing = selectedKinds.length > 0;
+                  const noNarrowing = !pillarNarrowing && !kindNarrowing;
+                  const pillarPasses = !pillarNarrowing || pillarOn;
+                  const allKindsPass =
+                    !kindNarrowing ||
+                    visibleKinds.every((k) => selectedKinds.includes(k));
+                  const someKindsPass =
+                    !kindNarrowing ||
+                    visibleKinds.some((k) => selectedKinds.includes(k));
+                  const parentState: "checked" | "indeterminate" | "unchecked" =
+                    noNarrowing || !pillarPasses
+                      ? "unchecked"
+                      : allKindsPass
+                        ? "checked"
+                        : someKindsPass
+                          ? "indeterminate"
+                          : "unchecked";
+
+                  return (
+                    <div key={pillar.slug} className="py-0.5">
+                      <button
+                        type="button"
+                        onClick={() => onToggleGroup(pillar.slug, visibleKinds)}
+                        className={cn(
+                          "flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-left text-sm font-semibold transition-colors",
+                          "hover:bg-accent",
+                          parentState !== "unchecked" && "bg-accent/60"
+                        )}
+                      >
+                        <TriStateBox state={parentState} />
+                        <span className="min-w-0 flex-1 truncate text-foreground">
+                          {pillar.label}
+                        </span>
+                        <span className="ml-auto text-xs tabular-nums text-muted-foreground">
+                          {pillar.count}
+                        </span>
+                      </button>
+                      <div className="ml-3 border-l border-border/60 pl-1">
+                        {pillar.kinds.map((k) => {
+                          const checked =
+                            !noNarrowing &&
+                            pillarPasses &&
+                            (!kindNarrowing || selectedKinds.includes(k.kind));
+                          return (
+                            <button
+                              key={k.kind}
+                              type="button"
+                              onClick={() =>
+                                onToggleLeaf(pillar.slug, k.kind, visibleKinds)
+                              }
+                              className={cn(
+                                "flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-left text-sm transition-colors",
+                                "hover:bg-accent",
+                                checked && "bg-accent/60"
+                              )}
+                            >
+                              <TriStateBox state={checked ? "checked" : "unchecked"} />
+                              <span className="min-w-0 flex-1 truncate text-foreground/90">
+                                {k.label}
+                              </span>
+                              <span className="ml-auto text-xs tabular-nums text-muted-foreground">
+                                {k.count}
+                              </span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  );
+                })
+              )}
+            </div>
+            {totalSelected > 0 && (
+              <div className="flex justify-end border-t p-1.5">
+                <button
+                  type="button"
+                  onClick={onClear}
+                  className="rounded px-2 py-1 text-xs text-muted-foreground hover:bg-muted hover:text-foreground"
+                >
+                  Clear
+                </button>
+              </div>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+function TriStateBox({
+  state,
+}: {
+  state: "checked" | "indeterminate" | "unchecked";
+}) {
+  return (
+    <span
+      className={cn(
+        "flex h-4 w-4 shrink-0 items-center justify-center rounded border",
+        state === "unchecked"
+          ? "border-muted-foreground/40"
+          : "border-primary bg-primary text-primary-foreground"
+      )}
+      aria-hidden
+    >
+      {state === "checked" && (
+        <svg viewBox="0 0 16 16" className="h-3 w-3">
+          <path
+            fill="currentColor"
+            d="M6.173 12.414L2.586 8.828l1.414-1.414 2.173 2.172 5.828-5.828 1.414 1.414z"
+          />
+        </svg>
+      )}
+      {state === "indeterminate" && (
+        <span className="block h-0.5 w-2 rounded-sm bg-current" />
+      )}
+    </span>
   );
 }
 

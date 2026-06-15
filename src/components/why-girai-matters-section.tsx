@@ -128,7 +128,7 @@ export const WhyGIRAIMattersSection = ({
     <section className="relative py-16 md:py-24">
       {/* Header */}
       <div className="flex flex-col gap-4 justify-center items-center text-center mb-12 px-4">
-        <h2 className="text-3xl md:text-4xl font-bold">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold">
           Why <span className="text-primary">GIRAI</span> Matters
         </h2>
         <p className="text-muted-foreground max-w-lg">

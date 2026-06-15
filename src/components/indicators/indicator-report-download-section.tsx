@@ -24,7 +24,7 @@ export function IndicatorReportDownloadSection() {
             REPORT 2024
           </span>
 
-          <h2 className="text-[1.75rem] font-bold leading-[1.18] tracking-tight md:text-4xl md:leading-[1.15] lg:text-[2.5rem]">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.18] tracking-tight md:leading-[1.15]">
             <span style={{ color: HEADING_DARK }}>
               Global Index on Responsible AI —{" "}
             </span>

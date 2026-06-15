@@ -7,7 +7,9 @@ import { DimensionCard } from "@/components/dimension-card";
 import { DIMENSIONS } from "@/data/dimensions-data";
 
 export function DimensionsSection() {
-  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [selectedId, setSelectedId] = useState<string | null>(
+    DIMENSIONS[0]?.id ?? null,
+  );
   const headingRef = useRef(null);
   const isInView = useInView(headingRef, { once: false, amount: 0.8 });
 

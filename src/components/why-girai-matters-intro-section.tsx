@@ -11,7 +11,7 @@ export function WhyGIRAIMattersIntroSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative overflow-hidden bg-[#1a0f4d] text-white dark:bg-[#0f0830]"
+      className="relative overflow-clip bg-[#1a0f4d] text-white dark:bg-[#0f0830]"
     >
       {/* Decorative subtle line/curve background */}
       <div
@@ -60,7 +60,7 @@ export function WhyGIRAIMattersIntroSection() {
               transition={{ duration: 0.6, ease: "easeOut" }}
               className="flex flex-col gap-6"
             >
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight text-white">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight tracking-tight text-white">
                 Why GIRAI Matters
               </h2>
               <p className="max-w-md text-base md:text-lg leading-relaxed text-white/70">
@@ -71,7 +71,7 @@ export function WhyGIRAIMattersIntroSection() {
                 <Button
                   asChild
                   size="lg"
-                  className="rounded-full bg-white px-6 text-[#1a0f4d] hover:bg-white/90"
+                  className="bg-white px-6 text-[#1a0f4d] hover:bg-white/90"
                 >
                   <a href="#learn-more">Learn more</a>
                 </Button>
