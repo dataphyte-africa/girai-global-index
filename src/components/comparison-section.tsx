@@ -985,7 +985,7 @@ function IndicatorTable({
             ))}
           </TableBody>
         </Table>
-      {entities.length > 0 && (
+      {/* {entities.length > 0 && ( 
         <div className="border-t px-5 py-4">
           <div className="flex items-center gap-2 mb-3">
             <h5 className="text-sm font-semibold">URAI score adjustment</h5>
@@ -1041,7 +1041,7 @@ function IndicatorTable({
             </table>
           </div>
         </div>
-      )}
+      )} */}
       <div className="border-t bg-card/95 backdrop-blur-sm px-5 py-3 flex flex-wrap items-center gap-x-4 gap-y-2">
         {PILLARS.map((p) => {
           const badge = PILLAR_BADGES[p.slug];
