@@ -13,7 +13,7 @@ export function ChoroplethMapHeading() {
         initial={{ opacity: 0, y: 30 }}
         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="text-4xl font-bold gap-2"
+        className="text-4xl font-medium gap-2"
       >
         Explore the <span className="text-primary">Global Index</span> Scores
       </motion.h2>

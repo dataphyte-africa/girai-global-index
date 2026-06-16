@@ -21,6 +21,10 @@ import {
   getPathwayFromKindParam,
   type PathwayConfig,
 } from "./pathway-config";
+import {
+  EVIDENCE_HUB_SECTIONS,
+  scrollToEvidenceHubSection,
+} from "./scroll";
 
 const INDEX_URL = "/data/2026/evidence-index.json";
 
@@ -212,11 +216,7 @@ export function PathwayIndicatorTable() {
     params.set("indicator", current.join(","));
     params.delete("page");
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
-    requestAnimationFrame(() => {
-      document
-        .getElementById("evidence-explorer")
-        ?.scrollIntoView({ behavior: "smooth", block: "start" });
-    });
+    scrollToEvidenceHubSection(EVIDENCE_HUB_SECTIONS.explorer);
   };
 
   const exploreMisuseType = (type: string) => {
@@ -226,11 +226,7 @@ export function PathwayIndicatorTable() {
     params.delete("indicator");
     params.delete("page");
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
-    requestAnimationFrame(() => {
-      document
-        .getElementById("evidence-explorer")
-        ?.scrollIntoView({ behavior: "smooth", block: "start" });
-    });
+    scrollToEvidenceHubSection(EVIDENCE_HUB_SECTIONS.explorer);
   };
 
   const { prefix, accent } = splitTableTitle(pathway.tableTitle);
@@ -238,9 +234,12 @@ export function PathwayIndicatorTable() {
   const rowNoun = pathway.id === "misuse" ? "misuse types" : "indicators";
 
   return (
-    <section className="bg-muted/30 py-12 md:py-16">
+    <section
+      id="pathway-indicator-table"
+      className="scroll-mt-20 bg-muted/30 py-12 md:py-16"
+    >
       <div className="mx-auto max-w-6xl px-4 md:px-6">
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-foreground">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight text-foreground">
           {prefix ? (
             <>
               {prefix}{" "}

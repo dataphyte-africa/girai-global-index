@@ -97,7 +97,7 @@ export function CountryEditionComparisonSection({
     <section className="w-full bg-background px-4 py-16 md:px-6 md:py-24 lg:py-28">
       <div className="mx-auto max-w-5xl">
         <header className="mx-auto mb-10 max-w-2xl text-center md:mb-12">
-          <h2 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl lg:text-[2.75rem] lg:leading-[1.12]">
+          <h2 className="text-3xl font-medium tracking-tight text-foreground md:text-4xl lg:text-[2.75rem] lg:leading-[1.12]">
             Comparing Results{" "}
             <span className="text-primary">Across Editions</span>
           </h2>

@@ -76,7 +76,7 @@ export function RegionsPerformanceOverview({
       <div className="mx-auto max-w-6xl">
         <header className="mx-auto mb-10 max-w-2xl text-center md:mb-12">
           <h2
-            className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight"
+            className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight"
             style={{ color: HEADING_DARK }}
           >
             Regional Performance Overview
@@ -169,7 +169,7 @@ function RegionOverviewCard({
     >
       <div className="flex items-start justify-between gap-3">
         <h3
-          className="text-base font-bold leading-snug md:text-[1.05rem]"
+          className="text-base font-medium leading-snug md:text-[1.05rem]"
           style={{ color: HEADING_DARK }}
         >
           {displayName}

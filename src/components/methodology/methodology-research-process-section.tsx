@@ -5,12 +5,6 @@ import Image from "next/image";
 import { Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const PURPLE = "#7150F4";
-const HEADING_DARK = "#1A1A2E";
-const BODY_COLOR = "#6B7280";
-const SUBTITLE_COLOR = "#6B7280";
-const BADGE_BG = "#F0EDFF";
-const LINE_COLOR = "#E5E7EB";
 const NUMBER_DECORATOR = "/methodology/number-decorator.svg";
 const RINGS_DECOR = "/methodology/circular-rings.svg";
 
@@ -26,31 +20,31 @@ const STEPS = [
     title: "Expert-Led Research",
     description:
       "In-country researchers collect and document evidence using standardized questionnaires and methodological guidance.",
-    color: "#7150F4",
+    color: "var(--process-step-1)",
   },
   {
     title: "Researcher Submission",
     description:
       "Completed questionnaires and supporting evidence are formally submitted through the survey system for review.",
-    color: "#22C55E",
+    color: "var(--process-step-2)",
   },
   {
     title: "Country Coordinator Review",
     description:
       "Country coordinators review submissions, verify evidence quality, and ensure alignment with methodological requirements.",
-    color: "#F97316",
+    color: "var(--process-step-3)",
   },
   {
     title: "Regional Supervision",
     description:
       "Regional supervisors conduct oversight, spot-check submissions, and address inconsistencies across countries.",
-    color: "#EC4899",
+    color: "var(--process-step-4)",
   },
   {
     title: "Global Review",
     description:
       "Final global review and validation to ensure consistency, accuracy, and cross-country comparability.",
-    color: "#EF4444",
+    color: "var(--process-step-5)",
   },
 ] as const;
 
@@ -71,8 +65,8 @@ function ProcessStepCard({
     <article
       ref={cardRef}
       data-step-index={index}
-      className="overflow-hidden rounded-2xl bg-white shadow-[0_2px_24px_rgba(26,26,46,0.06)]"
-      style={{ borderTop: `4px solid ${color}` }}
+      className="overflow-hidden rounded-2xl border-t-4 bg-card shadow-[0_2px_24px_rgba(26,26,46,0.06)] dark:shadow-[0_2px_24px_rgba(0,0,0,0.25)]"
+      style={{ borderTopColor: color }}
     >
       <div className="p-6 md:p-7">
         <div className="relative mb-5 w-fit">
@@ -84,25 +78,16 @@ function ProcessStepCard({
             height={57}
             className="pointer-events-none absolute -left-1.5 -top-3 select-none"
           />
-          <span
-            className="relative flex size-9 items-center justify-center rounded-full text-sm font-semibold text-white shadow-[0_4px_14px_rgba(113,80,244,0.32)]"
-            style={{ backgroundColor: PURPLE }}
-          >
+          <span className="relative flex size-9 items-center justify-center rounded-full bg-primary text-sm font-semibold text-primary-foreground shadow-[0_4px_14px_color-mix(in_oklab,var(--primary)_32%,transparent)]">
             {index}
           </span>
         </div>
 
-        <h3
-          className="text-lg font-bold leading-snug tracking-tight md:text-xl"
-          style={{ color: HEADING_DARK }}
-        >
+        <h3 className="text-lg font-medium leading-snug tracking-tight text-foreground md:text-xl">
           {title}
         </h3>
 
-        <p
-          className="mt-3 text-sm leading-[1.65] md:text-[0.9375rem] md:leading-[1.68]"
-          style={{ color: BODY_COLOR }}
-        >
+        <p className="mt-3 text-sm leading-[1.65] text-muted-foreground md:text-[0.9375rem] md:leading-[1.68]">
           {description}
         </p>
       </div>
@@ -138,14 +123,14 @@ export function MethodologyResearchProcessSection() {
   }, []);
 
   return (
-    <section className="relative w-full bg-white px-4 py-16 md:px-6 md:py-24 lg:py-28">
+    <section className="relative w-full bg-card px-4 py-16 md:px-6 md:py-24 lg:py-28">
       <Image
         src={RINGS_DECOR}
         alt=""
         aria-hidden
         width={456}
         height={1110}
-        className="pointer-events-none absolute -bottom-24 -left-28 hidden w-[min(42vw,22rem)] select-none opacity-80 lg:block"
+        className="pointer-events-none absolute -bottom-24 -left-28 hidden w-[min(42vw,22rem)] select-none opacity-80 dark:opacity-30 lg:block"
       />
       <Image
         src={RINGS_DECOR}
@@ -153,50 +138,37 @@ export function MethodologyResearchProcessSection() {
         aria-hidden
         width={456}
         height={1110}
-        className="pointer-events-none absolute top-1/2 -right-32 hidden w-[min(38vw,20rem)] -translate-y-1/4 select-none opacity-70 lg:block"
+        className="pointer-events-none absolute top-1/2 -right-32 hidden w-[min(38vw,20rem)] -translate-y-1/4 select-none opacity-70 dark:opacity-25 lg:block"
       />
 
       <div className="relative mx-auto max-w-7xl">
         <header className="mx-auto max-w-3xl text-center">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight lg:leading-[1.12]">
-            <span style={{ color: HEADING_DARK }}>Research and </span>
-            <span style={{ color: PURPLE }}>Review Process</span>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight lg:leading-[1.12]">
+            <span className="text-foreground">Research and </span>
+            <span className="text-primary">Review Process</span>
           </h2>
 
-          <p
-            className="mt-4 text-sm leading-relaxed md:text-base md:leading-[1.65]"
-            style={{ color: SUBTITLE_COLOR }}
-          >
+          <p className="mt-4 text-sm leading-relaxed text-muted-foreground md:text-base md:leading-[1.65]">
             How multi-layered review ensures consistency, independence, and
             methodological rigor.
           </p>
         </header>
 
-        <div
-          className="mt-12 grid grid-cols-2 border-y py-10 md:mt-14 md:grid-cols-4 md:py-12 lg:mt-16"
-          style={{ borderColor: LINE_COLOR }}
-        >
+        <div className="mt-12 grid grid-cols-2 border-y border-border py-10 md:mt-14 md:grid-cols-4 md:py-12 lg:mt-16">
           {STATS.map((stat, index) => (
             <div
               key={stat.label}
               className={cn(
                 "px-4 py-3 text-center md:px-6 md:py-0",
-                (index === 1 || index === 3) && "border-l",
-                index >= 2 && "border-t md:border-t-0",
-                index > 0 && "md:border-t-0 md:border-l"
+                (index === 1 || index === 3) && "border-l border-border",
+                index >= 2 && "border-t border-border md:border-t-0",
+                index > 0 && "md:border-t-0 md:border-l md:border-border"
               )}
-              style={{ borderColor: LINE_COLOR }}
             >
-              <p
-                className="text-3xl font-bold tracking-tight md:text-4xl"
-                style={{ color: HEADING_DARK }}
-              >
+              <p className="text-3xl font-medium tracking-tight text-foreground md:text-4xl">
                 {stat.value}
               </p>
-              <p
-                className="mt-2 text-sm leading-snug md:text-[0.9375rem]"
-                style={{ color: BODY_COLOR }}
-              >
+              <p className="mt-2 text-sm leading-snug text-muted-foreground md:text-[0.9375rem]">
                 {stat.label}
               </p>
             </div>
@@ -205,23 +177,17 @@ export function MethodologyResearchProcessSection() {
 
         <div className="mt-12 grid grid-cols-1 items-start gap-10 lg:mt-16 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-14 xl:gap-16">
           <div className="self-start lg:sticky lg:top-24">
-            <span
-              className="inline-flex w-fit items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[0.6875rem] font-semibold uppercase tracking-[0.14em]"
-              style={{ backgroundColor: BADGE_BG, color: PURPLE }}
-            >
+            <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-primary/10 px-3.5 py-1.5 text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-primary">
               <Sparkles className="size-3.5" aria-hidden />
               Research Process
             </span>
 
-            <h3 className="mt-5 text-[1.75rem] font-bold leading-[1.18] tracking-tight md:text-4xl md:leading-[1.15] lg:text-[2.5rem]">
-              <span style={{ color: PURPLE }}>Five Stages</span>
-              <span style={{ color: HEADING_DARK }}> of Evidence Review</span>
+            <h3 className="mt-5 text-[1.75rem] font-medium leading-[1.18] tracking-tight md:text-4xl md:leading-[1.15] lg:text-[2.5rem]">
+              <span className="text-primary">Five Stages</span>
+              <span className="text-foreground"> of Evidence Review</span>
             </h3>
 
-            <p
-              className="mt-4 max-w-md text-sm leading-relaxed md:text-base md:leading-[1.65]"
-              style={{ color: BODY_COLOR }}
-            >
+            <p className="mt-4 max-w-md text-sm leading-relaxed text-muted-foreground md:text-base md:leading-[1.65]">
               From in-country fieldwork to global validation, each submission
               advances through structured, independent checkpoints.
             </p>
@@ -229,8 +195,7 @@ export function MethodologyResearchProcessSection() {
 
           <div className="relative flex flex-col">
             <div
-              className="absolute left-4 top-5 bottom-5 w-px md:left-5"
-              style={{ backgroundColor: LINE_COLOR }}
+              className="absolute left-4 top-5 bottom-5 w-px bg-border md:left-5"
               aria-hidden
             />
 
@@ -245,9 +210,9 @@ export function MethodologyResearchProcessSection() {
                         className="relative z-10 size-4 rounded-full border-2 transition-all duration-300"
                         style={{
                           borderColor: step.color,
-                          backgroundColor: isFilled ? step.color : "white",
+                          backgroundColor: isFilled ? step.color : "var(--card)",
                           boxShadow: isFilled
-                            ? `0 0 0 4px ${step.color}22`
+                            ? `0 0 0 4px color-mix(in oklab, ${step.color} 13%, transparent)`
                             : undefined,
                         }}
                         aria-hidden

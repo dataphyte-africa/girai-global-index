@@ -22,7 +22,7 @@ import { ComparisonSection } from "@/components/comparison-section";
 import { WhyGIRAIMattersSection } from "@/components/why-girai-matters-section";
 import { WhyGIRAIMattersIntroSection } from "@/components/why-girai-matters-intro-section";
 import { ShapingIntelligenceSection } from "@/components/shaping-intelligence-section";
-import { TopTakeawaysSection } from "@/components/top-takeaways-section";
+import { TopTakeawaysCarouselSection } from "@/components/top-takeaways-carousel-section";
 import { ReportDownloadSection } from "@/components/report-download-section";
 import { EvidenceExplorerSection } from "@/components/evidence-explorer-section";
 import { OurImpactSection } from "@/components/our-impact-section";
@@ -84,7 +84,7 @@ export default async function Home() {
       <WhyGIRAIMattersIntroSection />
       <DimensionsSection />
       <ReportDownloadSection />
-      <TopTakeawaysSection />
+      <TopTakeawaysCarouselSection />
       <EvidenceExplorerSection stats={evidenceStats} />
       <ChoroplethMapSection />
       <ComparisonSection

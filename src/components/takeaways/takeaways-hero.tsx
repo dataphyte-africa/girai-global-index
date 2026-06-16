@@ -36,9 +36,9 @@ export function TakeawaysHero() {
             }}
           />
 
-          <div className="relative flex min-h-[360px] flex-col justify-between px-8 py-12 md:min-h-[565px] md:max-w-[58%] md:px-14 md:py-16 lg:min-h-[565px]">
+          <div className="relative flex min-h-[360px] flex-col justify-center px-8 py-12 md:min-h-[565px] md:max-w-[58%] md:px-14 md:py-16 lg:min-h-[565px]">
             <div>
-              <h1 className="text-[2rem] font-bold leading-[1.12] tracking-tight md:text-5xl lg:text-[3.25rem]">
+              <h1 className="text-[2rem] font-medium leading-[1.12] tracking-tight md:text-6xl lg:text-[3.25rem]">
                 <span className="text-white">Top 10 </span>
                 <span style={{ color: HERO_TITLE_ACCENT }}>Takeaways</span>
               </h1>
@@ -54,7 +54,7 @@ export function TakeawaysHero() {
                   <dt className="text-xs font-medium text-white/55 md:text-sm">
                     {stat.label}
                   </dt>
-                  <dd className="text-xl font-bold text-white md:text-2xl">
+                  <dd className="text-xl font-medium text-white md:text-2xl">
                     {stat.value}
                   </dd>
                 </div>

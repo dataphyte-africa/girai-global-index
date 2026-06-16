@@ -35,7 +35,7 @@ export function CountryMisuseEvidenceSection({
             <div className="space-y-3">
               <h2
                 id="country-misuse-evidence-heading"
-                className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-[#1e1b4b] dark:text-foreground"
+                className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight text-[#1e1b4b] dark:text-foreground"
               >
                 Unacceptable Risk AI Systems
               </h2>
@@ -99,7 +99,7 @@ function MisuseEvidenceCard({ item }: { item: EvidenceItem }) {
           </span>
         ) : null}
 
-        <h3 className="mt-3 text-lg font-bold leading-snug text-[#1e1b4b] dark:text-foreground md:text-xl">
+        <h3 className="mt-3 text-lg font-medium leading-snug text-[#1e1b4b] dark:text-foreground md:text-xl">
           <Link href={detailHref} className="hover:text-primary hover:underline">
             {item.title}
           </Link>

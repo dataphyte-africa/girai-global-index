@@ -1,11 +1,6 @@
 import Image from "next/image";
 import { Sparkles } from "lucide-react";
 
-const PURPLE = "#7150F4";
-const HEADING_DARK = "#1A1A2E";
-const BODY_COLOR = "#6B7280";
-const BADGE_BG = "#F0EDFF";
-
 const PARAGRAPHS = [
   "Since the first edition of GIRAI, the global AI governance environment has evolved significantly. Governments have moved from high-level strategy development toward implementation and regulatory experimentation. Oversight mechanisms have matured, public debate has deepened, and expectations around responsible AI have become more precise.",
   "To remain analytically relevant, the GIRAI framework was refined to better capture these developments. The evolution reflects lessons learned from the previous cycle, feedback from researchers and stakeholders, and the need to distinguish more clearly between policy intent, operational action, and structural capacity.",
@@ -13,7 +8,7 @@ const PARAGRAPHS = [
 
 function FrameworkEvolutionQuoteCard() {
   return (
-    <figure className="relative min-h-[300px] overflow-hidden rounded-[24px] bg-gradient-to-br from-[#4F3AAF] via-[#35267A] to-[#1A1038] p-8 shadow-[0_24px_48px_rgba(26,26,46,0.18)] md:min-h-[360px] md:p-10 lg:min-h-[400px] lg:p-12">
+    <figure className="methodology-feature-gradient relative min-h-[300px] overflow-hidden rounded-[24px] p-8 shadow-[0_24px_48px_rgba(26,26,46,0.18)] md:min-h-[360px] md:p-10 lg:min-h-[400px] lg:p-12 dark:shadow-[0_24px_48px_rgba(0,0,0,0.35)]">
       <Image
         src="/impact/circular-rings.svg"
         alt=""
@@ -50,26 +45,20 @@ function FrameworkEvolutionQuoteCard() {
  */
 export function MethodologyFrameworkEvolutionSection() {
   return (
-    <section className="w-full bg-white px-4 py-16 md:px-6 md:py-24 lg:py-28">
+    <section className="w-full bg-card px-4 py-16 md:px-6 md:py-24 lg:py-28">
       <div className="mx-auto grid max-w-7xl grid-cols-1 items-start gap-10 lg:grid-cols-2 lg:gap-14 xl:gap-16">
         <div className="flex max-w-xl flex-col gap-6 lg:gap-7">
-          <span
-            className="inline-flex w-fit items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[0.6875rem] font-semibold uppercase tracking-[0.14em]"
-            style={{ backgroundColor: BADGE_BG, color: PURPLE }}
-          >
+          <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-primary/10 px-3.5 py-1.5 text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-primary">
             <Sparkles className="size-3.5" aria-hidden />
             Framework Evolution
           </span>
 
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.18] tracking-tight md:leading-[1.15]">
-            <span style={{ color: HEADING_DARK }}>Why the Framework </span>
-            <span style={{ color: PURPLE }}>Evolved</span>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium leading-[1.18] tracking-tight md:leading-[1.15]">
+            <span className="text-foreground">Why the Framework </span>
+            <span className="text-primary">Evolved</span>
           </h2>
 
-          <div
-            className="flex flex-col gap-5 text-base leading-[1.7] md:gap-6 md:text-[1.0625rem] md:leading-[1.68]"
-            style={{ color: BODY_COLOR }}
-          >
+          <div className="flex flex-col gap-5 text-base leading-[1.7] text-muted-foreground md:gap-6 md:text-[1.0625rem] md:leading-[1.68]">
             {PARAGRAPHS.map((paragraph) => (
               <p key={paragraph.slice(0, 32)}>{paragraph}</p>
             ))}

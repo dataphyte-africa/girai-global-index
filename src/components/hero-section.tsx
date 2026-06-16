@@ -48,7 +48,7 @@ export const HeroSection = ( { arcData, markers }: { arcData: ArcPosition[], mar
       <div className="flex flex-col gap-7">
       <div className="flex flex-col gap-2">
 
-      <h1 className="text-4xl md:text-6xl font-bold text-center md:text-left leading-auto">
+      <h1 className="text-4xl md:text-6xl font-medium text-center md:text-left leading-auto">
       Igniting global action on <span className="text-primary">responsible AI</span>, with local evidence.
       </h1>
       <p className="text-base md:text-2xl mt-4 text-muted-foreground text-center md:text-left">

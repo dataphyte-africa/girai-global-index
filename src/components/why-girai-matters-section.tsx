@@ -100,7 +100,7 @@ function StickyCard({
             ${theme.bgTint} ${theme.darkBgTint}
           `}
         >
-          <h3 className="text-xl md:text-2xl font-bold text-foreground leading-tight">
+          <h3 className="text-xl md:text-2xl font-medium text-foreground leading-tight">
             {item.title}
           </h3>
           <p className="text-sm md:text-base text-muted-foreground leading-relaxed max-w-sm">
@@ -128,7 +128,7 @@ export const WhyGIRAIMattersSection = ({
     <section className="relative py-16 md:py-24">
       {/* Header */}
       <div className="flex flex-col gap-4 justify-center items-center text-center mb-12 px-4">
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium">
           Why <span className="text-primary">GIRAI</span> Matters
         </h2>
         <p className="text-muted-foreground max-w-lg">

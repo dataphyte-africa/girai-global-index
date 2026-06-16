@@ -52,7 +52,7 @@ export function EvidenceExplorerSection({
               Evidence Explorer
             </span>
 
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.1] text-foreground">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight leading-[1.1] text-foreground">
               Explore the Evidence Behind the Index
             </h2>
 
@@ -127,7 +127,7 @@ export function EvidenceExplorerSection({
                       }}
                       className="flex flex-col gap-1 rounded-xl bg-white/95 p-5 ring-1 ring-white/10 md:p-6 dark:bg-white/90"
                     >
-                      <span className="text-3xl md:text-4xl font-bold tracking-tight text-primary">
+                      <span className="text-3xl md:text-4xl font-medium tracking-tight text-primary">
                         {stat.value}
                       </span>
                       <span className="text-xs md:text-sm text-muted-foreground">

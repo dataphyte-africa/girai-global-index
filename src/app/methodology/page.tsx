@@ -23,7 +23,7 @@ export const metadata = {
 
 export default function MethodologyPage() {
   return (
-    <div className="flex min-h-screen flex-col bg-background font-sans dark:bg-black">
+    <div className="flex min-h-screen flex-col bg-background font-sans">
       <Header />
 
       <main className="flex-1">

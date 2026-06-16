@@ -589,7 +589,7 @@ function ScoreBreakdownCard({
     <div className="bg-card border rounded-2xl p-5 md:p-6 shadow-sm">
       <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2">
-          <h4 className="text-base font-semibold">
+          <h4 className="text-base font-medium">
             {mode === "dimensions" ? "Dimension scores" : "Pillar scores"}
           </h4>
           <ComparisonHelpTip content="Switch between dimension-level and pillar-level aggregate scores for the selected countries or regions." />
@@ -860,7 +860,7 @@ function IndicatorTable({
     <div className="bg-card border rounded-2xl shadow-sm overflow-hidden">
       <div className="px-5 py-4 border-b flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2.5">
-          <h4 className="text-base font-semibold">Indicators</h4>
+          <h4 className="text-base font-medium">Indicators</h4>
           <ComparisonHelpTip content="Scores are 0–100. The star marks the highest score among selected entities when values differ." />
           <span className="text-xs text-muted-foreground">
             {visibleIndicators.length} of {REGULAR_INDICATORS.length}
@@ -988,7 +988,7 @@ function IndicatorTable({
       {/* {entities.length > 0 && ( 
         <div className="border-t px-5 py-4">
           <div className="flex items-center gap-2 mb-3">
-            <h5 className="text-sm font-semibold">URAI score adjustment</h5>
+            <h5 className="text-sm font-medium">URAI score adjustment</h5>
             <ComparisonHelpTip content="URAI is not a dimension or pillar score. It is a multiplier applied to the overall GIRAI score after aggregation when government misuse evidence is on file." />
           </div>
           <div className="overflow-x-auto">
@@ -1168,7 +1168,7 @@ export function ComparisonSection({
             initial={{ opacity: 0, y: 24 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="text-3xl font-bold tracking-tight md:text-4xl"
+            className="text-3xl font-medium tracking-tight md:text-4xl"
           >
             {heading ?? (
               <>

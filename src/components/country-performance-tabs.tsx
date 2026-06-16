@@ -71,7 +71,7 @@ export function CountryPerformanceTabs({
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="text-3xl font-bold leading-tight md:text-4xl"
+            className="text-3xl font-medium leading-tight md:text-4xl"
           >
             Responsible <span className="text-primary">AI Performance</span>
             <br className="hidden sm:block" /> Across Countries

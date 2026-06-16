@@ -114,7 +114,7 @@ export default async function IndicatorPage({ params }: PageProps) {
 
         {/* <div className="container mx-auto grid grid-cols-1 gap-10 px-4 py-12 lg:grid-cols-3 lg:gap-12">
           <section className="lg:col-span-2">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl mb-4 font-semibold">Top countries</h2>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl mb-4 font-medium">Top countries</h2>
             <ScoreLeaderboard entries={leaderboard} limit={20} />
             <p className="mt-3 text-sm text-muted-foreground">
               Showing the top {Math.min(20, leaderboard.length)} of{" "}
@@ -126,7 +126,7 @@ export default async function IndicatorPage({ params }: PageProps) {
             {ind.hasEvidence ? (
               <div className="rounded-2xl border border-border bg-card/60 shadow-sm">
                 <div className="border-b border-border px-4 py-3">
-                  <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+                  <h3 className="text-sm font-medium uppercase tracking-wide text-muted-foreground">
                     Evidence by country
                   </h3>
                 </div>

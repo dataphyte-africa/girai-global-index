@@ -78,7 +78,7 @@ export function RegionCountryExplorer({
             initial={{ opacity: 0, y: 24 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="text-3xl font-bold tracking-tight md:text-4xl"
+            className="text-3xl font-medium tracking-tight md:text-4xl"
           >
             <span className="text-primary">Explore</span> a Country&apos;s
             Performance
@@ -232,7 +232,7 @@ function CountryDetail({ country }: { country: CountryRanking }) {
 
           {/* Dimension bars */}
           <div className="mt-8">
-            <h4 className="mb-5 text-base font-bold text-foreground">
+            <h4 className="mb-5 text-base font-medium text-foreground">
               Dimension-Level Performance
             </h4>
             <div className="flex flex-col gap-5">

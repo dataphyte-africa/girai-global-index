@@ -95,9 +95,11 @@ const RANK_BADGE_STYLES: Record<RankBadgeTone, string> = {
 function RankPill({
   rank,
   total,
+  showTotal = true,
 }: {
   rank: number | null;
   total: number;
+  showTotal?: boolean;
 }) {
   if (rank == null) {
     return <span className="text-sm text-muted-foreground">—</span>;
@@ -110,7 +112,7 @@ function RankPill({
         RANK_BADGE_STYLES[tone]
       )}
     >
-      {ordinal(rank)} of {total}
+      {showTotal ? `${ordinal(rank)} of ${total}` : ordinal(rank)}
     </span>
   );
 }
@@ -215,7 +217,6 @@ export function RankingDataTable({
   data,
   dimensionSlug,
   indicatorSlug,
-  indicatorName,
 }: RankingDataTableProps) {
   const locked = Boolean(dimensionSlug || indicatorSlug);
   const [sorting, setSorting] = useState<SortingState>(
@@ -251,7 +252,7 @@ export function RankingDataTable({
     ? true
     : usesCustomScoreFilter(scoreFilter, dimensionSlug);
   const indexHeader = indicatorSlug
-    ? (indicatorName ?? "Score")
+    ? "Index"
     : scoreColumnLabel(scoreFilter, {
         lockedDimensionSlug: dimensionSlug,
       });
@@ -344,7 +345,7 @@ export function RankingDataTable({
       return row.rankRegional;
     };
 
-    return [
+    const baseColumns: ColumnDef<CountryRanking>[] = [
       {
         id: "ranking",
         accessorFn: (row) => globalRank(row) ?? Number.MAX_SAFE_INTEGER,
@@ -394,6 +395,48 @@ export function RankingDataTable({
           return list.includes(row.original.region);
         },
       },
+    ];
+
+    // Indicator pages use a compact layout that mirrors the global rankings
+    // table: a country's overall Global and Income-group standing shown as
+    // ordinal, multicolour pills next to its indicator rank.
+    if (indicatorSlug) {
+      return [
+        ...baseColumns,
+        {
+          id: "global",
+          accessorFn: (row) => row.rankGlobal ?? Number.MAX_SAFE_INTEGER,
+          header: "Global",
+          cell: ({ row }) => (
+            <RankPill
+              rank={row.original.rankGlobal}
+              total={data.length}
+              showTotal={false}
+            />
+          ),
+        },
+        {
+          id: "income",
+          accessorFn: (row) => row.rankIncomeGroup ?? Number.MAX_SAFE_INTEGER,
+          header: "Income",
+          filterFn: (row, _id, value) => {
+            const list = value as string[] | undefined;
+            if (!list || list.length === 0) return true;
+            return list.includes(row.original.incomeGroup);
+          },
+          cell: ({ row }) => (
+            <RankPill
+              rank={row.original.rankIncomeGroup}
+              total={incomeRankTotal.get(row.original.incomeGroup) ?? data.length}
+              showTotal={false}
+            />
+          ),
+        },
+      ];
+    }
+
+    return [
+      ...baseColumns,
       {
         id: "regionRank",
         accessorFn: (row) => regionalRank(row) ?? Number.MAX_SAFE_INTEGER,

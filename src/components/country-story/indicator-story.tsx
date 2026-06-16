@@ -71,7 +71,7 @@ export function IndicatorStorySection({ country }: IndicatorStoryProps) {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium text-foreground mb-4">
             Dimension Performance
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
@@ -192,7 +192,7 @@ function DimensionCardView({ card, narrative, isActive, isLast }: DimensionCardV
       </span>
 
       <div className="flex flex-wrap items-center gap-4 mb-4">
-        <h3 className="text-2xl font-bold text-foreground">{card.label}</h3>
+        <h3 className="text-2xl font-medium text-foreground">{card.label}</h3>
         <div
           className="flex items-center gap-2 px-3 py-1 rounded-full text-white font-semibold"
           style={{ backgroundColor: card.color }}

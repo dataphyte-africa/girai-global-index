@@ -121,7 +121,7 @@ export function AboutContributorsSection() {
           <SectionAccent color="blue" className="mb-5" />
 
           <h2
-            className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight lg:leading-[1.12]"
+            className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight lg:leading-[1.12]"
             style={{ color: HEADING_DARK }}
           >
             Contributors and Partners

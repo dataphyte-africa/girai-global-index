@@ -32,7 +32,7 @@ export function IndicatorDetailHero({ name, lead }: IndicatorDetailHeroProps) {
           />
 
           <div className="relative flex min-h-[360px] flex-col justify-center px-8 py-12 md:min-h-[565px] md:max-w-[58%] md:px-14 md:py-16 lg:min-h-[565px]">
-            <h1 className="text-[2rem] font-bold leading-[1.12] tracking-tight text-white md:text-5xl lg:text-[3.25rem]">
+            <h1 className="text-[2rem] font-medium leading-[1.12] tracking-tight text-white md:text-5xl lg:text-[3.25rem]">
               {name}
             </h1>
 

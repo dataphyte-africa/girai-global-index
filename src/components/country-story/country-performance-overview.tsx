@@ -84,7 +84,7 @@ export function CountryPerformanceOverview({
           transition={{ duration: 0.6 }}
           className="text-center mb-12 md:mb-16 max-w-3xl mx-auto"
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground tracking-tight">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium text-foreground tracking-tight">
             How <span className="text-[#6c5cff]">{country.name}</span> Performs
             Across the Five Dimensions
           </h2>
@@ -218,7 +218,7 @@ function DimensionCardView({
         <span className="flex items-center justify-center size-8 rounded-full bg-[#6c5cff] text-white text-sm font-semibold tabular-nums shadow-sm">
           {index}
         </span>
-        <h3 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight">
+        <h3 className="text-2xl md:text-3xl font-medium text-foreground tracking-tight">
           {title}
         </h3>
       </div>

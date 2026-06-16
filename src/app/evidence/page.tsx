@@ -4,6 +4,7 @@ import { FooterSection } from "@/components/footer-section";
 import { EvidenceExplorer } from "@/components/evidence-explorer";
 import {
   EvidenceHero,
+  EvidenceHubScrollGuide,
   EvidenceHubUrlDefaults,
   PathwayIndicatorTable,
   PathwayPicker,
@@ -30,6 +31,7 @@ function EvidenceHubContent() {
   return (
     <>
       <EvidenceHubUrlDefaults />
+      <EvidenceHubScrollGuide />
       <EvidenceHero
         countriesIndexed={countriesIndexed}
         frameworkCount={frameworkCount}
@@ -38,11 +40,9 @@ function EvidenceHubContent() {
       />
       <PathwayPicker totals={totals} />
       <PathwayIndicatorTable />
-      <section id="evidence-explorer" className="scroll-mt-20">
-        <EvidenceExplorer
-          subheading={`${evidenceItemCount.toLocaleString()} unique evidence items from laws, strategies, policies, and institutional actions in the ${countriesIndexed}-country GIRAI index.`}
-        />
-      </section>
+      <EvidenceExplorer
+        subheading={`${evidenceItemCount.toLocaleString()} unique evidence items from laws, strategies, policies, and institutional actions in the ${countriesIndexed}-country GIRAI index.`}
+      />
     </>
   );
 }

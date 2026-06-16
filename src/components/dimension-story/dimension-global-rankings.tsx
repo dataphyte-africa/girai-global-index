@@ -80,7 +80,7 @@ export function DimensionGlobalRankings({
     <section className="w-full px-4 py-16 md:px-8 md:py-24">
       <div className="mx-auto max-w-6xl">
         <div className="mx-auto mb-12 max-w-2xl text-center">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight">
             <span className="text-foreground">Global Rankings for </span>
             <span className="text-primary">{dimensionName}</span>
           </h2>
@@ -95,7 +95,7 @@ export function DimensionGlobalRankings({
               <span className="flex size-7 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600">
                 <TrendingUp className="size-4" />
               </span>
-              <h3 className="text-lg font-semibold">Top 10 Countries</h3>
+              <h3 className="text-lg font-medium">Top 10 Countries</h3>
             </div>
             <ol className="flex flex-col gap-2.5">
               {top.map((entry, idx) => (
@@ -114,7 +114,7 @@ export function DimensionGlobalRankings({
               >
                 <TrendingUp className="size-4" />
               </span>
-              <h3 className="text-lg font-semibold">Emerging Countries</h3>
+              <h3 className="text-lg font-medium">Emerging Countries</h3>
             </div>
             <ol className="flex flex-col gap-2.5">
               {emerging.map((entry, idx) => (

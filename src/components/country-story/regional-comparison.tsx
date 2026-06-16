@@ -41,7 +41,7 @@ export function RegionalComparison({ country, regionalCountries }: RegionalCompa
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium text-foreground mb-4">
             Regional Comparison
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto mb-6">
@@ -105,7 +105,7 @@ export function RegionalComparison({ country, regionalCountries }: RegionalCompa
                   />
                   <span
                     className={`flex-1 text-sm font-medium truncate ${
-                      isCurrentCountry ? "text-primary font-semibold" : "text-foreground"
+                      isCurrentCountry ? "text-primary font-medium" : "text-foreground"
                     }`}
                   >
                     {c.name}

@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ChevronRight, Download, Menu, Orbit } from "lucide-react";
 import { DIMENSIONS } from "@/data/dimensions-data";
+import { INDICATORS } from "@/data/2026/taxonomy";
 import { cn } from "@/lib/utils";
 import { ThemeSwitcher } from "./theme-switcher";
 import { Button } from "./ui/button";
@@ -56,15 +57,35 @@ const dimensionLinks = DIMENSIONS.map((dimension) => ({
   href: `/dimensions/${dimension.id}`,
 }));
 
-const indicatorLinks = [
-  { label: "Gender equality", href: "/#indicators" },
-  { label: "Children's rights", href: "/#indicators" },
-  { label: "Public participation & inclusion", href: "/#indicators" },
-  { label: "Protection of vulnerable groups", href: "/#indicators" },
-  { label: "Bias & unfair discrimination", href: "/#indicators" },
-  { label: "Cultural & linguistic diversity", href: "/#indicators" },
-  { label: "Ethical AI principles & frameworks", href: "/#indicators" },
+const featuredNavIndicators: Array<{ slug: string; label?: string }> = [
+  { slug: "gender-equality", label: "Gender equality" },
+  { slug: "childrens-rights", label: "Children's rights" },
+  {
+    slug: "government-mechanisms-cso-inclusion",
+    label: "Public participation & inclusion",
+  },
+  { slug: "safety-security", label: "Protection of vulnerable groups" },
+  {
+    slug: "fairness-non-discrimination",
+    label: "Bias & unfair discrimination",
+  },
+  {
+    slug: "cultural-linguistic-diversity",
+    label: "Cultural & linguistic diversity",
+  },
+  {
+    slug: "human-oversight-determination",
+    label: "Ethical AI principles & frameworks",
+  },
 ];
+
+const indicatorLinks = featuredNavIndicators.map(({ slug, label }) => {
+  const indicator = INDICATORS.find((item) => item.slug === slug);
+  return {
+    label: label ?? indicator?.name ?? slug,
+    href: `/indicators/${slug}`,
+  };
+});
 
 const primaryNavItems = [
   { label: "Countries", href: "/countries" },
@@ -208,8 +229,9 @@ export const Header = () => {
                   title="Indicators"
                   links={[
                     ...indicatorLinks,
-                    { label: "View all", href: "/#indicators" },
+                    { label: "View all", href: "/indicators" },
                   ]}
+                
                   onNavigate={() => setSheetOpen(false)}
                 />
 
@@ -269,7 +291,7 @@ function MenuColumn({
         <NavigationMenuLink asChild>
           <Link
             href={footerLink.href}
-            className="inline-flex items-center gap-1 rounded-xl px-3 py-2 text-sm font-medium text-primary transition-colors hover:bg-primary/10"
+            className="inline-flex flex-row  items-center gap-1 rounded-xl px-3 py-2 text-sm font-medium text-primary transition-colors hover:bg-primary/10"
           >
             {footerLink.label}
             <ChevronRight className="size-4" />

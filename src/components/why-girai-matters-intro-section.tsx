@@ -60,7 +60,7 @@ export function WhyGIRAIMattersIntroSection() {
               transition={{ duration: 0.6, ease: "easeOut" }}
               className="flex flex-col gap-6"
             >
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight tracking-tight text-white">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium leading-tight tracking-tight text-white">
                 Why GIRAI Matters
               </h2>
               <p className="max-w-md text-base md:text-lg leading-relaxed text-white/70">

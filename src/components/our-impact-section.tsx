@@ -44,7 +44,7 @@ function ImpactCardItem({ item, index }: { item: ImpactCard; index: number }) {
       transition={{ duration: 0.55, ease: "easeOut", delay: index * 0.08 }}
       className="flex flex-col gap-5 rounded-2xl border border-border/60 bg-card/80 p-6 backdrop-blur-sm transition-colors hover:border-primary/40 hover:bg-card md:p-7 dark:bg-card/40 dark:hover:bg-card/70"
     >
-      <h3 className="text-lg md:text-xl font-semibold text-foreground">
+      <h3 className="text-lg md:text-xl font-medium text-foreground">
         {item.title}
       </h3>
       <p className="text-sm leading-relaxed text-muted-foreground">
@@ -98,7 +98,7 @@ export function OurImpactSection() {
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="mx-auto mb-12 flex max-w-3xl flex-col items-center gap-4 text-center md:mb-16"
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.1]">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight leading-[1.1]">
             <span className="text-foreground">Our Impact on </span>
             <span className="text-primary">Responsible AI Governance</span>
           </h2>

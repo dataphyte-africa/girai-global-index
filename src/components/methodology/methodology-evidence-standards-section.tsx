@@ -1,12 +1,7 @@
 import Image from "next/image";
 
-const PURPLE = "#7150F4";
-const HEADING_DARK = "#1A1A2E";
-const BODY_COLOR = "#6B7280";
-const SUBTITLE_COLOR = "#6B7280";
 const NUMBER_DECORATOR = "/methodology/number-decorator.svg";
 const EVIDENCE_IMAGE = "/methodology/evidence-standard.png";
-const IMAGE_BORDER = "rgba(113, 80, 244, 0.22)";
 
 const EVIDENCE_RULES = [
   {
@@ -46,7 +41,7 @@ function EvidenceRuleCard({
   description: string;
 }) {
   return (
-    <article className="flex gap-4 rounded-2xl bg-white p-5 shadow-[0_2px_24px_rgba(26,26,46,0.06)] md:gap-5 md:p-6">
+    <article className="flex gap-4 rounded-2xl bg-card p-5 shadow-[0_2px_24px_rgba(26,26,46,0.06)] dark:shadow-[0_2px_24px_rgba(0,0,0,0.25)] md:gap-5 md:p-6">
       <div className="relative mt-0.5 shrink-0">
         <Image
           src={NUMBER_DECORATOR}
@@ -56,25 +51,16 @@ function EvidenceRuleCard({
           height={57}
           className="pointer-events-none absolute -left-1.5 -top-3 select-none"
         />
-        <span
-          className="relative flex size-9 items-center justify-center rounded-full text-sm font-semibold text-white shadow-[0_4px_14px_rgba(113,80,244,0.32)]"
-          style={{ backgroundColor: PURPLE }}
-        >
+        <span className="relative flex size-9 items-center justify-center rounded-full bg-primary text-sm font-semibold text-primary-foreground shadow-[0_4px_14px_color-mix(in_oklab,var(--primary)_32%,transparent)]">
           {index}
         </span>
       </div>
 
       <div className="min-w-0 flex-1">
-        <h3
-          className="text-base font-bold leading-snug tracking-tight md:text-[1.0625rem]"
-          style={{ color: HEADING_DARK }}
-        >
+        <h3 className="text-base font-medium leading-snug tracking-tight text-foreground md:text-[1.0625rem]">
           {title}
         </h3>
-        <p
-          className="mt-1.5 text-sm leading-[1.6] md:text-[0.9375rem] md:leading-[1.65]"
-          style={{ color: BODY_COLOR }}
-        >
+        <p className="mt-1.5 text-sm leading-[1.6] text-muted-foreground md:text-[0.9375rem] md:leading-[1.65]">
           {description}
         </p>
       </div>
@@ -87,18 +73,15 @@ function EvidenceRuleCard({
  */
 export function MethodologyEvidenceStandardsSection() {
   return (
-    <section className="w-full bg-white px-4 py-16 md:px-6 md:py-24 lg:py-28">
+    <section className="w-full bg-card px-4 py-16 md:px-6 md:py-24 lg:py-28">
       <div className="mx-auto max-w-7xl">
         <header className="mx-auto mb-12 max-w-2xl text-center md:mb-14 lg:mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight lg:leading-[1.12]">
-            <span style={{ color: PURPLE }}>Evidence Standards </span>
-            <span style={{ color: HEADING_DARK }}>of GIRAI</span>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight lg:leading-[1.12]">
+            <span className="text-primary">Evidence Standards </span>
+            <span className="text-foreground">of GIRAI</span>
           </h2>
 
-          <p
-            className="mt-4 text-sm leading-relaxed md:text-base md:leading-[1.65]"
-            style={{ color: SUBTITLE_COLOR }}
-          >
+          <p className="mt-4 text-sm leading-relaxed text-muted-foreground md:text-base md:leading-[1.65]">
             To ensure credibility across more than 140 countries, GIRAI applies
             strict evidence rules:
           </p>
@@ -116,10 +99,7 @@ export function MethodologyEvidenceStandardsSection() {
             ))}
           </div>
 
-          <div
-            className="relative w-full max-w-xl justify-self-center overflow-hidden rounded-2xl border bg-white p-1.5 shadow-[0_2px_24px_rgba(113,80,244,0.08)] lg:max-w-none lg:justify-self-end"
-            style={{ borderColor: IMAGE_BORDER }}
-          >
+          <div className="relative w-full max-w-xl justify-self-center overflow-hidden rounded-2xl border border-primary/20 bg-card p-1.5 shadow-[0_2px_24px_color-mix(in_oklab,var(--primary)_8%,transparent)] lg:max-w-none lg:justify-self-end">
             <Image
               src={EVIDENCE_IMAGE}
               alt="Digital evidence verification interface with checklists and security indicators"

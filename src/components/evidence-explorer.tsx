@@ -877,11 +877,11 @@ export function EvidenceExplorer({
   return (
     <section
       id="evidence-explorer"
-      className="relative mx-auto w-full max-w-7xl px-4 py-12 md:px-6 md:py-16"
+      className="relative mx-auto w-full max-w-7xl scroll-mt-20 px-4 py-12 md:px-6 md:py-16"
     >
       {/* Heading */}
       <div className="mx-auto mb-8 max-w-3xl text-center md:mb-10">
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-foreground">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight text-foreground">
           {heading}
         </h2>
         <p className="mt-3 text-sm text-muted-foreground md:text-base">
@@ -892,84 +892,84 @@ export function EvidenceExplorer({
         </p>
       </div>
 
-      {/* Search */}
-      <div className="relative mb-4">
-        <Search
-          aria-hidden
-          className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
-        />
-        <input
-          type="search"
-          value={searchInput}
-          onChange={(e) => setSearchInput(e.target.value)}
-          placeholder={searchPlaceholder}
-          aria-label="Search evidence"
-          className="h-12 w-full rounded-lg border border-input bg-muted/40 pl-11 pr-4 text-sm shadow-sm transition-colors focus:bg-background focus:outline-none focus:ring-2 focus:ring-primary"
+      <div className="sticky top-16 z-40 -mx-4 mb-6 border-b border-border/60 bg-background/95 px-4 pb-4 pt-2 backdrop-blur-md supports-backdrop-filter:bg-background/80 md:-mx-6 md:px-6">
+        {/* Search */}
+        <div className="relative mb-4">
+          <Search
+            aria-hidden
+            className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
+          />
+          <input
+            type="search"
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+            placeholder={searchPlaceholder}
+            aria-label="Search evidence"
+            className="h-12 w-full rounded-lg border border-input bg-muted/40 pl-11 pr-4 text-sm shadow-sm transition-colors focus:bg-background focus:outline-none focus:ring-2 focus:ring-primary"
+          />
+        </div>
+
+        {/* Filters — desktop inline */}
+        <div className="mb-3 hidden grid-cols-2 gap-3 md:grid md:grid-cols-3 lg:grid-cols-5">
+          {FACETS.map((facet) =>
+            facet.key === "pillar" ? (
+              <NestedPillarKindDropdown
+                key={facet.key}
+                facet={facet}
+                tree={pillarTreeOptions}
+                selectedPillars={urlState.facets.pillar}
+                selectedKinds={urlState.facets.kind as EvidenceKind[]}
+                onToggleLeaf={togglePillarKindLeaf}
+                onToggleGroup={togglePillarGroup}
+                onClear={clearPillarTree}
+              />
+            ) : (
+              <FacetDropdown
+                key={facet.key}
+                facet={facet}
+                selected={urlState.facets[facet.key]}
+                options={facetOptions[facet.key]}
+                onToggle={(v) => toggleFacet(facet.key, v)}
+                onClear={() => clearFacet(facet.key)}
+              />
+            )
+          )}
+        </div>
+
+        {/* Filters — mobile sheet trigger */}
+        <div className="mb-3 flex items-center justify-between md:hidden">
+          <MobileFilterSheet
+            facets={FACETS}
+            selected={urlState.facets}
+            options={facetOptions}
+            onToggle={toggleFacet}
+            onClear={clearFacet}
+            pillarTree={pillarTreeOptions}
+            selectedKinds={urlState.facets.kind as EvidenceKind[]}
+            onTogglePillarLeaf={togglePillarKindLeaf}
+            onTogglePillarGroup={togglePillarGroup}
+            onClearPillarTree={clearPillarTree}
+            activeCount={FILTER_KEYS.reduce((sum, k) => sum + urlState.facets[k].length, 0)}
+          />
+          {hasActiveFilters && (
+            <Button variant="ghost" size="sm" onClick={clearAll}>
+              Clear all
+            </Button>
+          )}
+        </div>
+
+        {/* Active filter chips */}
+        <ActiveChips
+          state={urlState}
+          countryLookup={countryLookup}
+          onRemove={(key, value) => clearFacet(key, value)}
+          onClearSearch={() => {
+            setSearchInput("");
+            writeState({ ...urlState, q: "", page: 1 });
+          }}
+          onClearAll={clearAll}
         />
       </div>
-
-      {/* Filters — desktop inline */}
-      <div className="mb-3 hidden grid-cols-2 gap-3 md:grid md:grid-cols-3 lg:grid-cols-5">
-        {FACETS.map((facet) =>
-          facet.key === "pillar" ? (
-            <NestedPillarKindDropdown
-              key={facet.key}
-              facet={facet}
-              tree={pillarTreeOptions}
-              selectedPillars={urlState.facets.pillar}
-              selectedKinds={urlState.facets.kind as EvidenceKind[]}
-              onToggleLeaf={togglePillarKindLeaf}
-              onToggleGroup={togglePillarGroup}
-              onClear={clearPillarTree}
-            />
-          ) : (
-            <FacetDropdown
-              key={facet.key}
-              facet={facet}
-              selected={urlState.facets[facet.key]}
-              options={facetOptions[facet.key]}
-              onToggle={(v) => toggleFacet(facet.key, v)}
-              onClear={() => clearFacet(facet.key)}
-            />
-          )
-        )}
-      </div>
-
-      {/* Filters — mobile sheet trigger */}
-      <div className="mb-3 flex items-center justify-between md:hidden">
-        <MobileFilterSheet
-          facets={FACETS}
-          selected={urlState.facets}
-          options={facetOptions}
-          onToggle={toggleFacet}
-          onClear={clearFacet}
-          pillarTree={pillarTreeOptions}
-          selectedKinds={urlState.facets.kind as EvidenceKind[]}
-          onTogglePillarLeaf={togglePillarKindLeaf}
-          onTogglePillarGroup={togglePillarGroup}
-          onClearPillarTree={clearPillarTree}
-          activeCount={FILTER_KEYS.reduce((sum, k) => sum + urlState.facets[k].length, 0)}
-        />
-        {hasActiveFilters && (
-          <Button variant="ghost" size="sm" onClick={clearAll}>
-            Clear all
-          </Button>
-        )}
-      </div>
-
-      {/* Active filter chips */}
-      <ActiveChips
-        state={urlState}
-        countryLookup={countryLookup}
-        onRemove={(key, value) => clearFacet(key, value)}
-        onClearSearch={() => {
-          setSearchInput("");
-          writeState({ ...urlState, q: "", page: 1 });
-        }}
-        onClearAll={clearAll}
-      />
-
-      <div className="my-6 h-px w-full bg-border" aria-hidden />
 
       {/* Stat cards */}
       <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -1034,7 +1034,7 @@ function StatCard({
 }) {
   return (
     <div className="rounded-2xl border bg-card p-5 shadow-sm md:p-6">
-      <div className="text-3xl font-bold tracking-tight text-primary md:text-4xl">
+      <div className="text-3xl font-medium tracking-tight text-primary md:text-4xl">
         {loading ? <span className="inline-block h-9 w-20 animate-pulse rounded bg-muted" /> : value.toLocaleString()}
       </div>
       <div className="mt-1 text-sm text-muted-foreground">{label}</div>
@@ -1612,7 +1612,7 @@ function EmptyState({ onClear }: { onClear: () => void }) {
     <div className="flex flex-col items-center justify-center gap-4 rounded-xl border border-dashed bg-card px-6 py-16 text-center">
       <SearchX className="h-10 w-10 text-muted-foreground/70" aria-hidden />
       <div>
-        <h3 className="text-base font-semibold text-foreground">No evidence matches these filters</h3>
+        <h3 className="text-base font-medium text-foreground">No evidence matches these filters</h3>
         <p className="mt-1 text-sm text-muted-foreground">
           Try removing a filter or widening your search.
         </p>
@@ -1674,60 +1674,65 @@ function EvidenceRow({
   };
 
   return (
-    <div className="overflow-hidden rounded-xl border bg-card transition-shadow hover:shadow-sm">
-      <div className="flex flex-col gap-3 p-4 md:flex-row md:items-center md:gap-4">
-        {/* Country */}
-        <div className="flex shrink-0 items-center gap-2 md:w-32">
-          {flagUrl ? (
-            <Image
-              src={flagUrl}
-              alt=""
-              width={20}
-              height={14}
-              className="h-3.5 w-5 rounded-sm object-cover ring-1 ring-black/5"
-              unoptimized
-            />
-          ) : (
-            <span className="h-3.5 w-5 rounded-sm bg-muted" aria-hidden />
-          )}
-          <span className="text-sm font-medium text-foreground">{row.country.name}</span>
-        </div>
-
-        {/* Title + meta */}
-        <div className="min-w-0 flex-1">
-          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-foreground">
-            <KindBadge kind={row.kind} />
+    <div className="group overflow-hidden rounded-xl border bg-card transition-all duration-200 hover:border-primary hover:shadow-md hover:shadow-primary/5">
+      <div className="p-4 md:p-5">
+        {/* Top row: country + meta, with View Evidence on the right */}
+        <div className="flex items-start justify-between gap-3">
+          <div className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
+            <span className="flex shrink-0 items-center gap-2">
+              {flagUrl ? (
+                <Image
+                  src={flagUrl}
+                  alt=""
+                  width={28}
+                  height={20}
+                  className="h-5 w-7 rounded object-cover ring-1 ring-black/5"
+                  unoptimized
+                />
+              ) : (
+                <span className="h-5 w-7 rounded bg-muted" aria-hidden />
+              )}
+              <span className="text-sm font-semibold text-foreground">{row.country.name}</span>
+            </span>
             {metaBits.map((bit, i) => (
-              <span key={i} className="inline-flex items-center gap-1">
+              <span key={i} className="inline-flex items-center gap-2">
                 <span className="text-muted-foreground/40">·</span>
                 <span>{bit}</span>
               </span>
             ))}
           </div>
-          <div className="mt-1 text-sm font-semibold leading-snug text-foreground">
-            <span className="line-clamp-2">{row.title}</span>
-          </div>
-          <div className="mt-1 text-[11px] text-muted-foreground">
-            {dimensionName} · {pillarName} · {row.indicatorName}
-          </div>
+          {row.link ? (
+            <a
+              href={row.link}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="inline-flex shrink-0 items-center gap-1.5 text-xs font-semibold text-primary hover:underline"
+            >
+              <Eye className="h-3.5 w-3.5" aria-hidden /> View Evidence
+            </a>
+          ) : null}
         </div>
 
-        {/* Actions */}
-        <div className="flex shrink-0 items-center gap-2 md:flex-col md:items-end md:gap-1.5">
-          <Link
-            href={`/evidence/${encodeURIComponent(row.id)}`}
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline"
-          >
-            <Eye className="h-3.5 w-3.5" aria-hidden /> View Evidence
-          </Link>
+        {/* Title */}
+        <div className="mt-2 text-base font-medium leading-snug text-foreground">
+          <span className="line-clamp-2">{row.title}</span>
+        </div>
+
+        {/* Bottom row: taxonomy pills, with See More on the right */}
+        <div className="mt-3 flex items-end justify-between gap-3">
+          <div className="flex min-w-0 flex-wrap items-center gap-1.5">
+            <TaxonomyPill tone="dimension" label={dimensionName} />
+            <TaxonomyPill tone="indicator" label={row.indicatorName} />
+            <TaxonomyPill tone="pillar" label={pillarName} />
+          </div>
           <button
             type="button"
             onClick={onToggleExpand}
             disabled={pending || fullEvidenceLoading}
             aria-expanded={expanded}
             className={cn(
-              "inline-flex items-center gap-1 rounded-md border px-2.5 py-1 text-xs font-medium text-foreground transition-colors",
-              "hover:bg-muted disabled:cursor-progress disabled:opacity-60"
+              "inline-flex shrink-0 items-center gap-1 rounded-md border px-2.5 py-1 text-xs font-medium text-foreground transition-colors",
+              "hover:border-primary/40 hover:bg-muted disabled:cursor-progress disabled:opacity-60"
             )}
           >
             {pending ? "Loading…" : expanded ? "See Less" : "See More"}
@@ -1757,24 +1762,31 @@ function EvidenceRow({
   );
 }
 
-function KindBadge({ kind }: { kind: EvidenceKind }) {
-  const tone: Record<EvidenceKind, string> = {
-    framework: "bg-indigo-100 text-indigo-700 dark:bg-indigo-500/15 dark:text-indigo-300",
-    initiative: "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300",
-    "cso-initiative": "bg-amber-100 text-amber-800 dark:bg-amber-500/15 dark:text-amber-300",
-    "gmc-consultation": "bg-sky-100 text-sky-700 dark:bg-sky-500/15 dark:text-sky-300",
-    "gmc-provision": "bg-sky-100 text-sky-700 dark:bg-sky-500/15 dark:text-sky-300",
-    "gmc-mechanism": "bg-sky-100 text-sky-700 dark:bg-sky-500/15 dark:text-sky-300",
-    "government-misuse": "bg-rose-100 text-rose-700 dark:bg-rose-500/15 dark:text-rose-300",
+/**
+ * Soft colour-tinted pill used at the foot of each evidence card for the
+ * dimension / indicator / pillar taxonomy, mirroring the Figma design.
+ */
+function TaxonomyPill({
+  tone,
+  label,
+}: {
+  tone: "dimension" | "indicator" | "pillar";
+  label: string;
+}) {
+  const toneClass: Record<typeof tone, string> = {
+    dimension: "bg-amber-50 text-amber-700 dark:bg-amber-500/15 dark:text-amber-300",
+    indicator: "bg-emerald-50 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300",
+    pillar: "bg-violet-50 text-violet-700 dark:bg-violet-500/15 dark:text-violet-300",
   };
   return (
     <span
       className={cn(
-        "inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide",
-        tone[kind]
+        "inline-flex max-w-full items-center truncate rounded-md px-2 py-1 text-xs font-medium",
+        toneClass[tone]
       )}
+      title={label}
     >
-      {KIND_LABELS[kind]}
+      {label}
     </span>
   );
 }
@@ -1910,7 +1922,7 @@ function ThematicChip({ text, value }: { text: string; value: string }) {
       )}
       title={text}
     >
-      <span className="font-semibold capitalize">{value}</span>
+      <span className="font-medium capitalize">{value}</span>
       <span className="truncate">{text}</span>
     </span>
   );

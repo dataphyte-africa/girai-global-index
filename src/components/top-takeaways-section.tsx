@@ -162,18 +162,32 @@ export function TopTakeawaysSection({
     <section
       id="all-takeaways"
       ref={sectionRef}
-      className="relative overflow-hidden py-20 md:py-28"
+      className="relative isolate overflow-hidden py-20 md:py-28"
     >
+      {/* Light: theme background + Figma mesh image; Dark: theme background + subtle violet radial mesh */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-violet-50/80 via-background to-background dark:from-violet-950/30 dark:via-background dark:to-background"
+        className="pointer-events-none absolute inset-0 -z-10 bg-background"
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 opacity-60 dark:opacity-40"
+        className="pointer-events-none absolute inset-0 -z-10 bg-cover bg-center bg-no-repeat dark:hidden"
         style={{
-          backgroundImage:
-            "radial-gradient(ellipse 60% 50% at 20% 0%, rgba(168,85,247,0.12) 0%, transparent 60%), radial-gradient(ellipse 60% 50% at 90% 10%, rgba(99,102,241,0.10) 0%, transparent 60%)",
+          backgroundImage: "url('/takeaways/takeaways-mesh-bg.jpg')",
+        }}
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-10 hidden dark:block"
+        style={{
+          backgroundImage: [
+            "radial-gradient(60% 55% at 5% 55%, rgba(56, 189, 248, 0.16) 0%, rgba(56, 189, 248, 0) 70%)",
+            "radial-gradient(35% 80% at 28% 60%, rgba(167, 139, 250, 0.18) 0%, rgba(167, 139, 250, 0) 70%)",
+            "radial-gradient(40% 35% at 55% 10%, rgba(139, 92, 246, 0.22) 0%, rgba(139, 92, 246, 0) 70%)",
+            "radial-gradient(55% 70% at 95% 40%, rgba(129, 140, 248, 0.18) 0%, rgba(129, 140, 248, 0) 70%)",
+            "radial-gradient(50% 50% at 80% 95%, rgba(96, 165, 250, 0.12) 0%, rgba(96, 165, 250, 0) 70%)",
+            "radial-gradient(45% 40% at 45% 50%, rgba(168, 85, 247, 0.14) 0%, rgba(168, 85, 247, 0) 70%)",
+          ].join(", "),
         }}
       />
 
@@ -185,7 +199,7 @@ export function TopTakeawaysSection({
             transition={{ duration: 0.6, ease: "easeOut" }}
             className="mx-auto mb-10 flex max-w-2xl flex-col items-center gap-3 text-center md:mb-14"
           >
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight">
               <span className="text-primary">Top 10</span>{" "}
               <span className="text-foreground">take away</span>
             </h2>

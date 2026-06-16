@@ -69,7 +69,7 @@ export function DimensionCountryExplorer({
     <section className="w-full bg-[#f8f9ff] px-4 py-16 dark:bg-muted/20 md:px-8 md:py-24">
       <div className="mx-auto max-w-6xl">
         <div className="mx-auto mb-12 max-w-2xl text-center">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight">
             <span className="text-primary">Explore</span>{" "}
             <span className="text-foreground">a Country&apos;s Performance</span>
           </h2>
@@ -195,7 +195,7 @@ function CountryCard({
           background: `linear-gradient(135deg, ${ACCENT}14 0%, transparent 65%)`,
         }}
       >
-        <h3 className="text-2xl font-bold text-foreground md:text-3xl">
+        <h3 className="text-2xl font-medium text-foreground md:text-3xl">
           {country.name}
         </h3>
         <dl className="mt-5 grid grid-cols-3 gap-4">
@@ -220,7 +220,7 @@ function CountryCard({
           <div>
             <dt className="text-xs text-muted-foreground">Region</dt>
             <dd
-              className="mt-1 truncate text-xl font-bold"
+              className="mt-1 truncate text-xl font-medium"
               style={{ color: ACCENT }}
             >
               {country.region}
@@ -231,7 +231,7 @@ function CountryCard({
 
       {/* Indicator breakdown */}
       <div className="px-6 py-7 md:px-8">
-        <h4 className="mb-5 text-sm font-semibold text-foreground">
+        <h4 className="mb-5 text-sm font-medium text-foreground">
           Indicator-by-Indicator Breakdown
         </h4>
         <div className="flex flex-col gap-5">

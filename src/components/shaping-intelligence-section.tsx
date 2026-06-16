@@ -57,7 +57,7 @@ export function ShapingIntelligenceSection() {
         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
         transition={{ duration: 0.7, ease: "easeOut" }}
       >
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.1] tracking-tight text-foreground drop-shadow-sm">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium leading-[1.1] tracking-tight text-foreground drop-shadow-sm">
           Shaping
           <br />
           Responsible

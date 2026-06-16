@@ -100,7 +100,7 @@ function MapLockControl({ isLocked, onToggle }: { isLocked: boolean; onToggle: (
           variant="ghost"
           size="icon-sm"
           onClick={onToggle}
-          className="h-9 w-9 border-none outline-0 border bg-background shadow-sm hover:bg-accent"
+          className="h-9 w-9 border-none outline-0 border-[0.5px] bg-background  hover:bg-accent"
           aria-label={isLocked ? "Unlock map" : "Lock map"}
         >
           {isLocked ? (
@@ -215,7 +215,7 @@ export function ChoroplethMap({
 
   return (
     <>
-      <div className="choropleth-map relative isolate z-0">
+      <div className="choropleth-map relative isolate z-0 ">
       <div className="my-5 flex flex-wrap items-center gap-x-6 gap-y-2 rounded-lg border bg-background/95 px-4 py-3 shadow-sm">
           <span className="text-muted-foreground text-sm font-medium">Score tier</span>
           {TIER_LEGEND.map(({ label, min, max }) => {
@@ -234,6 +234,7 @@ export function ChoroplethMap({
             );
           })}
         </div>
+        <div className="bg-[#F8FAFC] p-2 dark:bg-muted/20 rounded-sm">
         <MapContainer
           center={[20, 0]}
           zoom={2}
@@ -259,6 +260,7 @@ export function ChoroplethMap({
           purposes only and do not imply any judgement or endorsement regarding
           the legal status of any territory or its borders.
         </p>
+        </div>
       </div>
       <CountryDrawer
         country={selectedCountry}

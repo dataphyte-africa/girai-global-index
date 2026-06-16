@@ -1,10 +1,6 @@
 import { NumberedImpactCard } from "@/components/numbered-impact-card";
 import { cn } from "@/lib/utils";
 
-const PURPLE = "#7150F4";
-const HEADING_DARK = "#1A1A2E";
-const SUBTITLE_COLOR = "#6B7280";
-
 const DIMENSION_CARDS = [
   {
     title: "Inclusion and Diversity",
@@ -38,19 +34,16 @@ const DIMENSION_CARDS = [
  */
 export function MethodologyWhatMeasuresSection() {
   return (
-    <section className="w-full bg-[#F7F8FA] px-4 py-16 md:px-6 md:py-24 lg:py-28">
+    <section className="w-full bg-muted/50 px-4 py-16 md:px-6 md:py-24 lg:py-28">
       <div className="mx-auto max-w-7xl">
         <header className="mx-auto mb-12 max-w-2xl text-center md:mb-14 lg:mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight lg:leading-[1.12]">
-            <span style={{ color: HEADING_DARK }}>What </span>
-            <span style={{ color: PURPLE }}>GIRAI</span>
-            <span style={{ color: HEADING_DARK }}> Measures</span>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight lg:leading-[1.12]">
+            <span className="text-foreground">What </span>
+            <span className="text-primary">GIRAI</span>
+            <span className="text-foreground"> Measures</span>
           </h2>
 
-          <p
-            className="mt-4 text-sm leading-relaxed md:text-base md:leading-[1.65]"
-            style={{ color: SUBTITLE_COLOR }}
-          >
+          <p className="mt-4 text-sm leading-relaxed text-muted-foreground md:text-base md:leading-[1.65]">
             GIRAI evaluates national AI ecosystems across five interconnected
             dimensions
           </p>

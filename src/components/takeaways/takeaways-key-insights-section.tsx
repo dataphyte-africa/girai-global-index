@@ -56,7 +56,7 @@ function InsightCard({
       </div>
 
       <h3
-        className="mt-8 text-lg font-bold leading-snug tracking-tight md:mt-9 md:text-xl md:leading-[1.3]"
+        className="mt-8 text-lg font-medium leading-snug tracking-tight md:mt-9 md:text-xl md:leading-[1.3]"
         style={{ color: HEADING_DARK }}
       >
         {title}
@@ -80,7 +80,7 @@ export function TakeawaysKeyInsightsSection() {
     <section className="w-full bg-white px-4 py-16 md:px-6 md:py-24 lg:py-28">
       <div className="mx-auto max-w-6xl">
         <header className="mx-auto mb-12 max-w-2xl text-center md:mb-14 lg:mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight lg:leading-[1.12]">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight lg:leading-[1.12]">
             <span style={{ color: PURPLE }}>Key Insights</span>
             <span style={{ color: HEADING_DARK }}> from the Global Index</span>
           </h2>

@@ -50,7 +50,7 @@ export function RegionFooterHero({
             initial={{ opacity: 0, y: 24 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="max-w-xl text-3xl font-bold leading-tight text-white sm:text-4xl md:text-[2.75rem] md:leading-[1.15]"
+            className="max-w-xl text-3xl font-medium leading-tight text-white sm:text-4xl md:text-[2.75rem] md:leading-[1.15]"
           >
             Advancing Responsible AI Across {regionName}
           </motion.h2>

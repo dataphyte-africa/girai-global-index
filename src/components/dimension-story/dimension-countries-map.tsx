@@ -99,7 +99,7 @@ export function DimensionCountriesMap({
       <div className="mx-auto max-w-6xl">
         <Tabs defaultValue="map" className="w-full">
           <div className="mb-8 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl max-w-2xl font-bold leading-tight">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl max-w-2xl font-medium leading-tight">
               <span className="text-foreground">How </span>
               <span className="text-primary">Countries Perform</span>
               <span className="text-foreground"> on {dimensionName}</span>

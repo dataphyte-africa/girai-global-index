@@ -60,7 +60,7 @@ export function CountryHero({ country }: CountryHeroProps) {
                 }}
               />
               <div>
-                <h1 className="text-3xl md:text-4xl font-bold text-foreground">
+                <h1 className="text-3xl md:text-4xl font-medium text-foreground">
                   {country.name}
                 </h1>
                 <p className="text-muted-foreground mt-1">
@@ -94,7 +94,7 @@ export function CountryHero({ country }: CountryHeroProps) {
               <div className="flex flex-wrap gap-3">
                 {country.rankGlobal !== null && (
                   <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary/10 border border-primary/20">
-                    <span className="text-2xl font-bold text-primary">
+                    <span className="text-2xl font-medium text-primary">
                       {getOrdinalSuffix(country.rankGlobal)}
                     </span>
                     <span className="text-sm text-muted-foreground">Global Rank</span>
@@ -102,7 +102,7 @@ export function CountryHero({ country }: CountryHeroProps) {
                 )}
                 {country.rankRegional !== null && (
                   <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-muted border border-border">
-                    <span className="text-2xl font-bold text-foreground">
+                    <span className="text-2xl font-medium text-foreground">
                       {getOrdinalSuffix(country.rankRegional)}
                     </span>
                     <span className="text-sm text-muted-foreground">in {country.region}</span>
@@ -110,7 +110,7 @@ export function CountryHero({ country }: CountryHeroProps) {
                 )}
                 {country.rankIncomeGroup !== null && (
                   <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-muted border border-border">
-                    <span className="text-2xl font-bold text-foreground">
+                    <span className="text-2xl font-medium text-foreground">
                       {getOrdinalSuffix(country.rankIncomeGroup)}
                     </span>
                     <span className="text-sm text-muted-foreground">{country.incomeGroup}</span>

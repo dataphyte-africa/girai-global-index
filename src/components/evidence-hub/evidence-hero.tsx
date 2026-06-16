@@ -21,7 +21,10 @@ export function EvidenceHero({
   ];
 
   return (
-    <section className="relative overflow-hidden border-b border-border/60 bg-[#F8F9FF] py-16 md:py-20 dark:bg-[#0c0718]">
+    <section
+      id="evidence-hero"
+      className="relative scroll-mt-20 overflow-hidden border-b border-border/60 bg-[#F8F9FF] py-16 md:py-20 dark:bg-[#0c0718]"
+    >
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-[0.35] dark:opacity-[0.12]"
@@ -37,7 +40,7 @@ export function EvidenceHero({
       </div>
 
       <div className="relative z-10 mx-auto max-w-6xl px-4 md:px-6">
-        <h1 className="max-w-3xl text-3xl font-bold tracking-tight text-foreground md:text-4xl lg:text-5xl">
+        <h1 className="max-w-3xl text-3xl font-medium tracking-tight text-foreground md:text-4xl lg:text-5xl">
           Responsible AI{" "}
           <span className="text-primary">Evidence Hub</span>
         </h1>
@@ -49,7 +52,7 @@ export function EvidenceHero({
         <dl className="mt-10 grid grid-cols-2 gap-6 sm:grid-cols-4">
           {stats.map((stat) => (
             <div key={stat.label} className="flex flex-col gap-1">
-              <dt className="text-2xl font-bold tracking-tight text-primary md:text-3xl">
+              <dt className="text-2xl font-medium tracking-tight text-primary md:text-3xl">
                 {stat.value}
               </dt>
               <dd className="text-xs text-muted-foreground md:text-sm">

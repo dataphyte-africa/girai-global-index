@@ -41,7 +41,7 @@ export function IndicatorCard({ index, slug, name }: IndicatorCardProps) {
       </div>
 
       <h3
-        className="text-lg font-bold leading-snug tracking-tight md:text-[1.2rem] md:leading-[1.3]"
+        className="text-lg font-medium leading-snug tracking-tight md:text-[1.2rem] md:leading-[1.3]"
         style={{ color: HEADING_DARK }}
       >
         {name}

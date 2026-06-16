@@ -97,7 +97,7 @@ function AnimatedProgressBar({
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return (
-    <h4 className="text-sm font-semibold text-foreground mt-6 mb-4 first:mt-0">
+    <h4 className="text-sm font-medium text-foreground mt-6 mb-4 first:mt-0">
       {children}
     </h4>
   );
@@ -148,7 +148,7 @@ export function CountryDrawer({
               }}
             />
             <div className="text-left">
-              <SheetTitle className="text-lg font-semibold">
+              <SheetTitle className="text-lg font-medium">
                 {country.name}
               </SheetTitle>
               <SheetDescription className="text-xs text-muted-foreground">

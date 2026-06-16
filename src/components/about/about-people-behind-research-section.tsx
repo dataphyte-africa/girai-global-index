@@ -73,7 +73,7 @@ export function AboutPeopleBehindResearchSection() {
     <section className="w-full bg-[#F9FAFB] px-4 py-16 md:px-6 md:py-24 lg:py-28">
       <div className="mx-auto max-w-5xl">
         <header className="mx-auto max-w-2xl text-center">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight lg:leading-[1.12]">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight lg:leading-[1.12]">
             <span style={{ color: HEADING_DARK }}>The </span>
             <span style={{ color: PURPLE }}>People</span>
             <span style={{ color: HEADING_DARK }}> Behind the Research</span>

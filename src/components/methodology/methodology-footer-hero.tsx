@@ -2,8 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { FileText } from "lucide-react";
 
-const PURPLE = "#7150F4";
-const TITLE_ACCENT = "#9FE8C7";
 const FOOTER_IMAGE = "/methodology/footer-hero.png";
 
 /**
@@ -32,10 +30,10 @@ export function MethodologyFooterHero() {
         />
 
         <div className="relative z-10 flex min-h-[360px] flex-col justify-center px-8 py-14 sm:px-12 md:min-h-[480px] md:px-14 md:py-16 lg:min-h-[565px] lg:max-w-[56%] lg:px-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl max-w-lg font-bold leading-[1.12] tracking-tight md:leading-[1.1]">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl max-w-lg font-medium leading-[1.12] tracking-tight md:leading-[1.1]">
             <span className="text-white">Download GIRAI Research</span>
             <br />
-            <span style={{ color: TITLE_ACCENT }}>Methodology Handbook</span>
+            <span className="text-hero-accent">Methodology Handbook</span>
           </h2>
 
           <p className="mt-5 max-w-md text-base leading-relaxed text-white/80 md:mt-6 md:text-lg">
@@ -46,8 +44,7 @@ export function MethodologyFooterHero() {
           <div className="mt-8">
             <Link
               href="#download-methodology"
-              className="inline-flex items-center gap-2.5 rounded-full px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-black/25 transition-opacity hover:opacity-90"
-              style={{ backgroundColor: PURPLE }}
+              className="inline-flex items-center gap-2.5 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-lg shadow-black/25 transition-opacity hover:opacity-90"
             >
               <FileText className="size-4" aria-hidden />
               Download book

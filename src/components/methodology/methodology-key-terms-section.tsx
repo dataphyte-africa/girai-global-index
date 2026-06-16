@@ -4,12 +4,6 @@ import { useState } from "react";
 import { Minus, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const PURPLE = "#7150F4";
-const HEADING_DARK = "#1A1A2E";
-const SUBTITLE_COLOR = "#6B7280";
-const BODY_COLOR = "#6B7280";
-const BORDER_COLOR = "rgba(113, 80, 244, 0.22)";
-
 const TERMS = [
   {
     title: "Thematic area",
@@ -55,27 +49,17 @@ function KeyTermItem({
   onToggle: () => void;
 }) {
   return (
-    <div
-      className="overflow-hidden rounded-2xl border bg-white shadow-[0_2px_20px_rgba(113,80,244,0.07)]"
-      style={{ borderColor: BORDER_COLOR }}
-    >
+    <div className="overflow-hidden rounded-2xl border border-primary/20 bg-card shadow-[0_2px_20px_color-mix(in_oklab,var(--primary)_7%,transparent)]">
       <button
         type="button"
         onClick={onToggle}
         aria-expanded={isOpen}
         className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left md:px-7 md:py-5"
       >
-        <span
-          className="text-base font-medium leading-snug md:text-[1.0625rem]"
-          style={{ color: HEADING_DARK }}
-        >
+        <span className="text-base font-medium leading-snug text-foreground md:text-[1.0625rem]">
           {title}
         </span>
-        <span
-          className="flex size-6 shrink-0 items-center justify-center"
-          style={{ color: PURPLE }}
-          aria-hidden
-        >
+        <span className="flex size-6 shrink-0 items-center justify-center text-primary" aria-hidden>
           {isOpen ? (
             <Minus className="size-5 stroke-[1.75]" />
           ) : (
@@ -91,11 +75,8 @@ function KeyTermItem({
         )}
       >
         <div className="overflow-hidden">
-          <div className="mx-6 border-t md:mx-7" style={{ borderColor: "#ECEEF2" }} />
-          <p
-            className="px-6 pb-5 pt-4 text-sm leading-[1.65] md:px-7 md:pb-6 md:pt-4 md:text-[0.9375rem] md:leading-[1.68]"
-            style={{ color: BODY_COLOR }}
-          >
+          <div className="mx-6 border-t border-border md:mx-7" />
+          <p className="px-6 pb-5 pt-4 text-sm leading-[1.65] text-muted-foreground md:px-7 md:pb-6 md:pt-4 md:text-[0.9375rem] md:leading-[1.68]">
             {definition}
           </p>
         </div>
@@ -114,28 +95,17 @@ export function MethodologyKeyTermsSection() {
     <section className="relative w-full overflow-hidden px-4 py-16 md:px-6 md:py-24 lg:py-28">
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-[#FAFBFF]"
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-90"
-        style={{
-          backgroundImage:
-            "radial-gradient(ellipse 55% 45% at 8% 12%, rgba(113,80,244,0.09) 0%, transparent 58%), radial-gradient(ellipse 50% 40% at 92% 88%, rgba(99,102,241,0.07) 0%, transparent 55%)",
-        }}
+        className="methodology-key-terms-bg pointer-events-none absolute inset-0"
       />
 
       <div className="relative mx-auto max-w-3xl">
         <header className="mx-auto mb-10 max-w-2xl text-center md:mb-12 lg:mb-14">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight lg:leading-[1.12]">
-            <span style={{ color: PURPLE }}>Key Terms </span>
-            <span style={{ color: HEADING_DARK }}>and Definitions</span>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight lg:leading-[1.12]">
+            <span className="text-primary">Key Terms </span>
+            <span className="text-foreground">and Definitions</span>
           </h2>
 
-          <p
-            className="mt-4 text-sm leading-relaxed md:text-base md:leading-[1.65]"
-            style={{ color: SUBTITLE_COLOR }}
-          >
+          <p className="mt-4 text-sm leading-relaxed text-muted-foreground md:text-base md:leading-[1.65]">
             The core concepts that shape GIRAI&apos;s methodology, clearly
             defined for transparency and consistency.
           </p>

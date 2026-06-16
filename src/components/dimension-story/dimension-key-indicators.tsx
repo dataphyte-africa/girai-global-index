@@ -125,7 +125,7 @@ export function DimensionKeyIndicators({
     <section className="w-full px-4 py-16 md:px-8 md:py-24">
       <div className="mx-auto max-w-6xl">
         <div className="mx-auto mb-12 max-w-2xl text-center md:mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight">
             <span className="text-primary">Key Indicators</span>{" "}
             <span className="text-foreground">Within This Dimension</span>
           </h2>
@@ -139,7 +139,7 @@ export function DimensionKeyIndicators({
           {/* Sticky left rail */}
           <div className="lg:sticky lg:top-24 lg:h-fit">
             <div className="rounded-3xl border border-border bg-card p-5 shadow-sm">
-              <h3 className="mb-4 px-1 text-lg font-semibold">
+              <h3 className="mb-4 px-1 text-lg font-medium">
                 {indicators.length} Key Indicators
               </h3>
               <ul className="flex flex-col gap-1.5">
@@ -221,7 +221,7 @@ export function DimensionKeyIndicators({
                       <Icon name={copy.icon} className="size-5" />
                     </span>
                     <div className="min-w-0 flex-1">
-                      <h4 className="text-lg font-semibold text-foreground">
+                      <h4 className="text-lg font-medium text-foreground">
                         {ind.name}
                       </h4>
                       <div className="mt-1 flex items-center gap-2">
@@ -245,7 +245,7 @@ export function DimensionKeyIndicators({
                     style={{ borderColor: color }}
                   >
                     <p className="text-sm leading-relaxed text-foreground/80">
-                      <span className="font-semibold text-foreground">
+                      <span className="font-medium text-foreground">
                         Why this matters:
                       </span>{" "}
                       {copy.whyItMatters}

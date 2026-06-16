@@ -17,6 +17,10 @@ import {
   itemCountForPathway,
   type PathwayConfig,
 } from "./pathway-config";
+import {
+  EVIDENCE_HUB_SECTIONS,
+  scrollToEvidenceHubSection,
+} from "./scroll";
 
 const PATHWAY_ICONS: Record<PathwayConfig["id"], LucideIcon> = {
   frameworks: FileText,
@@ -41,12 +45,16 @@ export function PathwayPicker({ totals }: PathwayPickerProps) {
     params.delete("indicator");
     params.delete("page");
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+    scrollToEvidenceHubSection(EVIDENCE_HUB_SECTIONS.indicatorTable);
   };
 
   return (
-    <section className="border-b border-border/60 bg-background py-12 md:py-16">
+    <section
+      id="pathway-picker"
+      className="scroll-mt-20 border-b border-border/60 bg-background py-12 md:py-16"
+    >
       <div className="mx-auto max-w-6xl px-4 md:px-6">
-        <h2 className="text-3xl md:text-4xl lg:text-5xl text-center font-bold tracking-tight text-foreground">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl text-center font-medium tracking-tight text-foreground">
           What would you like to explore?
         </h2>
         <p className="mx-auto mt-2 max-w-xl text-center text-sm text-muted-foreground md:text-base">
@@ -95,7 +103,7 @@ export function PathwayPicker({ totals }: PathwayPickerProps) {
                     aria-hidden
                   />
                 </div>
-                <h3 className="text-sm font-semibold text-foreground md:text-base">
+                <h3 className="text-sm font-medium text-foreground md:text-base">
                   {pathway.title}
                 </h3>
                 <p className="mt-2 flex-1 text-xs leading-relaxed text-muted-foreground">

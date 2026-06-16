@@ -27,7 +27,7 @@ export function CountriesHero({ arcData, markers }: CountriesHeroProps) {
 
       <div className="relative z-10 mx-auto grid max-w-7xl grid-cols-1 items-center gap-6 px-4 py-12 sm:px-6 md:grid-cols-2 md:gap-8 md:py-16 lg:px-8 lg:py-20">
         <div className="flex flex-col gap-4 md:gap-5">
-          <h1 className="text-4xl font-bold leading-[1.08] tracking-tight sm:text-5xl lg:text-[3.5rem] lg:leading-[1.05]">
+          <h1 className="text-4xl font-medium leading-[1.08] tracking-tight sm:text-5xl lg:text-[3.5rem] lg:leading-[1.05]">
             <span className="block text-foreground">Responsible AI</span>
             <span className="block text-primary">Governance by Country</span>
           </h1>

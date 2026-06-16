@@ -33,7 +33,7 @@ export function AboutWhatIndexMeasuresSection() {
             What it measures
           </span>
 
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.18] tracking-tight md:leading-[1.15]">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium leading-[1.18] tracking-tight md:leading-[1.15]">
             <span style={{ color: HEADING_DARK }}>What the Index Measures </span>
             <span style={{ color: PURPLE }}>Across AI Governance</span>
           </h2>

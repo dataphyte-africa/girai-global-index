@@ -11,7 +11,7 @@ export function AboutIntroSection() {
     <section className="w-full bg-white px-4 py-16 md:px-6 md:py-24 lg:py-28">
       <div className="mx-auto max-w-7xl">
         <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] lg:items-center lg:gap-20">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.14] tracking-tight lg:leading-[1.12]">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium leading-[1.14] tracking-tight lg:leading-[1.12]">
             <span style={{ color: HEADING_DARK }}>
               The GIRAI provides an evidence-based assessment{" "}
             </span>

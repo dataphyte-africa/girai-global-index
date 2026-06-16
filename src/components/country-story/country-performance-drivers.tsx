@@ -43,7 +43,7 @@ export function CountryPerformanceDrivers({
         >
           <h2
             id="country-performance-drivers-heading"
-            className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight"
+            className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight"
           >
             <span className="text-[#6c5cff]">What Drives</span>{" "}
             <span className="text-foreground">This Performance?</span>
@@ -119,7 +119,7 @@ function PillarDriverCard({
       transition={{ duration: 0.45, delay: index * 0.08 }}
       className="flex flex-col rounded-2xl border border-border/80 bg-card p-6 shadow-sm md:p-7"
     >
-      <h3 className="text-lg font-semibold text-foreground md:text-xl">
+      <h3 className="text-lg font-medium text-foreground md:text-xl">
         {heading}
       </h3>
       <p className="mt-2 text-sm leading-relaxed text-muted-foreground">

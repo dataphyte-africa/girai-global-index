@@ -91,7 +91,7 @@ export default async function EvidenceItemPage({ params }: PageProps) {
             <span className="text-border">•</span>
             <span>{item.country.name}</span>
           </div>
-          <h1 className="mt-3 max-w-4xl text-3xl font-bold tracking-tight md:text-4xl">
+          <h1 className="mt-3 max-w-4xl text-3xl font-medium tracking-tight md:text-4xl">
             {item.title}
           </h1>
 
@@ -176,7 +176,7 @@ function PublicCard({ item }: { item: EvidenceItem }) {
         </div>
       ) : null}
 
-      <h2 className="text-3xl md:text-4xl lg:text-5xl mb-3 font-semibold uppercase tracking-wide text-muted-foreground">
+      <h2 className="text-3xl md:text-4xl lg:text-5xl mb-3 font-medium uppercase tracking-wide text-muted-foreground">
         Justification
       </h2>
       <p className="whitespace-pre-line text-sm leading-relaxed text-foreground">
@@ -209,7 +209,7 @@ function PublicCard({ item }: { item: EvidenceItem }) {
 
       {item.defenceAndSecurity?.justification ? (
         <p className="mt-4 rounded-md bg-muted/50 p-3 text-xs leading-relaxed text-muted-foreground">
-          <span className="font-semibold text-foreground">
+          <span className="font-medium text-foreground">
             Defence and security note:{" "}
           </span>
           {item.defenceAndSecurity.justification}
@@ -226,7 +226,7 @@ function ThematicCoverageCard({
 }) {
   return (
     <article className="rounded-2xl border border-border bg-card p-6 shadow-sm">
-      <h2 className="text-3xl md:text-4xl lg:text-5xl mb-4 font-semibold uppercase tracking-wide text-muted-foreground">
+      <h2 className="text-3xl md:text-4xl lg:text-5xl mb-4 font-medium uppercase tracking-wide text-muted-foreground">
         Thematic coverage
       </h2>
       <ul className="space-y-3">
@@ -268,7 +268,7 @@ function ValidationPanel({
   return (
     <div className="rounded-2xl border border-border bg-card shadow-sm">
       <div className="border-b border-border px-4 py-3">
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold uppercase tracking-wide text-muted-foreground">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium uppercase tracking-wide text-muted-foreground">
           Validation
         </h2>
       </div>
@@ -410,7 +410,7 @@ function NotFoundView({ itemId }: { itemId: string }) {
             Back to Index
           </Button>
         </Link>
-        <h1 className="text-3xl font-bold tracking-tight">Evidence not found</h1>
+        <h1 className="text-3xl font-medium tracking-tight">Evidence not found</h1>
         <p className="mt-3 text-muted-foreground">
           We couldn&apos;t find the evidence row{" "}
           <code className="break-all rounded bg-muted px-1.5 py-0.5 text-sm">

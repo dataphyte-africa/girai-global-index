@@ -37,7 +37,7 @@ function CategoryColumn({
           sizes="(max-width: 768px) 100vw, 33vw"
         />
       </div>
-      <h3 className="text-lg font-semibold text-foreground md:text-xl">
+      <h3 className="text-lg font-medium text-foreground md:text-xl">
         {heading}
       </h3>
       <p className="text-sm leading-relaxed text-muted-foreground">{body}</p>
@@ -79,7 +79,7 @@ export function IndicatorCategorySection() {
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="mx-auto mb-12 flex max-w-3xl flex-col items-center gap-4 text-center md:mb-16"
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.1] tracking-tight">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium leading-[1.1] tracking-tight">
             <span className="text-primary">Three Categories</span>
             <span className="text-foreground">
               {" "}

@@ -43,14 +43,14 @@ export function DimensionCard({ dimension }: DimensionCardProps) {
                 )
               }
               <div className="relative z-10 space-y-1">
-                <CardTitle className="text-xl font-bold">{dimension.name}</CardTitle>
+                <CardTitle className="text-xl font-medium">{dimension.name}</CardTitle>
                 <CardDescription className="text-white/90">
                   {dimension.subtitle}
                 </CardDescription>
               </div>
             </CardHeader>
             <CardContent className="space-y-5 pt-6">
-              <h3 className="text-base font-semibold leading-snug">
+              <h3 className="text-base font-medium leading-snug">
                 See how indicators are distributed across the{" "}
                 {dimension.pillarGroups.length} pillars
               </h3>

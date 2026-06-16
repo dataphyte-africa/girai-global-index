@@ -34,7 +34,7 @@ export function FooterSection() {
         <div className="bg-[#241960] rounded-2xl p-8 md:p-12 flex flex-col md:flex-row gap-8 md:gap-16 items-start">
           {/* Left - Subscribe text */}
           <div className="flex-1">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold italic mb-4">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium italic mb-4">
               Subscribe
             </h2>
             <p className="text-white/70 text-sm max-w-xs">
@@ -134,7 +134,7 @@ export function FooterSection() {
           <div className="flex flex-wrap gap-10 md:gap-16 flex-2">
             {/* Results 2024 */}
             <div className="min-w-[120px]">
-              <h3 className="text-xs font-semibold tracking-widest text-white/50 uppercase mb-4">
+              <h3 className="text-xs font-medium tracking-widest text-white/50 uppercase mb-4">
                 Results 2024
               </h3>
               <ul className="space-y-2.5">
@@ -153,7 +153,7 @@ export function FooterSection() {
 
             {/* Explore Regions */}
             <div className="min-w-[140px]">
-              <h3 className="text-xs font-semibold tracking-widest text-white/50 uppercase mb-4">
+              <h3 className="text-xs font-medium tracking-widest text-white/50 uppercase mb-4">
                 Explore Regions
               </h3>
               <ul className="space-y-2.5">
@@ -172,7 +172,7 @@ export function FooterSection() {
 
             {/* Other Projects */}
             <div className="min-w-[140px]">
-              <h3 className="text-xs font-semibold tracking-widest text-white/50 uppercase mb-4">
+              <h3 className="text-xs font-medium tracking-widest text-white/50 uppercase mb-4">
                 Other Projects
               </h3>
               <ul className="space-y-2.5">

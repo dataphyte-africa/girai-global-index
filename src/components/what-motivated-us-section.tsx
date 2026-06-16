@@ -32,7 +32,7 @@ export function WhatMotivatedUsSection() {
               Why GIRAI?
             </span>
 
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.1]">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight leading-[1.1]">
               <span className="text-foreground">What </span>
               <span className="text-primary">Motivated</span>
               <span className="text-foreground"> Us to do This?</span>
@@ -76,7 +76,7 @@ export function WhatMotivatedUsSection() {
               />
             </svg>
 
-            <h3 className="relative z-10 text-center text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white">
+            <h3 className="relative z-10 text-center text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight text-white">
               What Is Global Index
             </h3>
           </motion.div>
