@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { getIndicatorCopy } from "@/lib/indicator-copy";
 
 const PURPLE = "#7150F4";
@@ -55,19 +56,23 @@ export function IndicatorCard({ index, slug, name }: IndicatorCardProps) {
       </p>
 
       <div className="mt-6 pt-1">
-        <Link
-          href={`/indicators/${slug}`}
-          className="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition-colors hover:bg-[#7150F4]/5"
+        <Button
+          asChild
+          variant="outline"
+          size="sm"
+          className="font-semibold hover:bg-[#7150F4]/5"
           style={{ borderColor: PURPLE, color: PURPLE }}
         >
-          Read more
-          <span
-            className="inline-flex size-5 items-center justify-center rounded-full"
-            style={{ backgroundColor: PURPLE }}
-          >
-            <ArrowUpRight className="size-3 text-white" aria-hidden />
-          </span>
-        </Link>
+          <Link href={`/indicators/${slug}`}>
+            Read more
+            <span
+              className="inline-flex size-5 items-center justify-center rounded-full"
+              style={{ backgroundColor: PURPLE }}
+            >
+              <ArrowUpRight className="size-3 text-white" aria-hidden />
+            </span>
+          </Link>
+        </Button>
       </div>
     </article>
   );

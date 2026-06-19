@@ -8,6 +8,7 @@ import { TopTakeawaysSection } from "@/components/top-takeaways-section";
 import { ReportDownloadSection } from "@/components/report-download-section";
 import {
   getAllCountries,
+  getGlobalAverages,
   getRegionAverages,
   getRegions,
 } from "@/lib/girai";
@@ -48,6 +49,7 @@ export default function CountriesPage() {
           countries={allCountries}
           regions={regions}
           regionAverages={regionAverages}
+          globalAverages={getGlobalAverages()}
         />
         <TopTakeawaysSection />
         <ReportDownloadSection />

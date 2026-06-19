@@ -5,6 +5,7 @@ import { motion } from "motion/react";
 import { PILLARS } from "@/data/2026/taxonomy";
 import { PILLAR_COPY } from "@/lib/pillar-copy";
 import { getCountryPillarNarrative } from "@/lib/country-narratives";
+import { EvidenceLinkedText } from "./evidence-linked-text";
 import {
   computePillarContributionMix,
   computePillarMedians,
@@ -159,7 +160,9 @@ function PillarDriverCard({
             >
               <Check className="size-3 stroke-[2.5]" />
             </span>
-            <span>{bullet}</span>
+            <span>
+              <EvidenceLinkedText text={bullet} />
+            </span>
           </li>
         ))}
       </ul>
@@ -170,7 +173,7 @@ function PillarDriverCard({
       >
         <p className="text-sm font-semibold text-[#6c5cff]">{calloutLabel}</p>
         <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
-          {calloutText}
+          <EvidenceLinkedText text={calloutText} />
         </p>
       </aside>
     </motion.article>

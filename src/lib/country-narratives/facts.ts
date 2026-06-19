@@ -125,27 +125,43 @@ function dimensionExtremes(
   country: CountryRanking,
   regDimAvgs: Record<DimensionSlug, number | null>
 ): { strongest: DimensionExtreme | null; weakest: DimensionExtreme | null } {
-  const scored = DIMENSIONS.map((d) => ({
+  // Strength/weakness is judged by competitive standing (rank), not raw score:
+  // a high score in a dimension where everyone scores high is not a real strength.
+  const ranked = DIMENSIONS.map((d) => ({
     slug: d.slug,
     name: d.name,
     score: country.dimensionScores[d.slug],
-  })).filter((x) => x.score !== null && Number.isFinite(x.score)) as Array<{
+    rankGlobal: country.dimensionRanksGlobal[d.slug],
+    rankRegional: country.dimensionRanksRegional[d.slug],
+  })).filter(
+    (x) =>
+      x.score !== null &&
+      Number.isFinite(x.score) &&
+      x.rankGlobal !== null
+  ) as Array<{
     slug: DimensionSlug;
     name: string;
     score: number;
+    rankGlobal: number;
+    rankRegional: number | null;
   }>;
 
-  if (scored.length === 0) return { strongest: null, weakest: null };
+  if (ranked.length === 0) return { strongest: null, weakest: null };
 
-  scored.sort((a, b) => b.score - a.score);
-  const strongest = scored[0]!;
-  const weakest = scored[scored.length - 1]!;
+  // Lower rank = stronger; break ties on regional rank.
+  ranked.sort(
+    (a, b) =>
+      a.rankGlobal - b.rankGlobal ||
+      (a.rankRegional ?? Infinity) - (b.rankRegional ?? Infinity)
+  );
+  const strongest = ranked[0]!;
+  const weakest = ranked[ranked.length - 1]!;
 
-  const toExtreme = (row: (typeof scored)[0]): DimensionExtreme => ({
+  const toExtreme = (row: (typeof ranked)[0]): DimensionExtreme => ({
     slug: row.slug,
     name: row.name,
     score: row.score,
-    rankGlobal: country.dimensionRanksGlobal[row.slug],
+    rankGlobal: row.rankGlobal,
     deltaVsRegional: row.score - (regDimAvgs[row.slug] ?? 0),
   });
 
@@ -280,6 +296,15 @@ function buildPillarFacts(
     checklistBullets: highlights?.pillars[pillar]?.bullets ?? null,
     sampleEvidenceTitles: titles,
     allowedTitles: titles,
+    relativeToCountryRank:
+      country.rankGlobal !== null && country.pillarRanksGlobal[pillar] !== null
+        ? {
+            countryRankGlobal: country.rankGlobal,
+            pillarRankGlobal: country.pillarRanksGlobal[pillar]!,
+            isRelativeStrength:
+              country.pillarRanksGlobal[pillar]! < country.rankGlobal,
+          }
+        : null,
   };
 }
 

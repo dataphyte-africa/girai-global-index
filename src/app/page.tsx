@@ -4,6 +4,7 @@ import { DimensionsSection } from "@/components/dimensions-section";
 import {
   getAllCountries,
   getAllEvidenceItems,
+  getGlobalAverages,
   getIndicatorDefs,
   getRegionAverages,
   getRegions,
@@ -91,6 +92,7 @@ export default async function Home() {
         countries={allCountries}
         regions={regions}
         regionAverages={regionAverages}
+        globalAverages={getGlobalAverages()}
       />
       <IndicatorCategorySection />
       <LimitsOfMeasurementSection />

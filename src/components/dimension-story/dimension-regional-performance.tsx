@@ -11,6 +11,30 @@ export interface DimensionRegionalPerformanceProps {
   pillarRows: RegionalPillarRow[];
 }
 
+/**
+ * Pick black or white text for a given hex background so the in-bar region
+ * label stays readable on every region colour (light lavender/orange as well
+ * as the deep Europe purple). Uses WCAG relative luminance.
+ */
+function readableTextColor(hex: string): string {
+  const m = hex.replace("#", "");
+  const full =
+    m.length === 3
+      ? m
+          .split("")
+          .map((c) => c + c)
+          .join("")
+      : m;
+  const r = parseInt(full.slice(0, 2), 16) / 255;
+  const g = parseInt(full.slice(2, 4), 16) / 255;
+  const b = parseInt(full.slice(4, 6), 16) / 255;
+  const toLinear = (c: number) =>
+    c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+  const luminance =
+    0.2126 * toLinear(r) + 0.7152 * toLinear(g) + 0.0722 * toLinear(b);
+  return luminance > 0.5 ? "#0b0b0f" : "#ffffff";
+}
+
 const REGION_ORDER = [
   "Europe",
   "Northern America",
@@ -72,14 +96,14 @@ export function DimensionRegionalPerformance({
         </div>
 
         <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-          <div className="inline-flex rounded-full border border-border bg-background p-1 text-sm shadow-sm">
+          <div className="inline-flex shrink-0 rounded-full bg-muted p-1 text-sm">
             <button
               type="button"
               onClick={() => setMode("indicator")}
               className={cn(
                 "rounded-full px-4 py-1.5 font-medium transition-colors",
                 mode === "indicator"
-                  ? "bg-foreground text-background"
+                  ? "bg-background text-foreground shadow-sm"
                   : "text-muted-foreground hover:text-foreground"
               )}
             >
@@ -91,7 +115,7 @@ export function DimensionRegionalPerformance({
               className={cn(
                 "rounded-full px-4 py-1.5 font-medium transition-colors",
                 mode === "pillar"
-                  ? "bg-foreground text-background"
+                  ? "bg-background text-foreground shadow-sm"
                   : "text-muted-foreground hover:text-foreground"
               )}
             >
@@ -99,14 +123,16 @@ export function DimensionRegionalPerformance({
             </button>
           </div>
 
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 rounded-full bg-muted/60 px-4 py-2">
             {orderedRegions.map((region) => (
               <div key={region} className="flex items-center gap-1.5">
                 <span
-                  className="size-3 rounded-full"
+                  className="size-3 shrink-0 rounded-[3px]"
                   style={{ backgroundColor: regionColor(region) }}
                 />
-                <span className="text-xs text-muted-foreground">{region}</span>
+                <span className="text-xs font-medium text-foreground">
+                  {region}
+                </span>
               </div>
             ))}
           </div>
@@ -115,25 +141,32 @@ export function DimensionRegionalPerformance({
         <div className="flex flex-col gap-8">
           {rows.map((row) => (
             <div key={row.key}>
-              <p className="mb-2.5 text-sm font-semibold text-foreground">
+              <p className="mb-3 text-sm font-medium text-foreground">
                 {row.label}
               </p>
               <div className="flex flex-col gap-1.5">
                 {orderedRegions.map((region) => {
                   const value = row.byRegion[region];
-                  const pct = value === null ? 0 : Math.max(0, Math.min(100, value));
+                  const pct =
+                    value === null ? 0 : Math.max(0, Math.min(100, value));
+                  const fill = regionColor(region);
                   return (
-                    <div key={region} className="flex items-center gap-3">
-                      <div className="relative h-5 flex-1 overflow-hidden rounded-full bg-muted">
-                        <div
-                          className="h-full rounded-full transition-all"
-                          style={{
-                            width: `${pct}%`,
-                            backgroundColor: regionColor(region),
-                          }}
-                        />
-                      </div>
-                      <span className="w-10 shrink-0 text-right text-xs font-semibold tabular-nums text-foreground">
+                    <div
+                      key={region}
+                      className="relative h-5 w-full overflow-hidden rounded-full bg-muted/50"
+                    >
+                      <span
+                        className="absolute inset-y-0 left-0 rounded-full transition-all"
+                        style={{ width: `${pct}%`, backgroundColor: fill }}
+                      />
+                      <span
+                        className="absolute left-3 top-1/2 max-w-[60%] -translate-y-1/2 truncate text-[11px] font-semibold"
+                        style={{ color: readableTextColor(fill) }}
+                        title={region}
+                      >
+                        {region}
+                      </span>
+                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[11px] font-semibold tabular-nums text-foreground">
                         {value === null ? "—" : value.toFixed(1)}
                       </span>
                     </div>

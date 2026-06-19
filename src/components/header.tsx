@@ -35,6 +35,7 @@ const exploreLinks = [
   { label: "Indicators", href: "/indicators" },
   { label: "Evidence Explorer", href: "/evidence" },
   { label: "Top Takeaway", href: "/takeaways" },
+  { label: "Regions", href: "/regions" },
   { label: "2025 results", href: "/#results" },
   { label: "2024 results", href: "/#results" },
 ];

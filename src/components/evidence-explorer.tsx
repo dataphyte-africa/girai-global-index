@@ -51,9 +51,16 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import { iso3ToIso2 } from "@/data/countries";
-import { DIMENSIONS, PILLARS } from "@/data/2026/taxonomy";
+import { DIMENSIONS, PILLARS, type PillarSlug } from "@/data/2026/taxonomy";
+import { PILLAR_BADGES } from "@/lib/pillar-badges";
 import type {
   EvidenceIndexArtifact,
   EvidenceIndexRow,
@@ -92,6 +99,11 @@ const KIND_NOUN_PLURAL: Record<EvidenceKind, string> = {
   "gmc-provision": "provisions",
   "gmc-mechanism": "government mechanisms",
   "government-misuse": "misuse cases",
+};
+
+/** Evidence kinds omitted from the nested Pillar dropdown for a given pillar. */
+const PILLAR_KINDS_HIDDEN_IN_TREE: Partial<Record<PillarSlug, EvidenceKind[]>> = {
+  "enabling-conditions": ["government-misuse"],
 };
 
 /** Facets configured by the URL — keep order stable to match the UI row. */
@@ -245,16 +257,35 @@ function withPresetIndicator(
   };
 }
 
+/** Apply a default region facet when the URL has no region filter yet. */
+function withPresetRegion(
+  state: ExplorerState,
+  presetRegion: string | undefined
+): ExplorerState {
+  if (!presetRegion || state.facets.region.length > 0) return state;
+  return {
+    ...state,
+    facets: {
+      ...state.facets,
+      region: [presetRegion],
+    },
+  };
+}
+
 function withPresets(
   state: ExplorerState,
   presets: {
     presetCountryIso3?: string;
     presetIndicatorSlug?: string;
+    presetRegion?: string;
   }
 ): ExplorerState {
-  return withPresetIndicator(
-    withPresetCountry(state, presets.presetCountryIso3),
-    presets.presetIndicatorSlug
+  return withPresetRegion(
+    withPresetIndicator(
+      withPresetCountry(state, presets.presetCountryIso3),
+      presets.presetIndicatorSlug
+    ),
+    presets.presetRegion
   );
 }
 
@@ -439,6 +470,12 @@ export interface EvidenceExplorerProps {
    * `?indicator=` on mount.
    */
   presetIndicatorSlug?: string;
+  /**
+   * When set (e.g. on a region page), preselects this region name in the
+   * region facet if the URL has no region filter. Synced into `?region=`
+   * on mount.
+   */
+  presetRegion?: string;
 }
 
 export function EvidenceExplorer({
@@ -447,6 +484,7 @@ export function EvidenceExplorer({
   searchPlaceholder = 'Search policies, laws, countries, indicators ("quoted" for exact)',
   presetCountryIso3,
   presetIndicatorSlug,
+  presetRegion,
 }: EvidenceExplorerProps) {
   const router = useRouter();
   const pathname = usePathname();
@@ -480,8 +518,9 @@ export function EvidenceExplorer({
       withPresets(parseStateFromUrl(searchParams), {
         presetCountryIso3,
         presetIndicatorSlug,
+        presetRegion,
       }),
-    [searchParams, presetCountryIso3, presetIndicatorSlug]
+    [searchParams, presetCountryIso3, presetIndicatorSlug, presetRegion]
   );
 
   // Keep shareable URL in sync when a country page preset is applied.
@@ -509,6 +548,18 @@ export function EvidenceExplorer({
       scroll: false,
     });
   }, [presetIndicatorSlug, searchParams, pathname, router]);
+
+  // Keep shareable URL in sync when a region page preset is applied.
+  React.useEffect(() => {
+    if (!presetRegion) return;
+    const fromUrl = searchParams.get("region")?.split(",").filter(Boolean) ?? [];
+    if (fromUrl.includes(presetRegion)) return;
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("region", presetRegion);
+    router.replace(`${pathname}${params.toString() ? `?${params}` : ""}`, {
+      scroll: false,
+    });
+  }, [presetRegion, searchParams, pathname, router]);
 
   // Local mirror of the search box (debounced into the URL).
   const [searchInput, setSearchInput] = React.useState(urlState.q);
@@ -577,7 +628,9 @@ export function EvidenceExplorer({
     return PILLARS.map((p) => {
       const entry = byPillar.get(p.slug);
       if (!entry) return null;
+      const hiddenKinds = new Set(PILLAR_KINDS_HIDDEN_IN_TREE[p.slug] ?? []);
       const kinds = Array.from(entry.kinds.entries())
+        .filter(([kind]) => !hiddenKinds.has(kind))
         .map(([kind, count]) => ({
           kind,
           label: KIND_LABELS[kind],
@@ -1148,10 +1201,18 @@ function FacetDropdown({
   }, [open]);
 
   const filtered = React.useMemo(() => {
-    if (!search.trim()) return options;
-    const q = search.toLowerCase();
-    return options.filter((o) => o.label.toLowerCase().includes(q));
-  }, [options, search]);
+    const q = search.trim().toLowerCase();
+    const base = q
+      ? options.filter((o) => o.label.toLowerCase().includes(q))
+      : options;
+    // Pin selected options to the top of the list. Sort is stable, so the
+    // remaining options keep their original alphabetical order.
+    const selectedSet = new Set(selected);
+    return [...base].sort(
+      (a, b) =>
+        (selectedSet.has(a.value) ? 0 : 1) - (selectedSet.has(b.value) ? 0 : 1)
+    );
+  }, [options, search, selected]);
 
   const triggerLabel =
     selected.length === 0
@@ -1220,8 +1281,12 @@ function FacetDropdown({
                 filtered.map((opt) => {
                   const checked = selected.includes(opt.value);
                   return (
-                    <button
+                    <motion.button
                       key={opt.value}
+                      layout
+                      transition={{
+                        layout: { duration: 0.3, ease: [0.25, 0.1, 0.25, 1] },
+                      }}
                       type="button"
                       onClick={() => onToggle(opt.value)}
                       className={cn(
@@ -1251,7 +1316,7 @@ function FacetDropdown({
                       <span className="ml-auto text-xs tabular-nums text-muted-foreground">
                         {opt.count}
                       </span>
-                    </button>
+                    </motion.button>
                   );
                 })
               )}
@@ -1509,6 +1574,7 @@ function NestedPillarKindDropdown({
                           {pillar.count}
                         </span>
                       </button>
+                      {pillar.kinds.length > 0 ? (
                       <div className="ml-3 border-l border-border/60 pl-1">
                         {pillar.kinds.map((k) => {
                           const checked =
@@ -1539,6 +1605,7 @@ function NestedPillarKindDropdown({
                           );
                         })}
                       </div>
+                      ) : null}
                     </div>
                   );
                 })
@@ -1676,8 +1743,10 @@ function EvidenceRow({
   return (
     <div className="group overflow-hidden rounded-xl border bg-card transition-all duration-200 hover:border-primary hover:shadow-md hover:shadow-primary/5">
       <div className="p-4 md:p-5">
+       
+
         {/* Top row: country + meta, with View Evidence on the right */}
-        <div className="flex items-start justify-between gap-3">
+        <div className="mt-3 flex items-start justify-between gap-3">
           <div className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
             <span className="flex shrink-0 items-center gap-2">
               {flagUrl ? (
@@ -1700,6 +1769,28 @@ function EvidenceRow({
                 <span>{bit}</span>
               </span>
             ))}
+             {/* Pillar pill moved to the top of the card */}
+        <div className="flex min-w-0 flex-wrap items-center gap-1.5">
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <span className="inline-flex max-w-full">
+                  <TaxonomyPill
+                    tone="pillar"
+                    label={pillarName}
+                    pillarSlug={row.pillarSlug as PillarSlug}
+                  />
+                </span>
+              </TooltipTrigger>
+              <TooltipContent side="top" className="max-w-xs text-balance">
+                <span className="font-semibold">Pillar:</span> the high-level
+                thematic area this evidence belongs to. Pillars are the top
+                level of the GIRAI taxonomy, grouping related indicators and
+                dimensions of responsible AI.
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
           </div>
           {row.link ? (
             <a
@@ -1723,7 +1814,6 @@ function EvidenceRow({
           <div className="flex min-w-0 flex-wrap items-center gap-1.5">
             <TaxonomyPill tone="dimension" label={dimensionName} />
             <TaxonomyPill tone="indicator" label={row.indicatorName} />
-            <TaxonomyPill tone="pillar" label={pillarName} />
           </div>
           <button
             type="button"
@@ -1769,20 +1859,27 @@ function EvidenceRow({
 function TaxonomyPill({
   tone,
   label,
+  pillarSlug,
 }: {
   tone: "dimension" | "indicator" | "pillar";
   label: string;
+  /** When `tone` is "pillar", colours the pill per the shared pillar palette. */
+  pillarSlug?: PillarSlug;
 }) {
   const toneClass: Record<typeof tone, string> = {
     dimension: "bg-amber-50 text-amber-700 dark:bg-amber-500/15 dark:text-amber-300",
     indicator: "bg-emerald-50 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300",
     pillar: "bg-violet-50 text-violet-700 dark:bg-violet-500/15 dark:text-violet-300",
   };
+  const pillClass =
+    tone === "pillar" && pillarSlug
+      ? PILLAR_BADGES[pillarSlug].className
+      : toneClass[tone];
   return (
     <span
       className={cn(
         "inline-flex max-w-full items-center truncate rounded-md px-2 py-1 text-xs font-medium",
-        toneClass[tone]
+        pillClass
       )}
       title={label}
     >
@@ -1878,12 +1975,7 @@ function ExpandedDetails({ item }: { item: EvidenceItem }) {
             <ExternalLink className="h-3.5 w-3.5" aria-hidden /> GIRAI mirror
           </a>
         )}
-        <Link
-          href={`/evidence/${encodeURIComponent(item.id)}`}
-          className="inline-flex items-center gap-1.5 rounded-md bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground hover:bg-primary/90"
-        >
-          Open full detail →
-        </Link>
+      
       </div>
     </div>
   );

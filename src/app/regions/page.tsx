@@ -9,6 +9,7 @@ import {
 } from "@/components/regions";
 import {
   getAllCountries,
+  getGlobalAverages,
   getRegionAverages,
   getRegionSummaries,
   getRegions,
@@ -57,6 +58,7 @@ export default function RegionsPage() {
           countries={allCountries}
           regions={regions}
           regionAverages={regionAverages}
+          globalAverages={getGlobalAverages()}
           initialSlots={initialSlots}
           heading={
             <>

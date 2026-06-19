@@ -36,9 +36,14 @@ import {
   Wind,
   type LucideIcon,
 } from "lucide-react";
-import type { PillarSlug } from "@/data/2026/taxonomy";
-import { getIndicatorCopy, PILLAR_LABELS } from "@/lib/indicator-copy";
+import { PILLARS, type PillarSlug } from "@/data/2026/taxonomy";
+import { getIndicatorCopy } from "@/lib/indicator-copy";
+import { PILLAR_BADGES } from "@/lib/pillar-badges";
 import { cn } from "@/lib/utils";
+
+const PILLAR_NAMES: Record<PillarSlug, string> = Object.fromEntries(
+  PILLARS.map((p) => [p.slug, p.name])
+) as Record<PillarSlug, string>;
 
 const ICONS: Record<string, LucideIcon> = {
   AlertTriangle,
@@ -224,13 +229,17 @@ export function DimensionKeyIndicators({
                       <h4 className="text-lg font-medium text-foreground">
                         {ind.name}
                       </h4>
-                      <div className="mt-1 flex items-center gap-2">
+                      <div className="mt-1.5 flex items-center gap-2">
                         <span
-                          className="h-0.5 w-5 rounded-full"
-                          style={{ backgroundColor: color }}
-                        />
-                        <span className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-                          {PILLAR_LABELS[ind.pillar]}
+                          className={cn(
+                            "rounded px-1.5 py-0.5 text-[10px] font-semibold leading-none",
+                            PILLAR_BADGES[ind.pillar].className
+                          )}
+                        >
+                          {PILLAR_BADGES[ind.pillar].abbr}
+                        </span>
+                        <span className="text-xs font-medium text-muted-foreground">
+                          {PILLAR_NAMES[ind.pillar]}
                         </span>
                       </div>
                     </div>

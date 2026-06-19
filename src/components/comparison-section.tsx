@@ -1,6 +1,7 @@
 "use client";
 
 import { Fragment, useEffect, useMemo, useRef, useState } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import {
   Check,
@@ -38,6 +39,7 @@ import {
   URAI_INDICATOR_SLUG,
 } from "@/data/2026/taxonomy";
 import { getOrdinalSuffix } from "@/lib/narratives";
+import { PILLAR_BADGES } from "@/lib/pillar-badges";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -59,6 +61,8 @@ const REGULAR_INDICATORS = INDICATORS.filter(
 interface ResolvedEntity {
   id: string;
   kind: "country" | "region";
+  /** Country-only: ISO3 code, used to deep-link into the evidence explorer. */
+  iso3?: string;
   label: string;
   sub?: string;
   flag?: string;
@@ -112,27 +116,6 @@ const SLOT_PALETTE = [
     ring: "ring-rose-500/40",
   },
 ] as const;
-
-const PILLAR_BADGES: Record<
-  PillarSlug,
-  { abbr: string; className: string }
-> = {
-  "ai-policy": {
-    abbr: "AP",
-    className:
-      "bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-400",
-  },
-  "cso-engagement": {
-    abbr: "CSO",
-    className:
-      "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-400",
-  },
-  "enabling-conditions": {
-    abbr: "EC",
-    className:
-      "bg-violet-100 text-violet-700 dark:bg-violet-500/15 dark:text-violet-400",
-  },
-};
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -225,6 +208,7 @@ function resolveRef(
     return {
       id: `country:${c.iso3}`,
       kind: "country",
+      iso3: c.iso3,
       label: c.name,
       sub: c.region,
       flag: countryFlags[c.iso3] || "🏳️",
@@ -240,11 +224,12 @@ function resolveRef(
   }
   const agg = regionMap.get(ref.name);
   if (!agg) return null;
+  const isGlobal = ref.name === "Global";
   return {
     id: `region:${ref.name}`,
     kind: "region",
-    label: ref.name,
-    sub: "Regional average",
+    label: isGlobal ? "Global average" : ref.name,
+    sub: isGlobal ? "All countries" : "Regional average",
     girai: agg.girai,
     dimensions: agg.dimensions,
     pillars: agg.pillars,
@@ -540,7 +525,7 @@ function StatCardStrip({ entities }: { entities: ResolvedEntity[] }) {
               <div className="mt-2 flex flex-wrap gap-1.5">
                 {e.kind === "region" ? (
                   <span className="rounded-full bg-muted px-2 py-0.5 text-[11px] font-medium text-muted-foreground">
-                    Regional average
+                    {e.sub ?? "Regional average"}
                   </span>
                 ) : (
                   <>
@@ -653,7 +638,7 @@ function ScoreBreakdownCard({
                         )}
                         initial={{ width: 0 }}
                         whileInView={{ width: `${pct}%` }}
-                        viewport={{ once: false, amount: 0.3 }}
+                        viewport={{ once: true, amount: 0.3 }}
                         transition={{
                           duration: 0.7,
                           delay: idx * 0.05 + slotIdx * 0.08,
@@ -983,65 +968,69 @@ function IndicatorTable({
                 })}
               </Fragment>
             ))}
-          </TableBody>
-        </Table>
-      {/* {entities.length > 0 && ( 
-        <div className="border-t px-5 py-4">
-          <div className="flex items-center gap-2 mb-3">
-            <h5 className="text-sm font-medium">URAI score adjustment</h5>
-            <ComparisonHelpTip content="URAI is not a dimension or pillar score. It is a multiplier applied to the overall GIRAI score after aggregation when government misuse evidence is on file." />
-          </div>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="text-xs text-muted-foreground">
-                  <th className="pb-2 text-left font-medium">Adjustment</th>
-                  {entities.map((e, idx) => {
-                    const palette = SLOT_PALETTE[idx % SLOT_PALETTE.length];
-                    return (
-                      <th key={e.id} className="pb-2 text-right font-medium">
-                        <span className="inline-flex items-center justify-end gap-1.5">
-                          <span
-                            className={cn("h-2 w-2 rounded-full", palette.dot)}
-                          />
-                          <span className="truncate max-w-[120px]">{e.label}</span>
-                        </span>
-                      </th>
-                    );
-                  })}
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td className="py-1 text-muted-foreground">
-                    Unacceptable Risks AI Systems
-                  </td>
+            {entities.length > 0 && (
+              <Fragment key="urai">
+                <TableRow className="hover:bg-transparent">
+                  <TableCell
+                    colSpan={columnCount}
+                    className="sticky top-10 z-[5] border-y bg-muted/70 py-2 backdrop-blur-sm"
+                  >
+                    <span className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                      Score adjustment
+                    </span>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="whitespace-normal">
+                    <div className="flex items-center gap-2 pl-2">
+                      <span className="shrink-0 rounded px-1.5 py-0.5 text-[10px] font-semibold leading-none bg-rose-100 text-rose-700 dark:bg-rose-500/15 dark:text-rose-400">
+                        URAI
+                      </span>
+                      <span className="text-sm">
+                        Unacceptable Risk AI Systems
+                      </span>
+                      <ComparisonHelpTip content="URAI is not a dimension or pillar score. It is a multiplier applied to the overall GIRAI score after aggregation when government-misuse evidence is on file." />
+                    </div>
+                  </TableCell>
                   {entities.map((e, idx) => {
                     const palette = SLOT_PALETTE[idx % SLOT_PALETTE.length];
                     const { label, detail } = formatUraiPenalty(e);
+                    const misuseHref =
+                      e.kind === "country" &&
+                      e.iso3 &&
+                      (e.uraiCount ?? 0) > 0
+                        ? `/evidence?country=${e.iso3.toUpperCase()}&kind=government-misuse`
+                        : null;
                     return (
-                      <td
+                      <TableCell
                         key={e.id}
                         className={cn(
-                          "py-1 text-right tabular-nums font-medium",
+                          "text-right tabular-nums font-medium",
                           palette.text
                         )}
                       >
                         <span>{label}</span>
-                        {detail && (
-                          <span className="mt-0.5 block text-[11px] font-normal text-muted-foreground">
-                            {detail}
-                          </span>
-                        )}
-                      </td>
+                        {detail &&
+                          (misuseHref ? (
+                            <Link
+                              href={misuseHref}
+                              className="mt-0.5 block text-[11px] font-normal text-muted-foreground underline decoration-dotted underline-offset-2 transition-colors hover:text-foreground"
+                            >
+                              {detail}
+                            </Link>
+                          ) : (
+                            <span className="mt-0.5 block text-[11px] font-normal text-muted-foreground">
+                              {detail}
+                            </span>
+                          ))}
+                      </TableCell>
                     );
                   })}
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      )} */}
+                </TableRow>
+              </Fragment>
+            )}
+          </TableBody>
+        </Table>
       <div className="border-t bg-card/95 backdrop-blur-sm px-5 py-3 flex flex-wrap items-center gap-x-4 gap-y-2">
         {PILLARS.map((p) => {
           const badge = PILLAR_BADGES[p.slug];
@@ -1069,10 +1058,15 @@ function IndicatorTable({
 
 const MAX_SLOTS = 4;
 
+/** Synthetic region name used for the all-countries global average entry. */
+const GLOBAL_REGION_NAME = "Global";
+
 export interface ComparisonSectionProps {
   countries: CountryRanking[];
   regions: string[];
   regionAverages: Record<string, ScoreAggregates>;
+  /** All-countries average, surfaced as a "Global" option under Regions. */
+  globalAverages?: ScoreAggregates;
   /** When set, replaces the homepage default slot selection. */
   initialSlots?: ComparisonEntityRef[];
   /** Optional heading override (JSX so callers can highlight a word). */
@@ -1085,12 +1079,13 @@ export function ComparisonSection({
   countries,
   regions,
   regionAverages,
+  globalAverages,
   initialSlots,
   heading,
   subheading,
 }: ComparisonSectionProps) {
   const headingRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(headingRef, { once: false, amount: 0.4 });
+  const isInView = useInView(headingRef, { once: true, amount: 0.4 });
 
   const countryMap = useMemo(() => {
     const m = new Map<string, CountryRanking>();
@@ -1100,8 +1095,16 @@ export function ComparisonSection({
   const regionMap = useMemo(() => {
     const m = new Map<string, ScoreAggregates>();
     for (const [name, agg] of Object.entries(regionAverages)) m.set(name, agg);
+    if (globalAverages) m.set(GLOBAL_REGION_NAME, globalAverages);
     return m;
-  }, [regionAverages]);
+  }, [regionAverages, globalAverages]);
+
+  // Surface "Global" at the top of the region list when an all-countries
+  // average is supplied.
+  const regionOptions = useMemo(
+    () => (globalAverages ? [GLOBAL_REGION_NAME, ...regions] : regions),
+    [regions, globalAverages]
+  );
 
   // Deterministic default for the server render (top two countries + highest
   // scoring region) to avoid a hydration mismatch; the selection is then
@@ -1192,7 +1195,7 @@ export function ComparisonSection({
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, amount: 0.4 }}
+          viewport={{ once: true, amount: 0.4 }}
           transition={{ duration: 0.5 }}
           className="mb-8 flex flex-wrap items-center gap-3"
         >
@@ -1217,7 +1220,7 @@ export function ComparisonSection({
                   value={ref}
                   onChange={(next) => updateSlot(idx, next)}
                   countries={countries}
-                  regions={regions}
+                  regions={regionOptions}
                   disabledKeys={disabledKeys}
                   paletteIndex={idx}
                 />
@@ -1260,7 +1263,7 @@ export function ComparisonSection({
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, amount: 0.15 }}
+          viewport={{ once: true, amount: 0.15 }}
           transition={{ duration: 0.6, delay: 0.1 }}
           className="grid grid-cols-1 lg:grid-cols-12 gap-6"
         >

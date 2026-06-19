@@ -1,6 +1,7 @@
 "use client";
 
 import { CountryMapSVG } from "./country-map-svg";
+import { EvidenceLinkedText } from "./evidence-linked-text";
 import { iso3ToIso2 } from "@/data/countries";
 import { getCountryHeroNarrative } from "@/lib/country-narratives";
 import { getOrdinalSuffix } from "@/lib/narratives/ordinal";
@@ -120,7 +121,7 @@ export function CountryScoreHero({ country, className }: CountryScoreHeroProps) 
         </div>
 
         <p className="max-w-lg text-sm leading-relaxed text-[#374151] dark:text-foreground/75 md:text-[15px] md:leading-7">
-          {heroNarrative}
+          <EvidenceLinkedText text={heroNarrative} />
         </p>
       </div>
     </section>

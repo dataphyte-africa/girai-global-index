@@ -744,6 +744,12 @@ for (const ind of INDICATORS.filter((i) => i.family === "ai-policy")) {
   frameworkAdoptionBySlug.set(ind.slug, { adopted: 0, draft: 0, notAdopted: 0, total: 0 });
 }
 const frameworkCountryIso3 = new Set<string>();
+// Per-indicator, per-country framework status — lets the client recompute
+// the indicator-adoption table when page filters (e.g. region) are active.
+type FrameworkStatus = "adopted" | "draft" | "notAdopted";
+const frameworkStatusBySlug = new Map<string, Map<string, FrameworkStatus>>();
+// Region of every country in the framework universe (for region filtering).
+const frameworkRegionByIso3 = new Map<string, string>();
 
 for (const row of frameworksRows) {
   const ik = str(row["interview_key"]);
@@ -760,11 +766,28 @@ for (const row of frameworksRows) {
   const frStatus = str(row["fr_status"]);
   const adoption = frameworkAdoptionBySlug.get(ind.slug)!;
   adoption.total += 1;
-  if (frStatus === "Adopted") adoption.adopted += 1;
-  else if (frStatus === "Draft") adoption.draft += 1;
-  else if (frStatus === "No framework") adoption.notAdopted += 1;
+  let statusKey: FrameworkStatus | null = null;
+  if (frStatus === "Adopted") {
+    adoption.adopted += 1;
+    statusKey = "adopted";
+  } else if (frStatus === "Draft") {
+    adoption.draft += 1;
+    statusKey = "draft";
+  } else if (frStatus === "No framework") {
+    adoption.notAdopted += 1;
+    statusKey = "notAdopted";
+  }
 
   const country = countryRef(iso3);
+  frameworkRegionByIso3.set(iso3, country.region);
+  if (statusKey) {
+    let statusByCountry = frameworkStatusBySlug.get(ind.slug);
+    if (!statusByCountry) {
+      statusByCountry = new Map<string, FrameworkStatus>();
+      frameworkStatusBySlug.set(ind.slug, statusByCountry);
+    }
+    statusByCountry.set(iso3, statusKey);
+  }
 
   for (const slot of [1, 2] as const) {
     const title = str(row[`fr${slot}_title`]);
@@ -1010,10 +1033,10 @@ const countryPillarHighlights = countriesArr.map((country) => {
   ).length;
 
   const aiPolicyBullets: [string, string, string] = [
-    `${frameworkDocs} AI policy ${pluralWord(frameworkDocs, "framework", "frameworks")} documented`,
+    `${frameworkDocs} AI Policy ${pluralWord(frameworkDocs, "indicator", "indicators")} covered by a framework`,
     `${initiatives} government ${pluralWord(initiatives, "initiative", "initiatives")} documented`,
     implementingBodies > 0
-      ? `Dedicated implementing body on ${implementingBodies} ${pluralWord(implementingBodies, "framework", "frameworks")}`
+      ? `Dedicated implementing body on ${implementingBodies} ${pluralWord(implementingBodies, "indicator", "indicators")}`
       : "No dedicated implementing bodies identified on frameworks",
   ];
 
@@ -1070,7 +1093,7 @@ for (const entry of countryPillarHighlights) {
   const init = ai.filter((e) => e.kind === "initiative").length;
   const bodies = ai.filter((e) => e.kind === "framework" && e.body?.exists === "Yes").length;
   const [b0, b1, b2] = entry.pillars["ai-policy"].bullets;
-  if (b0 !== `${fw} AI policy ${pluralWord(fw, "framework", "frameworks")} documented`) {
+  if (b0 !== `${fw} AI Policy ${pluralWord(fw, "indicator", "indicators")} covered by a framework`) {
     throw new Error(`[build-data] ai-policy framework bullet mismatch for ${entry.iso3}`);
   }
   if (b1 !== `${init} government ${pluralWord(init, "initiative", "initiatives")} documented`) {
@@ -1078,7 +1101,7 @@ for (const entry of countryPillarHighlights) {
   }
   const bodyBullet =
     bodies > 0
-      ? `Dedicated implementing body on ${bodies} ${pluralWord(bodies, "framework", "frameworks")}`
+      ? `Dedicated implementing body on ${bodies} ${pluralWord(bodies, "indicator", "indicators")}`
       : "No dedicated implementing bodies identified on frameworks";
   if (b2 !== bodyBullet) {
     throw new Error(`[build-data] ai-policy body bullet mismatch for ${entry.iso3}`);
@@ -1189,7 +1212,20 @@ writeJson(path.join(OUT_PUBLIC, "evidence.json"), evidenceJson);
 const indicatorAdoptionJson = {
   ...PROVENANCE,
   totalCountries: frameworkCountryIso3.size,
-  frameworks: Object.fromEntries(frameworkAdoptionBySlug),
+  // Framework universe with region so the client can scope counts to a
+  // region (or any country subset) when page filters are active.
+  countries: Array.from(frameworkRegionByIso3.entries())
+    .map(([iso3, region]) => ({ iso3, region }))
+    .sort((a, b) => a.iso3.localeCompare(b.iso3)),
+  frameworks: Object.fromEntries(
+    Array.from(frameworkAdoptionBySlug.entries()).map(([slug, counts]) => [
+      slug,
+      {
+        ...counts,
+        byCountry: Object.fromEntries(frameworkStatusBySlug.get(slug) ?? []),
+      },
+    ])
+  ),
 };
 writeJson(path.join(OUT_PUBLIC, "indicator-adoption.json"), indicatorAdoptionJson);
 console.log(
@@ -1240,7 +1276,10 @@ const evidenceIndexJson = {
       .sort(),
     countries: Array.from(
       new Map(
-        evidenceIndexRows.map((r) => [r.country.iso3, { iso3: r.country.iso3, name: r.country.name }])
+        evidenceIndexRows.map((r) => [
+          r.country.iso3,
+          { iso3: r.country.iso3, name: r.country.name, region: r.country.region },
+        ])
       ).values()
     ).sort((a, b) => a.name.localeCompare(b.name)),
   },

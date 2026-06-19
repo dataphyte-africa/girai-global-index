@@ -129,7 +129,9 @@ export function getDimensionAggregateStats(
 ): DimensionAggregateStats {
   const items = getEvidenceByDimension(slug);
 
-  let frameworks = 0;
+  // A single framework document can cover multiple indicators and therefore
+  // appear as several rows; count unique framework titles, not raw rows.
+  const frameworkTitles = new Set<string>();
   let initiatives = 0;
   let csoInitiatives = 0;
   const oversightCountries = new Set<string>();
@@ -137,7 +139,7 @@ export function getDimensionAggregateStats(
   for (const it of items) {
     switch (it.kind) {
       case "framework":
-        frameworks += 1;
+        frameworkTitles.add(it.title.trim().toLowerCase());
         break;
       case "initiative":
         initiatives += 1;
@@ -154,7 +156,7 @@ export function getDimensionAggregateStats(
   }
 
   return {
-    frameworks,
+    frameworks: frameworkTitles.size,
     initiatives,
     csoInitiatives,
     countriesWithOversight: oversightCountries.size,

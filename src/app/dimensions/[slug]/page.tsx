@@ -22,7 +22,6 @@ import {
 } from "@/lib/girai";
 import { DIMENSIONS, getDimension, type DimensionDef } from "@/data/2026/taxonomy";
 import { DIMENSIONS as DIMENSIONS_UI } from "@/data/dimensions-data";
-import { dimensionColors } from "@/lib/narratives";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -55,7 +54,6 @@ export default async function DimensionPage({ params }: PageProps) {
   }
 
   const ui = DIMENSIONS_UI.find((d) => d.id === dim.slug)!;
-  const color = dimensionColors[dim.slug];
   // The Key Indicators section keeps the shared brand purple across every
   // dimension (rather than the per-dimension accent) for visual consistency.
   const indicatorAccent = "#6c5cff";
@@ -100,7 +98,6 @@ export default async function DimensionPage({ params }: PageProps) {
           dimensionName={dim.name}
           subtitle={ui.rankingSubtitle}
           leaderboard={leaderboard}
-          color={color}
         />
 
         <DimensionAggregateStatsSection stats={aggregateStats} />
@@ -116,7 +113,6 @@ export default async function DimensionPage({ params }: PageProps) {
           dimensionName={dim.name}
           leaderboard={leaderboard}
           indicators={keyIndicators}
-          globalAverage={scoreStats.globalAverage}
         />
       </main>
 

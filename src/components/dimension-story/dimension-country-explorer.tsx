@@ -3,13 +3,17 @@
 import { useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, MoveDownRight, MoveUpRight, Search } from "lucide-react";
+import { ArrowRight, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import type { CountryRanking, ScoreLeaderboardEntry } from "@/lib/girai";
-import type { DimensionSlug, PillarSlug } from "@/data/2026/taxonomy";
-import { PILLAR_LABELS } from "@/lib/indicator-copy";
+import { PILLARS, type DimensionSlug, type PillarSlug } from "@/data/2026/taxonomy";
+import { PILLAR_BADGES } from "@/lib/pillar-badges";
 import { flagUrlForIso3 } from "@/lib/geo-iso";
 import { cn } from "@/lib/utils";
+
+const PILLAR_NAMES: Record<PillarSlug, string> = Object.fromEntries(
+  PILLARS.map((p) => [p.slug, p.name])
+) as Record<PillarSlug, string>;
 
 /** Shared brand purple — kept consistent across every dimension. */
 const ACCENT = "#6c5cff";
@@ -25,8 +29,6 @@ export interface DimensionCountryExplorerProps {
   dimensionName: string;
   leaderboard: ScoreLeaderboardEntry[];
   indicators: ExplorerIndicator[];
-  /** Dimension global average — used to flag countries above/below it. */
-  globalAverage: number | null;
 }
 
 export function DimensionCountryExplorer({
@@ -34,7 +36,6 @@ export function DimensionCountryExplorer({
   dimensionName,
   leaderboard,
   indicators,
-  globalAverage,
 }: DimensionCountryExplorerProps) {
   const [query, setQuery] = useState("");
   const [selectedIso3, setSelectedIso3] = useState(
@@ -63,8 +64,6 @@ export function DimensionCountryExplorer({
     [leaderboard, selectedIso3]
   );
 
-  const avg = globalAverage ?? 0;
-
   return (
     <section className="w-full bg-[#f8f9ff] px-4 py-16 dark:bg-muted/20 md:px-8 md:py-24">
       <div className="mx-auto max-w-6xl">
@@ -79,7 +78,7 @@ export function DimensionCountryExplorer({
           </p>
         </div>
 
-        <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-[400px_1fr]">
+        <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-2">
           {/* Search list */}
           <div className="rounded-3xl border border-border/70 bg-card p-4 shadow-sm">
             <div className="relative mb-2">
@@ -102,7 +101,6 @@ export function DimensionCountryExplorer({
                 const isActive = c.iso3 === selected?.country.iso3;
                 const flagUrl = flagUrlForIso3(c.iso3);
                 const rank = rankByIso3.get(c.iso3);
-                const above = entry.score >= avg;
                 return (
                   <li key={c.iso3}>
                     <button
@@ -138,17 +136,7 @@ export function DimensionCountryExplorer({
                           #{rank ?? "—"} · {c.region}
                         </span>
                       </span>
-                      <span
-                        className={cn(
-                          "flex items-center gap-1 text-sm font-bold tabular-nums",
-                          above ? "text-emerald-600" : "text-rose-500"
-                        )}
-                      >
-                        {above ? (
-                          <MoveUpRight className="size-3.5" />
-                        ) : (
-                          <MoveDownRight className="size-3.5" />
-                        )}
+                      <span className="text-sm font-bold tabular-nums text-primary">
                         {entry.score.toFixed(0)}
                       </span>
                     </button>
@@ -187,20 +175,15 @@ function CountryCard({
   const rank = country.dimensionRanksGlobal[dimensionSlug];
 
   return (
-    <div className="overflow-hidden rounded-3xl border border-border/70 bg-card shadow-sm">
-      {/* Header */}
-      <div
-        className="px-6 py-7 md:px-8"
-        style={{
-          background: `linear-gradient(135deg, ${ACCENT}14 0%, transparent 65%)`,
-        }}
-      >
+    <div className="rounded-3xl border border-border/70 bg-card p-4 shadow-sm md:p-5">
+      {/* Header panel */}
+      <div className="rounded-2xl bg-primary/10 px-6 py-6 dark:bg-primary/15">
         <h3 className="text-2xl font-medium text-foreground md:text-3xl">
           {country.name}
         </h3>
         <dl className="mt-5 grid grid-cols-3 gap-4">
           <div>
-            <dt className="text-xs text-muted-foreground">Dimension Score</dt>
+            <dt className="text-xs text-muted-foreground">Overall Score</dt>
             <dd
               className="mt-1 text-3xl font-bold tabular-nums"
               style={{ color: ACCENT }}
@@ -220,7 +203,7 @@ function CountryCard({
           <div>
             <dt className="text-xs text-muted-foreground">Region</dt>
             <dd
-              className="mt-1 truncate text-xl font-medium"
+              className="mt-1 truncate text-xl font-medium md:text-2xl"
               style={{ color: ACCENT }}
             >
               {country.region}
@@ -230,30 +213,40 @@ function CountryCard({
       </div>
 
       {/* Indicator breakdown */}
-      <div className="px-6 py-7 md:px-8">
+      <div className="px-2 py-6 md:px-3">
         <h4 className="mb-5 text-sm font-medium text-foreground">
           Indicator-by-Indicator Breakdown
         </h4>
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-4">
           {indicators.map((ind) => {
             const value = country.indicatorScores[ind.slug];
             const pct = value == null ? 0 : Math.max(0, Math.min(100, value));
             return (
               <div key={ind.slug}>
-                <p className="mb-2 text-xs font-medium text-foreground/80">
-                  {ind.name}{" "}
-                  <span className="text-muted-foreground">
-                    ( {PILLAR_LABELS[ind.pillar]} )
+                <p className="mb-2 flex flex-wrap items-center gap-2 text-xs font-medium text-foreground/80">
+                  {ind.name}
+                  <span className="inline-flex items-center gap-1.5">
+                    <span
+                      className={cn(
+                        "rounded px-1.5 py-0.5 text-[10px] font-semibold leading-none",
+                        PILLAR_BADGES[ind.pillar].className
+                      )}
+                    >
+                      {PILLAR_BADGES[ind.pillar].abbr}
+                    </span>
+                    <span className="text-muted-foreground">
+                      {PILLAR_NAMES[ind.pillar]}
+                    </span>
                   </span>
                 </p>
-                <div className="relative h-7 w-full overflow-hidden rounded-full bg-muted/70">
+                <div className="relative h-5 w-full overflow-hidden rounded-full bg-muted/70">
                   <div
                     className="h-full rounded-full"
                     style={{ width: `${pct}%`, backgroundColor: ACCENT }}
                   />
                   <span
                     className={cn(
-                      "absolute right-3 top-1/2 -translate-y-1/2 text-xs font-semibold tabular-nums",
+                      "absolute right-3 top-1/2 -translate-y-1/2 text-[11px] font-semibold tabular-nums",
                       // When the fill reaches the label, render it white for
                       // contrast against the purple bar; otherwise dark on track.
                       pct > 88 ? "text-white" : "text-foreground"

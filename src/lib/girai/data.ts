@@ -254,6 +254,10 @@ export function getEvidenceByCountry(iso3: string): EvidenceItem[] {
   return evidence.items.filter((it) => it.country.iso3 === iso3);
 }
 
+export function getEvidenceByRegion(region: string): EvidenceItem[] {
+  return evidence.items.filter((it) => it.country.region === region);
+}
+
 /** URAI / government-misuse cases for a country (Unacceptable Risk AI Systems). */
 export function getGovernmentMisuseByCountry(iso3: string): EvidenceItem[] {
   const code = iso3.toUpperCase();

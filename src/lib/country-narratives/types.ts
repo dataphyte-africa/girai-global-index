@@ -88,6 +88,11 @@ export interface PillarFacts {
   checklistBullets: [string, string, string] | null;
   sampleEvidenceTitles: string[];
   allowedTitles: string[];
+  relativeToCountryRank: {
+    countryRankGlobal: number;
+    pillarRankGlobal: number;
+    isRelativeStrength: boolean;
+  } | null;
 }
 
 export interface CountryFactBundle {

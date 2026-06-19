@@ -9,6 +9,12 @@ export interface PathwayTheme {
   badgeBg: string;
   badgeText: string;
   accentText: string;
+  /**
+   * Base pillar colour as space-separated RGB channels (e.g. "139 92 246").
+   * Used to tint indicator-table rows into a score heat map: the highest
+   * scoring indicator gets the full colour, the lowest a faded version.
+   */
+  heatRgb: string;
 }
 
 export interface PathwayConfig {
@@ -45,6 +51,7 @@ export const PATHWAYS: PathwayConfig[] = [
       badgeBg: "bg-violet-50 dark:bg-violet-950/40",
       badgeText: "text-violet-700 dark:text-violet-300",
       accentText: "text-violet-600 dark:text-violet-400",
+      heatRgb: "139 92 246",
     },
   },
   {
@@ -64,12 +71,13 @@ export const PATHWAYS: PathwayConfig[] = [
       badgeBg: "bg-orange-50 dark:bg-orange-950/40",
       badgeText: "text-orange-700 dark:text-orange-300",
       accentText: "text-orange-600 dark:text-orange-400",
+      heatRgb: "249 115 22",
     },
   },
   {
     id: "nonGov",
-    title: "Non-Government Initiatives",
-    tableTitle: "Non-Government Initiative",
+    title: "CSO Engagement",
+    tableTitle: "CSO Engagement",
     description:
       "Advocacy groups, research institutions, consultations, and participation in governance.",
     kinds: [
@@ -89,6 +97,7 @@ export const PATHWAYS: PathwayConfig[] = [
       badgeBg: "bg-sky-50 dark:bg-sky-950/40",
       badgeText: "text-sky-700 dark:text-sky-300",
       accentText: "text-sky-600 dark:text-sky-400",
+      heatRgb: "14 165 233",
     },
   },
   {
@@ -108,6 +117,7 @@ export const PATHWAYS: PathwayConfig[] = [
       badgeBg: "bg-red-50 dark:bg-red-950/40",
       badgeText: "text-red-700 dark:text-red-300",
       accentText: "text-red-600 dark:text-red-400",
+      heatRgb: "239 68 68",
     },
   },
 ];

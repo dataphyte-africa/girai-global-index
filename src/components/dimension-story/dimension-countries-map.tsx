@@ -68,34 +68,12 @@ export function DimensionCountriesMap({
     [mapFilter.pillars.length, rankMap, dimensionSlug]
   );
 
-  const statItems = [
-    {
-      label: "Global average score",
-      value:
-        scoreStats.globalAverage !== null
-          ? scoreStats.globalAverage.toFixed(1)
-          : "—",
-      sub: "Mean across all scored countries",
-    },
-    {
-      label: "Highest score",
-      value: scoreStats.highest ? scoreStats.highest.score.toFixed(1) : "—",
-      sub: scoreStats.highest ? scoreStats.highest.name : "—",
-    },
-    {
-      label: "Lowest score",
-      value: scoreStats.lowest ? scoreStats.lowest.score.toFixed(1) : "—",
-      sub: scoreStats.lowest ? scoreStats.lowest.name : "—",
-    },
-    {
-      label: "Countries above average",
-      value: String(scoreStats.aboveAverage),
-      sub: `of ${scoreStats.countriesScored} scored`,
-    },
-  ];
+  const averageScore = scoreStats.globalAverage;
+  const averagePct =
+    averageScore !== null ? Math.max(0, Math.min(100, averageScore)) : 0;
 
   return (
-    <section className="w-full bg-muted/30 px-4 py-16 md:px-8 md:py-24">
+    <section className="w-full bg-white dark:bg-muted/20 px-4 py-16 md:px-8 md:py-24">
       <div className="mx-auto max-w-6xl">
         <Tabs defaultValue="map" className="w-full">
           <div className="mb-8 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
@@ -147,21 +125,51 @@ export function DimensionCountriesMap({
           </TabsContent>
         </Tabs>
 
-        {/* Stat bar */}
-        <div className="mt-8 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-border bg-border md:grid-cols-4">
-          {statItems.map((stat) => (
-            <div key={stat.label} className="bg-card p-5">
-              <p className="text-xs uppercase tracking-wide text-muted-foreground">
-                {stat.label}
-              </p>
-              <p className="mt-1.5 text-2xl font-bold tabular-nums text-foreground md:text-3xl">
-                {stat.value}
-              </p>
-              <p className="mt-0.5 truncate text-xs text-muted-foreground">
-                {stat.sub}
-              </p>
+        {/* Stat cards */}
+        <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-3">
+          <div className="flex flex-col rounded-2xl border border-border bg-[linear-gradient(to_right,#EEF2FF,#FAF5FF)] p-6 dark:bg-none dark:bg-muted/40">
+            <p className="text-sm text-muted-foreground">Global Average Score</p>
+            <p className="mt-2 text-4xl font-bold tabular-nums text-primary md:text-5xl">
+              {averageScore !== null ? Math.round(averageScore) : "—"}
+            </p>
+            <div className="mt-auto pt-6">
+              <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
+                <div
+                  className="h-full rounded-full bg-primary"
+                  style={{ width: `${averagePct}%` }}
+                />
+              </div>
             </div>
-          ))}
+          </div>
+
+          <div className="flex flex-col rounded-2xl border border-border bg-[linear-gradient(to_right,#EEF2FF,#FAF5FF)] p-6 dark:bg-none dark:bg-muted/40">
+            <p className="text-sm text-muted-foreground">Highest Score</p>
+            <p className="mt-2 text-4xl font-bold tabular-nums text-primary md:text-5xl">
+              {scoreStats.highest ? Math.round(scoreStats.highest.score) : "—"}
+            </p>
+            <p className="mt-auto pt-6 text-sm text-muted-foreground">
+              {scoreStats.highest ? (
+                <>
+                  <span className="font-semibold text-foreground">
+                    {scoreStats.highest.name}
+                  </span>{" "}
+                  leads globally
+                </>
+              ) : (
+                "No scored countries"
+              )}
+            </p>
+          </div>
+
+          <div className="flex flex-col rounded-2xl border border-border bg-[linear-gradient(to_right,#EEF2FF,#FAF5FF)] p-6 dark:bg-none dark:bg-muted/40">
+            <p className="text-sm text-muted-foreground">Countries Assessed</p>
+            <p className="mt-2 text-4xl font-bold tabular-nums text-primary md:text-5xl">
+              {scoreStats.countriesScored}
+            </p>
+            <p className="mt-auto pt-6 text-sm text-muted-foreground">
+              Comprehensive global coverage
+            </p>
+          </div>
         </div>
       </div>
     </section>

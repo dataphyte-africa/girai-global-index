@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion, useInView } from "motion/react";
-import { Sparkles } from "lucide-react";
+import { ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 type CarouselTakeaway = {
@@ -111,6 +111,7 @@ function TakeawayCarouselCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.5, ease: "easeOut", delay: (index % 3) * 0.08 }}
+      data-carousel-card
       className="flex w-[300px] shrink-0 snap-start flex-col rounded-2xl bg-white/90 p-6 shadow-[0_1px_2px_rgba(15,23,42,0.04),0_20px_40px_-24px_rgba(76,29,149,0.22)] ring-1 ring-black/4 backdrop-blur-sm sm:w-[340px] sm:p-7 md:w-[500px] dark:bg-card/70 dark:ring-white/10 dark:shadow-[0_1px_2px_rgba(0,0,0,0.4),0_20px_40px_-24px_rgba(0,0,0,0.6)]"
     >
       <div className="flex items-start justify-between">
@@ -153,6 +154,42 @@ export function TopTakeawaysCarouselSection({
 }: TopTakeawaysCarouselSectionProps = {}) {
   const sectionRef = React.useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+
+  const scrollRef = React.useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = React.useState(false);
+  const [canScrollRight, setCanScrollRight] = React.useState(true);
+
+  const updateScrollState = React.useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const maxScrollLeft = el.scrollWidth - el.clientWidth;
+    setCanScrollLeft(el.scrollLeft > 1);
+    setCanScrollRight(el.scrollLeft < maxScrollLeft - 1);
+  }, []);
+
+  React.useEffect(() => {
+    updateScrollState();
+    const el = scrollRef.current;
+    if (!el) return;
+    el.addEventListener("scroll", updateScrollState, { passive: true });
+    window.addEventListener("resize", updateScrollState);
+    return () => {
+      el.removeEventListener("scroll", updateScrollState);
+      window.removeEventListener("resize", updateScrollState);
+    };
+  }, [updateScrollState]);
+
+  const scrollByDirection = (direction: "left" | "right") => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const firstCard = el.querySelector<HTMLElement>("[data-carousel-card]");
+    const gap = 20;
+    const amount = firstCard ? firstCard.offsetWidth + gap : el.clientWidth * 0.8;
+    el.scrollBy({
+      left: direction === "left" ? -amount : amount,
+      behavior: "smooth",
+    });
+  };
 
   return (
     <section
@@ -230,11 +267,33 @@ export function TopTakeawaysCarouselSection({
 
         <div className="mt-10 md:mt-14">
           <div
+            ref={scrollRef}
             className="flex snap-x snap-mandatory gap-5 overflow-x-auto pb-6 scroll-pl-[max(1rem,calc((100vw-72rem)/2+1rem))] pl-[max(1rem,calc((100vw-72rem)/2+1rem))] pr-[max(1rem,calc((100vw-72rem)/2+1rem))] [-ms-overflow-style:none] scrollbar-none md:scroll-pl-[max(1.5rem,calc((100vw-72rem)/2+1.5rem))] md:pl-[max(1.5rem,calc((100vw-72rem)/2+1.5rem))] md:pr-[max(1.5rem,calc((100vw-72rem)/2+1.5rem))] [&::-webkit-scrollbar]:hidden"
           >
             {takeaways.map((item, index) => (
               <TakeawayCarouselCard key={item.title} item={item} index={index} />
             ))}
+          </div>
+
+          <div className="mx-auto mt-6 flex max-w-6xl justify-end gap-3 px-4 md:px-6">
+            <button
+              type="button"
+              aria-label="Scroll takeaways left"
+              onClick={() => scrollByDirection("left")}
+              disabled={!canScrollLeft}
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-primary/30 bg-background/70 text-primary transition hover:bg-primary/10 disabled:cursor-not-allowed disabled:opacity-40 dark:bg-background/30 dark:hover:bg-primary/10"
+            >
+              <ChevronLeft className="h-5 w-5" strokeWidth={2.2} />
+            </button>
+            <button
+              type="button"
+              aria-label="Scroll takeaways right"
+              onClick={() => scrollByDirection("right")}
+              disabled={!canScrollRight}
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-primary/30 bg-background/70 text-primary transition hover:bg-primary/10 disabled:cursor-not-allowed disabled:opacity-40 dark:bg-background/30 dark:hover:bg-primary/10"
+            >
+              <ChevronRight className="h-5 w-5" strokeWidth={2.2} />
+            </button>
           </div>
         </div>
       </div>

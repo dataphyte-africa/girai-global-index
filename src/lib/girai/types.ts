@@ -227,17 +227,26 @@ export interface EvidenceArtifact {
   items: EvidenceItem[];
 }
 
+export type FrameworkAdoptionStatus = "adopted" | "draft" | "notAdopted";
+
 export interface IndicatorAdoptionEntry {
   adopted: number;
   draft: number;
   notAdopted: number;
   total: number;
+  /**
+   * Per-country framework status (ISO3 → status). Present so the client can
+   * recompute the table for a country subset (e.g. a region filter).
+   */
+  byCountry?: Record<string, FrameworkAdoptionStatus>;
 }
 
 export interface IndicatorAdoptionArtifact {
   generatedAt: string;
   sourceHash: string;
   totalCountries: number;
+  /** Framework-universe countries with their region (for region filtering). */
+  countries?: Array<{ iso3: string; region: string }>;
   frameworks: Record<string, IndicatorAdoptionEntry>;
 }
 
@@ -313,7 +322,7 @@ export interface EvidenceIndexArtifact {
   /** Pre-computed facet option lists (sorted, distinct). */
   facets: {
     regions: string[];
-    countries: Array<{ iso3: string; name: string }>;
+    countries: Array<{ iso3: string; name: string; region: string }>;
   };
   rows: EvidenceIndexRow[];
 }

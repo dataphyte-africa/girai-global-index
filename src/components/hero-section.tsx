@@ -48,10 +48,10 @@ export const HeroSection = ( { arcData, markers }: { arcData: ArcPosition[], mar
       <div className="flex flex-col gap-7">
       <div className="flex flex-col gap-2">
 
-      <h1 className="text-4xl md:text-6xl font-medium text-center md:text-left leading-auto">
+      <h1 className="text-4xl md:text-6xl font-medium text-center md:text-left leading-[1.15]">
       Igniting global action on <span className="text-primary">responsible AI</span>, with local evidence.
       </h1>
-      <p className="text-base md:text-2xl mt-4 text-muted-foreground text-center md:text-left">
+      <p className="text-base md:text-xl mt-4 text-muted-foreground text-center md:text-left">
       Unlike indexes that assess AI through adoption and application, GIRAI examines responsible AI through a human rights lens — measuring not just whether countries are building AI, but whether they are building it in ways that protect people&apos;s rights, dignity, and freedoms.
         </p>
       </div>

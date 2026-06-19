@@ -5,17 +5,16 @@
  *
  * Layout (desktop):
  *   ┌─────────────────────┬─────────────────────┐
- *   │  4 sticky summary   │  5 dimension cards   │
- *   │  cards (Framework,  │  scrolling past the  │
- *   │  Implementation,    │  sticky column.      │
- *   │  CSO, Income Group) │                      │
+ *   │  3 sticky summary   │  5 dimension cards   │
+ *   │  cards (AI Policy,  │  scrolling past the  │
+ *   │  Enabling Conditions│  sticky column.      │
+ *   │  CSO Engagement)    │                      │
  *   └─────────────────────┴─────────────────────┘
  *
  * Mobile collapses to a single column (left cards first, then dimensions).
  *
  * All data points come from `CountryRanking` + `ScoreAggregates` (the
- * regional aggregate for "Avrg. Dimension score", and the income-group
- * aggregate for the Income Group card's peer-average reference).
+ * regional aggregate for pillar and dimension peer-average references).
  *
  * Narrative copy is sourced via `@/lib/country-narratives` (fact bundles →
  * generated/deterministic fallback per ADR 0004).
@@ -26,51 +25,41 @@ import type { CountryRanking, ScoreAggregates } from "@/lib/girai";
 import { DIMENSIONS } from "@/data/2026/taxonomy";
 import { getCountryDimensionNarrative } from "@/lib/country-narratives";
 import { getOrdinalSuffix } from "@/lib/narratives/ordinal";
+import { EvidenceLinkedText } from "./evidence-linked-text";
 
 interface Props {
   country: CountryRanking;
   regionAggregates: ScoreAggregates | null;
-  incomeGroupAggregates: ScoreAggregates | null;
 }
 
 export function CountryPerformanceOverview({
   country,
   regionAggregates,
-  incomeGroupAggregates,
 }: Props) {
   const summaryCards: SummaryCard[] = [
     {
-      label: "Framework",
-      score: country.frameworkScore,
-      avgScore: regionAggregates?.frameworkScore ?? null,
+      label: "AI Policy",
+      score: country.pillarScores["ai-policy"],
+      avgScore: regionAggregates?.pillars["ai-policy"] ?? null,
       avgLabel: "Avrg. Score",
-      rankGlobal: country.frameworkRankGlobal,
-      rankRegional: country.frameworkRankRegional,
+      rankGlobal: country.pillarRanksGlobal["ai-policy"],
+      rankRegional: country.pillarRanksRegional["ai-policy"],
     },
     {
-      label: "Implementation",
-      score: country.implementationScore,
-      avgScore: regionAggregates?.implementationScore ?? null,
+      label: "Enabling Conditions",
+      score: country.pillarScores["enabling-conditions"],
+      avgScore: regionAggregates?.pillars["enabling-conditions"] ?? null,
       avgLabel: "Avrg. Score",
-      rankGlobal: country.implementationRankGlobal,
-      rankRegional: country.implementationRankRegional,
+      rankGlobal: country.pillarRanksGlobal["enabling-conditions"],
+      rankRegional: country.pillarRanksRegional["enabling-conditions"],
     },
     {
-      label: "Civil society engagement",
+      label: "Civil Society Engagement",
       score: country.pillarScores["cso-engagement"],
       avgScore: regionAggregates?.pillars["cso-engagement"] ?? null,
       avgLabel: "Avrg. Score",
       rankGlobal: country.pillarRanksGlobal["cso-engagement"],
       rankRegional: country.pillarRanksRegional["cso-engagement"],
-    },
-    {
-      label: "Income Group",
-      sublabel: country.incomeGroup || undefined,
-      score: country.girai,
-      avgScore: incomeGroupAggregates?.girai ?? null,
-      avgLabel: "Avrg. Score",
-      rankGlobal: country.rankGlobal,
-      rankRegional: country.rankRegional,
     },
   ];
 
@@ -243,7 +232,7 @@ function DimensionCardView({
         <RankPill label="Regional" rank={rankRegional} tone="blue" />
       </div>
       <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
-        {blurb}
+        <EvidenceLinkedText text={blurb} />
       </p>
     </motion.div>
   );

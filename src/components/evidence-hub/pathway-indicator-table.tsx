@@ -9,7 +9,6 @@ import type {
   EvidenceIndexArtifact,
   EvidenceIndexRow,
   IndicatorAdoptionArtifact,
-  IndicatorAdoptionEntry,
 } from "@/lib/girai/types";
 import {
   getMisuseTypeDisplay,
@@ -55,12 +54,46 @@ interface MisuseTypeRow {
   total: number;
 }
 
+function parseList(value: string | null): string[] {
+  return value?.split(",").filter(Boolean) ?? [];
+}
+
 function formatCell(value: number, total: number, mode: ViewMode): string {
   if (mode === "percent") {
     if (total === 0) return "0%";
     return `${Math.round((value / total) * 100)}%`;
   }
   return value.toLocaleString();
+}
+
+// Heat is measured against a fixed absolute scale: 0 countries → transparent,
+// the full total (e.g. 135) → full pillar colour. The tint is therefore
+// comparable across every cell and column rather than relative to a column.
+const HEAT_MAX_OPACITY = 1;
+
+function heatStyle(value: number, total: number, heatRgb: string): React.CSSProperties {
+  const t = total > 0 ? Math.min(1, value / total) : 0;
+  return { backgroundColor: `rgb(${heatRgb} / ${t * HEAT_MAX_OPACITY})` };
+}
+
+/**
+ * Tint each data cell into a heat map against the absolute 0 → total scale, so
+ * a cell covering all countries gets the full pillar colour and an empty cell
+ * is transparent. Returns a matrix of inline styles aligned with each row's
+ * data cells (the Total column is left untinted as it is the denominator).
+ */
+function buildCellHeatStyles(
+  rows: { cells: number[]; total: number }[],
+  dataColCount: number,
+  heatRgb: string
+): React.CSSProperties[][] {
+  return rows.map((r) => {
+    const cellStyles: React.CSSProperties[] = [];
+    for (let col = 0; col < dataColCount; col += 1) {
+      cellStyles[col] = heatStyle(r.cells[col] ?? 0, r.total, heatRgb);
+    }
+    return cellStyles;
+  });
 }
 
 function splitTableTitle(title: string): { prefix: string; accent: string } {
@@ -75,7 +108,32 @@ export function PathwayIndicatorTable() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const pathway = getPathwayFromKindParam(searchParams.get("kind"));
-  const indicators = getIndicatorsForPathway(pathway);
+
+  // Ambient page filters that scope *which countries* (and which indicator
+  // rows) the table counts. We deliberately ignore `indicator`, `type` and
+  // `kind` here — those are intrinsic to the table itself (`kind` selects the
+  // pathway, `indicator`/`type` are the table's own row dimension set by the
+  // Explore buttons). Region/country/dimension/pillar mirror the filters the
+  // user can apply on the page so the table stays in sync with the explorer.
+  const regionFilter = parseList(searchParams.get("region"));
+  const countryFilter = parseList(searchParams.get("country"));
+  const dimensionFilter = parseList(searchParams.get("dimension"));
+  const pillarFilter = parseList(searchParams.get("pillar"));
+  const regionKey = regionFilter.join(",");
+  const countryKey = countryFilter.join(",");
+  const dimensionKey = dimensionFilter.join(",");
+  const pillarKey = pillarFilter.join(",");
+  const hasCountryScope = regionFilter.length > 0 || countryFilter.length > 0;
+
+  const indicators = React.useMemo(() => {
+    let list = getIndicatorsForPathway(pathway);
+    if (dimensionFilter.length)
+      list = list.filter((i) => dimensionFilter.includes(i.dimension));
+    if (pillarFilter.length)
+      list = list.filter((i) => pillarFilter.includes(i.pillar));
+    return list;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathway.id, dimensionKey, pillarKey]);
 
   const [viewMode, setViewMode] = React.useState<ViewMode>("count");
   const [adoption, setAdoption] = React.useState<IndicatorAdoptionArtifact | null>(
@@ -130,26 +188,72 @@ export function PathwayIndicatorTable() {
     index?.totals.countriesIndexed ??
     (index ? new Set(index.rows.map((r) => r.country.iso3)).size : 135);
 
+  // Set of ISO3s the table should count, given the active region/country page
+  // filters. `null` means "no country scope" (count everything). The universe
+  // is drawn from whichever data source is loaded (adoption carries the full
+  // framework universe with regions; the evidence index carries regions for
+  // the yes/no and misuse pathways).
+  const allowedCountries = React.useMemo<Set<string> | null>(() => {
+    if (!hasCountryScope) return null;
+    const universe = new Map<string, string>();
+    if (adoption?.countries) {
+      for (const c of adoption.countries) universe.set(c.iso3, c.region);
+    }
+    if (index) {
+      for (const r of index.rows) {
+        if (!universe.has(r.country.iso3))
+          universe.set(r.country.iso3, r.country.region);
+      }
+    }
+    const allowed = new Set<string>();
+    for (const [iso3, region] of universe) {
+      if (regionFilter.length && !regionFilter.includes(region)) continue;
+      if (countryFilter.length && !countryFilter.includes(iso3)) continue;
+      allowed.add(iso3);
+    }
+    return allowed;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hasCountryScope, adoption, index, regionKey, countryKey]);
+
+  // Denominator for the Total column / percentages, scoped to the filters.
+  const scopedTotal = allowedCountries ? allowedCountries.size : totalCountries;
+
   const frameworkRows: FrameworkRow[] = React.useMemo(() => {
     if (pathway.statusColumnMode !== "framework" || !adoption) return [];
     return indicators.map((ind) => {
-      const counts: IndicatorAdoptionEntry =
-        adoption.frameworks[ind.slug] ?? {
-          adopted: 0,
-          draft: 0,
-          notAdopted: 0,
-          total: totalCountries,
+      const entry = adoption.frameworks[ind.slug];
+      const byCountry = entry?.byCountry;
+      if (byCountry && Object.keys(byCountry).length > 0) {
+        let adopted = 0;
+        let draft = 0;
+        let notAdopted = 0;
+        for (const [iso3, status] of Object.entries(byCountry)) {
+          if (allowedCountries && !allowedCountries.has(iso3)) continue;
+          if (status === "adopted") adopted += 1;
+          else if (status === "draft") draft += 1;
+          else notAdopted += 1;
+        }
+        return {
+          slug: ind.slug,
+          name: ind.name,
+          adopted,
+          draft,
+          notAdopted,
+          total: adopted + draft + notAdopted,
         };
+      }
+      // Fallback for older data without a per-country breakdown: aggregate
+      // counts only (cannot be scoped to a region/country subset).
       return {
         slug: ind.slug,
         name: ind.name,
-        adopted: counts.adopted,
-        draft: counts.draft,
-        notAdopted: counts.notAdopted,
-        total: counts.total || totalCountries,
+        adopted: entry?.adopted ?? 0,
+        draft: entry?.draft ?? 0,
+        notAdopted: entry?.notAdopted ?? 0,
+        total: entry?.total || totalCountries,
       };
     });
-  }, [pathway.statusColumnMode, adoption, indicators, totalCountries]);
+  }, [pathway.statusColumnMode, adoption, indicators, allowedCountries, totalCountries]);
 
   const yesNoRows: YesNoRow[] = React.useMemo(() => {
     if (pathway.statusColumnMode !== "yesNo" || pathway.id === "misuse" || !index)
@@ -158,6 +262,7 @@ export function PathwayIndicatorTable() {
     const yesBySlug = new Map<string, Set<string>>();
     for (const row of index.rows) {
       if (!kindSet.has(row.kind)) continue;
+      if (allowedCountries && !allowedCountries.has(row.country.iso3)) continue;
       if (!indicators.some((i) => i.slug === row.indicatorSlug)) continue;
       let set = yesBySlug.get(row.indicatorSlug);
       if (!set) {
@@ -172,17 +277,18 @@ export function PathwayIndicatorTable() {
         slug: ind.slug,
         name: ind.name,
         yes,
-        no: Math.max(0, totalCountries - yes),
-        total: totalCountries,
+        no: Math.max(0, scopedTotal - yes),
+        total: scopedTotal,
       };
     });
-  }, [pathway, index, indicators, totalCountries]);
+  }, [pathway, index, indicators, allowedCountries, scopedTotal]);
 
   const misuseRows: MisuseTypeRow[] = React.useMemo(() => {
     if (pathway.id !== "misuse" || !index) return [];
     const countriesByType = new Map<string, Set<string>>();
     for (const row of index.rows) {
       if (row.kind !== "government-misuse" || !row.type) continue;
+      if (allowedCountries && !allowedCountries.has(row.country.iso3)) continue;
       const countries = countriesByType.get(row.type) ?? new Set<string>();
       countries.add(row.country.iso3);
       countriesByType.set(row.type, countries);
@@ -196,8 +302,8 @@ export function PathwayIndicatorTable() {
           type,
           name: getMisuseTypeDisplay(type).shortLabel,
           yes,
-          no: Math.max(0, totalCountries - yes),
-          total: totalCountries,
+          no: Math.max(0, scopedTotal - yes),
+          total: scopedTotal,
         };
       })
       .sort((a, b) => {
@@ -206,7 +312,7 @@ export function PathwayIndicatorTable() {
         if (orderA !== orderB) return orderA - orderB;
         return a.name.localeCompare(b.name);
       });
-  }, [pathway.id, index, totalCountries]);
+  }, [pathway.id, index, allowedCountries, scopedTotal]);
 
   const exploreIndicator = (slug: string) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -228,6 +334,38 @@ export function PathwayIndicatorTable() {
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
     scrollToEvidenceHubSection(EVIDENCE_HUB_SECTIONS.explorer);
   };
+
+  // Tint each data cell relative to the min/max of its own column ("class").
+  const frameworkHeat = React.useMemo(
+    () =>
+      buildCellHeatStyles(
+        frameworkRows.map((r) => ({
+          cells: [r.adopted, r.draft, r.notAdopted],
+          total: r.total,
+        })),
+        3,
+        pathway.theme.heatRgb
+      ),
+    [frameworkRows, pathway.theme.heatRgb]
+  );
+  const yesNoHeat = React.useMemo(
+    () =>
+      buildCellHeatStyles(
+        yesNoRows.map((r) => ({ cells: [r.yes, r.no], total: r.total })),
+        2,
+        pathway.theme.heatRgb
+      ),
+    [yesNoRows, pathway.theme.heatRgb]
+  );
+  const misuseHeat = React.useMemo(
+    () =>
+      buildCellHeatStyles(
+        misuseRows.map((r) => ({ cells: [r.no, r.yes], total: r.total })),
+        2,
+        pathway.theme.heatRgb
+      ),
+    [misuseRows, pathway.theme.heatRgb]
+  );
 
   const { prefix, accent } = splitTableTitle(pathway.tableTitle);
   const rowCount = pathway.id === "misuse" ? misuseRows.length : indicators.length;
@@ -298,7 +436,7 @@ export function PathwayIndicatorTable() {
                 </thead>
                 <tbody>
                   {pathway.statusColumnMode === "framework"
-                    ? frameworkRows.map((row) => (
+                    ? frameworkRows.map((row, i) => (
                         <IndicatorTableRow
                           key={row.slug}
                           name={row.name}
@@ -312,10 +450,11 @@ export function PathwayIndicatorTable() {
                             row.total,
                           ]}
                           total={row.total}
+                          heatStyles={frameworkHeat[i]}
                         />
                       ))
                     : pathway.id === "misuse"
-                      ? misuseRows.map((row) => (
+                      ? misuseRows.map((row, i) => (
                           <IndicatorTableRow
                             key={row.type}
                             name={row.name}
@@ -324,9 +463,10 @@ export function PathwayIndicatorTable() {
                             onExplore={() => exploreMisuseType(row.type)}
                             cells={[row.no, row.yes, row.total]}
                             total={row.total}
+                            heatStyles={misuseHeat[i]}
                           />
                         ))
-                      : yesNoRows.map((row) => (
+                      : yesNoRows.map((row, i) => (
                         <IndicatorTableRow
                           key={row.slug}
                           name={row.name}
@@ -335,6 +475,7 @@ export function PathwayIndicatorTable() {
                           onExplore={() => exploreIndicator(row.slug)}
                           cells={[row.yes, row.no, row.total]}
                           total={row.total}
+                          heatStyles={yesNoHeat[i]}
                         />
                       ))}
                 </tbody>
@@ -395,6 +536,7 @@ function IndicatorTableRow({
   onExplore,
   cells,
   total,
+  heatStyles,
 }: {
   name: string;
   pathway: PathwayConfig;
@@ -402,15 +544,20 @@ function IndicatorTableRow({
   onExplore: () => void;
   cells: number[];
   total: number;
+  heatStyles?: React.CSSProperties[];
 }) {
   const dataCells = cells.slice(0, -1);
   const totalVal = cells[cells.length - 1]!;
 
   return (
-    <tr className="border-b border-border/40 last:border-0 hover:bg-muted/30">
+    <tr className="border-b border-border/40 transition-colors last:border-0 hover:bg-muted/30">
       <td className="px-4 py-3 font-medium text-foreground md:px-6">{name}</td>
       {dataCells.map((val, i) => (
-        <td key={i} className="px-3 py-3 text-center tabular-nums text-foreground">
+        <td
+          key={i}
+          className="px-3 py-3 text-center tabular-nums text-foreground"
+          style={heatStyles?.[i]}
+        >
           {formatCell(val, total, viewMode)}
         </td>
       ))}

@@ -7,9 +7,12 @@ import {
   RegionHero,
   RegionCountryExplorer,
   RegionFooterHero,
+  RegionEvidenceExplorerSection,
 } from "@/components/region";
 import {
   getAllCountries,
+  getEvidenceByRegion,
+  getGlobalAverages,
   getRegionAverages,
   getRegions,
 } from "@/lib/girai";
@@ -60,6 +63,7 @@ export default async function RegionPage({ params }: PageProps) {
   });
 
   const regionAvg = regionAverages[regionName]?.girai ?? null;
+  const regionEvidence = getEvidenceByRegion(regionName);
 
   // Pre-seed the comparison with the region's two leaders plus the regional
   // average, so the section is populated on first paint.
@@ -84,6 +88,7 @@ export default async function RegionPage({ params }: PageProps) {
           countries={regionCountries}
           regions={[regionName]}
           regionAverages={regionAverages}
+          globalAverages={getGlobalAverages()}
           initialSlots={initialSlots}
           heading={
             <>
@@ -91,6 +96,11 @@ export default async function RegionPage({ params }: PageProps) {
             </>
           }
           subheading={`See how countries in ${regionName} perform relative to each other and the regional average across GIRAI's dimensions and indicators.`}
+        />
+
+        <RegionEvidenceExplorerSection
+          regionName={regionName}
+          evidenceCount={regionEvidence.length}
         />
 
         <RegionFooterHero regionName={regionName} blurb={copy.footerBlurb} />

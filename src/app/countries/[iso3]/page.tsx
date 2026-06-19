@@ -6,8 +6,8 @@ import {
   getGovernmentMisuseByCountry,
   getEvidenceByCountry,
   getCountryPillarHighlights,
+  getGlobalAverages,
   getRegionAverages,
-  getIncomeGroupAverages,
   getRegions,
   getCountryEditionEvidenceStatus,
   getEditionEvidenceStatusArtifact,
@@ -58,8 +58,6 @@ export default async function CountryStoryPage({ params }: PageProps) {
   const regionAverages = getRegionAverages();
 
   const regionAggregates = regionAverages[country.region] ?? null;
-  const incomeGroupAggregates =
-    getIncomeGroupAverages()[country.incomeGroup] ?? null;
 
   const { generatedAt } = getDatasetProvenance();
   const misuseEvidence = getGovernmentMisuseByCountry(country.iso3);
@@ -77,7 +75,6 @@ export default async function CountryStoryPage({ params }: PageProps) {
         <CountryPerformanceOverview
           country={country}
           regionAggregates={regionAggregates}
-          incomeGroupAggregates={incomeGroupAggregates}
         />
         {editionStatus ? (
           <CountryEditionComparisonSection
@@ -91,6 +88,7 @@ export default async function CountryStoryPage({ params }: PageProps) {
           countries={allCountries}
           regions={regions}
           regionAverages={regionAverages}
+          globalAverages={getGlobalAverages()}
           initialSlots={[
             { kind: "country", iso3: country.iso3 },
             { kind: "region", name: country.region },
