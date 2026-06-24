@@ -13,7 +13,10 @@
       "firebase-debug.*.log",
       "functions",
       "public/data/2026",
+      "public/downloads",
+      "public/download1.png",
       "src/data/2026/generated",
+      "src/data/2026/previous-version",
       "src/data/countries.json"
     ]
   }

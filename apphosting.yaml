@@ -34,6 +34,26 @@ env:
     availability:
       - RUNTIME
 
+  - variable: DOWNLOAD_FIRST_REPORT_PATH
+    value: https://storage.googleapis.com/girai-global-index-downloads/GIRAI-2024-report.pdf
+    availability:
+      - RUNTIME
+
+  - variable: DOWNLOAD_SECOND_REPORT_PATH
+    value: https://storage.googleapis.com/girai-global-index-downloads/GIRAI-2026-report.pdf
+    availability:
+      - RUNTIME
+
+  - variable: DOWNLOAD_FIRST_DATA_PATH
+    value: https://storage.googleapis.com/girai-global-index-downloads/GIRAI_2024_dataset.xlsx
+    availability:
+      - RUNTIME
+
+  - variable: DOWNLOAD_SECOND_DATA_PATH
+    value: https://storage.googleapis.com/girai-global-index-downloads/GIRAI_2026_dataset.xlsx
+    availability:
+      - RUNTIME
+
   # Server-only secrets (Cloud Secret Manager)
   - variable: OPENAI_API_KEY
     secret: OPENAI_API_KEY

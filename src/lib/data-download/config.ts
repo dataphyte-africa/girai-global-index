@@ -74,6 +74,9 @@ export function getPublicDownloadUrl(
   assetType: DownloadAssetType
 ): string {
   const asset = getDownloadAsset(edition, assetType);
+  if (asset.path.startsWith("http://") || asset.path.startsWith("https://")) {
+    return asset.path;
+  }
   if (asset.path.startsWith("/")) {
     return asset.path;
   }
