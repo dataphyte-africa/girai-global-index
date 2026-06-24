@@ -3,39 +3,7 @@
 import { useState } from "react";
 import { Minus, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-const TERMS = [
-  {
-    title: "Thematic area",
-    definition:
-      "Composite indicator measuring the performance of the responsible AI ecosystem in relation to a sub-component of responsible AI",
-  },
-  {
-    title: "Dimension",
-    definition:
-      "One of five interconnected areas that structure GIRAI's assessment of national responsible AI — spanning inclusion, ethics, labour, trust, and public-sector use.",
-  },
-  {
-    title: "Pillar",
-    definition:
-      "A structural layer assessed within each thematic area, distinguishing government frameworks, government actions, and non-state actor contributions to responsible AI.",
-  },
-  {
-    title: "Government frameworks",
-    definition:
-      "The laws, policies, strategies, and institutional arrangements through which governments commit to governing AI responsibly.",
-  },
-  {
-    title: "Government actions",
-    definition:
-      "Operational measures taken by government to implement responsible AI — including enforcement, oversight, procurement, and deployment in public services.",
-  },
-  {
-    title: "Non-state actors",
-    definition:
-      "Initiatives and contributions from civil society, academia, industry, and other non-government actors that shape, scrutinise, and advance responsible AI.",
-  },
-] as const;
+import { methodologyDefaults, type MethodologyContent } from "@/content/methodology.defaults";
 
 function KeyTermItem({
   title,
@@ -88,8 +56,13 @@ function KeyTermItem({
 /**
  * Key Terms and Definitions — single-open accordion list.
  */
-export function MethodologyKeyTermsSection() {
+export function MethodologyKeyTermsSection({
+  content = methodologyDefaults,
+}: {
+  content?: MethodologyContent;
+}) {
   const [openIndex, setOpenIndex] = useState(0);
+  const terms = content.terms;
 
   return (
     <section className="relative w-full overflow-hidden px-4 py-16 md:px-6 md:py-24 lg:py-28">
@@ -101,18 +74,17 @@ export function MethodologyKeyTermsSection() {
       <div className="relative mx-auto max-w-3xl">
         <header className="mx-auto mb-10 max-w-2xl text-center md:mb-12 lg:mb-14">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight lg:leading-[1.12]">
-            <span className="text-primary">Key Terms </span>
-            <span className="text-foreground">and Definitions</span>
+            <span className="text-primary">{content.keyTermsHeadingAccent}</span>
+            <span className="text-foreground">{content.keyTermsHeadingTail}</span>
           </h2>
 
           <p className="mt-4 text-sm leading-relaxed text-muted-foreground md:text-base md:leading-[1.65]">
-            The core concepts that shape GIRAI&apos;s methodology, clearly
-            defined for transparency and consistency.
+            {content.keyTermsSubtitle}
           </p>
         </header>
 
         <div className="flex flex-col gap-4">
-          {TERMS.map((term, index) => (
+          {terms.map((term, index) => (
             <KeyTermItem
               key={term.title}
               title={term.title}

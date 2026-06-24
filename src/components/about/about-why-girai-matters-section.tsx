@@ -1,41 +1,9 @@
 import { NumberedImpactCard } from "@/components/numbered-impact-card";
+import { aboutDefaults, type AboutContent } from "@/content/about.defaults";
 
 const PURPLE = "#7150F4";
 const HEADING_DARK = "#1A1A2E";
 const SUBTITLE_COLOR = "#6B7280";
-
-const CARDS = [
-  {
-    title: "AI is shaping real-world decisions",
-    description:
-      "AI systems increasingly influence public services and access to rights. Measuring governance helps ensure they serve people fairly.",
-  },
-  {
-    title: "Governance gaps create risk and inequity",
-    description:
-      "Without safeguards, AI can amplify bias, inequality, and misuse of power. GIRAI highlights where protections exist — and where they are missing.",
-  },
-  {
-    title: "Policymakers need evidence, not assumptions",
-    description:
-      "Responsible AI requires more than good intentions. GIRAI provides structured, comparable evidence to guide better laws and public investment.",
-  },
-  {
-    title: "Accountability builds public trust",
-    description:
-      "Transparent measurement strengthens oversight and responsible innovation. Accountability supports confidence in AI governance.",
-  },
-  {
-    title: "Global comparison drives better governance",
-    description:
-      "Countries face similar AI risks but respond in different ways. Comparable measurement helps identify good practices and shared challenges.",
-  },
-  {
-    title: "Civil society needs visibility and leverage",
-    description:
-      "Effective AI governance depends on public oversight. GIRAI makes government action visible, enabling civil society to engage and influence policy.",
-  },
-] as const;
 
 function SectionAccent({
   className,
@@ -57,7 +25,11 @@ function SectionAccent({
  * Six-card grid explaining why GIRAI matters — numbered badges, ring
  * accents, and centered section header with decorative line markers.
  */
-export function AboutWhyGiraiMattersSection() {
+export function AboutWhyGiraiMattersSection({
+  content = aboutDefaults,
+}: {
+  content?: AboutContent;
+}) {
   return (
     <section className="relative w-full overflow-hidden bg-[#F7F8FA] px-4 py-16 md:px-6 md:py-24 lg:py-28">
       <span
@@ -74,24 +46,23 @@ export function AboutWhyGiraiMattersSection() {
           <SectionAccent color="blue" className="mb-5" />
 
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight lg:leading-[1.12]">
-            <span style={{ color: HEADING_DARK }}>Why </span>
-            <span style={{ color: PURPLE }}>GIRAI</span>
-            <span style={{ color: HEADING_DARK }}> Matters</span>
+            <span style={{ color: HEADING_DARK }}>{content.whyHeadingLead}</span>
+            <span style={{ color: PURPLE }}>{content.whyHeadingAccent}</span>
+            <span style={{ color: HEADING_DARK }}>{content.whyHeadingTail}</span>
           </h2>
 
           <p
             className="mt-4 max-w-xl text-sm leading-relaxed md:text-base md:leading-[1.65]"
             style={{ color: SUBTITLE_COLOR }}
           >
-            Understanding how countries govern AI is essential to ensure
-            innovation benefits society while protecting people and institutions.
+            {content.whySubtitle}
           </p>
 
           <SectionAccent color="pink" className="mt-5" />
         </header>
 
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
-          {CARDS.map((card, index) => (
+          {content.whyCards.map((card, index) => (
             <NumberedImpactCard
               key={card.title}
               index={index + 1}

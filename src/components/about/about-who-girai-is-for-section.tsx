@@ -1,37 +1,10 @@
 import Image from "next/image";
+import { aboutDefaults, type AboutContent } from "@/content/about.defaults";
 
 const PURPLE = "#7150F4";
 const HEADING_DARK = "#1A1A2E";
 const BODY_COLOR = "#6B7280";
 const SUBTITLE_COLOR = "#6B7280";
-
-const AUDIENCES = [
-  {
-    title: "Policymakers and public institutions",
-    description:
-      "Use evidence to design, evaluate, and strengthen AI laws, strategies, and public-sector practice.",
-  },
-  {
-    title: "Researchers and academics",
-    description:
-      "Access comparable data to support analysis, benchmarking, and cross-country research.",
-  },
-  {
-    title: "Civil society organisations",
-    description:
-      "Monitor government action, advocate for rights, and strengthen public oversight of AI governance.",
-  },
-  {
-    title: "Journalists and analysts",
-    description:
-      "Ground reporting and analysis in verified data and documented government practice.",
-  },
-  {
-    title: "International and regional bodies",
-    description:
-      "Compare progress, identify gaps, and support policy coordination across jurisdictions.",
-  },
-] as const;
 
 function AudienceCard({
   index,
@@ -78,28 +51,32 @@ function AudienceCard({
 /**
  * Who GIRAI is for — audience cards on the left, portrait and summary on the right.
  */
-export function AboutWhoGiraiIsForSection() {
+export function AboutWhoGiraiIsForSection({
+  content = aboutDefaults,
+}: {
+  content?: AboutContent;
+}) {
+  const image = content.whoForImage.url ?? aboutDefaults.whoForImage.url!;
   return (
     <section className="w-full bg-white px-4 py-16 md:px-6 md:py-24 lg:py-28">
       <div className="mx-auto max-w-7xl">
         <header className="mx-auto mb-12 max-w-3xl text-center md:mb-14 lg:mb-16">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium leading-[1.18] tracking-tight md:leading-[1.15]">
-            <span style={{ color: HEADING_DARK }}>Who GIRAI Is For in a </span>
-            <span style={{ color: PURPLE }}>World Shaped by AI</span>
+            <span style={{ color: HEADING_DARK }}>{content.whoForHeadingLead}</span>
+            <span style={{ color: PURPLE }}>{content.whoForHeadingAccent}</span>
           </h2>
 
           <p
             className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed md:text-base md:leading-[1.65]"
             style={{ color: SUBTITLE_COLOR }}
           >
-            Designed for those shaping, studying, and holding power accountable
-            in the age of AI.
+            {content.whoForSubtitle}
           </p>
         </header>
 
         <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-2 lg:gap-14 xl:gap-16">
           <div className="flex flex-col gap-4 md:gap-5">
-            {AUDIENCES.map((audience, index) => (
+            {content.audiences.map((audience, index) => (
               <AudienceCard
                 key={audience.title}
                 index={index + 1}
@@ -111,8 +88,8 @@ export function AboutWhoGiraiIsForSection() {
 
           <div className="lg:sticky lg:top-24">
             <Image
-              src="/about/who-girai-is-for.png"
-              alt="Professional reviewing AI governance insights"
+              src={image}
+              alt={content.whoForImage.alt ?? "Professional reviewing AI governance insights"}
               width={598}
               height={399}
               className="h-auto w-full rounded-[20px] object-cover shadow-[0_20px_48px_rgba(26,26,46,0.1)]"
@@ -123,9 +100,7 @@ export function AboutWhoGiraiIsForSection() {
               className="mt-6 max-w-lg text-base leading-[1.65] md:mt-7 md:text-[1.0625rem]"
               style={{ color: BODY_COLOR }}
             >
-              GIRAI serves a diverse set of actors who rely on credible evidence
-              to understand, compare, and improve how artificial intelligence is
-              governed across countries.
+              {content.whoForSummary}
             </p>
           </div>
         </div>

@@ -2,22 +2,58 @@
 # See https://firebase.google.com/docs/app-hosting/configure#cloud-run
 runConfig:
   minInstances: 0
-  # maxInstances: 100
-  # concurrency: 80
-  # cpu: 1
-  # memoryMiB: 512
 
-# Environment variables and secrets.
-# env:
-  # Configure environment variables.
-  # See https://firebase.google.com/docs/app-hosting/configure#user-defined-environment
-  # - variable: MESSAGE
-  #   value: Hello world!
+env:
+  # Public — available at build and runtime
+  - variable: NEXT_PUBLIC_SANITY_PROJECT_ID
+    value: wwnfg3le
+    availability:
+      - BUILD
+      - RUNTIME
+
+  - variable: NEXT_PUBLIC_SANITY_DATASET
+    value: production
+    availability:
+      - BUILD
+      - RUNTIME
+
+  - variable: NEXT_PUBLIC_SANITY_API_VERSION
+    value: "2024-10-01"
+    availability:
+      - BUILD
+      - RUNTIME
+
+  - variable: OPENAI_VECTOR_STORE_ID
+    value: vs_6a3a6e41c3548191b72539d24aa60b0b
+    availability:
+      - BUILD
+      - RUNTIME
+
+  - variable: GOOGLE_SHEETS_SHEET_NAME
+    value: Submissions
+    availability:
+      - RUNTIME
+
+  # Server-only secrets (Cloud Secret Manager)
+  - variable: OPENAI_API_KEY
+    secret: OPENAI_API_KEY
+    availability:
+      - RUNTIME
+
+  - variable: SANITY_API_READ_TOKEN
+    secret: SANITY_API_READ_TOKEN
+    availability:
+      - BUILD
+      - RUNTIME
+
+  - variable: SANITY_REVALIDATE_SECRET
+    secret: SANITY_REVALIDATE_SECRET
+    availability:
+      - RUNTIME
+
+  # Uncomment after setting the secret:
+  # firebase apphosting:secrets:set GOOGLE_SHEETS_WEB_APP_URL --data-file - --force
+  # - variable: GOOGLE_SHEETS_WEB_APP_URL
+  #   secret: GOOGLE_SHEETS_WEB_APP_URL
   #   availability:
-  #     - BUILD
   #     - RUNTIME
-
-  # Grant access to secrets in Cloud Secret Manager.
-  # See https://firebase.google.com/docs/app-hosting/configure#secret-parameters
-  # - variable: MY_SECRET
-  #   secret: mySecretRef

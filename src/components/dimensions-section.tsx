@@ -5,8 +5,13 @@ import { motion, useInView } from "framer-motion";
 import { RadialDimensionsChart } from "@/components/radial-dimensions-chart";
 import { DimensionCard } from "@/components/dimension-card";
 import { DIMENSIONS } from "@/data/dimensions-data";
+import { homeDefaults, type HomeContent } from "@/content/home.defaults";
 
-export function DimensionsSection() {
+export function DimensionsSection({
+  content = homeDefaults,
+}: {
+  content?: HomeContent;
+}) {
   const [selectedId, setSelectedId] = useState<string | null>(
     DIMENSIONS[0]?.id ?? null,
   );
@@ -34,7 +39,7 @@ export function DimensionsSection() {
             transition={{ duration: 0.6, ease: "easeOut" }}
             className="text-3xl font-medium tracking-tight md:text-4xl"
           >
-            The Five Dimensions of <span className="text-primary">Responsible AI</span>
+            {content.dimensionsHeadingLead}<span className="text-primary">{content.dimensionsHeadingAccent}</span>
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -42,8 +47,7 @@ export function DimensionsSection() {
             transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
             className="mt-3 text-muted-foreground"
           >
-            Explore the framework used to assess national AI governance across
-            countries
+            {content.dimensionsSubtitle}
           </motion.p>
         </div>
 

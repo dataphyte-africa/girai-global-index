@@ -4,48 +4,17 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { methodologyDefaults, type MethodologyContent } from "@/content/methodology.defaults";
 
 const NUMBER_DECORATOR = "/methodology/number-decorator.svg";
 const RINGS_DECOR = "/methodology/circular-rings.svg";
 
-const STATS = [
-  { value: "150+", label: "Researchers engaged globally" },
-  { value: "3-Tier", label: "Independent review structure" },
-  { value: "25", label: "Indicators assessed" },
-  { value: "100%", label: "Public evidence verified" },
-] as const;
-
-const STEPS = [
-  {
-    title: "Expert-Led Research",
-    description:
-      "In-country researchers collect and document evidence using standardized questionnaires and methodological guidance.",
-    color: "var(--process-step-1)",
-  },
-  {
-    title: "Researcher Submission",
-    description:
-      "Completed questionnaires and supporting evidence are formally submitted through the survey system for review.",
-    color: "var(--process-step-2)",
-  },
-  {
-    title: "Country Coordinator Review",
-    description:
-      "Country coordinators review submissions, verify evidence quality, and ensure alignment with methodological requirements.",
-    color: "var(--process-step-3)",
-  },
-  {
-    title: "Regional Supervision",
-    description:
-      "Regional supervisors conduct oversight, spot-check submissions, and address inconsistencies across countries.",
-    color: "var(--process-step-4)",
-  },
-  {
-    title: "Global Review",
-    description:
-      "Final global review and validation to ensure consistency, accuracy, and cross-country comparability.",
-    color: "var(--process-step-5)",
-  },
+const STEP_COLORS = [
+  "var(--process-step-1)",
+  "var(--process-step-2)",
+  "var(--process-step-3)",
+  "var(--process-step-4)",
+  "var(--process-step-5)",
 ] as const;
 
 function ProcessStepCard({
@@ -98,9 +67,17 @@ function ProcessStepCard({
 /**
  * Research and Review Process — stats header, sticky intro left, timeline cards right.
  */
-export function MethodologyResearchProcessSection() {
+export function MethodologyResearchProcessSection({
+  content = methodologyDefaults,
+}: {
+  content?: MethodologyContent;
+}) {
   const [activeStep, setActiveStep] = useState(0);
   const cardRefs = useRef<Array<HTMLDivElement | null>>([]);
+  const steps = content.processSteps.map((step, i) => ({
+    ...step,
+    color: STEP_COLORS[i % STEP_COLORS.length],
+  }));
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -144,18 +121,17 @@ export function MethodologyResearchProcessSection() {
       <div className="relative mx-auto max-w-7xl">
         <header className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight lg:leading-[1.12]">
-            <span className="text-foreground">Research and </span>
-            <span className="text-primary">Review Process</span>
+            <span className="text-foreground">{content.processHeadingLead}</span>
+            <span className="text-primary">{content.processHeadingAccent}</span>
           </h2>
 
           <p className="mt-4 text-sm leading-relaxed text-muted-foreground md:text-base md:leading-[1.65]">
-            How multi-layered review ensures consistency, independence, and
-            methodological rigor.
+            {content.processSubtitle}
           </p>
         </header>
 
         <div className="mt-12 grid grid-cols-2 border-y border-border py-10 md:mt-14 md:grid-cols-4 md:py-12 lg:mt-16">
-          {STATS.map((stat, index) => (
+          {content.processStats.map((stat, index) => (
             <div
               key={stat.label}
               className={cn(
@@ -179,17 +155,16 @@ export function MethodologyResearchProcessSection() {
           <div className="self-start lg:sticky lg:top-24">
             <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-primary/10 px-3.5 py-1.5 text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-primary">
               <Sparkles className="size-3.5" aria-hidden />
-              Research Process
+              {content.processBadge}
             </span>
 
             <h3 className="mt-5 text-[1.75rem] font-medium leading-[1.18] tracking-tight md:text-4xl md:leading-[1.15] lg:text-[2.5rem]">
-              <span className="text-primary">Five Stages</span>
-              <span className="text-foreground"> of Evidence Review</span>
+              <span className="text-primary">{content.processStagesHeadingAccent}</span>
+              <span className="text-foreground">{content.processStagesHeadingTail}</span>
             </h3>
 
             <p className="mt-4 max-w-md text-sm leading-relaxed text-muted-foreground md:text-base md:leading-[1.65]">
-              From in-country fieldwork to global validation, each submission
-              advances through structured, independent checkpoints.
+              {content.processStagesIntro}
             </p>
           </div>
 
@@ -200,7 +175,7 @@ export function MethodologyResearchProcessSection() {
             />
 
             <div className="flex flex-col gap-6 md:gap-8">
-              {STEPS.map((step, index) => {
+              {steps.map((step, index) => {
                 const isFilled = index <= activeStep;
 
                 return (

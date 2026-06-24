@@ -9,6 +9,7 @@ import type { DimensionSlug, PillarSlug } from "@/data/2026/taxonomy";
 import type { RegionSummary } from "@/lib/girai";
 import { getRegionDisplayName, regionToSlug } from "@/lib/regions";
 import { cn } from "@/lib/utils";
+import { regionsDefaults, type RegionsContent } from "@/content/regions.defaults";
 
 const HEADING_DARK = "#1A1A2E";
 const SUBTITLE_COLOR = "#6B7280";
@@ -63,10 +64,12 @@ function orderRegions(summaries: RegionSummary[]): RegionSummary[] {
 
 export interface RegionsPerformanceOverviewProps {
   summaries: RegionSummary[];
+  content?: RegionsContent;
 }
 
 export function RegionsPerformanceOverview({
   summaries,
+  content = regionsDefaults,
 }: RegionsPerformanceOverviewProps) {
   const [mode, setMode] = useState<ChartMode>("dimensions");
   const rows = useMemo(() => orderRegions(summaries), [summaries]);
@@ -79,14 +82,13 @@ export function RegionsPerformanceOverview({
             className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight"
             style={{ color: HEADING_DARK }}
           >
-            Regional Performance Overview
+            {content.overviewHeading}
           </h2>
           <p
             className="mt-4 text-sm leading-relaxed md:text-base md:leading-[1.65]"
             style={{ color: SUBTITLE_COLOR }}
           >
-            Scores reflect aggregated performance across all GIRAI dimensions
-            for each assessed region.
+            {content.overviewSubtitle}
           </p>
 
           <div className="mt-8 inline-flex rounded-full border border-border/60 bg-[#ECEEF2] p-1 text-sm shadow-sm">

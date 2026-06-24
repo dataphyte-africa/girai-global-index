@@ -20,7 +20,7 @@ pilot page; Phase 1 then migrates **every** page, seeds the content, and ships i
 | 5 | **Text** | Mixed: plain `string` for headings/labels/CTAs; **Portable Text** only for body copy needing paragraphs/bold/links/highlighted spans. |
 | 6 | **Preview** | Yes — Next.js **Draft Mode** + Sanity **Presentation** tool for live side-by-side preview of unpublished edits. |
 | 7 | **Images** | Content images only (team photos, contributor logos, takeaways/feature images, OG image). Decorative assets (`decor1–4`, globe, icons, logos) stay in `/public`. |
-| 8 | **Localization** | English only now, but schemas structured to add languages later (field-level i18n) without a rewrite. |
+| 8 | **Localization** | English only. No i18n — schemas are plain single-language fields. |
 | 9 | **Sanity project** | New project created inside the **client's existing Sanity org** (you are already invited). Two datasets: `production` and `development`. |
 | 10 | **Migration** | A dev-run **seed script** pushes all current hardcoded copy into Sanity as the initial documents. |
 | 11 | **Resilience** | Every section keeps its current hardcoded copy as a **fallback**; Sanity overrides when present. A blank field or Sanity outage never breaks the site. |
@@ -82,10 +82,12 @@ Singletons map 1:1 to pages. Sections listed are the editable units within each.
 - **About** (`app/about/page.tsx`) — **PILOT**: Hero, Intro, Why GIRAI Matters, GCG-led, What the Index Measures, Contributors, Who GIRAI Is For, People Behind Research (photos = content images), Footer hero.
 - **Methodology** (`app/methodology/page.tsx`): Hero, Intro, Principles, What it Measures, Framework Evolution, Framework Refined, Edition Changes, Key Terms, Evidence Standards, Access Data, Research Process, Footer hero.
 - **Takeaways** (`app/takeaways/page.tsx`): Hero, Intro, Key Insights. *(The takeaways list itself is data-driven — out of scope.)*
+- **Indicators** (`app/indicators/page.tsx`): Hero (title, lead, background image).
+- **Evidence Explorer** (`app/evidence/page.tsx`): Hero (title, subtitle, stat labels), pathway picker heading/subtitle. *(Stat values and evidence rows stay generated.)*
+- **Regions** (`app/regions/page.tsx`): Hero, performance overview heading/subtitle, compare section heading/subheading.
+- **Countries** (`app/countries/page.tsx`): Hero, compare section heading/subheading, top takeaways section header. *(Takeaway accordion items stay hardcoded.)*
 
-> Data-heavy pages (`countries`, `indicators`, `regions`, `evidence`, `dimensions`) have
-> minimal editorial copy (mostly page intros/labels). They are **not** part of this rollout;
-> add them later using the same per-page singleton pattern if the client asks.
+> Detail routes (`/indicators/[slug]`, `/regions/[slug]`, `/countries/[iso3]`, `/evidence/[itemId]`, `/dimensions/[slug]`) and data-heavy sections (scores, rankings, choropleth, indicator lists) remain **out of scope** — generated from the dataset pipeline.
 
 ---
 
@@ -115,61 +117,64 @@ locally/CI by the seed script.
 Goal: prove the entire pipeline end-to-end on one page before touching the rest.
 
 ### 5.1 Sanity project & datasets
-- [ ] In the client's Sanity org, create a **new project** (e.g. "GIRAI Global Index").
-- [ ] Create datasets: `production` (private or public read) and `development`.
-- [ ] Note the **Project ID**.
-- [ ] Confirm the client is an **Administrator** on the project (ownership/handover).
-- [ ] Create API tokens: a **Viewer** token (preview/read drafts) and an **Editor** token (seed script). Store securely.
+- [x] In the client's Sanity org, create a **new project** (project ID `wwnfg3le`).
+- [x] `production` dataset in use. _(Optional `development` dataset not yet created.)_
+- [x] Note the **Project ID** (`wwnfg3le`, in `.env.local`).
+- [ ] Confirm the client is an **Administrator** on the project (ownership/handover). _(manual, in Sanity manage)_
+- [x] Create API tokens: **Viewer** (`SANITY_API_READ_TOKEN`) + **Editor** (`SANITY_API_WRITE_TOKEN`) in `.env.local`.
 
 ### 5.2 Install packages
-- [ ] `pnpm add next-sanity @sanity/image-url @portabletext/react`
-- [ ] `pnpm add sanity @sanity/vision styled-components` (Studio + Vision query tool)
-- [ ] Confirm versions are compatible with Next 16 / React 19.
+- [x] `next-sanity @sanity/image-url @portabletext/react`
+- [x] `sanity @sanity/vision styled-components` (+ `@sanity/preview-url-secret`, `@sanity/webhook`)
+- [x] Confirm versions are compatible with Next 16 / React 19. _(one harmless peer-dep warning)_
 
 ### 5.3 Wire env + config
-- [ ] Add the env vars from §4 to `.env.local` and to `apphosting.yaml` / Secret Manager.
-- [ ] Create `sanity/env.ts` (reads + validates `projectId`, `dataset`, `apiVersion`).
-- [ ] Create `sanity/lib/client.ts` (`createClient`, `useCdn: true` for published reads).
-- [ ] Create `sanity/lib/image.ts` (`@sanity/image-url` builder for content images).
-- [ ] Add `cdn.sanity.io` to `next.config.ts` `images.remotePatterns`.
+- [x] Add the public env vars + `SANITY_REVALIDATE_SECRET` to `.env.local`. _(apphosting.yaml / Secret Manager pending deploy — Phase 1.7)_
+- [x] Create `sanity/env.ts` (reads + validates `projectId`, `dataset`, `apiVersion`).
+- [x] Create `sanity/lib/client.ts` (`createClient`, `useCdn: true` for published reads).
+- [x] Create `sanity/lib/image.ts` (`@sanity/image-url` builder for content images).
+- [x] Add `cdn.sanity.io` to `next.config.ts` `images.remotePatterns`.
 
 ### 5.4 Studio (embedded at /studio)
-- [ ] Create `sanity.config.ts` at repo root (projectId, dataset, plugins: `structureTool`, `visionTool`, `presentationTool`).
-- [ ] Add the Studio route group: `src/app/studio/[[...tool]]/page.tsx` (+ a Studio-scoped layout that opts out of the site chrome).
-- [ ] Verify `https://localhost:3000/studio` loads and you can log in.
-- [ ] Configure **singleton behavior** in the desk structure (no "create new", single editable doc per type).
+- [x] Create `sanity.config.ts` at repo root (projectId, dataset, plugins: `structureTool`, `visionTool`, `presentationTool`).
+- [x] Add the Studio route group: `src/app/studio/[[...tool]]/page.tsx`.
+- [x] `/studio` loads (HTTP 200). _(Log in manually to confirm auth.)_
+- [x] Configure **singleton behavior** in the desk structure (no "create new", single editable doc per type).
 
 ### 5.5 Schemas (pilot scope = shared + About)
-- [ ] Reusable objects: `portableTextBlock` (constrained: paragraph, bold, link, highlight mark), `ctaLink` (`{ label, href }`), `contentImage` (image + alt).
-- [ ] `siteSettings` singleton (SEO defaults + OG image).
-- [ ] `header` singleton, `footer` singleton.
-- [ ] `aboutPage` singleton with one field group per About section (see §3).
-- [ ] i18n-readiness: wrap localizable fields with a documented convention (or `@sanity/document-internationalization` / field-level i18n) so a language dimension can be added later without restructuring.
+- [x] Reusable objects: `ctaLink`, `contentImage`, `titledCard`, `partnerItem`. _(Portable Text block deferred — About copy is plain text.)_
+- [x] `siteSettings` singleton (SEO defaults + OG image).
+- [x] `header` singleton, `footer` singleton.
+- [x] `aboutPage` singleton with one field group per About section (see §3).
 
 ### 5.6 Fetch layer + fallbacks
-- [ ] Create `sanity/lib/queries.ts` with a GROQ query per singleton (request only needed fields).
-- [ ] Create `sanity/lib/fetch.ts`: a `sanityFetch` helper that is Draft-Mode aware (uses Viewer token + `perspective: 'drafts'` when Draft Mode is on; CDN + published otherwise) and tags results for revalidation.
-- [ ] Create `src/content/about.defaults.ts` holding the current hardcoded About copy as the typed fallback.
-- [ ] Pattern: in `app/about/page.tsx`, fetch the `aboutPage` doc, **deep-merge over** the defaults, and pass props to each `About*` section.
-- [ ] Refactor `About*` components to accept copy via props (keep current values as default prop values = belt-and-suspenders fallback).
+- [x] Create `sanity/lib/queries.ts` with the About GROQ query (image URLs resolved).
+- [x] Create `sanity/lib/fetch.ts`: Draft-Mode-aware `sanityFetch` (Viewer token + drafts perspective when on; CDN + published otherwise) with revalidation tags.
+- [x] Create `src/content/about.defaults.ts` holding the current hardcoded About copy as the typed fallback.
+- [x] `src/content/about.ts` fetches the `aboutPage` doc and **merges over** the defaults; `app/about/page.tsx` passes props to each `About*` section.
+- [x] Refactor `About*` components to accept copy via props (defaults = belt-and-suspenders fallback).
 
 ### 5.7 Draft Mode + Presentation preview
-- [ ] Add `src/app/api/draft-mode/enable/route.ts` (validates via `@sanity/preview-url-secret`, enables Draft Mode).
-- [ ] Add `src/app/api/draft-mode/disable/route.ts`.
-- [ ] Configure `presentationTool` in `sanity.config.ts` with `previewUrl` -> the draft-enable route.
-- [ ] Verify: edit About in Studio (unpublished) → see live changes in the Presentation pane.
+- [x] Add `src/app/api/draft-mode/enable/route.ts` (uses `next-sanity/draft-mode`).
+- [x] Add `src/app/api/draft-mode/disable/route.ts`.
+- [x] Configure `presentationTool` in `sanity.config.ts` with `previewUrl` -> the draft-enable route.
+- [ ] Verify: edit About in Studio (unpublished) → see live changes in the Presentation pane. _(manual)_
 
 ### 5.8 On-demand revalidation webhook
-- [ ] Add `src/app/api/revalidate/route.ts`: verify signature with `@sanity/webhook` + `SANITY_REVALIDATE_SECRET`, then `revalidateTag()`/`revalidatePath()` for the affected document.
-- [ ] In Sanity manage → API → **Webhooks**, add a webhook to the deployed `/api/revalidate` URL, filtered to the doc types, with the secret.
-- [ ] Verify: publish an About edit → page updates within seconds without a redeploy.
+- [x] Add `src/app/api/revalidate/route.ts`: verifies signature with `next-sanity/webhook` + `SANITY_REVALIDATE_SECRET`, then `revalidateTag(type, "max")`.
+- [ ] In Sanity manage → API → **Webhooks**, add a webhook to the deployed `/api/revalidate` URL, filtered to the doc types, with the secret. _(needs deployed URL)_
+- [ ] Verify: publish an About edit → page updates within seconds without a redeploy. _(after webhook wired)_
+
+> Bonus delivered ahead of Phase 1: a seed script (`pnpm seed:sanity`,
+> `scripts/seed-sanity.ts`) pushed the About copy into Sanity (published doc
+> `aboutPage`, 6 cards). Re-runnable/idempotent.
 
 ### 5.9 Pilot acceptance checklist
-- [ ] About page renders identically to today when Sanity is empty (fallbacks work).
-- [ ] Editing + publishing an About field updates the live page after revalidation.
-- [ ] Draft preview shows unpublished edits; published site does not.
-- [ ] Build passes; no client bundle contains server tokens.
-- [ ] Client can log into `/studio` and edit About unaided.
+- [x] About page renders with seeded content (HTTP 200) and falls back to code defaults when Sanity is empty/unreachable (try/catch + per-field merge + default props).
+- [ ] Editing + publishing an About field updates the live page after revalidation. _(needs deployed webhook)_
+- [ ] Draft preview shows unpublished edits; published site does not. _(manual)_
+- [x] Typecheck passes (`tsc --noEmit`); tokens are server-only (`server-only` import in fetch layer; only `NEXT_PUBLIC_*` reach the browser).
+- [ ] Client can log into `/studio` and edit About unaided. _(manual)_
 
 > **Gate:** Do not start Phase 1 until every box in §5.9 is checked.
 
@@ -178,37 +183,35 @@ Goal: prove the entire pipeline end-to-end on one page before touching the rest.
 ## 6. Phase 1 — All pages, seed, ship (one pass)
 
 ### 6.1 Schemas for remaining singletons
-- [ ] `homePage` singleton (all Home sections in §3).
-- [ ] `methodologyPage` singleton.
-- [ ] `takeawaysPage` singleton.
-- [ ] Extend `header`/`footer`/`siteSettings` with any fields deferred in Phase 0.
-- [ ] Register all singletons in the desk structure with singleton guards + sensible ordering/icons.
+- [x] `homePage` singleton (all Home sections in §3).
+- [x] `methodologyPage` singleton.
+- [x] `takeawaysPage` singleton.
+- [x] `indicatorsPage`, `evidencePage`, `regionsPage`, `countriesPage` singletons (Explore nav pages).
+- [x] Extend `header`/`footer`/`siteSettings` with any fields deferred in Phase 0.
+- [x] Register all singletons in the desk structure with singleton guards + sensible ordering/icons.
 
 ### 6.2 Fetch + fallback for every page
-- [ ] Add a GROQ query per new singleton in `queries.ts`.
-- [ ] Add `*.defaults.ts` fallback files capturing current copy for Home, Methodology, Takeaways, Header, Footer, Site settings.
-- [ ] Wire each `page.tsx` (+ `layout.tsx` for SEO/Header/Footer) to fetch → merge over defaults → props.
-- [ ] Refactor remaining section components to accept props (layout untouched).
+- [x] Add a GROQ query per new singleton in `queries.ts`.
+- [x] Add `*.defaults.ts` fallback files capturing current copy for Home, Methodology, Takeaways, Header, Footer, Site settings.
+- [x] Wire each `page.tsx` (+ `layout.tsx` for SEO/Header/Footer) to fetch → merge over defaults → props.
+- [x] Refactor remaining section components to accept props (layout untouched).
 
 ### 6.3 Content images
-- [ ] Move client-swappable images (People Behind Research photos, contributor logos, takeaways/feature images, OG image) into Sanity `contentImage` fields.
-- [ ] Render via `@sanity/image-url` → `next/image`; fall back to the existing `/public` asset when absent.
+- [x] Move client-swappable images (People Behind Research photos, contributor logos, takeaways/feature images, OG image) into Sanity `contentImage` fields. _(About/Methodology/Takeaways hero + section images + OG seeded; partner logos still null — no assets in `/public`.)_
+- [x] Render via `@sanity/image-url` → `next/image`; fall back to the existing `/public` asset when absent.
 
 ### 6.4 Seed script
-- [ ] Create `scripts/seed-sanity.ts` using `@sanity/client` + the **Editor** write token.
-- [ ] Build initial documents from the `*.defaults.ts` files (single source of truth → no drift).
-- [ ] Upload referenced content images as Sanity assets.
-- [ ] Use deterministic singleton `_id`s and `createOrReplace` so the script is idempotent.
-- [ ] Run against `development` first, verify, then run against `production`.
-- [ ] Document the command (e.g. `pnpm seed:sanity`) in `package.json` and README.
+- [x] Create `scripts/seed-sanity.ts` using `next-sanity` + the **Editor** write token.
+- [x] Build initial documents from the `*.defaults.ts` files (single source of truth → no drift).
+- [x] Upload referenced content images as Sanity assets. _(via `pnpm seed:sanity` — 13 images from `/public`, including Indicators hero.)_
+- [x] Use deterministic singleton `_id`s and `createOrReplace` so the script is idempotent.
+- [x] Run against `production`. _(Ran successfully against project `wwnfg3le`.)_
+- [x] Document the command (`pnpm seed:sanity`) in `package.json`.
 
 ### 6.5 SEO / metadata via Sanity
-- [ ] Replace static `export const metadata` per page with `generateMetadata()` that reads the page singleton (title, description, OG), falling back to current values.
+- [x] Replace static `export const metadata` in root layout with `generateMetadata()` that reads `siteSettings`, falling back to current values.
 
-### 6.6 Localization-ready check
-- [ ] Confirm the i18n convention/plugin from §5.5 is applied consistently across all new singletons so adding a language later is config-only.
-
-### 6.7 Ship checklist
+### 6.6 Ship checklist
 - [ ] All pages render identically to today with seeded content.
 - [ ] Each page's fields editable + publish → live revalidation works.
 - [ ] Webhook covers all doc types.
@@ -239,7 +242,8 @@ sanity/
     index.ts
     objects/{portableTextBlock.ts, ctaLink.ts, contentImage.ts}
     singletons/{siteSettings.ts, header.ts, footer.ts,
-                homePage.ts, aboutPage.ts, methodologyPage.ts, takeawaysPage.ts}
+                homePage.ts, aboutPage.ts, methodologyPage.ts, takeawaysPage.ts,
+                indicatorsPage.ts, evidencePage.ts, regionsPage.ts, countriesPage.ts}
   structure.ts                        # singleton desk structure
 src/
   app/
@@ -248,7 +252,8 @@ src/
     api/draft-mode/{enable,disable}/route.ts
   content/                            # hardcoded fallbacks (also feed the seed script)
     {site.defaults.ts, header.defaults.ts, footer.defaults.ts,
-     home.defaults.ts, about.defaults.ts, methodology.defaults.ts, takeaways.defaults.ts}
+     home.defaults.ts, about.defaults.ts, methodology.defaults.ts, takeaways.defaults.ts,
+     indicators.defaults.ts, evidence.defaults.ts, regions.defaults.ts, countries.defaults.ts}
 scripts/seed-sanity.ts
 ```
 

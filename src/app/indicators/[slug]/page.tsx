@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ExternalLink } from "lucide-react";
-import { Header } from "@/components/header";
+import { SiteHeader } from "@/components/site-header";
 import { ScoreLeaderboard } from "@/components/score-leaderboard";
 import {
   IndicatorDetailHero,
@@ -76,7 +76,7 @@ export default async function IndicatorPage({ params }: PageProps) {
 
   return (
     <div className="flex min-h-screen flex-col bg-background font-sans dark:bg-black">
-      <Header />
+      <SiteHeader />
 
       <main className="flex-1">
         <IndicatorDetailHero name={ind.name} lead={pageCopy.heroLead} />

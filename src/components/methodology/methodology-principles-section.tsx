@@ -1,35 +1,6 @@
 import Image from "next/image";
 import { Sparkles } from "lucide-react";
-
-const HERO_IMAGE = "/methodology/methodology-principle.png";
-
-const PRINCIPLES = [
-  {
-    title: "Responsibility over capability",
-    description:
-      "GIRAI does not rank countries by AI sophistication. It evaluates the quality of governance, safeguards, and oversight shaping AI use.",
-  },
-  {
-    title: "Evidence-based by design",
-    description:
-      "All assessments rely on public, verifiable evidence, documented and reviewed through standardized processes.",
-  },
-  {
-    title: "Human-centred and rights-based",
-    description:
-      "Indicators are aligned with international human rights norms, ensuring AI is assessed through its impact on people and society.",
-  },
-  {
-    title: "Globally comparable, locally grounded",
-    description:
-      "The same indicators apply worldwide, while research guidance allows for context-sensitive interpretation.",
-  },
-  {
-    title: "Transparent and reviewable",
-    description:
-      "Methodological choices, indicators, and evidence rules are clearly defined so results can be understood, scrutinized, and improved.",
-  },
-] as const;
+import { methodologyDefaults, type MethodologyContent } from "@/content/methodology.defaults";
 
 const NUMBER_DECORATOR = "/methodology/number-decorator.svg";
 
@@ -75,7 +46,13 @@ function PrincipleCard({
  * Layout mirrors CountryPerformanceOverview / CountryMisuseEvidenceSection:
  * the left column pins while the taller right column scrolls past it.
  */
-export function MethodologyPrinciplesSection() {
+export function MethodologyPrinciplesSection({
+  content = methodologyDefaults,
+}: {
+  content?: MethodologyContent;
+}) {
+  const principlesImage =
+    content.principlesImage.url ?? methodologyDefaults.principlesImage.url!;
   return (
     <section className="relative w-full bg-card px-4 py-16 md:px-6 md:py-24 lg:py-28">
       <span
@@ -89,8 +66,11 @@ export function MethodologyPrinciplesSection() {
           <div className="self-start lg:sticky lg:top-24">
             <div className="relative mx-auto aspect-4/5 w-full max-w-[520px] min-h-[360px] md:min-h-[565px] lg:mx-0 lg:max-w-none lg:aspect-auto lg:h-[565px]">
               <Image
-                src={HERO_IMAGE}
-                alt="Wooden blocks stacked in balance, representing methodological rigor"
+                src={principlesImage}
+                alt={
+                  content.principlesImage.alt ??
+                  "Wooden blocks stacked in balance, representing methodological rigor"
+                }
                 fill
                 className="object-contain object-left"
                 sizes="(max-width: 1024px) 90vw, 50vw"
@@ -104,23 +84,21 @@ export function MethodologyPrinciplesSection() {
             <header className="max-w-xl pb-8 md:pb-10">
               <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-primary/10 px-3.5 py-1.5 text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-primary">
                 <Sparkles className="size-3.5" aria-hidden />
-                Methodological Principles
+                {content.principlesBadge}
               </span>
 
               <h2 className="text-3xl md:text-4xl lg:text-5xl mt-5 font-medium leading-[1.18] tracking-tight md:leading-[1.15]">
-                <span className="text-primary">Built for Trust</span>
-                <span className="text-foreground">
-                  , Rigor, and Fair Comparison
-                </span>
+                <span className="text-primary">{content.principlesHeadingLead}</span>
+                <span className="text-foreground">{content.principlesHeadingTail}</span>
               </h2>
 
               <p className="mt-4 text-sm leading-relaxed text-muted-foreground md:text-base md:leading-[1.65]">
-                GIRAI&apos;s methodology is grounded in five core principles:
+                {content.principlesIntro}
               </p>
             </header>
 
             <div className="flex flex-col gap-6 md:gap-8">
-              {PRINCIPLES.map((principle, index) => (
+              {content.principles.map((principle, index) => (
                 <PrincipleCard
                   key={principle.title}
                   index={index + 1}

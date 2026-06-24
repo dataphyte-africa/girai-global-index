@@ -4,9 +4,14 @@ import React from "react";
 import Image from "next/image";
 import { motion, useInView } from "motion/react";
 import { Download, Sparkles } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { DataDownloadTrigger } from "@/components/data-download/data-download-trigger";
+import { homeDefaults, type HomeContent } from "@/content/home.defaults";
 
-export function ReportDownloadSection() {
+export function ReportDownloadSection({
+  content = homeDefaults,
+}: {
+  content?: HomeContent;
+}) {
   const sectionRef = React.useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
 
@@ -64,45 +69,41 @@ export function ReportDownloadSection() {
           >
             <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary ring-1 ring-inset ring-primary/20">
               <Sparkles className="h-3.5 w-3.5" aria-hidden />
-              REPORT 2024
+              {content.reportBadge}
             </span>
 
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight leading-[1.1]">
-              <span className="text-foreground">
-                Global Index on Responsible AI —{" "}
-              </span>
-              <span className="text-primary">2026 Report</span>
+              <span className="text-foreground">{content.reportHeadingLead}</span>
+              <span className="text-primary">{content.reportHeadingAccent}</span>
             </h2>
 
             <p className="max-w-xl text-sm md:text-base leading-relaxed text-muted-foreground">
-              Download the 2024 edition of the Global Index on Responsible AI,
-              offering comparative insights into how countries govern and use
-              artificial intelligence.
+              {content.reportBody}
             </p>
 
             <div className="flex flex-col gap-3 pt-2 sm:flex-row sm:items-center">
-              <Button
-                asChild
+              <DataDownloadTrigger
+                assetType="report"
+                edition="first"
+                source="report-download-section-primary"
                 size="lg"
                 className="bg-primary px-6 text-primary-foreground shadow-lg shadow-primary/25 hover:bg-primary/90"
               >
-                <a href="#download-report">
-                  <Download className="h-4 w-4" aria-hidden />
-                  Download Report
-                </a>
-              </Button>
+                <Download className="h-4 w-4" aria-hidden />
+                {content.reportPrimaryCtaLabel}
+              </DataDownloadTrigger>
 
-              <Button
-                asChild
+              <DataDownloadTrigger
+                assetType="report"
+                edition="second"
+                source="report-download-section-secondary"
                 variant="outline"
                 size="lg"
                 className="border-primary/40 bg-background/60 px-6 text-primary hover:bg-primary/5 hover:text-primary dark:bg-background/30 dark:hover:bg-primary/10"
               >
-                <a href="#download-2025">
-                  <Download className="h-4 w-4" aria-hidden />
-                  Download 2025 report
-                </a>
-              </Button>
+                <Download className="h-4 w-4" aria-hidden />
+                {content.reportSecondaryCtaLabel}
+              </DataDownloadTrigger>
             </div>
           </motion.div>
         </div>

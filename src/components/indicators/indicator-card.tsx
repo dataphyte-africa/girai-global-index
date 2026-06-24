@@ -60,7 +60,7 @@ export function IndicatorCard({ index, slug, name }: IndicatorCardProps) {
           asChild
           variant="outline"
           size="sm"
-          className="font-semibold hover:bg-[#7150F4]/5"
+          className="font-semibold hover:bg-[#7150F4]/5 w-full h-12"
           style={{ borderColor: PURPLE, color: PURPLE }}
         >
           <Link href={`/indicators/${slug}`}>

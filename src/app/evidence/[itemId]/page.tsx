@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowLeft, ExternalLink, FileText, ShieldAlert } from "lucide-react";
-import { Header } from "@/components/header";
+import { SiteHeader } from "@/components/site-header";
 import { Button } from "@/components/ui/button";
 import { EvidenceDebugJson } from "@/components/evidence-debug-json";
 import {
@@ -67,7 +67,7 @@ export default async function EvidenceItemPage({ params }: PageProps) {
 
   return (
     <div className="flex min-h-screen flex-col bg-background font-sans dark:bg-black">
-      <Header />
+      <SiteHeader />
 
       <section
         className="relative overflow-hidden border-b border-border"
@@ -402,7 +402,7 @@ function shortenUrl(url: string): string {
 function NotFoundView({ itemId }: { itemId: string }) {
   return (
     <div className="flex min-h-screen flex-col bg-background font-sans dark:bg-black">
-      <Header />
+      <SiteHeader />
       <main className="container mx-auto max-w-2xl flex-1 px-4 py-20">
         <Link href="/">
           <Button variant="ghost" size="sm" className="mb-6 gap-2">

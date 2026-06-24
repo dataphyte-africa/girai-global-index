@@ -1,28 +1,21 @@
 import Image from "next/image";
+import { takeawaysDefaults, type TakeawaysContent } from "@/content/takeaways.defaults";
 
 const HERO_TITLE_ACCENT = "#9FE8C7";
-const HERO_IMAGE = "/takeaways/hero-takeaways.png";
-
-const HERO_LEAD =
-  "The most important insights shaping how countries govern artificial intelligence responsibly across regions and contexts.";
-
-const HERO_STATS = [
-  { label: "Edition", value: "2026" },
-  { label: "Countries Assessed", value: "135" },
-] as const;
 
 /**
  * Wide banner hero for the Top Takeaways page. Matches methodology hero sizing;
  * copy, stats, and background image are Takeaways-specific.
  */
-export function TakeawaysHero() {
+export function TakeawaysHero({ content = takeawaysDefaults }: { content?: TakeawaysContent }) {
+  const heroImage = content.heroImage.url ?? takeawaysDefaults.heroImage.url!;
   return (
     <section className="w-full px-4 pt-6 md:px-6 md:min-h-[565px]">
       <div className="w-full min-h-[565px]">
         <div className="relative overflow-hidden rounded-[28px] md:rounded-[32px]">
           <Image
-            src={HERO_IMAGE}
-            alt=""
+            src={heroImage}
+            alt={content.heroImage.alt ?? ""}
             fill
             priority
             sizes="(max-width: 1280px) 100vw, 1280px"
@@ -39,17 +32,17 @@ export function TakeawaysHero() {
           <div className="relative flex min-h-[360px] flex-col justify-center px-8 py-12 md:min-h-[565px] md:max-w-[58%] md:px-14 md:py-16 lg:min-h-[565px]">
             <div>
               <h1 className="text-[2rem] font-medium leading-[1.12] tracking-tight md:text-6xl lg:text-[3.25rem]">
-                <span className="text-white">Top 10 </span>
-                <span style={{ color: HERO_TITLE_ACCENT }}>Takeaways</span>
+                <span className="text-white">{content.heroTitleLead}</span>
+                <span style={{ color: HERO_TITLE_ACCENT }}>{content.heroTitleAccent}</span>
               </h1>
 
               <p className="mt-5 max-w-xl text-base leading-relaxed text-white md:mt-6 md:text-lg">
-                {HERO_LEAD}
+                {content.heroLead}
               </p>
             </div>
 
             <dl className="mt-10 flex flex-wrap gap-x-12 gap-y-4 md:mt-8">
-              {HERO_STATS.map((stat) => (
+              {content.heroStats.map((stat) => (
                 <div key={stat.label} className="flex flex-col gap-1">
                   <dt className="text-xs font-medium text-white/55 md:text-sm">
                     {stat.label}

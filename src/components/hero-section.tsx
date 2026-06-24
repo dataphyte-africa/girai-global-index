@@ -2,9 +2,18 @@ import React from 'react'
 import Image from 'next/image'
 import { GlobeDemo } from './hero-globe'
 import { ArcPosition, Country } from '@/data/countries'
+import { homeDefaults, type HomeContent } from '@/content/home.defaults'
 
 
-export const HeroSection = ( { arcData, markers }: { arcData: ArcPosition[], markers: Country[] } ) => {
+export const HeroSection = ( {
+  arcData,
+  markers,
+  content = homeDefaults,
+}: {
+  arcData: ArcPosition[]
+  markers: Country[]
+  content?: HomeContent
+} ) => {
   return (
     <div className='md:p-6'>
    <div className=" relative grid grid-cols-1 md:grid-cols-2 min-h-screen md:min-h-[80vh] w-full overflow-hidden">
@@ -49,10 +58,10 @@ export const HeroSection = ( { arcData, markers }: { arcData: ArcPosition[], mar
       <div className="flex flex-col gap-2">
 
       <h1 className="text-4xl md:text-6xl font-medium text-center md:text-left leading-[1.15]">
-      Igniting global action on <span className="text-primary">responsible AI</span>, with local evidence.
+      {content.heroHeadlineLead}<span className="text-primary">{content.heroHeadlineAccent}</span>{content.heroHeadlineTail}
       </h1>
       <p className="text-base md:text-xl mt-4 text-muted-foreground text-center md:text-left">
-      Unlike indexes that assess AI through adoption and application, GIRAI examines responsible AI through a human rights lens — measuring not just whether countries are building AI, but whether they are building it in ways that protect people&apos;s rights, dignity, and freedoms.
+      {content.heroSubtext}
         </p>
       </div>
       {/* <div className="flex flex-row gap-2 justify-center md:justify-start">

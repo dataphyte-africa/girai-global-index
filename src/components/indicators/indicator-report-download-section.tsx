@@ -1,6 +1,8 @@
+"use client";
+
 import Image from "next/image";
-import Link from "next/link";
 import { Download, Sparkles } from "lucide-react";
+import { DataDownloadOpenButton } from "@/components/data-download/data-download-trigger";
 
 const PURPLE = "#7150F4";
 const HEADING_DARK = "#1A1A2E";
@@ -41,14 +43,16 @@ export function IndicatorReportDownloadSection() {
           </p>
 
           <div className="pt-1">
-            <Link
-              href="#download-report"
+            <DataDownloadOpenButton
+              assetType="report"
+              edition="first"
+              source="indicator-report-download-section"
               className="inline-flex items-center gap-2.5 rounded-xl px-6 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90"
               style={{ backgroundColor: PURPLE }}
             >
               <Download className="size-4" aria-hidden />
               Download Report
-            </Link>
+            </DataDownloadOpenButton>
           </div>
         </div>
 

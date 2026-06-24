@@ -1,28 +1,6 @@
 import { SlidersHorizontal } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-const REFINEMENTS = [
-  {
-    title: "Clearer Dimension Structure",
-    description:
-      "Dimensions were refined to better distinguish between governance commitments, implementation activity, and enabling conditions — improving conceptual clarity and analytical balance.",
-  },
-  {
-    title: "Stronger Indicator Definitions",
-    description:
-      "Indicator wording and evidence requirements were tightened to reduce ambiguity and improve consistency across countries, enhancing cross-country comparability.",
-  },
-  {
-    title: "Greater Emphasis on Implementation",
-    description:
-      "The updated framework places stronger focus on operational oversight, enforcement, and real-world action — not just the existence of policies on paper.",
-  },
-  {
-    title: "Enhanced Review and Validation",
-    description:
-      "Quality assurance processes were strengthened, including clearer coding guidance and more structured cross-country validation procedures.",
-  },
-] as const;
+import { methodologyDefaults, type MethodologyContent } from "@/content/methodology.defaults";
 
 function RefinedCard({
   index,
@@ -71,24 +49,29 @@ function RefinedCard({
 /**
  * How the Framework Was Refined — 2×2 bordered grid with purple hover cards.
  */
-export function MethodologyFrameworkRefinedSection() {
+export function MethodologyFrameworkRefinedSection({
+  content = methodologyDefaults,
+}: {
+  content?: MethodologyContent;
+}) {
+  const refinements = content.refinements;
   return (
     <section className="w-full bg-muted/50 px-4 py-16 md:px-6 md:py-24 lg:py-28">
       <div className="mx-auto max-w-5xl">
         <header className="mx-auto mb-12 max-w-2xl text-center md:mb-14 lg:mb-16">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight lg:leading-[1.12]">
-            <span className="text-foreground">How the Framework </span>
-            <span className="text-primary">Was Refined</span>
+            <span className="text-foreground">{content.refinedHeadingLead}</span>
+            <span className="text-primary">{content.refinedHeadingAccent}</span>
           </h2>
 
           <p className="mt-4 text-sm leading-relaxed text-muted-foreground md:text-base md:leading-[1.65]">
-            Strengthening Clarity, Comparability, and Implementation Focus
+            {content.refinedSubtitle}
           </p>
         </header>
 
         <div className="overflow-hidden rounded-sm border border-border bg-card">
           <div className="grid grid-cols-1 md:grid-cols-2">
-            {REFINEMENTS.map((item, index) => (
+            {refinements.map((item, index) => (
               <RefinedCard
                 key={item.title}
                 index={index + 1}

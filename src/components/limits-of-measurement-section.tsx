@@ -3,40 +3,38 @@
 import React from "react";
 import { motion, useInView } from "motion/react";
 import { Scale, AlertCircle, Lightbulb, type LucideIcon } from "lucide-react";
+import { homeDefaults, type HomeContent } from "@/content/home.defaults";
+import type { Card } from "@/content/about.defaults";
 
-type LimitCard = {
-  title: string;
-  description: string;
+type LimitCard = Card & {
   Icon: LucideIcon;
   iconClass: string;
 };
 
-const cards: LimitCard[] = [
+const CARD_META = [
   {
-    title: "What The Index Can Do",
-    description:
-      "The index enables systematic comparison across organizations, tracks progress over time, and identifies governance gaps. It provides a framework for understanding maturity of responsible AI practices and creates accountability through transparency.",
     Icon: Scale,
     iconClass:
       "bg-primary/10 text-primary ring-1 ring-inset ring-primary/20 dark:bg-primary/15",
   },
   {
-    title: "What The Index Cannot Do",
-    description:
-      "Responsible AI is contextual, political, and contested. Scores cannot capture the lived realities of those affected by AI systems, the nuances of implementation, or the complex social and ethical trade-offs that arise in practice.",
     Icon: AlertCircle,
     iconClass:
       "bg-orange-100 text-orange-600 ring-1 ring-inset ring-orange-200 dark:bg-orange-500/15 dark:text-orange-400 dark:ring-orange-500/30",
   },
   {
-    title: "How GIRAI Responds",
-    description:
-      "GIRAI complements quantitative scores with qualitative insights, transparent methodology, and contextual interpretation. We recognise that measurement is a tool — useful for comparison, but never a substitute for critical judgment.",
     Icon: Lightbulb,
     iconClass:
       "bg-sky-100 text-sky-600 ring-1 ring-inset ring-sky-200 dark:bg-sky-500/15 dark:text-sky-400 dark:ring-sky-500/30",
   },
-];
+] as const;
+
+function toLimitCards(cards: Card[]): LimitCard[] {
+  return cards.map((card, index) => ({
+    ...card,
+    ...CARD_META[index % CARD_META.length],
+  }));
+}
 
 function LimitCardItem({ item, index }: { item: LimitCard; index: number }) {
   const ref = React.useRef<HTMLDivElement>(null);
@@ -66,9 +64,14 @@ function LimitCardItem({ item, index }: { item: LimitCard; index: number }) {
   );
 }
 
-export function LimitsOfMeasurementSection() {
+export function LimitsOfMeasurementSection({
+  content = homeDefaults,
+}: {
+  content?: HomeContent;
+}) {
   const sectionRef = React.useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+  const cards = toLimitCards(content.limitsCards);
 
   return (
     <section
@@ -96,11 +99,11 @@ export function LimitsOfMeasurementSection() {
           className="mx-auto mb-12 flex max-w-3xl flex-col items-center gap-4 text-center md:mb-16"
         >
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight leading-[1.1]">
-            <span className="text-foreground">Understanding the </span>
-            <span className="text-primary">Limits of Measurement</span>
+            <span className="text-foreground">{content.limitsHeadingLead}</span>
+            <span className="text-primary">{content.limitsHeadingAccent}</span>
           </h2>
           <p className="max-w-xl text-sm md:text-base text-muted-foreground leading-relaxed">
-            What this Index can — and cannot — capture.
+            {content.limitsSubtitle}
           </p>
         </motion.div>
 

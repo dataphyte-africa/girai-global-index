@@ -1,6 +1,6 @@
 import { Suspense } from "react";
-import { Header } from "@/components/header";
-import { FooterSection } from "@/components/footer-section";
+import { SiteHeader } from "@/components/site-header";
+import { SiteFooter } from "@/components/site-footer";
 import { EvidenceExplorer } from "@/components/evidence-explorer";
 import {
   EvidenceHero,
@@ -9,6 +9,8 @@ import {
   PathwayIndicatorTable,
   PathwayPicker,
 } from "@/components/evidence-hub";
+import { getEvidencePageContent } from "@/content/evidencePage";
+import type { EvidenceContent } from "@/content/evidence.defaults";
 import { getEvidenceArtifact, getTaxonomy } from "@/lib/girai";
 
 export const metadata = {
@@ -17,7 +19,7 @@ export const metadata = {
     "Search and filter every law, policy, strategy and institutional action behind the GIRAI scores.",
 };
 
-function EvidenceHubContent() {
+function EvidenceHubContent({ content }: { content: EvidenceContent }) {
   const { totals } = getEvidenceArtifact();
   const { indicators } = getTaxonomy();
   const countriesIndexed = totals.countriesIndexed ?? totals.countriesWithItems;
@@ -37,8 +39,9 @@ function EvidenceHubContent() {
         frameworkCount={frameworkCount}
         evidenceItemCount={evidenceItemCount}
         indicatorCount={evidenceIndicatorCount}
+        content={content}
       />
-      <PathwayPicker totals={totals} />
+      <PathwayPicker totals={totals} content={content} />
       <PathwayIndicatorTable />
       <EvidenceExplorer
         subheading={`${evidenceItemCount.toLocaleString()} unique evidence items from laws, strategies, policies, and institutional actions in the ${countriesIndexed}-country GIRAI index.`}
@@ -47,16 +50,18 @@ function EvidenceHubContent() {
   );
 }
 
-export default function EvidencePage() {
+export default async function EvidencePage() {
+  const content = await getEvidencePageContent();
+
   return (
     <div className="flex min-h-screen flex-col bg-background font-sans dark:bg-black">
-      <Header />
+      <SiteHeader />
       <main className="flex-1">
         <Suspense fallback={null}>
-          <EvidenceHubContent />
+          <EvidenceHubContent content={content} />
         </Suspense>
       </main>
-      <FooterSection />
+      <SiteFooter />
     </div>
   );
 }

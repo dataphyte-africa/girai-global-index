@@ -21,6 +21,7 @@ import {
   EVIDENCE_HUB_SECTIONS,
   scrollToEvidenceHubSection,
 } from "./scroll";
+import { evidenceDefaults, type EvidenceContent } from "@/content/evidence.defaults";
 
 const PATHWAY_ICONS: Record<PathwayConfig["id"], LucideIcon> = {
   frameworks: FileText,
@@ -31,9 +32,10 @@ const PATHWAY_ICONS: Record<PathwayConfig["id"], LucideIcon> = {
 
 export interface PathwayPickerProps {
   totals: EvidenceArtifact["totals"];
+  content?: EvidenceContent;
 }
 
-export function PathwayPicker({ totals }: PathwayPickerProps) {
+export function PathwayPicker({ totals, content = evidenceDefaults }: PathwayPickerProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -55,11 +57,10 @@ export function PathwayPicker({ totals }: PathwayPickerProps) {
     >
       <div className="mx-auto max-w-6xl px-4 md:px-6">
         <h2 className="text-3xl md:text-4xl lg:text-5xl text-center font-medium tracking-tight text-foreground">
-          What would you like to explore?
+          {content.pathwayHeading}
         </h2>
         <p className="mx-auto mt-2 max-w-xl text-center text-sm text-muted-foreground md:text-base">
-          Choose an evidence pathway to begin exploring the data behind GIRAI
-          scores.
+          {content.pathwaySubtitle}
         </p>
 
         <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">

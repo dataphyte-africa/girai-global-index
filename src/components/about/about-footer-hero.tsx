@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { BarChart3 } from "lucide-react";
+import { aboutDefaults, type AboutContent } from "@/content/about.defaults";
 
 const PURPLE = "#7150F4";
 
@@ -8,14 +9,15 @@ const PURPLE = "#7150F4";
  * Closing CTA banner for the About page — dark gradient over footer-hero
  * photography with copy and an Explore Index button on the left.
  */
-export function AboutFooterHero() {
+export function AboutFooterHero({ content = aboutDefaults }: { content?: AboutContent }) {
+  const image = content.footerImage.url ?? aboutDefaults.footerImage.url!;
   return (
     <section className="w-full px-4 py-12 md:px-6 md:py-16 lg:py-20">
       <div className="relative mx-auto min-h-[340px] max-w-7xl overflow-hidden rounded-[28px] md:min-h-[420px] md:rounded-[32px] lg:min-h-[480px]">
         <Image
-          src="/about/footer-hero.png"
-          alt=""
-          aria-hidden
+          src={image}
+          alt={content.footerImage.alt ?? ""}
+          aria-hidden={!content.footerImage.alt}
           fill
           className="object-cover object-right"
           sizes="(max-width: 1280px) 100vw, 1280px"
@@ -31,22 +33,21 @@ export function AboutFooterHero() {
 
         <div className="relative z-10 flex min-h-[340px] flex-col justify-center px-8 py-14 sm:px-12 md:min-h-[420px] md:px-14 md:py-16 lg:min-h-[480px] lg:max-w-[52%] lg:px-16">
           <h2 className="text-3xl md:text-4xl lg:text-5xl max-w-md font-medium leading-[1.12] tracking-tight text-white md:leading-[1.1]">
-            Discover How AI Is Governed
+            {content.footerHeading}
           </h2>
 
           <p className="mt-5 max-w-md text-base leading-relaxed text-white/80 md:mt-6 md:text-lg">
-            Explore country scores, regional insights, and the evidence behind
-            responsible AI governance.
+            {content.footerBody}
           </p>
 
           <div className="mt-8">
             <Link
-              href="/"
+              href={content.footerCta.href}
               className="inline-flex items-center gap-2.5 rounded-full px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-black/25 transition-opacity hover:opacity-90"
               style={{ backgroundColor: PURPLE }}
             >
               <BarChart3 className="size-4" aria-hidden />
-              Explore Index
+              {content.footerCta.label}
             </Link>
           </div>
         </div>

@@ -148,11 +148,17 @@ function TakeawayAccordionItem({
 interface TopTakeawaysSectionProps {
   showHeader?: boolean;
   showCta?: boolean;
+  headingAccent?: string;
+  headingTail?: string;
+  headerSubtitle?: string;
 }
 
 export function TopTakeawaysSection({
   showHeader = true,
   showCta = true,
+  headingAccent = "Top 10",
+  headingTail = "take away",
+  headerSubtitle = "Strengthening Clarity, Comparability, and Implementation Focus",
 }: TopTakeawaysSectionProps = {}) {
   const sectionRef = React.useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
@@ -200,11 +206,11 @@ export function TopTakeawaysSection({
             className="mx-auto mb-10 flex max-w-2xl flex-col items-center gap-3 text-center md:mb-14"
           >
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight">
-              <span className="text-primary">Top 10</span>{" "}
-              <span className="text-foreground">take away</span>
+              <span className="text-primary">{headingAccent}</span>{" "}
+              <span className="text-foreground">{headingTail}</span>
             </h2>
             <p className="text-sm md:text-base text-muted-foreground leading-relaxed max-w-xl">
-              Strengthening Clarity, Comparability, and Implementation Focus
+              {headerSubtitle}
             </p>
           </motion.div>
         ) : null}

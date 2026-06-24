@@ -1,6 +1,7 @@
-import { Header } from "@/components/header";
-import { FooterSection } from "@/components/footer-section";
+import { SiteHeader } from "@/components/site-header";
+import { SiteFooter } from "@/components/site-footer";
 import { IndicatorsHero, IndicatorsListSection } from "@/components/indicators";
+import { getIndicatorsContent } from "@/content/indicators";
 
 export const metadata = {
   title: "Indicators | GIRAI Global Index",
@@ -8,17 +9,19 @@ export const metadata = {
     "The full set of structured indicators used to evaluate how countries govern, regulate, and implement responsible artificial intelligence.",
 };
 
-export default function IndicatorsPage() {
+export default async function IndicatorsPage() {
+  const content = await getIndicatorsContent();
+
   return (
     <div className="flex min-h-screen flex-col bg-background font-sans dark:bg-black">
-      <Header />
+      <SiteHeader />
 
       <main className="flex-1">
-        <IndicatorsHero />
+        <IndicatorsHero content={content} />
         <IndicatorsListSection />
       </main>
 
-      <FooterSection />
+      <SiteFooter />
     </div>
   );
 }

@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
-import { Header } from "@/components/header";
-import { FooterSection } from "@/components/footer-section";
+import { SiteHeader } from "@/components/site-header";
+import { SiteFooter } from "@/components/site-footer";
 import { ComparisonSection } from "@/components/comparison-section";
 import { ReportDownloadSection } from "@/components/report-download-section";
 import {
   RegionsHero,
   RegionsPerformanceOverview,
 } from "@/components/regions";
+import { getRegionsContent } from "@/content/regions";
 import {
   getAllCountries,
   getGlobalAverages,
@@ -14,11 +15,6 @@ import {
   getRegionSummaries,
   getRegions,
 } from "@/lib/girai";
-import {
-  generateArcData,
-  selectMixedCountries,
-  type Country,
-} from "@/data/countries";
 
 export const metadata: Metadata = {
   title: "Regions | GIRAI Global Index",
@@ -28,7 +24,8 @@ export const metadata: Metadata = {
 
 const DEFAULT_COMPARE_REGION_COUNT = 3;
 
-export default function RegionsPage() {
+export default async function RegionsPage() {
+  const content = await getRegionsContent();
   const allCountries = getAllCountries();
   const regions = getRegions();
   const regionAverages = getRegionAverages();
@@ -38,22 +35,12 @@ export default function RegionsPage() {
     .slice(0, DEFAULT_COMPARE_REGION_COUNT)
     .map((summary) => ({ kind: "region" as const, name: summary.region }));
 
-  const globeCandidates = allCountries.map((c) => ({
-    iso3: c.iso3,
-    name: c.name,
-    region: c.region,
-    rankGlobal: c.rankGlobal,
-    girai: c.girai,
-  }));
-  const markers: Country[] = selectMixedCountries(globeCandidates, 20);
-  const arcData = generateArcData(markers, 15);
-
   return (
     <div className="flex min-h-screen flex-col bg-background font-sans dark:bg-black">
-      <Header />
+      <SiteHeader />
       <main className="flex-1">
-        <RegionsHero arcData={arcData} markers={markers} />
-        <RegionsPerformanceOverview summaries={regionSummaries} />
+        <RegionsHero content={content} />
+        <RegionsPerformanceOverview summaries={regionSummaries} content={content} />
         <ComparisonSection
           countries={allCountries}
           regions={regions}
@@ -62,15 +49,15 @@ export default function RegionsPage() {
           initialSlots={initialSlots}
           heading={
             <>
-              Compare responsible AI{" "}
-              <span className="text-primary">across regions</span>
+              {content.compareHeadingLead}
+              <span className="text-primary">{content.compareHeadingAccent}</span>
             </>
           }
-          subheading="Explore how regions perform relative to each other across GIRAI's governance dimensions, scores, and structural indicators."
+          subheading={content.compareSubheading}
         />
         <ReportDownloadSection />
       </main>
-      <FooterSection />
+      <SiteFooter />
     </div>
   );
 }

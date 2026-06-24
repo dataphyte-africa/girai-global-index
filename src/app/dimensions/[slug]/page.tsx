@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
-import { Header } from "@/components/header";
-import { FooterSection } from "@/components/footer-section";
+import { SiteHeader } from "@/components/site-header";
+import { SiteFooter } from "@/components/site-footer";
 import {
   DimensionHero,
   DimensionKeyIndicators,
@@ -76,7 +76,7 @@ export default async function DimensionPage({ params }: PageProps) {
 
   return (
     <div className="flex min-h-screen flex-col bg-background font-sans dark:bg-black">
-      <Header />
+      <SiteHeader />
 
       <main className="flex-1">
         <DimensionHero
@@ -116,7 +116,7 @@ export default async function DimensionPage({ params }: PageProps) {
         />
       </main>
 
-      <FooterSection />
+      <SiteFooter />
     </div>
   );
 }

@@ -8,7 +8,6 @@ import {
   getIndicatorDefs,
   getRegionAverages,
   getRegions,
-  getTopAndBottomCountries,
 } from "@/lib/girai";
 import {
   selectMixedCountries,
@@ -16,11 +15,9 @@ import {
   type ArcPosition,
   type Country,
 } from "@/data/countries";
-import { Header } from "@/components/header";
+import { SiteHeader } from "@/components/site-header";
 import { IndicatorCategorySection } from "@/components/indicator-category-section";
-import { GlobalPerformanceSection } from "@/components/global-performance-section";
 import { ComparisonSection } from "@/components/comparison-section";
-import { WhyGIRAIMattersSection } from "@/components/why-girai-matters-section";
 import { WhyGIRAIMattersIntroSection } from "@/components/why-girai-matters-intro-section";
 import { ShapingIntelligenceSection } from "@/components/shaping-intelligence-section";
 import { TopTakeawaysCarouselSection } from "@/components/top-takeaways-carousel-section";
@@ -28,8 +25,8 @@ import { ReportDownloadSection } from "@/components/report-download-section";
 import { EvidenceExplorerSection } from "@/components/evidence-explorer-section";
 import { OurImpactSection } from "@/components/our-impact-section";
 import { LimitsOfMeasurementSection } from "@/components/limits-of-measurement-section";
-import { WhatMotivatedUsSection } from "@/components/what-motivated-us-section";
-import { FooterSection } from "@/components/footer-section";
+import { SiteFooter } from "@/components/site-footer";
+import { getHomeContent } from "@/content/home";
 
 // Rounds an exact count down to the nearest 100 and appends a "+" so the
 // stat reads as a confident floor (e.g. 2,977 → "2,900+").
@@ -40,6 +37,7 @@ function formatRoundedCount(n: number): string {
 }
 
 export default async function Home() {
+  const content = await getHomeContent();
   const allCountries = getAllCountries();
 
   // Hero globe: pick a mix of countries with known coordinates and flag art.
@@ -53,7 +51,6 @@ export default async function Home() {
   const markers: Country[] = selectMixedCountries(globeCandidates, 20);
   const arcData: ArcPosition[] = generateArcData(markers, 15);
 
-  const { topCountries, bottomCountries } = getTopAndBottomCountries(10);
   const regions = getRegions();
   const regionAverages = getRegionAverages();
 
@@ -80,13 +77,13 @@ export default async function Home() {
 
   return (
     <div className="flex flex-col min-h-screen  bg-background font-sans dark:bg-black">
-      <Header />
-      <HeroSection arcData={arcData} markers={markers} />
-      <WhyGIRAIMattersIntroSection />
-      <DimensionsSection />
-      <ReportDownloadSection />
-      <TopTakeawaysCarouselSection />
-      <EvidenceExplorerSection stats={evidenceStats} />
+      <SiteHeader />
+      <HeroSection arcData={arcData} markers={markers} content={content} />
+      <WhyGIRAIMattersIntroSection content={content} />
+      <DimensionsSection content={content} />
+      <ReportDownloadSection content={content} />
+      <TopTakeawaysCarouselSection content={content} />
+      <EvidenceExplorerSection stats={evidenceStats} content={content} />
       <ChoroplethMapSection />
       <ComparisonSection
         countries={allCountries}
@@ -94,19 +91,12 @@ export default async function Home() {
         regionAverages={regionAverages}
         globalAverages={getGlobalAverages()}
       />
-      <IndicatorCategorySection />
-      <LimitsOfMeasurementSection />
-      <OurImpactSection />
-     {/* { <WhatMotivatedUsSection /> */}
-     {/* <WhyGIRAIMattersSection /> */}
-      <ShapingIntelligenceSection />
+      <IndicatorCategorySection content={content} />
+      <LimitsOfMeasurementSection content={content} />
+      <OurImpactSection content={content} />
+      <ShapingIntelligenceSection content={content} />
 
-      {/* <GlobalPerformanceSection
-        topCountries={topCountries}
-        bottomCountries={bottomCountries}
-      /> */}
-
-      <FooterSection />
+      <SiteFooter />
     </div>
   );
 }

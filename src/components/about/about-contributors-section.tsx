@@ -1,17 +1,8 @@
 import Image from "next/image";
+import { aboutDefaults, type AboutContent, type Partner } from "@/content/about.defaults";
 
 const HEADING_DARK = "#1A1A2E";
 const SUBTITLE_COLOR = "#6B7280";
-
-/** Replace `logoSrc` when real partner assets are available. */
-const PARTNERS = [
-  { name: "Google", logoSrc: undefined },
-  { name: "Microsoft", logoSrc: undefined },
-  { name: "Facebook", logoSrc: undefined },
-  { name: "IBM", logoSrc: undefined },
-  { name: "Andela", logoSrc: undefined },
-  { name: "Internet Society Foundation", logoSrc: undefined },
-] as const;
 
 function SectionAccent({
   className,
@@ -29,13 +20,7 @@ function SectionAccent({
   );
 }
 
-function PartnerLogo({
-  name,
-  logoSrc,
-}: {
-  name: string;
-  logoSrc?: string;
-}) {
+function PartnerLogo({ name, logoSrc }: { name: string; logoSrc?: string }) {
   if (logoSrc) {
     return (
       <Image
@@ -58,8 +43,8 @@ function PartnerLogo({
   );
 }
 
-function PartnerMarquee() {
-  const track = [...PARTNERS, ...PARTNERS];
+function PartnerMarquee({ partners }: { partners: Partner[] }) {
+  const track = [...partners, ...partners];
 
   return (
     <div className="relative mt-10 overflow-hidden md:mt-12">
@@ -78,7 +63,7 @@ function PartnerMarquee() {
             key={`${partner.name}-${index}`}
             className="flex shrink-0 items-center"
           >
-            <PartnerLogo name={partner.name} logoSrc={partner.logoSrc} />
+            <PartnerLogo name={partner.name} logoSrc={partner.logo?.url ?? undefined} />
           </div>
         ))}
       </div>
@@ -113,7 +98,11 @@ function PartnerMarquee() {
  * Contributors and partners — centered header with an infinitely scrolling
  * logo strip (placeholder logos until assets are supplied).
  */
-export function AboutContributorsSection() {
+export function AboutContributorsSection({
+  content = aboutDefaults,
+}: {
+  content?: AboutContent;
+}) {
   return (
     <section className="w-full bg-[#F7F8FA] px-4 py-16 md:px-6 md:py-24 lg:py-28">
       <div className="mx-auto max-w-5xl">
@@ -124,21 +113,20 @@ export function AboutContributorsSection() {
             className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight lg:leading-[1.12]"
             style={{ color: HEADING_DARK }}
           >
-            Contributors and Partners
+            {content.contributorsHeading}
           </h2>
 
           <p
             className="mt-4 max-w-xl text-sm leading-relaxed md:text-base md:leading-[1.65]"
             style={{ color: SUBTITLE_COLOR }}
           >
-            Recognising the researchers, authors, and organisations whose
-            expertise and support make GIRAI possible.
+            {content.contributorsSubtitle}
           </p>
 
           <SectionAccent color="pink" className="mt-5" />
         </header>
 
-        <PartnerMarquee />
+        <PartnerMarquee partners={content.partners} />
 
         <div className="mt-14 flex justify-center md:mt-16">
           <SectionAccent color="blue" />

@@ -9,6 +9,7 @@ import { INDICATORS } from "@/data/2026/taxonomy";
 import { cn } from "@/lib/utils";
 import { ThemeSwitcher } from "./theme-switcher";
 import { Button } from "./ui/button";
+import { DataDownloadTrigger } from "./data-download/data-download-trigger";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -25,20 +26,12 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "./ui/sheet";
+import { headerDefaults, type HeaderContent } from "@/content/header.defaults";
 
 const desktopNavLinkClass = cn(
   navigationMenuTriggerStyle(),
   "h-10 rounded-full bg-transparent px-3 text-[15px] font-medium text-foreground/80 shadow-none hover:bg-muted/70 hover:text-foreground focus:bg-muted/70 focus:text-foreground data-[active=true]:bg-muted/70 data-[active=true]:text-foreground"
 );
-
-const exploreLinks = [
-  { label: "Indicators", href: "/indicators" },
-  { label: "Evidence Explorer", href: "/evidence" },
-  { label: "Top Takeaway", href: "/takeaways" },
-  { label: "Regions", href: "/regions" },
-  { label: "2025 results", href: "/#results" },
-  { label: "2024 results", href: "/#results" },
-];
 
 const regionLinks = [
   { label: "Africa", href: "/regions/africa" },
@@ -88,14 +81,8 @@ const indicatorLinks = featuredNavIndicators.map(({ slug, label }) => {
   };
 });
 
-const primaryNavItems = [
-  { label: "Countries", href: "/countries" },
-  { label: "Methodology", href: "/methodology" },
-  { label: "Updates", href: "/updates" },
-  { label: "About", href: "/about" },
-];
-
-export const Header = () => {
+export const Header = ({ content = headerDefaults }: { content?: HeaderContent }) => {
+  const { primaryNav, exploreLinks, downloadCta } = content;
   const [sheetOpen, setSheetOpen] = useState(false);
 
   return (
@@ -142,7 +129,7 @@ export const Header = () => {
                 </NavigationMenuContent>
               </NavigationMenuItem>
 
-              {primaryNavItems.map((item) => (
+              {primaryNav.map((item) => (
                 <NavigationMenuItem key={item.label}>
                   <NavigationMenuLink asChild className={desktopNavLinkClass}>
                     <Link href={item.href}>{item.label}</Link>
@@ -171,12 +158,15 @@ export const Header = () => {
             <ThemeSwitcher />
           </div>
 
-          <Button asChild className="hidden px-5 shadow-sm sm:inline-flex">
-            <Link href="/data">
-              <Download data-icon="inline-start" />
-              Download Data
-            </Link>
-          </Button>
+          <DataDownloadTrigger
+            assetType="data"
+            edition="second"
+            source="header-desktop"
+            className="hidden px-5 shadow-sm sm:inline-flex"
+          >
+            <Download data-icon="inline-start" />
+            {downloadCta.label}
+          </DataDownloadTrigger>
 
           <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
             <SheetTrigger asChild>
@@ -199,7 +189,7 @@ export const Header = () => {
 
               <div className="flex flex-col gap-6 pt-6">
                 <nav className="flex flex-col gap-2">
-                  {primaryNavItems.map((item) => (
+                  {primaryNav.map((item) => (
                     <Link
                       key={item.label}
                       href={item.href}
@@ -244,12 +234,16 @@ export const Header = () => {
                     <ThemeSwitcher />
                   </div>
 
-                  <Button asChild className="w-full">
-                    <Link href="/data" onClick={() => setSheetOpen(false)}>
-                      <Download data-icon="inline-start" />
-                      Download Data
-                    </Link>
-                  </Button>
+                  <DataDownloadTrigger
+                    assetType="data"
+                    edition="second"
+                    source="header-mobile"
+                    className="w-full"
+                    onClick={() => setSheetOpen(false)}
+                  >
+                    <Download data-icon="inline-start" />
+                    {downloadCta.label}
+                  </DataDownloadTrigger>
                 </div>
               </div>
             </SheetContent>

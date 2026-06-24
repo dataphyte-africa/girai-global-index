@@ -4,6 +4,7 @@ import React from "react";
 import { motion, useInView } from "motion/react";
 import { Sparkles, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { homeDefaults, type HomeContent } from "@/content/home.defaults";
 
 export type EvidenceExplorerStat = {
   value: string;
@@ -12,10 +13,12 @@ export type EvidenceExplorerStat = {
 
 export interface EvidenceExplorerSectionProps {
   stats: EvidenceExplorerStat[];
+  content?: HomeContent;
 }
 
 export function EvidenceExplorerSection({
   stats,
+  content = homeDefaults,
 }: EvidenceExplorerSectionProps) {
   const sectionRef = React.useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
@@ -49,17 +52,15 @@ export function EvidenceExplorerSection({
           >
             <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary ring-1 ring-inset ring-primary/20">
               <Sparkles className="h-3.5 w-3.5" aria-hidden />
-              Evidence Explorer
+              {content.evidenceBadge}
             </span>
 
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight leading-[1.1] text-foreground">
-              Explore the Evidence Behind the Index
+              {content.evidenceHeading}
             </h2>
 
             <p className="max-w-md text-sm md:text-base leading-relaxed text-muted-foreground">
-              Access the laws, policies, strategies, institutional actions, and
-              public documents that inform GIRAI scores across countries and
-              regions.
+              {content.evidenceBody}
             </p>
 
             <Button
@@ -68,7 +69,7 @@ export function EvidenceExplorerSection({
               className="bg-primary px-6 text-primary-foreground shadow-lg shadow-primary/25 hover:bg-primary/90"
             >
               <a href="/evidence">
-                Explore Evidence Explorer
+                {content.evidenceCtaLabel}
                 <ArrowRight className="h-4 w-4" aria-hidden />
               </a>
             </Button>
@@ -145,9 +146,7 @@ export function EvidenceExplorerSection({
                   transition={{ duration: 0.6, ease: "easeOut", delay: 0.55 }}
                   className="mt-6 text-xs md:text-sm leading-relaxed text-white/80 underline decoration-white/30 underline-offset-4 md:mt-8"
                 >
-                  Every score in GIRAI is grounded in publicly verifiable
-                  evidence, reviewed through a structured research and
-                  validation process.
+                  {content.evidenceNote}
                 </motion.p>
               </div>
             </div>

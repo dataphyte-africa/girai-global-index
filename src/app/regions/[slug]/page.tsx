@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Header } from "@/components/header";
-import { FooterSection } from "@/components/footer-section";
+import { SiteHeader } from "@/components/site-header";
+import { SiteFooter } from "@/components/site-footer";
 import { ComparisonSection } from "@/components/comparison-section";
 import {
   RegionHero,
@@ -75,7 +75,7 @@ export default async function RegionPage({ params }: PageProps) {
 
   return (
     <div className="flex min-h-screen flex-col bg-background font-sans dark:bg-black">
-      <Header />
+      <SiteHeader />
       <main className="flex-1">
         <RegionHero regionName={regionName} blurb={copy.blurb} />
 
@@ -105,7 +105,7 @@ export default async function RegionPage({ params }: PageProps) {
 
         <RegionFooterHero regionName={regionName} blurb={copy.footerBlurb} />
       </main>
-      <FooterSection />
+      <SiteFooter />
     </div>
   );
 }

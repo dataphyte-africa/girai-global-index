@@ -4,33 +4,10 @@ import React from "react";
 import Image from "next/image";
 import { motion, useInView } from "motion/react";
 import { Button } from "@/components/ui/button";
+import { homeDefaults, type HomeContent } from "@/content/home.defaults";
+import type { Card } from "@/content/about.defaults";
 
-type ImpactCard = {
-  title: string;
-  description: string;
-  href: string;
-};
-
-const cards: ImpactCard[] = [
-  {
-    title: "International Organisation",
-    description:
-      "GIRAI provides clear benchmarks and comparative insights that help policymakers identify gaps, track progress, and design stronger governance frameworks for artificial intelligence.",
-    href: "#impact-international",
-  },
-  {
-    title: "Global Policy makers",
-    description:
-      "By making scores traceable to public evidence, GIRAI promotes greater openness in how AI governance is measured and encourages accountable decision-making across institutions.",
-    href: "#impact-policy",
-  },
-  {
-    title: "Media Institutions",
-    description:
-      "Researchers, advocates, and civil society organisations use GIRAI data to inform public debate, support advocacy efforts, and advance more inclusive approaches to responsible AI.",
-    href: "#impact-media",
-  },
-];
+type ImpactCard = Card;
 
 function ImpactCardItem({ item, index }: { item: ImpactCard; index: number }) {
   const ref = React.useRef<HTMLDivElement>(null);
@@ -56,16 +33,21 @@ function ImpactCardItem({ item, index }: { item: ImpactCard; index: number }) {
           size="sm"
           className="bg-primary px-4 text-primary-foreground hover:bg-primary/90"
         >
-          <a href={item.href}>Read more</a>
+          <a href="#read-more">Read more</a>
         </Button>
       </div>
     </motion.div>
   );
 }
 
-export function OurImpactSection() {
+export function OurImpactSection({
+  content = homeDefaults,
+}: {
+  content?: HomeContent;
+}) {
   const sectionRef = React.useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+  const cards = content.impactCards;
 
   return (
     <section
@@ -99,13 +81,11 @@ export function OurImpactSection() {
           className="mx-auto mb-12 flex max-w-3xl flex-col items-center gap-4 text-center md:mb-16"
         >
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight leading-[1.1]">
-            <span className="text-foreground">Our Impact on </span>
-            <span className="text-primary">Responsible AI Governance</span>
+            <span className="text-foreground">{content.impactHeadingLead}</span>
+            <span className="text-primary">{content.impactHeadingAccent}</span>
           </h2>
           <p className="max-w-2xl text-sm md:text-base text-muted-foreground leading-relaxed">
-            How GIRAI is helping governments, researchers, civil society, and
-            institutions understand and strengthen responsible AI governance
-            worldwide.
+            {content.impactSubtitle}
           </p>
         </motion.div>
 

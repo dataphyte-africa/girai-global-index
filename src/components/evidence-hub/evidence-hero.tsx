@@ -1,10 +1,13 @@
 import Image from "next/image";
+import type { EvidenceContent } from "@/content/evidence.defaults";
+import { evidenceDefaults } from "@/content/evidence.defaults";
 
 export interface EvidenceHeroProps {
   countriesIndexed: number;
   frameworkCount: number;
   evidenceItemCount: number;
   indicatorCount: number;
+  content?: EvidenceContent;
 }
 
 export function EvidenceHero({
@@ -12,13 +15,19 @@ export function EvidenceHero({
   frameworkCount,
   evidenceItemCount,
   indicatorCount,
+  content = evidenceDefaults,
 }: EvidenceHeroProps) {
-  const stats = [
-    { value: countriesIndexed.toLocaleString(), label: "Countries Indexed" },
-    { value: frameworkCount.toLocaleString(), label: "Frameworks" },
-    { value: evidenceItemCount.toLocaleString(), label: "Evidence Items" },
-    { value: indicatorCount.toLocaleString(), label: "Indicators" },
+  const values = [
+    countriesIndexed.toLocaleString(),
+    frameworkCount.toLocaleString(),
+    evidenceItemCount.toLocaleString(),
+    indicatorCount.toLocaleString(),
   ];
+  const labels = content.heroStatLabels;
+  const stats = values.map((value, index) => ({
+    value,
+    label: labels[index] ?? evidenceDefaults.heroStatLabels[index] ?? "",
+  }));
 
   return (
     <section
@@ -41,12 +50,11 @@ export function EvidenceHero({
 
       <div className="relative z-10 mx-auto max-w-6xl px-4 md:px-6">
         <h1 className="max-w-3xl text-3xl font-medium tracking-tight text-foreground md:text-4xl lg:text-5xl">
-          Responsible AI{" "}
-          <span className="text-primary">Evidence Hub</span>
+          {content.heroTitleLead}
+          <span className="text-primary">{content.heroTitleAccent}</span>
         </h1>
         <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground md:text-base">
-          Explore the public evidence, frameworks, and institutional actions
-          that inform GIRAI scores across countries and regions.
+          {content.heroSubtitle}
         </p>
 
         <dl className="mt-10 grid grid-cols-2 gap-6 sm:grid-cols-4">

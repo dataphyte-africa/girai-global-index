@@ -1,28 +1,5 @@
 import { cn } from "@/lib/utils";
-
-const CHANGES = [
-  {
-    dimension: "Governance Emphasis",
-    before:
-      "Greater emphasis on the existence of frameworks",
-    now: "Clear separation between government frameworks, implementation actions, and contextual indicators",
-  },
-  {
-    dimension: "Policy vs. Implementation",
-    before: "Less distinction between policy intent and implementation",
-    now: "Stronger focus on operational oversight and enforcement mechanisms",
-  },
-  {
-    dimension: "Indicator Structure",
-    before: "Broader grouping of indicator types",
-    now: "Refined indicator definitions and clearer evidence standards",
-  },
-  {
-    dimension: "Governance Context",
-    before: "Early-stage global governance landscape",
-    now: "Expanded validation and review procedures reflecting a maturing governance environment",
-  },
-] as const;
+import { methodologyDefaults, type MethodologyContent } from "@/content/methodology.defaults";
 
 function BeforeBadge() {
   return (
@@ -88,19 +65,22 @@ function EditionChangeRow({
 /**
  * What Changed in This Edition — three-column before/now comparison table.
  */
-export function MethodologyEditionChangesSection() {
+export function MethodologyEditionChangesSection({
+  content = methodologyDefaults,
+}: {
+  content?: MethodologyContent;
+}) {
   return (
     <section className="w-full bg-card px-4 py-16 md:px-6 md:py-24 lg:py-28">
       <div className="mx-auto max-w-5xl">
         <header className="mx-auto mb-12 max-w-2xl text-center md:mb-14 lg:mb-16">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight lg:leading-[1.12]">
-            <span className="text-primary">What Changed </span>
-            <span className="text-foreground">in This Edition</span>
+            <span className="text-primary">{content.editionHeadingAccent}</span>
+            <span className="text-foreground">{content.editionHeadingTail}</span>
           </h2>
 
           <p className="mt-4 text-sm leading-relaxed text-muted-foreground md:text-base md:leading-[1.65]">
-            Key differences between the previous and current edition of the GIRAI
-            methodology framework.
+            {content.editionSubtitle}
           </p>
         </header>
 
@@ -117,7 +97,7 @@ export function MethodologyEditionChangesSection() {
             </span>
           </div>
 
-          {CHANGES.map((change) => (
+          {content.changes.map((change) => (
             <EditionChangeRow
               key={change.dimension}
               dimension={change.dimension}

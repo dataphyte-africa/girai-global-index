@@ -1,22 +1,24 @@
 import Image from "next/image";
+import { indicatorsDefaults, type IndicatorsContent } from "@/content/indicators.defaults";
 
 const HERO_TITLE_ACCENT = "#9FE8C7";
-const HERO_IMAGE = "/indicator/hero-indicator.png";
-
-const HERO_LEAD =
-  "The full set of structured indicators used to evaluate how countries govern, regulate, and implement responsible artificial intelligence.";
 
 /**
  * Wide banner hero for the Indicators index page.
  */
-export function IndicatorsHero() {
+export function IndicatorsHero({
+  content = indicatorsDefaults,
+}: {
+  content?: IndicatorsContent;
+}) {
+  const heroImage = content.heroImage.url ?? indicatorsDefaults.heroImage.url!;
   return (
     <section className="w-full px-4 pt-6 md:px-6 md:min-h-[565px]">
       <div className="w-full min-h-[565px]">
         <div className="relative overflow-hidden rounded-[28px] md:rounded-[32px]">
           <Image
-            src={HERO_IMAGE}
-            alt=""
+            src={heroImage}
+            alt={content.heroImage.alt ?? ""}
             fill
             priority
             sizes="(max-width: 1280px) 100vw, 1280px"
@@ -32,12 +34,12 @@ export function IndicatorsHero() {
 
           <div className="relative flex min-h-[360px] flex-col justify-center px-8 py-12 md:min-h-[565px] md:max-w-[58%] md:px-14 md:py-16 lg:min-h-[565px]">
             <h1 className="text-[2rem] font-medium leading-[1.12] tracking-tight md:text-5xl lg:text-[3.25rem]">
-              <span style={{ color: HERO_TITLE_ACCENT }}>Indicators used </span>
-              <span className="text-white">for Index measurement</span>
+              <span style={{ color: HERO_TITLE_ACCENT }}>{content.heroTitleAccent}</span>
+              <span className="text-white">{content.heroTitleTail}</span>
             </h1>
 
             <p className="mt-5 max-w-xl text-base leading-relaxed text-white md:mt-6 md:text-lg">
-              {HERO_LEAD}
+              {content.heroLead}
             </p>
           </div>
         </div>

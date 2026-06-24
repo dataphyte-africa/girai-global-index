@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import { Header } from "@/components/header";
-import { FooterSection } from "@/components/footer-section";
+import { SiteHeader } from "@/components/site-header";
+import { SiteFooter } from "@/components/site-footer";
 import { CountriesHero } from "@/components/countries";
 import { ChoroplethMapSection } from "@/components/choropleth-map-section";
 import { ComparisonSection } from "@/components/comparison-section";
 import { TopTakeawaysSection } from "@/components/top-takeaways-section";
 import { ReportDownloadSection } from "@/components/report-download-section";
+import { getCountriesContent } from "@/content/countries";
 import {
   getAllCountries,
   getGlobalAverages,
@@ -24,7 +25,8 @@ export const metadata: Metadata = {
     "Compare national approaches to AI oversight, implementation, and institutional capacity across the Global Index on Responsible AI.",
 };
 
-export default function CountriesPage() {
+export default async function CountriesPage() {
+  const content = await getCountriesContent();
   const allCountries = getAllCountries();
   const regions = getRegions();
   const regionAverages = getRegionAverages();
@@ -41,20 +43,31 @@ export default function CountriesPage() {
 
   return (
     <div className="flex min-h-screen flex-col bg-background font-sans dark:bg-black">
-      <Header />
+      <SiteHeader />
       <main className="flex-1">
-        <CountriesHero arcData={arcData} markers={markers} />
+        <CountriesHero arcData={arcData} markers={markers} content={content} />
         <ChoroplethMapSection />
         <ComparisonSection
           countries={allCountries}
           regions={regions}
           regionAverages={regionAverages}
           globalAverages={getGlobalAverages()}
+          heading={
+            <>
+              {content.compareHeadingLead}
+              <span className="text-primary">{content.compareHeadingAccent}</span>
+            </>
+          }
+          subheading={content.compareSubheading}
         />
-        <TopTakeawaysSection />
+        <TopTakeawaysSection
+          headingAccent={content.takeawaysHeadingAccent}
+          headingTail={content.takeawaysHeadingTail}
+          headerSubtitle={content.takeawaysSubtitle}
+        />
         <ReportDownloadSection />
       </main>
-      <FooterSection />
+      <SiteFooter />
     </div>
   );
 }

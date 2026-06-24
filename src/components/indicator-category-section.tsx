@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion, useInView } from "motion/react";
 import { PILLARS } from "@/data/2026/taxonomy";
 import { PILLAR_COPY } from "@/lib/pillar-copy";
+import { homeDefaults, type HomeContent } from "@/content/home.defaults";
 
 function CategoryColumn({
   heading,
@@ -45,7 +46,11 @@ function CategoryColumn({
   );
 }
 
-export function IndicatorCategorySection() {
+export function IndicatorCategorySection({
+  content = homeDefaults,
+}: {
+  content?: HomeContent;
+}) {
   const sectionRef = React.useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
 
@@ -80,15 +85,11 @@ export function IndicatorCategorySection() {
           className="mx-auto mb-12 flex max-w-3xl flex-col items-center gap-4 text-center md:mb-16"
         >
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium leading-[1.1] tracking-tight">
-            <span className="text-primary">Three Categories</span>
-            <span className="text-foreground">
-              {" "}
-              of Responsible AI Indicators
-            </span>
+            <span className="text-primary">{content.indicatorsHeadingAccent}</span>
+            <span className="text-foreground">{content.indicatorsHeadingTail}</span>
           </h2>
           <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground md:text-base">
-            To provide a comprehensive picture, the indicators for the Global
-            Index of Responsible AI are grouped into three categories
+            {content.indicatorsSubtitle}
           </p>
         </motion.div>
 

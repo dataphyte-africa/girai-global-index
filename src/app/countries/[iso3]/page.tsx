@@ -21,7 +21,7 @@ import {
   CountryEditionComparisonSection,
 } from "@/components/country-story";
 import { ComparisonSection } from "@/components/comparison-section";
-import { Header } from "@/components/header";
+import { SiteHeader } from "@/components/site-header";
 
 interface PageProps {
   params: Promise<{ iso3: string }>;
@@ -68,7 +68,7 @@ export default async function CountryStoryPage({ params }: PageProps) {
 
   return (
     <div className="flex flex-col min-h-screen bg-background font-sans dark:bg-black">
-      <Header />
+      <SiteHeader />
       <main className="flex-1">
         <CountryScoreHero country={country} />
        { /* <IndicatorStorySection country={country} /> */}

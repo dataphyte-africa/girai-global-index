@@ -4,8 +4,13 @@ import React from "react";
 import Image from "next/image";
 import { motion, useInView } from "motion/react";
 import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation";
+import { homeDefaults, type HomeContent } from "@/content/home.defaults";
 
-export function ShapingIntelligenceSection() {
+export function ShapingIntelligenceSection({
+  content = homeDefaults,
+}: {
+  content?: HomeContent;
+}) {
   const sectionRef = React.useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
 
@@ -58,11 +63,12 @@ export function ShapingIntelligenceSection() {
         transition={{ duration: 0.7, ease: "easeOut" }}
       >
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium leading-[1.1] tracking-tight text-foreground drop-shadow-sm">
-          Shaping
-          <br />
-          Responsible
-          <br />
-          Intelligence
+          {content.shapingHeadingLines.map((line, index) => (
+            <React.Fragment key={line}>
+              {line}
+              {index < content.shapingHeadingLines.length - 1 ? <br /> : null}
+            </React.Fragment>
+          ))}
         </h2>
       </motion.div>
     </section>

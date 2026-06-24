@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { takeawaysDefaults, type TakeawaysContent } from "@/content/takeaways.defaults";
 
 const PURPLE = "#7150F4";
 const HEADING_DARK = "#1A1A2E";
@@ -6,24 +7,6 @@ const SUBTITLE_COLOR = "#6B7280";
 const BODY_COLOR = "#6B7280";
 const BORDER_COLOR = "#ECEEF2";
 const LABEL_COLOR = "#B8BDC6";
-
-const INSIGHTS = [
-  {
-    title: "Policy Adoption Is Increasing, but Implementation Lags",
-    description:
-      "More countries have adopted national AI strategies, but fewer have established operational oversight or enforcement mechanisms. The gap between commitment and execution remains a central governance challenge.",
-  },
-  {
-    title: "Oversight and Accountability Systems Remain Underdeveloped",
-    description:
-      "Independent monitoring bodies and structured audits are still limited in many jurisdictions. Transparency requirements vary, and access to redress for individuals affected by AI systems remains inconsistent.",
-  },
-  {
-    title: "Society Engagement Strengthens Governance Outcomes",
-    description:
-      "Countries with active civil society participation tend to demonstrate stronger transparency and more inclusive processes. Where engagement is institutionalized, governance frameworks are more balanced and accountable.",
-  },
-] as const;
 
 function InsightCard({
   index,
@@ -75,21 +58,26 @@ function InsightCard({
 /**
  * Three-column Key Insights grid below the Top Takeaways intro.
  */
-export function TakeawaysKeyInsightsSection() {
+export function TakeawaysKeyInsightsSection({
+  content = takeawaysDefaults,
+}: {
+  content?: TakeawaysContent;
+}) {
+  const insights = content.insights;
   return (
     <section className="w-full bg-white px-4 py-16 md:px-6 md:py-24 lg:py-28">
       <div className="mx-auto max-w-6xl">
         <header className="mx-auto mb-12 max-w-2xl text-center md:mb-14 lg:mb-16">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight lg:leading-[1.12]">
-            <span style={{ color: PURPLE }}>Key Insights</span>
-            <span style={{ color: HEADING_DARK }}> from the Global Index</span>
+            <span style={{ color: PURPLE }}>{content.keyInsightsHeadingAccent}</span>
+            <span style={{ color: HEADING_DARK }}>{content.keyInsightsHeadingTail}</span>
           </h2>
 
           <p
             className="mt-4 text-sm leading-relaxed md:text-base md:leading-[1.65]"
             style={{ color: SUBTITLE_COLOR }}
           >
-            What the evidence reveals about global AI governance
+            {content.keyInsightsSubtitle}
           </p>
         </header>
 
@@ -98,14 +86,14 @@ export function TakeawaysKeyInsightsSection() {
           style={{ borderColor: BORDER_COLOR }}
         >
           <div className="grid grid-cols-1 md:grid-cols-3">
-            {INSIGHTS.map((item, index) => (
+            {insights.map((item, index) => (
               <InsightCard
                 key={item.title}
                 index={index + 1}
                 title={item.title}
                 description={item.description}
                 className={cn(
-                  index < INSIGHTS.length - 1 && "border-b md:border-b-0",
+                  index < insights.length - 1 && "border-b md:border-b-0",
                   index % 3 !== 2 && "md:border-r",
                   "border-[#ECEEF2]"
                 )}
