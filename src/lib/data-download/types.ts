@@ -30,4 +30,12 @@ export type DataDownloadOpenOptions = {
   assetType: DownloadAssetType;
   edition?: DownloadEdition;
   source?: string;
+  /** When true, the edition toggle is hidden (e.g. citation landing pages). */
+  lockEdition?: boolean;
+};
+
+export type DownloadReferralEvent = {
+  assetType: DownloadAssetType;
+  edition?: DownloadEdition;
+  source: string;
 };

@@ -45,7 +45,7 @@ export interface RegionCopy {
  * {@link fallbackCopy}, so adding a new region to the dataset never breaks
  * the build — it just reads a little more generically until copy is added.
  */
-const REGION_COPY: Record<string, RegionCopy> = {
+export const REGION_COPY: Record<string, RegionCopy> = {
   Africa: {
     adjective: "African",
     blurb:

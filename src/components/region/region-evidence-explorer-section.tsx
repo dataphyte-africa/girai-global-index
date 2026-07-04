@@ -5,12 +5,16 @@ import { EvidenceExplorer } from "@/components/evidence-explorer";
 
 export interface RegionEvidenceExplorerSectionProps {
   regionName: string;
-  evidenceCount: number;
+  /** Distinct pieces of evidence (deduped across indicators). */
+  uniqueEvidenceCount: number;
+  /** Indicator cases — one row per indicator a piece of evidence is assessed under. */
+  indicatorCaseCount: number;
 }
 
 function RegionEvidenceExplorerInner({
   regionName,
-  evidenceCount,
+  uniqueEvidenceCount,
+  indicatorCaseCount,
 }: RegionEvidenceExplorerSectionProps) {
   return (
     <EvidenceExplorer
@@ -21,8 +25,8 @@ function RegionEvidenceExplorerInner({
         </>
       }
       subheading={
-        evidenceCount > 0
-          ? `${evidenceCount.toLocaleString()} evidence items documenting laws, policies, strategies, and institutional actions across ${regionName}.`
+        uniqueEvidenceCount > 0
+          ? `${uniqueEvidenceCount.toLocaleString()} pieces of evidence assessed across ${indicatorCaseCount.toLocaleString()} indicator cases — laws, policies, strategies, and institutional actions across ${regionName}.`
           : `No evidence items are on file for ${regionName} in the 2026 dataset.`
       }
     />

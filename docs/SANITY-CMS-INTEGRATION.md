@@ -161,7 +161,9 @@ Goal: prove the entire pipeline end-to-end on one page before touching the rest.
 - [ ] Verify: edit About in Studio (unpublished) → see live changes in the Presentation pane. _(manual)_
 
 ### 5.8 On-demand revalidation webhook
-- [x] Add `src/app/api/revalidate/route.ts`: verifies signature with `next-sanity/webhook` + `SANITY_REVALIDATE_SECRET`, then `revalidateTag(type, "max")`.
+- [x] Add `src/app/api/revalidate/route.ts`: verifies signature with `next-sanity/webhook` + `SANITY_REVALIDATE_SECRET`, then `revalidateTag(type, { expire: 0 })` + `revalidatePath` for affected routes.
+- [x] **Firebase App Hosting:** root `layout.tsx` exports `export const dynamic = 'force-dynamic'` (must be inline — Next.js cannot re-export segment config). Prerendered HTML is cached at the CDN with `s-maxage=31536000`; webhooks alone cannot bust that cache.
+- [x] `sanityFetch` uses `revalidate: 0` and `useCdn: false` so each request reads fresh published content from Sanity.
 - [ ] In Sanity manage → API → **Webhooks**, add a webhook to the deployed `/api/revalidate` URL, filtered to the doc types, with the secret. _(needs deployed URL)_
 - [ ] Verify: publish an About edit → page updates within seconds without a redeploy. _(after webhook wired)_
 

@@ -20,6 +20,13 @@ export interface GroupedMultiSelectFilterProps {
   selected: string[];
   onChange: (next: string[]) => void;
   className?: string;
+  /**
+   * Allow at most one selection per group (combinable across groups). Picking
+   * a second option within the same group replaces the first. Used so the
+   * score filter resolves to a single measured value (e.g. one Dimension +
+   * one Pillar = the matrix intersection cell) rather than an average.
+   */
+  singlePerGroup?: boolean;
 }
 
 /**
@@ -32,6 +39,7 @@ export function GroupedMultiSelectFilter({
   selected,
   onChange,
   className,
+  singlePerGroup = false,
 }: GroupedMultiSelectFilterProps) {
   const [open, setOpen] = React.useState(false);
   const [search, setSearch] = React.useState("");
@@ -71,20 +79,30 @@ export function GroupedMultiSelectFilter({
 
   const triggerLabel = React.useMemo(() => {
     if (selected.length === 0) return placeholder;
-    if (selected.length === 1) {
-      return (
-        allOptions.find((o) => o.value === selected[0])?.label ?? selected[0]
-      );
-    }
+    const labelFor = (value: string) =>
+      allOptions.find((o) => o.value === value)?.label ?? value;
+    if (selected.length === 1) return labelFor(selected[0]);
+    // With one-per-group selection a two-item state is meaningful (e.g.
+    // "AI Policy · Trust and Safety"), so spell it out instead of "2 selected".
+    if (singlePerGroup) return selected.map(labelFor).join(" · ");
     return `${selected.length} selected`;
-  }, [selected, placeholder, allOptions]);
+  }, [selected, placeholder, allOptions, singlePerGroup]);
 
   const toggle = (value: string) => {
-    onChange(
-      selected.includes(value)
-        ? selected.filter((s) => s !== value)
-        : [...selected, value]
-    );
+    if (selected.includes(value)) {
+      onChange(selected.filter((s) => s !== value));
+      return;
+    }
+    if (singlePerGroup) {
+      // Replace any existing selection within the same group.
+      const group = groups.find((g) =>
+        g.options.some((o) => o.value === value)
+      );
+      const groupValues = new Set(group?.options.map((o) => o.value) ?? []);
+      onChange([...selected.filter((s) => !groupValues.has(s)), value]);
+      return;
+    }
+    onChange([...selected, value]);
   };
 
   const searchLabel = fieldLabel ?? placeholder.replace(/^All /i, "");

@@ -3,6 +3,10 @@
 import * as React from "react";
 import { DataDownloadModal } from "@/components/data-download/data-download-modal";
 import type { DataDownloadOpenOptions } from "@/lib/data-download/types";
+import {
+  downloadModalDefaults,
+  type DownloadModalContent,
+} from "@/content/downloadModal.defaults";
 
 type DataDownloadContextValue = {
   openDataDownload: (options: DataDownloadOpenOptions) => void;
@@ -14,8 +18,10 @@ const DataDownloadContext = React.createContext<DataDownloadContextValue | null>
 
 export function DataDownloadProvider({
   children,
+  content = downloadModalDefaults,
 }: {
   children: React.ReactNode;
+  content?: DownloadModalContent;
 }) {
   const [open, setOpen] = React.useState(false);
   const [options, setOptions] = React.useState<DataDownloadOpenOptions | null>(
@@ -37,6 +43,7 @@ export function DataDownloadProvider({
         open={open}
         onOpenChange={setOpen}
         options={options}
+        content={content}
       />
     </DataDownloadContext.Provider>
   );

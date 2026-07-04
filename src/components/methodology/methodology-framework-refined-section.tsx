@@ -35,7 +35,7 @@ function RefinedCard({
         <SlidersHorizontal className="size-[18px] stroke-[1.75]" aria-hidden />
       </div>
 
-      <h3 className="text-lg font-medium leading-snug tracking-tight text-foreground transition-colors duration-300 md:text-xl md:leading-[1.3] group-hover:text-white">
+      <h3 className="text-lg font-semibold leading-snug tracking-tight text-foreground transition-colors duration-300 md:text-xl md:leading-[1.3] group-hover:text-white">
         {title}
       </h3>
 
@@ -59,7 +59,7 @@ export function MethodologyFrameworkRefinedSection({
     <section className="w-full bg-muted/50 px-4 py-16 md:px-6 md:py-24 lg:py-28">
       <div className="mx-auto max-w-5xl">
         <header className="mx-auto mb-12 max-w-2xl text-center md:mb-14 lg:mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight lg:leading-[1.12]">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight lg:leading-[1.12]">
             <span className="text-foreground">{content.refinedHeadingLead}</span>
             <span className="text-primary">{content.refinedHeadingAccent}</span>
           </h2>

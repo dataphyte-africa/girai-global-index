@@ -22,6 +22,7 @@ import {
 } from "@/lib/girai";
 import { DIMENSIONS, getDimension, type DimensionDef } from "@/data/2026/taxonomy";
 import { DIMENSIONS as DIMENSIONS_UI } from "@/data/dimensions-data";
+import { getDimensionsUi } from "@/content/dimensions";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -53,7 +54,8 @@ export default async function DimensionPage({ params }: PageProps) {
     notFound();
   }
 
-  const ui = DIMENSIONS_UI.find((d) => d.id === dim.slug)!;
+  const dimensionsUi = await getDimensionsUi();
+  const ui = dimensionsUi.find((d) => d.id === dim.slug)!;
   // The Key Indicators section keeps the shared brand purple across every
   // dimension (rather than the per-dimension accent) for visual consistency.
   const indicatorAccent = "#6c5cff";

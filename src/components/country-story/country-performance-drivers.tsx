@@ -4,6 +4,7 @@ import { Check } from "lucide-react";
 import { motion } from "motion/react";
 import { PILLARS } from "@/data/2026/taxonomy";
 import { PILLAR_COPY } from "@/lib/pillar-copy";
+import type { PillarCopyMap } from "@/content/pillars";
 import { getCountryPillarNarrative } from "@/lib/country-narratives";
 import { EvidenceLinkedText } from "./evidence-linked-text";
 import {
@@ -19,12 +20,14 @@ interface CountryPerformanceDriversProps {
   country: CountryRanking;
   highlights: CountryPillarHighlightsEntry;
   allCountries: CountryRanking[];
+  pillarCopy?: PillarCopyMap;
 }
 
 export function CountryPerformanceDrivers({
   country,
   highlights,
   allCountries,
+  pillarCopy = PILLAR_COPY,
 }: CountryPerformanceDriversProps) {
   const contributionMix = computePillarContributionMix(country.pillarScores);
   const pillarMedians = computePillarMedians(allCountries);
@@ -57,7 +60,7 @@ export function CountryPerformanceDrivers({
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-5 lg:gap-6">
           {PILLARS.map((pillar, index) => {
-            const copy = PILLAR_COPY[pillar.slug];
+            const copy = pillarCopy[pillar.slug];
             const pillarHighlight = highlights.pillars[pillar.slug];
             const score = country.pillarScores[pillar.slug];
             const contribution = contributionMix[pillar.slug];
@@ -120,7 +123,7 @@ function PillarDriverCard({
       transition={{ duration: 0.45, delay: index * 0.08 }}
       className="flex flex-col rounded-2xl border border-border/80 bg-card p-6 shadow-sm md:p-7"
     >
-      <h3 className="text-lg font-medium text-foreground md:text-xl">
+      <h3 className="text-lg font-semibold text-foreground md:text-xl">
         {heading}
       </h3>
       <p className="mt-2 text-sm leading-relaxed text-muted-foreground">

@@ -10,6 +10,7 @@ export const footer = defineType({
     { name: "subscribe", title: "Subscribe" },
     { name: "links", title: "Link Groups" },
     { name: "social", title: "Social" },
+    { name: "funder", title: "Funder Note" },
   ],
   fields: [
     defineField({ name: "subscribeHeading", title: "Heading", type: "string", group: "subscribe" }),
@@ -46,7 +47,39 @@ export const footer = defineType({
       type: "array",
       group: "social",
       of: [defineArrayMember({ type: "ctaLink" })],
-      description: "Label is the platform name (Instagram, LinkedIn, X, Facebook).",
+      description:
+        "Label is the platform name (LinkedIn, X, Email). Use an Email entry with a mailto: link to show a contact icon.",
+    }),
+
+    defineField({
+      name: "funderNoteText",
+      title: "Funder note",
+      type: "text",
+      rows: 3,
+      group: "funder",
+      description: "Short funder / attribution note shown site-wide in the footer.",
+    }),
+    defineField({
+      name: "funderLogos",
+      title: "Funder & partner logos",
+      type: "array",
+      group: "funder",
+      of: [defineArrayMember({ type: "funderLogo" })],
+      description:
+        "Logos shown as a row above the funder note. Displayed on white chips, so full-colour logos are fine.",
+    }),
+    defineField({
+      name: "funderLogo",
+      title: "Funder logo (legacy, optional)",
+      type: "contentImage",
+      group: "funder",
+      description: "Deprecated single logo. Prefer the Funder & partner logos list above.",
+    }),
+    defineField({
+      name: "funderLink",
+      title: "Funder link (legacy, optional)",
+      type: "url",
+      group: "funder",
     }),
   ],
   preview: {

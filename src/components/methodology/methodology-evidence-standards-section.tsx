@@ -29,7 +29,7 @@ function EvidenceRuleCard({
       </div>
 
       <div className="min-w-0 flex-1">
-        <h3 className="text-base font-medium leading-snug tracking-tight text-foreground md:text-[1.0625rem]">
+        <h3 className="text-base font-semibold leading-snug tracking-tight text-foreground md:text-[1.0625rem]">
           {title}
         </h3>
         <p className="mt-1.5 text-sm leading-[1.6] text-muted-foreground md:text-[0.9375rem] md:leading-[1.65]">
@@ -53,7 +53,7 @@ export function MethodologyEvidenceStandardsSection({
     <section className="w-full bg-card px-4 py-16 md:px-6 md:py-24 lg:py-28">
       <div className="mx-auto max-w-7xl">
         <header className="mx-auto mb-12 max-w-2xl text-center md:mb-14 lg:mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight lg:leading-[1.12]">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight lg:leading-[1.12]">
             <span className="text-primary">{content.evidenceHeadingAccent}</span>
             <span className="text-foreground">{content.evidenceHeadingTail}</span>
           </h2>

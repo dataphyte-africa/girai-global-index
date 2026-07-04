@@ -45,12 +45,8 @@ function interpolateColor(color1: string, color2: string, t: number): string {
   return rgbToHex(r, g, b);
 }
 
-// No country currently scores above this, so the gradient and tiers are
-// scaled to it rather than a theoretical 100 (which would never be reached).
-const MAX_SCORE = 80;
-
-function getColor(score: number): string {
-  const normalized = Math.min(MAX_SCORE, Math.max(0, score)) / MAX_SCORE;
+function getColor(score: number, ceiling: number): string {
+  const normalized = Math.min(ceiling, Math.max(0, score)) / ceiling;
   // Inverted: high score (1.0) = #5200FF (purple), low score (0) = #FAF5FF (light)
   if (normalized < 0.5) {
     return interpolateColor("#D3C9FC", "#A08AF8", normalized * 2);
@@ -58,13 +54,28 @@ function getColor(score: number): string {
   return interpolateColor("#A08AF8", "#5039AD", (normalized - 0.5) * 2);
 }
 
-// Score tier ranges (leader → nascent) for legend; colors from getColor()
+// Fixed 20-point semantic bands (nascent → leading). A score's tier is
+// absolute — a 65 is always "Advanced" — so the legend stays interpretable
+// across every view. The "Leading" band only appears when the active metric
+// reaches into it (see resolveCeiling).
 const TIER_LEGEND: { label: string; min: number; max: number }[] = [
+  { label: "Leading", min: 80, max: 100 },
   { label: "Advanced", min: 60, max: 80 },
   { label: "Developing", min: 40, max: 60 },
   { label: "Emerging", min: 20, max: 40 },
   { label: "Nascent", min: 0, max: 20 },
 ];
+
+/**
+ * Snap the largest visible score up to a "nice" gradient ceiling. The overall
+ * GIRAI never exceeds ~80, so the default view keeps the 0–80 scale (and its
+ * existing colour spread); filtered pillar / dimension-cell / indicator views
+ * routinely reach into the 90s, so they expand to 0–100 — extending the
+ * gradient (no clamping at the top) and surfacing the "Leading" tier.
+ */
+function resolveCeiling(maxScore: number): number {
+  return maxScore > 80 ? 100 : 80;
+}
 
 function MapLockControl({ isLocked, onToggle }: { isLocked: boolean; onToggle: () => void }) {
   const map = useMap();
@@ -158,6 +169,22 @@ export function ChoroplethMap({
     [rankingData]
   );
 
+  // Gradient + legend scale to the metric in view: 0–80 for the overall GIRAI,
+  // 0–100 once a filter/indicator pushes the top score past 80.
+  const ceiling = useMemo(() => {
+    let max = 0;
+    for (const c of rankingData) {
+      const score = resolveScore(c);
+      if (score != null && score > max) max = score;
+    }
+    return resolveCeiling(max);
+  }, [rankingData, resolveScore]);
+
+  const visibleTiers = useMemo(
+    () => TIER_LEGEND.filter((t) => t.min < ceiling),
+    [ceiling]
+  );
+
   useEffect(() => {
     fetch("/api/geojson/countries")
       .then((res) => res.json())
@@ -171,7 +198,7 @@ export function ChoroplethMap({
     const score = countryData ? resolveScore(countryData) : null;
     return {
       fillColor: score !== null && score !== undefined
-        ? getColor(score)
+        ? getColor(score, ceiling)
         : "var(--background)",
       weight: 1,
       opacity: 1,
@@ -218,13 +245,13 @@ export function ChoroplethMap({
       <div className="choropleth-map relative isolate z-0 ">
       <div className="my-5 flex flex-wrap items-center gap-x-6 gap-y-2 rounded-lg border bg-background/95 px-4 py-3 shadow-sm">
           <span className="text-muted-foreground text-sm font-medium">Score tier</span>
-          {TIER_LEGEND.map(({ label, min, max }) => {
+          {visibleTiers.map(({ label, min, max }) => {
             const mid = (min + max) / 2;
             return (
               <div key={label} className="flex items-center gap-2">
                 <span
                   className="size-4 shrink-0 rounded border border-white/50 shadow-sm"
-                  style={{ backgroundColor: getColor(mid) }}
+                  style={{ backgroundColor: getColor(mid, ceiling) }}
                   aria-hidden
                 />
                 <span className="text-sm text-foreground">
@@ -258,7 +285,18 @@ export function ChoroplethMap({
         <p className="text-muted-foreground/70 mt-2 text-xs leading-relaxed">
           Boundaries and country names shown on this map are for illustrative
           purposes only and do not imply any judgement or endorsement regarding
-          the legal status of any territory or its borders.
+          the legal status of any territory or its borders. We do not officially
+          endorse the boundaries depicted; they are used solely to render the
+          map. Base map data:{" "}
+          <a
+            href="https://www.naturalearthdata.com/downloads/110m-cultural-vectors/110m-admin-0-countries/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline underline-offset-2 hover:text-foreground"
+          >
+            Natural Earth — Admin 0 Countries
+          </a>{" "}
+          (public domain).
         </p>
         </div>
       </div>

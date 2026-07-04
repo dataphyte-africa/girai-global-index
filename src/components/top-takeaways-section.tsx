@@ -4,84 +4,33 @@ import React from "react";
 import { AnimatePresence, motion, useInView } from "motion/react";
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { TAKEAWAYS } from "@/components/takeaways/takeaways-data";
+import { TakeawayVisualRenderer } from "@/components/takeaways/takeaway-visual-renderer";
+import {
+  FindingSummary,
+  FindingBody,
+  FindingBrightSpotBody,
+} from "@/components/takeaways/finding-content";
+import type { Takeaway } from "@/components/takeaways/types";
+import type { KeyFinding } from "@/content/keyFindings";
 
-type Takeaway = {
-  title: string;
-  description: string;
-};
-
-const takeaways: Takeaway[] = [
-  {
-    title:
-      "AI is accelerating faster than governments can govern it in the public interest",
-    description:
-      "Diffusion of AI is expanding, with 53% of the global population having used generative AI tools. Yet average GIRAI scores remain low, at roughly 35 out of 100, and evidence of implementation exists in only 55% of cases where frameworks are active, falling to 45% in Global South countries.",
-  },
-  {
-    title:
-      "Responsible AI governance is expanding in Global South countries, but binding protections remain scarce",
-    description:
-      "Since the 1st Edition, Global South countries substantially broadened the responsible AI content of their national frameworks. On average, the number of GIRAI topics covered rose from 2.5 to 4.7, an 88% increase. In Global North countries, the number rose from 8.2 to 11.1, a 35% increase. Global South countries account for 203 of the 306 new country cases of indicators covered by frameworks identified since the 1st Edition. Despite this progress, most of the growth is in soft law: 78% of responsible AI framework cases in these countries are non-binding, compared with 42% in Global North countries.",
-  },
-  {
-    title:
-      "AI safety is being governed as a technical problem, while human harms remain under-addressed",
-    description:
-      "AI safety and security is one of the fastest-growing areas of governance, but much of it focuses on technical safeguards. Meanwhile, the Index found credible evidence of government misuse of AI in 35 of 135 countries, and only 49 countries (36%) have frameworks addressing AI-facilitated misinformation and violence.",
-  },
-  {
-    title:
-      "Governments are regulating AI transparency but not disclosing their own use of AI",
-    description:
-      "Transparency and Explainability is the strongest-performing indicator, with 58% of countries having some form of framework. Yet implementation lags behind the existence of frameworks. For government use of AI, Public Disclosure of Government Algorithmic Systems is the weakest-performing indicator, with only 18% of countries requiring disclosure of government AI systems.",
-  },
-  {
-    title:
-      "Gender is increasingly recognised in AI governance, but protection from gendered harms remains weak",
-    description:
-      "Gender equality is gaining visibility, with 29 new countries addressing gender and AI since the 1st Edition, but only 24 of 55 countries with gender-related frameworks show evidence of implementation. Protection from gendered AI harms remains limited.",
-  },
-  {
-    title:
-      "Future generations are being prepared for the AI economy but not protected from AI-related harms",
-    description:
-      "AI Literacy is one of the strongest-performing indicators, with 71 countries (53%) having some framework in place and 106 countries showing evidence of some activity in this area. By contrast, only 55 countries (41%) have frameworks addressing Children’s Rights in AI, and only 27 of them show evidence of implementation.",
-  },
-  {
-    title:
-      "AI’s environmental footprint remains a blind spot in responsible AI governance",
-    description:
-      "Only 27% of countries have frameworks addressing AI’s environmental effects, and 83% of those frameworks are non-binding. Very few governments require disclosure of AI’s energy use, water use, or environmental impact, contributing to making the environmental impact of AI a global blind spot.",
-  },
-  {
-    title:
-      "Governments recognise the need for local-language AI but do not require developers to deliver it",
-    description:
-      "Governments are investing in local-language technologies and cultural inclusion, with 52 countries (39%) showing government-led initiatives. Only 47 countries (35%) have frameworks addressing Cultural and Linguistic Diversity, and few require developers to use diverse datasets or adapt systems to local contexts.",
-  },
-  {
-    title: "Governments are investing in AI skills but neglecting workers’ rights",
-    description:
-      "Labour protection frameworks exist in only 39 countries (29%), compared with 72 countries (53%) with frameworks on reskilling and upskilling. Few countries address workers’ rights to organise and collectively bargain in response to AI-driven workplace change.",
-  },
-  {
-    title:
-      "Global AI governance is fragmenting before a shared floor of protection has been established",
-    description:
-      "Average GIRAI scores range from 55 in Global North countries to 27 in Global South countries. Available evidence shows that 164 of 215 recent AI-related frameworks are non-binding, and multi-stakeholder consultations appear only 31 times in the global implementation record. Only 73 of 135 countries (54%) have adopted a national AI policy or equivalent framework, and just 36 countries (27%) have operational mechanisms for participation of civil society organisations (CSOs) in AI governance. Without a shared rights-based floor, interoperability risks serving markets before it protects people.",
-  },
-];
-
-function TakeawayAccordionItem({
-  item,
+/**
+ * Accordion shell: the animated card, trigger button and expand/collapse
+ * behaviour. Panel content is provided by the caller so both the CMS-driven
+ * findings and the built-in static takeaways share identical chrome.
+ */
+function AccordionCard({
+  title,
   index,
   isOpen,
   onToggle,
+  children,
 }: {
-  item: Takeaway;
+  title: React.ReactNode;
   index: number;
   isOpen: boolean;
   onToggle: () => void;
+  children: React.ReactNode;
 }) {
   const ref = React.useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-60px" });
@@ -105,7 +54,7 @@ function TakeawayAccordionItem({
         className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left md:px-6 md:py-5"
       >
         <span className="text-sm md:text-base font-medium leading-snug text-foreground">
-          {item.title}
+          {title}
         </span>
         <span
           className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors ${
@@ -134,9 +83,7 @@ function TakeawayAccordionItem({
           >
             <div className="px-5 pb-5 md:px-6 md:pb-6">
               <div className="h-px w-full bg-border/60" />
-              <p className="pt-4 text-sm leading-relaxed text-muted-foreground">
-                {item.description}
-              </p>
+              {children}
             </div>
           </motion.div>
         ) : null}
@@ -145,7 +92,81 @@ function TakeawayAccordionItem({
   );
 }
 
+/** Bright Spot callout shared by both content variants. */
+function BrightSpotCallout({
+  country,
+  children,
+}: {
+  country?: string | null;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="mt-5 rounded-xl bg-primary/5 px-4 py-3 dark:bg-primary/10">
+      <p className="text-xs font-semibold uppercase tracking-wide text-primary">
+        Bright Spot{country ? ` · ${country}` : ""}
+      </p>
+      {children}
+    </div>
+  );
+}
+
+/** CMS-driven finding: rich text summary, body (charts/tables) and callout. */
+function FindingPanel({ item }: { item: KeyFinding }) {
+  return (
+    <>
+      {item.summary ? <FindingSummary value={item.summary} /> : null}
+      {item.body ? <FindingBody value={item.body} /> : null}
+      {item.brightSpotCountry || item.brightSpotBody ? (
+        <BrightSpotCallout country={item.brightSpotCountry}>
+          {item.brightSpotBody ? (
+            <FindingBrightSpotBody value={item.brightSpotBody} />
+          ) : null}
+        </BrightSpotCallout>
+      ) : null}
+    </>
+  );
+}
+
+/** Static fallback finding rendered from the built-in report data. */
+function TakeawayPanel({ item }: { item: Takeaway }) {
+  return (
+    <>
+      <p className="pt-4 text-sm font-medium leading-relaxed text-foreground/90">
+        {item.summary}
+      </p>
+      <ul className="mt-3 space-y-2">
+        {item.narrative.map((point, i) => (
+          <li
+            key={i}
+            className="flex gap-2 text-sm leading-relaxed text-muted-foreground"
+          >
+            <span
+              aria-hidden
+              className="mt-2 h-1 w-1 shrink-0 rounded-full bg-primary/50"
+            />
+            <span>{point}</span>
+          </li>
+        ))}
+      </ul>
+
+      {item.visuals.map((visual, i) => (
+        <TakeawayVisualRenderer key={i} visual={visual} />
+      ))}
+
+      {item.brightSpot ? (
+        <BrightSpotCallout country={item.brightSpot.country}>
+          <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+            {item.brightSpot.body}
+          </p>
+        </BrightSpotCallout>
+      ) : null}
+    </>
+  );
+}
+
 interface TopTakeawaysSectionProps {
+  /** CMS-driven findings. When absent/empty, the built-in report data is used. */
+  findings?: KeyFinding[] | null;
   showHeader?: boolean;
   showCta?: boolean;
   headingAccent?: string;
@@ -154,6 +175,7 @@ interface TopTakeawaysSectionProps {
 }
 
 export function TopTakeawaysSection({
+  findings,
   showHeader = true,
   showCta = true,
   headingAccent = "Top 10",
@@ -163,6 +185,13 @@ export function TopTakeawaysSection({
   const sectionRef = React.useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
   const [openIndex, setOpenIndex] = React.useState<number | null>(0);
+
+  const cmsFindings =
+    findings && findings.length > 0 ? findings : null;
+  const count = cmsFindings ? cmsFindings.length : TAKEAWAYS.length;
+
+  const toggle = (index: number) =>
+    setOpenIndex((current) => (current === index ? null : index));
 
   return (
     <section
@@ -197,7 +226,7 @@ export function TopTakeawaysSection({
         }}
       />
 
-      <div className="relative mx-auto max-w-3xl px-4 md:px-6">
+      <div className="relative mx-auto max-w-4xl px-4 md:px-6">
         {showHeader ? (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -205,7 +234,7 @@ export function TopTakeawaysSection({
             transition={{ duration: 0.6, ease: "easeOut" }}
             className="mx-auto mb-10 flex max-w-2xl flex-col items-center gap-3 text-center md:mb-14"
           >
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight">
               <span className="text-primary">{headingAccent}</span>{" "}
               <span className="text-foreground">{headingTail}</span>
             </h2>
@@ -216,20 +245,32 @@ export function TopTakeawaysSection({
         ) : null}
 
         <div className="flex flex-col gap-3 md:gap-4">
-          {takeaways.map((item, index) => (
-            <TakeawayAccordionItem
-              key={item.title}
-              item={item}
-              index={index}
-              isOpen={openIndex === index}
-              onToggle={() =>
-                setOpenIndex((current) => (current === index ? null : index))
-              }
-            />
-          ))}
+          {cmsFindings
+            ? cmsFindings.map((item, index) => (
+                <AccordionCard
+                  key={index}
+                  title={item.title}
+                  index={index}
+                  isOpen={openIndex === index}
+                  onToggle={() => toggle(index)}
+                >
+                  <FindingPanel item={item} />
+                </AccordionCard>
+              ))
+            : TAKEAWAYS.map((item, index) => (
+                <AccordionCard
+                  key={item.title}
+                  title={item.title}
+                  index={index}
+                  isOpen={openIndex === index}
+                  onToggle={() => toggle(index)}
+                >
+                  <TakeawayPanel item={item} />
+                </AccordionCard>
+              ))}
         </div>
 
-        {showCta ? (
+        {count > 0 && showCta ? (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}

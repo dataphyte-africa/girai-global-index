@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { EvidenceItem } from "@/lib/girai";
@@ -83,7 +82,8 @@ export function CountryMisuseEvidenceSection({
 
 function MisuseEvidenceCard({ item }: { item: EvidenceItem }) {
   const typeDisplay = getMisuseTypeDisplay(item.type ?? "");
-  const detailHref = `/evidence/${encodeURIComponent(item.id)}`;
+  // Evidence has no dedicated on-site page — link the title to the real source.
+  const sourceHref = item.link ?? item.drive ?? null;
 
   return (
     <li>
@@ -99,10 +99,19 @@ function MisuseEvidenceCard({ item }: { item: EvidenceItem }) {
           </span>
         ) : null}
 
-        <h3 className="mt-3 text-lg font-medium leading-snug text-[#1e1b4b] dark:text-foreground md:text-xl">
-          <Link href={detailHref} className="hover:text-primary hover:underline">
-            {item.title}
-          </Link>
+        <h3 className="mt-3 text-lg font-semibold leading-snug text-[#1e1b4b] dark:text-foreground md:text-xl">
+          {sourceHref ? (
+            <a
+              href={sourceHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-primary hover:underline"
+            >
+              {item.title}
+            </a>
+          ) : (
+            item.title
+          )}
         </h3>
 
         {item.justification ? (

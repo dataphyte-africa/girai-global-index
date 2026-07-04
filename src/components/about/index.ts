@@ -6,4 +6,5 @@ export { AboutWhatIndexMeasuresSection } from "./about-what-index-measures-secti
 export { AboutContributorsSection } from "./about-contributors-section";
 export { AboutWhoGiraiIsForSection } from "./about-who-girai-is-for-section";
 export { AboutPeopleBehindResearchSection } from "./about-people-behind-research-section";
+export { AboutAdvisoryCommitteeSection } from "./about-advisory-committee-section";
 export { AboutFooterHero } from "./about-footer-hero";

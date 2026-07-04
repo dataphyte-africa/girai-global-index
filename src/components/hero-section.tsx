@@ -1,6 +1,8 @@
 import React from 'react'
 import Image from 'next/image'
+import { Download } from 'lucide-react'
 import { GlobeDemo } from './hero-globe'
+import { Button } from '@/components/ui/button'
 import { ArcPosition, Country } from '@/data/countries'
 import { homeDefaults, type HomeContent } from '@/content/home.defaults'
 
@@ -57,18 +59,21 @@ export const HeroSection = ( {
       <div className="flex flex-col gap-7">
       <div className="flex flex-col gap-2">
 
-      <h1 className="text-4xl md:text-6xl font-medium text-center md:text-left leading-[1.15]">
+      <h1 className="text-4xl md:text-5xl font-semibold text-center md:text-left leading-[1.12]">
       {content.heroHeadlineLead}<span className="text-primary">{content.heroHeadlineAccent}</span>{content.heroHeadlineTail}
       </h1>
       <p className="text-base md:text-xl mt-4 text-muted-foreground text-center md:text-left">
       {content.heroSubtext}
         </p>
       </div>
-      {/* <div className="flex flex-row gap-2 justify-center md:justify-start">
-        <Button variant="default" size="lg" asChild>
-          <Link href="/evidence">Explore Index</Link>
+      <div className="flex flex-row gap-2 justify-center md:justify-start">
+        <Button size="lg" asChild className="gap-2">
+          <a href="#report-download">
+            <Download className="h-4 w-4" aria-hidden />
+            Download 2026 Report
+          </a>
         </Button>
-      </div> */}
+      </div>
       </div>
     </div>
     <div className="relative z-10 col-span-1 order-first md:order-last  overflow-visible min-h-[100px]">

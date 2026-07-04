@@ -32,7 +32,7 @@ export function MethodologyAccessDataSection({
             {content.accessBadge}
           </span>
 
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium leading-[1.18] tracking-tight md:leading-[1.15]">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold leading-[1.18] tracking-tight md:leading-[1.15]">
             <span className="text-primary">{content.accessHeadingLead}</span>
             <br />
             <span className="text-foreground">{content.accessHeadingTail}</span>

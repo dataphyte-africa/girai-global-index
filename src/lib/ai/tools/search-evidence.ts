@@ -71,6 +71,9 @@ export const searchEvidenceTool = tool({
       indicatorSlug: it.indicatorSlug,
       region: it.country.region,
       type: it.type,
+      // Real external source URL (Drive mirror as fallback) — evidence has no
+      // dedicated on-site detail page.
+      link: it.link ?? it.drive ?? null,
     }));
 
     const indicatorSlugs = [...new Set(limited.map((i) => i.indicatorSlug))];
@@ -89,7 +92,9 @@ export const searchEvidenceTool = tool({
         filters: input,
       },
       sources: mergeSources(
-        limited.map((it) => evidenceSource(it.id, it.title)),
+        limited
+          .filter((it): it is typeof it & { link: string } => Boolean(it.link))
+          .map((it) => evidenceSource(it.title, it.link)),
         indicatorSources
       ),
       visualization: "table",

@@ -58,7 +58,7 @@ export function MethodologyFrameworkEvolutionSection({
             {content.evolutionBadge}
           </span>
 
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium leading-[1.18] tracking-tight md:leading-[1.15]">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold leading-[1.18] tracking-tight md:leading-[1.15]">
             <span className="text-foreground">{content.evolutionHeadingLead}</span>
             <span className="text-primary">{content.evolutionHeadingAccent}</span>
           </h2>

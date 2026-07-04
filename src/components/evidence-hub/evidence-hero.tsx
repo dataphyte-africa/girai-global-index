@@ -49,7 +49,7 @@ export function EvidenceHero({
       </div>
 
       <div className="relative z-10 mx-auto max-w-6xl px-4 md:px-6">
-        <h1 className="max-w-3xl text-3xl font-medium tracking-tight text-foreground md:text-4xl lg:text-5xl">
+        <h1 className="max-w-3xl text-3xl font-semibold tracking-tight text-foreground md:text-4xl lg:text-5xl">
           {content.heroTitleLead}
           <span className="text-primary">{content.heroTitleAccent}</span>
         </h1>

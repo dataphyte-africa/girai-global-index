@@ -55,7 +55,7 @@ export function EvidenceExplorerSection({
               {content.evidenceBadge}
             </span>
 
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight leading-[1.1] text-foreground">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight leading-[1.1] text-foreground">
               {content.evidenceHeading}
             </h2>
 

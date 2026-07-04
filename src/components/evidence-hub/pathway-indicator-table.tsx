@@ -24,6 +24,7 @@ import {
   EVIDENCE_HUB_SECTIONS,
   scrollToEvidenceHubSection,
 } from "./scroll";
+import { PATHWAY_COPY_DEFAULTS, type PathwayCopyMap } from "@/content/pathways.defaults";
 
 const INDEX_URL = "/data/2026/evidence-index.json";
 
@@ -103,7 +104,11 @@ function splitTableTitle(title: string): { prefix: string; accent: string } {
   return { prefix: parts.join(" "), accent };
 }
 
-export function PathwayIndicatorTable() {
+export function PathwayIndicatorTable({
+  pathwayCopy = PATHWAY_COPY_DEFAULTS,
+}: {
+  pathwayCopy?: PathwayCopyMap;
+} = {}) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -367,7 +372,9 @@ export function PathwayIndicatorTable() {
     [misuseRows, pathway.theme.heatRgb]
   );
 
-  const { prefix, accent } = splitTableTitle(pathway.tableTitle);
+  const { prefix, accent } = splitTableTitle(
+    pathwayCopy[pathway.id]?.tableTitle ?? pathway.tableTitle
+  );
   const rowCount = pathway.id === "misuse" ? misuseRows.length : indicators.length;
   const rowNoun = pathway.id === "misuse" ? "misuse types" : "indicators";
 
@@ -377,7 +384,7 @@ export function PathwayIndicatorTable() {
       className="scroll-mt-20 bg-muted/30 py-12 md:py-16"
     >
       <div className="mx-auto max-w-6xl px-4 md:px-6">
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight text-foreground">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight text-foreground">
           {prefix ? (
             <>
               {prefix}{" "}

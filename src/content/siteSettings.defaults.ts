@@ -27,5 +27,5 @@ export const siteSettingsDefaults: SiteSettingsContent = {
   ogTitle: "Global Index on Responsible AI (GIRAI)",
   ogDescription:
     "Measuring and comparing responsible AI development, deployment, and governance across countries worldwide.",
-  ogImage: { url: "/report-image.png", alt: "Global Index on Responsible AI 2026 Report cover" },
+  ogImage: { url: "/report-image.jpg", alt: "Global Index on Responsible AI 2026 Report cover" },
 };

@@ -34,24 +34,36 @@ export async function getHomeContent(): Promise<HomeContent> {
     dimensionsHeadingAccent: str(data.dimensionsHeadingAccent, d.dimensionsHeadingAccent),
     dimensionsSubtitle: str(data.dimensionsSubtitle, d.dimensionsSubtitle),
 
-    reportBadge: str(data.reportBadge, d.reportBadge),
-    reportHeadingLead: str(data.reportHeadingLead, d.reportHeadingLead),
-    reportHeadingAccent: str(data.reportHeadingAccent, d.reportHeadingAccent),
-    reportBody: str(data.reportBody, d.reportBody),
-    reportPrimaryCtaLabel: str(data.reportPrimaryCtaLabel, d.reportPrimaryCtaLabel),
-    reportSecondaryCtaLabel: str(data.reportSecondaryCtaLabel, d.reportSecondaryCtaLabel),
-
     takeawaysBadge: str(data.takeawaysBadge, d.takeawaysBadge),
     takeawaysHeadingAccent: str(data.takeawaysHeadingAccent, d.takeawaysHeadingAccent),
     takeawaysHeadingTail: str(data.takeawaysHeadingTail, d.takeawaysHeadingTail),
     takeawaysSubtitle: str(data.takeawaysSubtitle, d.takeawaysSubtitle),
     takeawaysViewAllLabel: str(data.takeawaysViewAllLabel, d.takeawaysViewAllLabel),
+    takeawaysCards:
+      Array.isArray(data.takeawaysCards) && data.takeawaysCards.length > 0
+        ? data.takeawaysCards.map((c, i) => ({
+            category: str(c?.category, d.takeawaysCards[i]?.category ?? ""),
+            title: str(c?.title, d.takeawaysCards[i]?.title ?? ""),
+            description: str(c?.description, d.takeawaysCards[i]?.description ?? ""),
+            stat: str(c?.stat, d.takeawaysCards[i]?.stat ?? ""),
+            statCaption: str(c?.statCaption, d.takeawaysCards[i]?.statCaption ?? ""),
+          }))
+        : d.takeawaysCards,
 
     evidenceBadge: str(data.evidenceBadge, d.evidenceBadge),
     evidenceHeading: str(data.evidenceHeading, d.evidenceHeading),
     evidenceBody: str(data.evidenceBody, d.evidenceBody),
     evidenceCtaLabel: str(data.evidenceCtaLabel, d.evidenceCtaLabel),
     evidenceNote: str(data.evidenceNote, d.evidenceNote),
+
+    performanceHeadingLead: str(data.performanceHeadingLead, d.performanceHeadingLead),
+    performanceHeadingAccent: str(data.performanceHeadingAccent, d.performanceHeadingAccent),
+    performanceHeadingTail: str(data.performanceHeadingTail, d.performanceHeadingTail),
+    performanceSubtitle: str(data.performanceSubtitle, d.performanceSubtitle),
+
+    compareHeadingLead: str(data.compareHeadingLead, d.compareHeadingLead),
+    compareHeadingAccent: str(data.compareHeadingAccent, d.compareHeadingAccent),
+    compareSubheading: str(data.compareSubheading, d.compareSubheading),
 
     indicatorsHeadingAccent: str(data.indicatorsHeadingAccent, d.indicatorsHeadingAccent),
     indicatorsHeadingTail: str(data.indicatorsHeadingTail, d.indicatorsHeadingTail),
@@ -66,6 +78,21 @@ export async function getHomeContent(): Promise<HomeContent> {
     impactHeadingAccent: str(data.impactHeadingAccent, d.impactHeadingAccent),
     impactSubtitle: str(data.impactSubtitle, d.impactSubtitle),
     impactCards: cards(data.impactCards, d.impactCards),
+    impactCtaLabel: str(data.impactCtaLabel, d.impactCtaLabel),
+    impactCtaHref: str(data.impactCtaHref, d.impactCtaHref),
+
+    usedByHeading: str(data.usedByHeading, d.usedByHeading),
+    usedBySubtitle: str(data.usedBySubtitle, d.usedBySubtitle),
+    usedByPartners:
+      Array.isArray(data.usedByPartners) && data.usedByPartners.length > 0
+        ? data.usedByPartners.map((p, i) => ({
+            name: str(p?.name, d.usedByPartners[i]?.name ?? ""),
+            logo:
+              p?.logo && typeof p.logo.url === "string" && p.logo.url.length > 0
+                ? { url: p.logo.url, alt: typeof p.logo.alt === "string" ? p.logo.alt : null }
+                : null,
+          }))
+        : d.usedByPartners,
 
     shapingHeadingLines: strings(data.shapingHeadingLines, d.shapingHeadingLines),
   };

@@ -151,6 +151,7 @@ export function PerformanceFilterBar({
           placeholder="Overall GIRAI"
           groups={scoreGroups}
           selected={scoreSelected}
+          singlePerGroup
           onChange={(values) => {
             const { dimensions, pillars } = parseScoreFilterValues(values);
             onChange({ ...value, dimensions, pillars });

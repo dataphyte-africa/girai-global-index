@@ -123,7 +123,7 @@ export function AiChatFullscreen({
                     <div className="mx-auto mb-4 flex size-14 items-center justify-center rounded-2xl border border-border/60 bg-card/80 shadow-sm">
                       <MessageSquare className="size-6 text-primary/70" />
                     </div>
-                    <h3 className="font-medium text-lg tracking-tight">
+                    <h3 className="font-semibold text-lg tracking-tight">
                       What would you like to explore?
                     </h3>
                     <p className="mt-1.5 max-w-sm text-muted-foreground text-sm">

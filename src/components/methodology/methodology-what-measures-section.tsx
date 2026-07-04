@@ -14,7 +14,7 @@ export function MethodologyWhatMeasuresSection({
     <section className="w-full bg-muted/50 px-4 py-16 md:px-6 md:py-24 lg:py-28">
       <div className="mx-auto max-w-7xl">
         <header className="mx-auto mb-12 max-w-2xl text-center md:mb-14 lg:mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight lg:leading-[1.12]">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight lg:leading-[1.12]">
             <span className="text-foreground">{content.measuresHeadingLead}</span>
             <span className="text-primary">{content.measuresHeadingAccent}</span>
             <span className="text-foreground">{content.measuresHeadingTail}</span>

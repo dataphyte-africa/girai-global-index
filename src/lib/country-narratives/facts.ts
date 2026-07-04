@@ -66,7 +66,10 @@ function topBottomIndicators(
   dim: DimensionSlug,
   n = 2
 ): { top: IndicatorFact[]; bottom: IndicatorFact[] } {
+  // Strongest/weakest are ranked only within AI Policy indicators — scores
+  // across pillars sit on different scales and aren't directly comparable.
   const inds = indicatorsForDimension(dim)
+    .filter((i) => i.pillar === "ai-policy")
     .map((i) => ({
       slug: i.slug,
       name: i.name,
@@ -75,12 +78,19 @@ function topBottomIndicators(
     .filter((x) => x.score !== null && Number.isFinite(x.score))
     .sort((a, b) => b.score! - a.score!);
 
+  // Keep the two lists disjoint — with the small AI Policy pool, an unbounded
+  // bottom slice would otherwise repeat indicators already named as strongest.
+  const fact = (x: (typeof inds)[number]): IndicatorFact => ({
+    slug: x.slug,
+    name: x.name,
+    score: x.score!,
+  });
   return {
-    top: inds.slice(0, n).map((x) => ({ slug: x.slug, name: x.name, score: x.score! })),
+    top: inds.slice(0, n).map(fact),
     bottom: inds
-      .slice(-n)
+      .slice(Math.max(n, inds.length - n))
       .reverse()
-      .map((x) => ({ slug: x.slug, name: x.name, score: x.score! })),
+      .map(fact),
   };
 }
 

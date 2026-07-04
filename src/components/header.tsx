@@ -51,35 +51,29 @@ const dimensionLinks = DIMENSIONS.map((dimension) => ({
   href: `/dimensions/${dimension.id}`,
 }));
 
-const featuredNavIndicators: Array<{ slug: string; label?: string }> = [
-  { slug: "gender-equality", label: "Gender equality" },
-  { slug: "childrens-rights", label: "Children's rights" },
-  {
-    slug: "government-mechanisms-cso-inclusion",
-    label: "Public participation & inclusion",
-  },
-  { slug: "safety-security", label: "Protection of vulnerable groups" },
-  {
-    slug: "fairness-non-discrimination",
-    label: "Bias & unfair discrimination",
-  },
-  {
-    slug: "cultural-linguistic-diversity",
-    label: "Cultural & linguistic diversity",
-  },
-  {
-    slug: "human-oversight-determination",
-    label: "Ethical AI principles & frameworks",
-  },
+// Curated subset of indicators surfaced in the Explore menu. Labels are always
+// derived from the canonical taxonomy name so each entry matches the title of
+// the dedicated /indicators/[slug] page it links to.
+const featuredNavIndicatorSlugs = [
+  "gender-equality",
+  "childrens-rights",
+  "government-mechanisms-cso-inclusion",
+  "safety-security",
+  "fairness-non-discrimination",
+  "cultural-linguistic-diversity",
+  "human-oversight-determination",
 ];
 
-const indicatorLinks = featuredNavIndicators.map(({ slug, label }) => {
-  const indicator = INDICATORS.find((item) => item.slug === slug);
-  return {
-    label: label ?? indicator?.name ?? slug,
-    href: `/indicators/${slug}`,
-  };
-});
+const indicatorLinks = featuredNavIndicatorSlugs
+  .map((slug) => {
+    const indicator = INDICATORS.find((item) => item.slug === slug);
+    if (!indicator) return null;
+    return {
+      label: indicator.name,
+      href: `/indicators/${indicator.slug}`,
+    };
+  })
+  .filter((link): link is { label: string; href: string } => link !== null);
 
 export const Header = ({ content = headerDefaults }: { content?: HeaderContent }) => {
   const { primaryNav, exploreLinks, downloadCta } = content;
@@ -129,20 +123,33 @@ export const Header = ({ content = headerDefaults }: { content?: HeaderContent }
                 </NavigationMenuContent>
               </NavigationMenuItem>
 
-              {primaryNav.map((item) => (
-                <NavigationMenuItem key={item.label}>
-                  <NavigationMenuLink asChild className={desktopNavLinkClass}>
-                    <Link href={item.href}>{item.label}</Link>
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
-              ))}
+              {primaryNav.map((item) => {
+                const isExternal = /^https?:\/\//.test(item.href);
+                return (
+                  <NavigationMenuItem key={item.label}>
+                    <NavigationMenuLink asChild className={desktopNavLinkClass}>
+                      <Link
+                        href={item.href}
+                        {...(isExternal
+                          ? { target: "_blank", rel: "noopener noreferrer" }
+                          : {})}
+                      >
+                        {item.label}
+                      </Link>
+                    </NavigationMenuLink>
+                  </NavigationMenuItem>
+                );
+              })}
             </NavigationMenuList>
           </NavigationMenu>
         </div>
 
         <div className="relative z-50 flex items-center gap-2 sm:gap-3">
           <Link
-            href="/"
+            href="https://www.globalcenter.ai/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Global Center on AI Governance"
             className="hidden items-center gap-3 text-left transition-colors hover:bg-muted/60 xl:flex"
           >
             <Image
@@ -189,16 +196,22 @@ export const Header = ({ content = headerDefaults }: { content?: HeaderContent }
 
               <div className="flex flex-col gap-6 pt-6">
                 <nav className="flex flex-col gap-2">
-                  {primaryNav.map((item) => (
-                    <Link
-                      key={item.label}
-                      href={item.href}
-                      onClick={() => setSheetOpen(false)}
-                      className="rounded-xl px-3 py-3 text-base font-medium text-foreground/90 transition-colors hover:bg-muted hover:text-foreground"
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
+                  {primaryNav.map((item) => {
+                    const isExternal = /^https?:\/\//.test(item.href);
+                    return (
+                      <Link
+                        key={item.label}
+                        href={item.href}
+                        {...(isExternal
+                          ? { target: "_blank", rel: "noopener noreferrer" }
+                          : {})}
+                        onClick={() => setSheetOpen(false)}
+                        className="rounded-xl px-3 py-3 text-base font-medium text-foreground/90 transition-colors hover:bg-muted hover:text-foreground"
+                      >
+                        {item.label}
+                      </Link>
+                    );
+                  })}
                 </nav>
 
                 <MobileMenuGroup

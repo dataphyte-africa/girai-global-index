@@ -152,11 +152,11 @@ AUT,Austria,40-80-57-03,Europe,Western Europe,Developed,Europe & Central Asia,Hi
 AUT,Austria,71-64-14-79,Europe,Western Europe,Developed,Europe & Central Asia,High income,73911.44,Labour and Skills,AI Policy,Reskilling and upskilling initiatives,71.59,15.75
 AUT,Austria,73-25-78-57,Europe,Western Europe,Developed,Europe & Central Asia,High income,73911.44,Trust and Safety,AI Policy,Safety and Security,65.45,14.4
 AUT,Austria,91-90-09-12,Europe,Western Europe,Developed,Europe & Central Asia,High income,73911.44,Ethics and Sustainability,AI Policy,Transparency and Explainability,64.77,14.25
-AZE,Azerbaijan,38-46-26-52,Asia and Oceania,NorthWest Asia,Developing,Europe & Central Asia,Upper middle income,25089,Labour and Skills,AI Policy,AI Literacy,60.98,13.42
+AZE,Azerbaijan,38-46-26-52,Asia and Oceania,NorthWest Asia,Developing,Europe & Central Asia,Upper middle income,25089,Labour and Skills,AI Policy,AI Literacy,62.12,13.67
 AZE,Azerbaijan,83-03-65-76,Asia and Oceania,NorthWest Asia,Developing,Europe & Central Asia,Upper middle income,25089,Trust and Safety,AI Policy,AI-facilitated Misinformation and Violence,0,0
 AZE,Azerbaijan,01-56-01-69,Asia and Oceania,NorthWest Asia,Developing,Europe & Central Asia,Upper middle income,25089,Trust and Safety,AI Policy,Access to Redress and Remedy,0,0
 AZE,Azerbaijan,61-67-57-28,Asia and Oceania,NorthWest Asia,Developing,Europe & Central Asia,Upper middle income,25089,Inclusion and Diversity,AI Policy,Children's Rights,0,0
-AZE,Azerbaijan,16-21-26-06,Asia and Oceania,NorthWest Asia,Developing,Europe & Central Asia,Upper middle income,25089,Inclusion and Diversity,AI Policy,Cultural and Linguistic Diversity,82.58,18.17
+AZE,Azerbaijan,16-21-26-06,Asia and Oceania,NorthWest Asia,Developing,Europe & Central Asia,Upper middle income,25089,Inclusion and Diversity,AI Policy,Cultural and Linguistic Diversity,78.03,17.17
 AZE,Azerbaijan,36-65-66-32,Asia and Oceania,NorthWest Asia,Developing,Europe & Central Asia,Upper middle income,25089,Ethics and Sustainability,AI Policy,Environmental Impact,0,0
 AZE,Azerbaijan,32-43-84-82,Asia and Oceania,NorthWest Asia,Developing,Europe & Central Asia,Upper middle income,25089,Ethics and Sustainability,AI Policy,Fairness and Non-discrimination,0,0
 AZE,Azerbaijan,41-94-86-54,Asia and Oceania,NorthWest Asia,Developing,Europe & Central Asia,Upper middle income,25089,Inclusion and Diversity,AI Policy,Gender Equality,0,0
@@ -165,10 +165,10 @@ AZE,Azerbaijan,65-76-82-05,Asia and Oceania,NorthWest Asia,Developing,Europe & C
 AZE,Azerbaijan,70-89-43-76,Asia and Oceania,NorthWest Asia,Developing,Europe & Central Asia,Upper middle income,25089,Labour and Skills,AI Policy,Labour Protections,0,0
 AZE,Azerbaijan,05-32-19-39,Asia and Oceania,NorthWest Asia,Developing,Europe & Central Asia,Upper middle income,25089,AI Use in Public Service,AI Policy,Public Disclosure of Government Algorithmic Systems,0,0
 AZE,Azerbaijan,20-56-76-22,Asia and Oceania,NorthWest Asia,Developing,Europe & Central Asia,Upper middle income,25089,AI Use in Public Service,AI Policy,Public Procurement,0,0
-AZE,Azerbaijan,96-57-77-23,Asia and Oceania,NorthWest Asia,Developing,Europe & Central Asia,Upper middle income,25089,AI Use in Public Service,AI Policy,Public Sector Skills Development,75,16.5
-AZE,Azerbaijan,27-69-69-71,Asia and Oceania,NorthWest Asia,Developing,Europe & Central Asia,Upper middle income,25089,Labour and Skills,AI Policy,Reskilling and upskilling initiatives,73.48,16.17
+AZE,Azerbaijan,96-57-77-23,Asia and Oceania,NorthWest Asia,Developing,Europe & Central Asia,Upper middle income,25089,AI Use in Public Service,AI Policy,Public Sector Skills Development,70.45,15.5
+AZE,Azerbaijan,27-69-69-71,Asia and Oceania,NorthWest Asia,Developing,Europe & Central Asia,Upper middle income,25089,Labour and Skills,AI Policy,Reskilling and upskilling initiatives,68.94,15.17
 AZE,Azerbaijan,00-01-07-02,Asia and Oceania,NorthWest Asia,Developing,Europe & Central Asia,Upper middle income,25089,Trust and Safety,AI Policy,Safety and Security,9.09,2
-AZE,Azerbaijan,69-97-39-07,Asia and Oceania,NorthWest Asia,Developing,Europe & Central Asia,Upper middle income,25089,Ethics and Sustainability,AI Policy,Transparency and Explainability,65.15,14.33
+AZE,Azerbaijan,69-97-39-07,Asia and Oceania,NorthWest Asia,Developing,Europe & Central Asia,Upper middle income,25089,Ethics and Sustainability,AI Policy,Transparency and Explainability,60.61,13.33
 BHR,Bahrain,25-90-72-92,Middle East,,Developing,"Middle East, North Africa, Afghanistan & Pakistan",High income,66941.24,Labour and Skills,AI Policy,AI Literacy,17.27,3.8
 BHR,Bahrain,78-67-38-85,Middle East,,Developing,"Middle East, North Africa, Afghanistan & Pakistan",High income,66941.24,Trust and Safety,AI Policy,AI-facilitated Misinformation and Violence,8.69,1.91
 BHR,Bahrain,46-85-47-75,Middle East,,Developing,"Middle East, North Africa, Afghanistan & Pakistan",High income,66941.24,Trust and Safety,AI Policy,Access to Redress and Remedy,8.18,1.8
@@ -273,7 +273,7 @@ BLZ,Belize,90-77-53-31,Caribbean,,Developing,Latin America & Caribbean ,Upper mi
 BLZ,Belize,67-59-05-94,Caribbean,,Developing,Latin America & Caribbean ,Upper middle income,14346.52,Ethics and Sustainability,AI Policy,Transparency and Explainability,0,0
 BEN,Benin,79-41-03-94,Africa,West Africa,Developing,Sub-Saharan Africa ,Lower middle income,4434.56,Labour and Skills,AI Policy,AI Literacy,75.76,16.67
 BEN,Benin,21-20-55-72,Africa,West Africa,Developing,Sub-Saharan Africa ,Lower middle income,4434.56,Trust and Safety,AI Policy,AI-facilitated Misinformation and Violence,0,0
-BEN,Benin,85-94-28-78,Africa,West Africa,Developing,Sub-Saharan Africa ,Lower middle income,4434.56,Trust and Safety,AI Policy,Access to Redress and Remedy,56.59,12.45
+BEN,Benin,85-94-28-78,Africa,West Africa,Developing,Sub-Saharan Africa ,Lower middle income,4434.56,Trust and Safety,AI Policy,Access to Redress and Remedy,58.64,12.9
 BEN,Benin,88-98-86-59,Africa,West Africa,Developing,Sub-Saharan Africa ,Lower middle income,4434.56,Inclusion and Diversity,AI Policy,Children's Rights,0,0
 BEN,Benin,97-82-84-40,Africa,West Africa,Developing,Sub-Saharan Africa ,Lower middle income,4434.56,Inclusion and Diversity,AI Policy,Cultural and Linguistic Diversity,73.48,16.17
 BEN,Benin,34-54-20-18,Africa,West Africa,Developing,Sub-Saharan Africa ,Lower middle income,4434.56,Ethics and Sustainability,AI Policy,Environmental Impact,64.39,14.17
@@ -446,7 +446,7 @@ CAN,Canada,41-40-68-06,Northern America,,Developed,North America,High income,646
 CAN,Canada,81-36-74-00,Northern America,,Developed,North America,High income,64610.38,Trust and Safety,AI Policy,Access to Redress and Remedy,40.11,8.82
 CAN,Canada,68-10-99-63,Northern America,,Developed,North America,High income,64610.38,Inclusion and Diversity,AI Policy,Children's Rights,29.55,6.5
 CAN,Canada,98-95-82-24,Northern America,,Developed,North America,High income,64610.38,Inclusion and Diversity,AI Policy,Cultural and Linguistic Diversity,49.24,10.83
-CAN,Canada,41-35-85-74,Northern America,,Developed,North America,High income,64610.38,Ethics and Sustainability,AI Policy,Environmental Impact,39.77,8.75
+CAN,Canada,41-35-85-74,Northern America,,Developed,North America,High income,64610.38,Ethics and Sustainability,AI Policy,Environmental Impact,37.22,8.19
 CAN,Canada,65-74-54-12,Northern America,,Developed,North America,High income,64610.38,Ethics and Sustainability,AI Policy,Fairness and Non-discrimination,59.62,13.12
 CAN,Canada,52-00-39-00,Northern America,,Developed,North America,High income,64610.38,Inclusion and Diversity,AI Policy,Gender Equality,60.08,13.22
 CAN,Canada,36-70-25-68,Northern America,,Developed,North America,High income,64610.38,Ethics and Sustainability,AI Policy,Human Oversight and Determination,49.05,10.79
@@ -525,7 +525,7 @@ CHN,China,04-27-29-04,Asia and Oceania,East Asia,Developing,East Asia & Pacific,
 CHN,China,55-36-23-76,Asia and Oceania,East Asia,Developing,East Asia & Pacific,Upper middle income,27104.87,AI Use in Public Service,AI Policy,Public Sector Skills Development,65.53,14.42
 CHN,China,98-19-60-25,Asia and Oceania,East Asia,Developing,East Asia & Pacific,Upper middle income,27104.87,Labour and Skills,AI Policy,Reskilling and upskilling initiatives,68.94,15.17
 CHN,China,55-51-81-61,Asia and Oceania,East Asia,Developing,East Asia & Pacific,Upper middle income,27104.87,Trust and Safety,AI Policy,Safety and Security,68.18,15
-CHN,China,79-41-78-91,Asia and Oceania,East Asia,Developing,East Asia & Pacific,Upper middle income,27104.87,Ethics and Sustainability,AI Policy,Transparency and Explainability,80.3,17.67
+CHN,China,79-41-78-91,Asia and Oceania,East Asia,Developing,East Asia & Pacific,Upper middle income,27104.87,Ethics and Sustainability,AI Policy,Transparency and Explainability,68.94,15.17
 HKG,China Hong Kong Special Administrative Region,52-73-46-59,Asia and Oceania,East Asia,Developing,East Asia & Pacific,High income,75195.99,Labour and Skills,AI Policy,AI Literacy,46.21,10.17
 HKG,China Hong Kong Special Administrative Region,65-49-29-18,Asia and Oceania,East Asia,Developing,East Asia & Pacific,High income,75195.99,Trust and Safety,AI Policy,AI-facilitated Misinformation and Violence,40.34,8.88
 HKG,China Hong Kong Special Administrative Region,44-30-67-68,Asia and Oceania,East Asia,Developing,East Asia & Pacific,High income,75195.99,Trust and Safety,AI Policy,Access to Redress and Remedy,37.88,8.33
@@ -679,11 +679,11 @@ ECU,Ecuador,73-96-41-51,South and Central America,South America,Developing,Latin
 ECU,Ecuador,83-48-43-19,South and Central America,South America,Developing,Latin America & Caribbean ,Upper middle income,15840.27,Labour and Skills,AI Policy,Reskilling and upskilling initiatives,9.09,2
 ECU,Ecuador,17-09-28-71,South and Central America,South America,Developing,Latin America & Caribbean ,Upper middle income,15840.27,Trust and Safety,AI Policy,Safety and Security,0,0
 ECU,Ecuador,57-69-32-88,South and Central America,South America,Developing,Latin America & Caribbean ,Upper middle income,15840.27,Ethics and Sustainability,AI Policy,Transparency and Explainability,11.36,2.5
-EGY,Egypt,98-25-60-48,Africa,North Africa,Developing,"Middle East, North Africa, Afghanistan & Pakistan",Lower middle income,19094.14,Labour and Skills,AI Policy,AI Literacy,77.27,17
+EGY,Egypt,98-25-60-48,Africa,North Africa,Developing,"Middle East, North Africa, Afghanistan & Pakistan",Lower middle income,19094.14,Labour and Skills,AI Policy,AI Literacy,72.73,16
 EGY,Egypt,84-91-36-94,Africa,North Africa,Developing,"Middle East, North Africa, Afghanistan & Pakistan",Lower middle income,19094.14,Trust and Safety,AI Policy,AI-facilitated Misinformation and Violence,9.09,2
 EGY,Egypt,91-05-46-85,Africa,North Africa,Developing,"Middle East, North Africa, Afghanistan & Pakistan",Lower middle income,19094.14,Trust and Safety,AI Policy,Access to Redress and Remedy,52.65,11.58
 EGY,Egypt,94-74-49-71,Africa,North Africa,Developing,"Middle East, North Africa, Afghanistan & Pakistan",Lower middle income,19094.14,Inclusion and Diversity,AI Policy,Children's Rights,37.12,8.17
-EGY,Egypt,85-14-10-18,Africa,North Africa,Developing,"Middle East, North Africa, Afghanistan & Pakistan",Lower middle income,19094.14,Inclusion and Diversity,AI Policy,Cultural and Linguistic Diversity,74.24,16.33
+EGY,Egypt,85-14-10-18,Africa,North Africa,Developing,"Middle East, North Africa, Afghanistan & Pakistan",Lower middle income,19094.14,Inclusion and Diversity,AI Policy,Cultural and Linguistic Diversity,69.7,15.33
 EGY,Egypt,94-24-55-36,Africa,North Africa,Developing,"Middle East, North Africa, Afghanistan & Pakistan",Lower middle income,19094.14,Ethics and Sustainability,AI Policy,Environmental Impact,11.36,2.5
 EGY,Egypt,11-05-22-45,Africa,North Africa,Developing,"Middle East, North Africa, Afghanistan & Pakistan",Lower middle income,19094.14,Ethics and Sustainability,AI Policy,Fairness and Non-discrimination,50,11
 EGY,Egypt,40-31-92-63,Africa,North Africa,Developing,"Middle East, North Africa, Afghanistan & Pakistan",Lower middle income,19094.14,Inclusion and Diversity,AI Policy,Gender Equality,9.09,2
@@ -692,8 +692,8 @@ EGY,Egypt,62-09-32-95,Africa,North Africa,Developing,"Middle East, North Africa,
 EGY,Egypt,45-54-13-06,Africa,North Africa,Developing,"Middle East, North Africa, Afghanistan & Pakistan",Lower middle income,19094.14,Labour and Skills,AI Policy,Labour Protections,36.36,8
 EGY,Egypt,40-25-10-47,Africa,North Africa,Developing,"Middle East, North Africa, Afghanistan & Pakistan",Lower middle income,19094.14,AI Use in Public Service,AI Policy,Public Disclosure of Government Algorithmic Systems,0,0
 EGY,Egypt,41-30-02-46,Africa,North Africa,Developing,"Middle East, North Africa, Afghanistan & Pakistan",Lower middle income,19094.14,AI Use in Public Service,AI Policy,Public Procurement,0,0
-EGY,Egypt,96-91-89-76,Africa,North Africa,Developing,"Middle East, North Africa, Afghanistan & Pakistan",Lower middle income,19094.14,AI Use in Public Service,AI Policy,Public Sector Skills Development,75,16.5
-EGY,Egypt,02-39-43-01,Africa,North Africa,Developing,"Middle East, North Africa, Afghanistan & Pakistan",Lower middle income,19094.14,Labour and Skills,AI Policy,Reskilling and upskilling initiatives,82.58,18.17
+EGY,Egypt,96-91-89-76,Africa,North Africa,Developing,"Middle East, North Africa, Afghanistan & Pakistan",Lower middle income,19094.14,AI Use in Public Service,AI Policy,Public Sector Skills Development,70.45,15.5
+EGY,Egypt,02-39-43-01,Africa,North Africa,Developing,"Middle East, North Africa, Afghanistan & Pakistan",Lower middle income,19094.14,Labour and Skills,AI Policy,Reskilling and upskilling initiatives,78.03,17.17
 EGY,Egypt,77-11-79-60,Africa,North Africa,Developing,"Middle East, North Africa, Afghanistan & Pakistan",Lower middle income,19094.14,Trust and Safety,AI Policy,Safety and Security,49.43,10.88
 EGY,Egypt,73-83-95-16,Africa,North Africa,Developing,"Middle East, North Africa, Afghanistan & Pakistan",Lower middle income,19094.14,Ethics and Sustainability,AI Policy,Transparency and Explainability,40.15,8.83
 SLV,El Salvador,86-28-35-51,South and Central America,Central America,Developing,Latin America & Caribbean ,Upper middle income,13264.03,Labour and Skills,AI Policy,AI Literacy,73.48,16.17
@@ -730,13 +730,13 @@ EST,Estonia,50-10-56-92,Europe,North Europe,Developed,Europe & Central Asia,High
 EST,Estonia,32-57-32-95,Europe,North Europe,Developed,Europe & Central Asia,High income,49968.71,Labour and Skills,AI Policy,Reskilling and upskilling initiatives,74.24,16.33
 EST,Estonia,73-22-08-02,Europe,North Europe,Developed,Europe & Central Asia,High income,49968.71,Trust and Safety,AI Policy,Safety and Security,74.55,16.4
 EST,Estonia,85-32-92-79,Europe,North Europe,Developed,Europe & Central Asia,High income,49968.71,Ethics and Sustainability,AI Policy,Transparency and Explainability,73.86,16.25
-ETH,Ethiopia,98-83-64-74,Africa,East Africa,Developing,Sub-Saharan Africa ,Low income,3287.53,Labour and Skills,AI Policy,AI Literacy,73.11,16.08
+ETH,Ethiopia,98-83-64-74,Africa,East Africa,Developing,Sub-Saharan Africa ,Low income,3287.53,Labour and Skills,AI Policy,AI Literacy,68.56,15.08
 ETH,Ethiopia,40-60-74-06,Africa,East Africa,Developing,Sub-Saharan Africa ,Low income,3287.53,Trust and Safety,AI Policy,AI-facilitated Misinformation and Violence,0,0
 ETH,Ethiopia,65-64-85-15,Africa,East Africa,Developing,Sub-Saharan Africa ,Low income,3287.53,Trust and Safety,AI Policy,Access to Redress and Remedy,0,0
 ETH,Ethiopia,77-84-65-36,Africa,East Africa,Developing,Sub-Saharan Africa ,Low income,3287.53,Inclusion and Diversity,AI Policy,Children's Rights,0,0
-ETH,Ethiopia,58-07-80-68,Africa,East Africa,Developing,Sub-Saharan Africa ,Low income,3287.53,Inclusion and Diversity,AI Policy,Cultural and Linguistic Diversity,63.26,13.92
+ETH,Ethiopia,58-07-80-68,Africa,East Africa,Developing,Sub-Saharan Africa ,Low income,3287.53,Inclusion and Diversity,AI Policy,Cultural and Linguistic Diversity,58.71,12.92
 ETH,Ethiopia,27-97-20-79,Africa,East Africa,Developing,Sub-Saharan Africa ,Low income,3287.53,Ethics and Sustainability,AI Policy,Environmental Impact,0,0
-ETH,Ethiopia,36-89-40-74,Africa,East Africa,Developing,Sub-Saharan Africa ,Low income,3287.53,Ethics and Sustainability,AI Policy,Fairness and Non-discrimination,64.02,14.08
+ETH,Ethiopia,36-89-40-74,Africa,East Africa,Developing,Sub-Saharan Africa ,Low income,3287.53,Ethics and Sustainability,AI Policy,Fairness and Non-discrimination,59.47,13.08
 ETH,Ethiopia,41-09-87-09,Africa,East Africa,Developing,Sub-Saharan Africa ,Low income,3287.53,Inclusion and Diversity,AI Policy,Gender Equality,0,0
 ETH,Ethiopia,25-58-25-67,Africa,East Africa,Developing,Sub-Saharan Africa ,Low income,3287.53,Ethics and Sustainability,AI Policy,Human Oversight and Determination,65.15,14.33
 ETH,Ethiopia,95-38-15-58,Africa,East Africa,Developing,Sub-Saharan Africa ,Low income,3287.53,Trust and Safety,AI Policy,Impact Assessments,64.39,14.17
@@ -744,8 +744,8 @@ ETH,Ethiopia,01-22-63-92,Africa,East Africa,Developing,Sub-Saharan Africa ,Low i
 ETH,Ethiopia,67-67-28-85,Africa,East Africa,Developing,Sub-Saharan Africa ,Low income,3287.53,AI Use in Public Service,AI Policy,Public Disclosure of Government Algorithmic Systems,0,0
 ETH,Ethiopia,10-12-78-72,Africa,East Africa,Developing,Sub-Saharan Africa ,Low income,3287.53,AI Use in Public Service,AI Policy,Public Procurement,0,0
 ETH,Ethiopia,35-27-50-42,Africa,East Africa,Developing,Sub-Saharan Africa ,Low income,3287.53,AI Use in Public Service,AI Policy,Public Sector Skills Development,9.09,2
-ETH,Ethiopia,33-66-15-87,Africa,East Africa,Developing,Sub-Saharan Africa ,Low income,3287.53,Labour and Skills,AI Policy,Reskilling and upskilling initiatives,63.26,13.92
-ETH,Ethiopia,70-80-92-30,Africa,East Africa,Developing,Sub-Saharan Africa ,Low income,3287.53,Trust and Safety,AI Policy,Safety and Security,73.86,16.25
+ETH,Ethiopia,33-66-15-87,Africa,East Africa,Developing,Sub-Saharan Africa ,Low income,3287.53,Labour and Skills,AI Policy,Reskilling and upskilling initiatives,58.71,12.92
+ETH,Ethiopia,70-80-92-30,Africa,East Africa,Developing,Sub-Saharan Africa ,Low income,3287.53,Trust and Safety,AI Policy,Safety and Security,69.32,15.25
 ETH,Ethiopia,59-93-31-64,Africa,East Africa,Developing,Sub-Saharan Africa ,Low income,3287.53,Ethics and Sustainability,AI Policy,Transparency and Explainability,65.91,14.5
 FRA,France,50-42-89-66,Europe,Western Europe,Developed,Europe & Central Asia,High income,62556.92,Labour and Skills,AI Policy,AI Literacy,70.45,15.5
 FRA,France,32-71-51-80,Europe,Western Europe,Developed,Europe & Central Asia,High income,62556.92,Trust and Safety,AI Policy,AI-facilitated Misinformation and Violence,79.55,17.5
@@ -900,11 +900,11 @@ HND,Honduras,21-87-40-80,South and Central America,Central America,Developing,La
 HND,Honduras,08-88-93-60,South and Central America,Central America,Developing,Latin America & Caribbean ,Lower middle income,7486.02,Labour and Skills,AI Policy,Reskilling and upskilling initiatives,0,0
 HND,Honduras,33-59-56-69,South and Central America,Central America,Developing,Latin America & Caribbean ,Lower middle income,7486.02,Trust and Safety,AI Policy,Safety and Security,0,0
 HND,Honduras,24-66-73-30,South and Central America,Central America,Developing,Latin America & Caribbean ,Lower middle income,7486.02,Ethics and Sustainability,AI Policy,Transparency and Explainability,0,0
-HUN,Hungary,70-57-85-55,Europe,Central Europe,Developed,Europe & Central Asia,High income,48552.47,Labour and Skills,AI Policy,AI Literacy,33.14,7.29
+HUN,Hungary,70-57-85-55,Europe,Central Europe,Developed,Europe & Central Asia,High income,48552.47,Labour and Skills,AI Policy,AI Literacy,30.87,6.79
 HUN,Hungary,36-08-12-25,Europe,Central Europe,Developed,Europe & Central Asia,High income,48552.47,Trust and Safety,AI Policy,AI-facilitated Misinformation and Violence,70.45,15.5
 HUN,Hungary,32-41-18-17,Europe,Central Europe,Developed,Europe & Central Asia,High income,48552.47,Trust and Safety,AI Policy,Access to Redress and Remedy,73.86,16.25
 HUN,Hungary,50-11-49-42,Europe,Central Europe,Developed,Europe & Central Asia,High income,48552.47,Inclusion and Diversity,AI Policy,Children's Rights,71.21,15.67
-HUN,Hungary,59-88-28-72,Europe,Central Europe,Developed,Europe & Central Asia,High income,48552.47,Inclusion and Diversity,AI Policy,Cultural and Linguistic Diversity,70.45,15.5
+HUN,Hungary,59-88-28-72,Europe,Central Europe,Developed,Europe & Central Asia,High income,48552.47,Inclusion and Diversity,AI Policy,Cultural and Linguistic Diversity,67.05,14.75
 HUN,Hungary,10-54-13-04,Europe,Central Europe,Developed,Europe & Central Asia,High income,48552.47,Ethics and Sustainability,AI Policy,Environmental Impact,0,0
 HUN,Hungary,30-09-08-34,Europe,Central Europe,Developed,Europe & Central Asia,High income,48552.47,Ethics and Sustainability,AI Policy,Fairness and Non-discrimination,64.77,14.25
 HUN,Hungary,68-80-08-49,Europe,Central Europe,Developed,Europe & Central Asia,High income,48552.47,Inclusion and Diversity,AI Policy,Gender Equality,63.41,13.95
@@ -913,20 +913,20 @@ HUN,Hungary,34-46-91-78,Europe,Central Europe,Developed,Europe & Central Asia,Hi
 HUN,Hungary,20-40-86-95,Europe,Central Europe,Developed,Europe & Central Asia,High income,48552.47,Labour and Skills,AI Policy,Labour Protections,64.09,14.1
 HUN,Hungary,36-28-96-75,Europe,Central Europe,Developed,Europe & Central Asia,High income,48552.47,AI Use in Public Service,AI Policy,Public Disclosure of Government Algorithmic Systems,0,0
 HUN,Hungary,86-54-08-28,Europe,Central Europe,Developed,Europe & Central Asia,High income,48552.47,AI Use in Public Service,AI Policy,Public Procurement,0,0
-HUN,Hungary,22-04-98-25,Europe,Central Europe,Developed,Europe & Central Asia,High income,48552.47,AI Use in Public Service,AI Policy,Public Sector Skills Development,64.02,14.08
-HUN,Hungary,72-92-66-03,Europe,Central Europe,Developed,Europe & Central Asia,High income,48552.47,Labour and Skills,AI Policy,Reskilling and upskilling initiatives,63.26,13.92
+HUN,Hungary,22-04-98-25,Europe,Central Europe,Developed,Europe & Central Asia,High income,48552.47,AI Use in Public Service,AI Policy,Public Sector Skills Development,59.47,13.08
+HUN,Hungary,72-92-66-03,Europe,Central Europe,Developed,Europe & Central Asia,High income,48552.47,Labour and Skills,AI Policy,Reskilling and upskilling initiatives,58.71,12.92
 HUN,Hungary,41-69-76-49,Europe,Central Europe,Developed,Europe & Central Asia,High income,48552.47,Trust and Safety,AI Policy,Safety and Security,65.45,14.4
 HUN,Hungary,12-06-17-28,Europe,Central Europe,Developed,Europe & Central Asia,High income,48552.47,Ethics and Sustainability,AI Policy,Transparency and Explainability,64.77,14.25
 IND,India,86-38-94-36,Asia and Oceania,South West Asia,Developing,South Asia,Lower middle income,11159.99,Labour and Skills,AI Policy,AI Literacy,72.35,15.92
-IND,India,54-21-33-66,Asia and Oceania,South West Asia,Developing,South Asia,Lower middle income,11159.99,Trust and Safety,AI Policy,AI-facilitated Misinformation and Violence,45.17,9.94
+IND,India,54-21-33-66,Asia and Oceania,South West Asia,Developing,South Asia,Lower middle income,11159.99,Trust and Safety,AI Policy,AI-facilitated Misinformation and Violence,44.03,9.69
 IND,India,95-47-77-18,Asia and Oceania,South West Asia,Developing,South Asia,Lower middle income,11159.99,Trust and Safety,AI Policy,Access to Redress and Remedy,53.41,11.75
 IND,India,66-36-46-23,Asia and Oceania,South West Asia,Developing,South Asia,Lower middle income,11159.99,Inclusion and Diversity,AI Policy,Children's Rights,67.73,14.9
 IND,India,12-24-19-02,Asia and Oceania,South West Asia,Developing,South Asia,Lower middle income,11159.99,Inclusion and Diversity,AI Policy,Cultural and Linguistic Diversity,68.94,15.17
 IND,India,11-26-77-51,Asia and Oceania,South West Asia,Developing,South Asia,Lower middle income,11159.99,Ethics and Sustainability,AI Policy,Environmental Impact,0,0
 IND,India,50-73-49-96,Asia and Oceania,South West Asia,Developing,South Asia,Lower middle income,11159.99,Ethics and Sustainability,AI Policy,Fairness and Non-discrimination,20.45,4.5
-IND,India,64-47-93-67,Asia and Oceania,South West Asia,Developing,South Asia,Lower middle income,11159.99,Inclusion and Diversity,AI Policy,Gender Equality,35.61,7.83
+IND,India,64-47-93-67,Asia and Oceania,South West Asia,Developing,South Asia,Lower middle income,11159.99,Inclusion and Diversity,AI Policy,Gender Equality,52.65,11.58
 IND,India,23-89-84-80,Asia and Oceania,South West Asia,Developing,South Asia,Lower middle income,11159.99,Ethics and Sustainability,AI Policy,Human Oversight and Determination,31.82,7
-IND,India,56-95-18-54,Asia and Oceania,South West Asia,Developing,South Asia,Lower middle income,11159.99,Trust and Safety,AI Policy,Impact Assessments,62.12,13.67
+IND,India,56-95-18-54,Asia and Oceania,South West Asia,Developing,South Asia,Lower middle income,11159.99,Trust and Safety,AI Policy,Impact Assessments,64.39,14.17
 IND,India,16-45-96-11,Asia and Oceania,South West Asia,Developing,South Asia,Lower middle income,11159.99,Labour and Skills,AI Policy,Labour Protections,10.61,2.33
 IND,India,06-07-60-55,Asia and Oceania,South West Asia,Developing,South Asia,Lower middle income,11159.99,AI Use in Public Service,AI Policy,Public Disclosure of Government Algorithmic Systems,0,0
 IND,India,17-38-69-83,Asia and Oceania,South West Asia,Developing,South Asia,Lower middle income,11159.99,AI Use in Public Service,AI Policy,Public Procurement,37.5,8.25
@@ -972,19 +972,19 @@ ISR,Israel,08-55-16-36,Middle East,,Developed,"Middle East, North Africa, Afghan
 ISR,Israel,48-73-92-84,Middle East,,Developed,"Middle East, North Africa, Afghanistan & Pakistan",High income,57235.78,Trust and Safety,AI Policy,AI-facilitated Misinformation and Violence,21.02,4.62
 ISR,Israel,06-03-72-99,Middle East,,Developed,"Middle East, North Africa, Afghanistan & Pakistan",High income,57235.78,Trust and Safety,AI Policy,Access to Redress and Remedy,18.18,4
 ISR,Israel,98-46-48-40,Middle East,,Developed,"Middle East, North Africa, Afghanistan & Pakistan",High income,57235.78,Inclusion and Diversity,AI Policy,Children's Rights,30.68,6.75
-ISR,Israel,93-75-95-05,Middle East,,Developed,"Middle East, North Africa, Afghanistan & Pakistan",High income,57235.78,Inclusion and Diversity,AI Policy,Cultural and Linguistic Diversity,36.36,8
+ISR,Israel,93-75-95-05,Middle East,,Developed,"Middle East, North Africa, Afghanistan & Pakistan",High income,57235.78,Inclusion and Diversity,AI Policy,Cultural and Linguistic Diversity,63.64,14
 ISR,Israel,14-80-17-73,Middle East,,Developed,"Middle East, North Africa, Afghanistan & Pakistan",High income,57235.78,Ethics and Sustainability,AI Policy,Environmental Impact,0,0
 ISR,Israel,01-91-80-30,Middle East,,Developed,"Middle East, North Africa, Afghanistan & Pakistan",High income,57235.78,Ethics and Sustainability,AI Policy,Fairness and Non-discrimination,53.41,11.75
 ISR,Israel,39-04-80-55,Middle East,,Developed,"Middle East, North Africa, Afghanistan & Pakistan",High income,57235.78,Inclusion and Diversity,AI Policy,Gender Equality,9.09,2
-ISR,Israel,58-65-30-75,Middle East,,Developed,"Middle East, North Africa, Afghanistan & Pakistan",High income,57235.78,Ethics and Sustainability,AI Policy,Human Oversight and Determination,60.23,13.25
+ISR,Israel,58-65-30-75,Middle East,,Developed,"Middle East, North Africa, Afghanistan & Pakistan",High income,57235.78,Ethics and Sustainability,AI Policy,Human Oversight and Determination,62.5,13.75
 ISR,Israel,66-54-64-98,Middle East,,Developed,"Middle East, North Africa, Afghanistan & Pakistan",High income,57235.78,Trust and Safety,AI Policy,Impact Assessments,53.41,11.75
 ISR,Israel,79-24-57-13,Middle East,,Developed,"Middle East, North Africa, Afghanistan & Pakistan",High income,57235.78,Labour and Skills,AI Policy,Labour Protections,0,0
 ISR,Israel,80-54-00-02,Middle East,,Developed,"Middle East, North Africa, Afghanistan & Pakistan",High income,57235.78,AI Use in Public Service,AI Policy,Public Disclosure of Government Algorithmic Systems,40.91,9
 ISR,Israel,81-43-88-17,Middle East,,Developed,"Middle East, North Africa, Afghanistan & Pakistan",High income,57235.78,AI Use in Public Service,AI Policy,Public Procurement,49.43,10.88
-ISR,Israel,80-73-22-11,Middle East,,Developed,"Middle East, North Africa, Afghanistan & Pakistan",High income,57235.78,AI Use in Public Service,AI Policy,Public Sector Skills Development,26.89,5.92
+ISR,Israel,80-73-22-11,Middle East,,Developed,"Middle East, North Africa, Afghanistan & Pakistan",High income,57235.78,AI Use in Public Service,AI Policy,Public Sector Skills Development,29.17,6.42
 ISR,Israel,09-54-31-71,Middle East,,Developed,"Middle East, North Africa, Afghanistan & Pakistan",High income,57235.78,Labour and Skills,AI Policy,Reskilling and upskilling initiatives,54.55,12
 ISR,Israel,07-88-40-20,Middle East,,Developed,"Middle East, North Africa, Afghanistan & Pakistan",High income,57235.78,Trust and Safety,AI Policy,Safety and Security,52.56,11.56
-ISR,Israel,37-14-40-03,Middle East,,Developed,"Middle East, North Africa, Afghanistan & Pakistan",High income,57235.78,Ethics and Sustainability,AI Policy,Transparency and Explainability,56.44,12.42
+ISR,Israel,37-14-40-03,Middle East,,Developed,"Middle East, North Africa, Afghanistan & Pakistan",High income,57235.78,Ethics and Sustainability,AI Policy,Transparency and Explainability,71.21,15.67
 ITA,Italy,82-39-93-12,Europe,Western Europe,Developed,Europe & Central Asia,High income,62014.27,Labour and Skills,AI Policy,AI Literacy,73.18,16.1
 ITA,Italy,27-05-54-69,Europe,Western Europe,Developed,Europe & Central Asia,High income,62014.27,Trust and Safety,AI Policy,AI-facilitated Misinformation and Violence,88.64,19.5
 ITA,Italy,60-03-00-13,Europe,Western Europe,Developed,Europe & Central Asia,High income,62014.27,Trust and Safety,AI Policy,Access to Redress and Remedy,73.86,16.25
@@ -1018,19 +1018,19 @@ JAM,Jamaica,31-59-51-40,Caribbean,,Developing,Latin America & Caribbean ,Upper m
 JAM,Jamaica,27-98-40-96,Caribbean,,Developing,Latin America & Caribbean ,Upper middle income,12890.27,AI Use in Public Service,AI Policy,Public Sector Skills Development,9.09,2
 JAM,Jamaica,81-27-40-41,Caribbean,,Developing,Latin America & Caribbean ,Upper middle income,12890.27,Labour and Skills,AI Policy,Reskilling and upskilling initiatives,18.18,4
 JAM,Jamaica,87-95-40-97,Caribbean,,Developing,Latin America & Caribbean ,Upper middle income,12890.27,Trust and Safety,AI Policy,Safety and Security,9.09,2
-JAM,Jamaica,51-90-54-71,Caribbean,,Developing,Latin America & Caribbean ,Upper middle income,12890.27,Ethics and Sustainability,AI Policy,Transparency and Explainability,71.82,15.8
+JAM,Jamaica,51-90-54-71,Caribbean,,Developing,Latin America & Caribbean ,Upper middle income,12890.27,Ethics and Sustainability,AI Policy,Transparency and Explainability,67.73,14.9
 JPN,Japan,68-51-35-17,Asia and Oceania,East Asia,Developed,East Asia & Pacific,High income,52039.17,Labour and Skills,AI Policy,AI Literacy,26.14,5.75
 JPN,Japan,33-40-09-47,Asia and Oceania,East Asia,Developed,East Asia & Pacific,High income,52039.17,Trust and Safety,AI Policy,AI-facilitated Misinformation and Violence,67.61,14.88
 JPN,Japan,76-31-04-85,Asia and Oceania,East Asia,Developed,East Asia & Pacific,High income,52039.17,Trust and Safety,AI Policy,Access to Redress and Remedy,9.09,2
 JPN,Japan,05-35-94-41,Asia and Oceania,East Asia,Developed,East Asia & Pacific,High income,52039.17,Inclusion and Diversity,AI Policy,Children's Rights,52.27,11.5
 JPN,Japan,90-40-43-30,Asia and Oceania,East Asia,Developed,East Asia & Pacific,High income,52039.17,Inclusion and Diversity,AI Policy,Cultural and Linguistic Diversity,29.55,6.5
-JPN,Japan,54-29-60-69,Asia and Oceania,East Asia,Developed,East Asia & Pacific,High income,52039.17,Ethics and Sustainability,AI Policy,Environmental Impact,28.41,6.25
+JPN,Japan,54-29-60-69,Asia and Oceania,East Asia,Developed,East Asia & Pacific,High income,52039.17,Ethics and Sustainability,AI Policy,Environmental Impact,26.48,5.82
 JPN,Japan,30-00-30-45,Asia and Oceania,East Asia,Developed,East Asia & Pacific,High income,52039.17,Ethics and Sustainability,AI Policy,Fairness and Non-discrimination,72.73,16
 JPN,Japan,89-35-46-60,Asia and Oceania,East Asia,Developed,East Asia & Pacific,High income,52039.17,Inclusion and Diversity,AI Policy,Gender Equality,73.11,16.08
 JPN,Japan,35-19-45-14,Asia and Oceania,East Asia,Developed,East Asia & Pacific,High income,52039.17,Ethics and Sustainability,AI Policy,Human Oversight and Determination,61.36,13.5
 JPN,Japan,45-44-60-98,Asia and Oceania,East Asia,Developed,East Asia & Pacific,High income,52039.17,Trust and Safety,AI Policy,Impact Assessments,67.42,14.83
 JPN,Japan,12-47-87-34,Asia and Oceania,East Asia,Developed,East Asia & Pacific,High income,52039.17,Labour and Skills,AI Policy,Labour Protections,18.18,4
-JPN,Japan,49-92-75-03,Asia and Oceania,East Asia,Developed,East Asia & Pacific,High income,52039.17,AI Use in Public Service,AI Policy,Public Disclosure of Government Algorithmic Systems,48.3,10.62
+JPN,Japan,49-92-75-03,Asia and Oceania,East Asia,Developed,East Asia & Pacific,High income,52039.17,AI Use in Public Service,AI Policy,Public Disclosure of Government Algorithmic Systems,44.38,9.76
 JPN,Japan,39-27-48-21,Asia and Oceania,East Asia,Developed,East Asia & Pacific,High income,52039.17,AI Use in Public Service,AI Policy,Public Procurement,42.84,9.43
 JPN,Japan,38-06-44-34,Asia and Oceania,East Asia,Developed,East Asia & Pacific,High income,52039.17,AI Use in Public Service,AI Policy,Public Sector Skills Development,27.16,5.98
 JPN,Japan,11-46-60-88,Asia and Oceania,East Asia,Developed,East Asia & Pacific,High income,52039.17,Labour and Skills,AI Policy,Reskilling and upskilling initiatives,69.7,15.33
@@ -1155,11 +1155,11 @@ LAO,Lao People's Democratic Republic,41-92-34-16,Asia and Oceania,South East Asi
 LAO,Lao People's Democratic Republic,72-03-11-53,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,Lower middle income,9775.83,Labour and Skills,AI Policy,Reskilling and upskilling initiatives,0,0
 LAO,Lao People's Democratic Republic,60-76-48-62,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,Lower middle income,9775.83,Trust and Safety,AI Policy,Safety and Security,0,0
 LAO,Lao People's Democratic Republic,23-46-42-92,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,Lower middle income,9775.83,Ethics and Sustainability,AI Policy,Transparency and Explainability,0,0
-LVA,Latvia,94-82-93-68,Europe,North Europe,Developed,Europe & Central Asia,High income,43394.27,Labour and Skills,AI Policy,AI Literacy,88.64,19.5
+LVA,Latvia,94-82-93-68,Europe,North Europe,Developed,Europe & Central Asia,High income,43394.27,Labour and Skills,AI Policy,AI Literacy,93.18,20.5
 LVA,Latvia,43-21-91-74,Europe,North Europe,Developed,Europe & Central Asia,High income,43394.27,Trust and Safety,AI Policy,AI-facilitated Misinformation and Violence,97.73,21.5
 LVA,Latvia,70-71-49-53,Europe,North Europe,Developed,Europe & Central Asia,High income,43394.27,Trust and Safety,AI Policy,Access to Redress and Remedy,64.77,14.25
 LVA,Latvia,44-99-15-46,Europe,North Europe,Developed,Europe & Central Asia,High income,43394.27,Inclusion and Diversity,AI Policy,Children's Rights,80.3,17.67
-LVA,Latvia,16-08-48-52,Europe,North Europe,Developed,Europe & Central Asia,High income,43394.27,Inclusion and Diversity,AI Policy,Cultural and Linguistic Diversity,71.97,15.83
+LVA,Latvia,16-08-48-52,Europe,North Europe,Developed,Europe & Central Asia,High income,43394.27,Inclusion and Diversity,AI Policy,Cultural and Linguistic Diversity,76.52,16.83
 LVA,Latvia,71-65-13-06,Europe,North Europe,Developed,Europe & Central Asia,High income,43394.27,Ethics and Sustainability,AI Policy,Environmental Impact,0,0
 LVA,Latvia,63-56-12-00,Europe,North Europe,Developed,Europe & Central Asia,High income,43394.27,Ethics and Sustainability,AI Policy,Fairness and Non-discrimination,73.86,16.25
 LVA,Latvia,76-78-73-94,Europe,North Europe,Developed,Europe & Central Asia,High income,43394.27,Inclusion and Diversity,AI Policy,Gender Equality,72.5,15.95
@@ -1230,7 +1230,7 @@ LBY,Libya,01-25-86-97,Africa,North Africa,Developing,"Middle East, North Africa,
 LBY,Libya,04-53-96-21,Africa,North Africa,Developing,"Middle East, North Africa, Afghanistan & Pakistan",Upper middle income,14303.81,Inclusion and Diversity,AI Policy,Cultural and Linguistic Diversity,0,0
 LBY,Libya,89-01-32-01,Africa,North Africa,Developing,"Middle East, North Africa, Afghanistan & Pakistan",Upper middle income,14303.81,Ethics and Sustainability,AI Policy,Environmental Impact,37.88,8.33
 LBY,Libya,45-92-55-94,Africa,North Africa,Developing,"Middle East, North Africa, Afghanistan & Pakistan",Upper middle income,14303.81,Ethics and Sustainability,AI Policy,Fairness and Non-discrimination,40.15,8.83
-LBY,Libya,48-93-32-52,Africa,North Africa,Developing,"Middle East, North Africa, Afghanistan & Pakistan",Upper middle income,14303.81,Inclusion and Diversity,AI Policy,Gender Equality,59.47,13.08
+LBY,Libya,48-93-32-52,Africa,North Africa,Developing,"Middle East, North Africa, Afghanistan & Pakistan",Upper middle income,14303.81,Inclusion and Diversity,AI Policy,Gender Equality,58.33,12.83
 LBY,Libya,74-86-52-92,Africa,North Africa,Developing,"Middle East, North Africa, Afghanistan & Pakistan",Upper middle income,14303.81,Ethics and Sustainability,AI Policy,Human Oversight and Determination,40.15,8.83
 LBY,Libya,90-27-07-76,Africa,North Africa,Developing,"Middle East, North Africa, Afghanistan & Pakistan",Upper middle income,14303.81,Trust and Safety,AI Policy,Impact Assessments,0,0
 LBY,Libya,49-89-67-85,Africa,North Africa,Developing,"Middle East, North Africa, Afghanistan & Pakistan",Upper middle income,14303.81,Labour and Skills,AI Policy,Labour Protections,0,0
@@ -1265,8 +1265,8 @@ MWI,Malawi,48-95-05-98,Africa,East Africa,Developing,Sub-Saharan Africa ,Low inc
 MWI,Malawi,54-92-50-83,Africa,East Africa,Developing,Sub-Saharan Africa ,Low income,1857.62,Ethics and Sustainability,AI Policy,Environmental Impact,0,0
 MWI,Malawi,06-00-16-81,Africa,East Africa,Developing,Sub-Saharan Africa ,Low income,1857.62,Ethics and Sustainability,AI Policy,Fairness and Non-discrimination,0,0
 MWI,Malawi,50-30-94-22,Africa,East Africa,Developing,Sub-Saharan Africa ,Low income,1857.62,Inclusion and Diversity,AI Policy,Gender Equality,0,0
-MWI,Malawi,82-35-12-63,Africa,East Africa,Developing,Sub-Saharan Africa ,Low income,1857.62,Ethics and Sustainability,AI Policy,Human Oversight and Determination,97.73,21.5
-MWI,Malawi,17-20-39-34,Africa,East Africa,Developing,Sub-Saharan Africa ,Low income,1857.62,Trust and Safety,AI Policy,Impact Assessments,67.42,14.83
+MWI,Malawi,82-35-12-63,Africa,East Africa,Developing,Sub-Saharan Africa ,Low income,1857.62,Ethics and Sustainability,AI Policy,Human Oversight and Determination,93.18,20.5
+MWI,Malawi,17-20-39-34,Africa,East Africa,Developing,Sub-Saharan Africa ,Low income,1857.62,Trust and Safety,AI Policy,Impact Assessments,65.15,14.33
 MWI,Malawi,03-11-01-07,Africa,East Africa,Developing,Sub-Saharan Africa ,Low income,1857.62,Labour and Skills,AI Policy,Labour Protections,0,0
 MWI,Malawi,08-65-13-17,Africa,East Africa,Developing,Sub-Saharan Africa ,Low income,1857.62,AI Use in Public Service,AI Policy,Public Disclosure of Government Algorithmic Systems,0,0
 MWI,Malawi,64-69-32-15,Africa,East Africa,Developing,Sub-Saharan Africa ,Low income,1857.62,AI Use in Public Service,AI Policy,Public Procurement,0,0
@@ -1281,16 +1281,16 @@ MYS,Malaysia,98-62-76-39,Asia and Oceania,South East Asia,Developing,East Asia &
 MYS,Malaysia,20-21-34-30,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,Upper middle income,38779.28,Inclusion and Diversity,AI Policy,Cultural and Linguistic Diversity,0,0
 MYS,Malaysia,26-26-60-54,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,Upper middle income,38779.28,Ethics and Sustainability,AI Policy,Environmental Impact,49.24,10.83
 MYS,Malaysia,94-79-64-50,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,Upper middle income,38779.28,Ethics and Sustainability,AI Policy,Fairness and Non-discrimination,40.91,9
-MYS,Malaysia,96-93-25-23,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,Upper middle income,38779.28,Inclusion and Diversity,AI Policy,Gender Equality,59.47,13.08
+MYS,Malaysia,96-93-25-23,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,Upper middle income,38779.28,Inclusion and Diversity,AI Policy,Gender Equality,60.61,13.33
 MYS,Malaysia,80-94-08-89,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,Upper middle income,38779.28,Ethics and Sustainability,AI Policy,Human Oversight and Determination,11.59,2.55
 MYS,Malaysia,06-37-91-12,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,Upper middle income,38779.28,Trust and Safety,AI Policy,Impact Assessments,48.48,10.67
 MYS,Malaysia,36-08-53-63,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,Upper middle income,38779.28,Labour and Skills,AI Policy,Labour Protections,38.64,8.5
 MYS,Malaysia,88-36-01-92,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,Upper middle income,38779.28,AI Use in Public Service,AI Policy,Public Disclosure of Government Algorithmic Systems,0,0
-MYS,Malaysia,69-32-07-55,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,Upper middle income,38779.28,AI Use in Public Service,AI Policy,Public Procurement,46.59,10.25
+MYS,Malaysia,69-32-07-55,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,Upper middle income,38779.28,AI Use in Public Service,AI Policy,Public Procurement,42.84,9.43
 MYS,Malaysia,17-46-80-90,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,Upper middle income,38779.28,AI Use in Public Service,AI Policy,Public Sector Skills Development,73.41,16.15
-MYS,Malaysia,93-31-78-54,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,Upper middle income,38779.28,Labour and Skills,AI Policy,Reskilling and upskilling initiatives,80.68,17.75
+MYS,Malaysia,93-31-78-54,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,Upper middle income,38779.28,Labour and Skills,AI Policy,Reskilling and upskilling initiatives,81.82,18
 MYS,Malaysia,43-50-30-81,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,Upper middle income,38779.28,Trust and Safety,AI Policy,Safety and Security,48.3,10.62
-MYS,Malaysia,22-84-32-16,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,Upper middle income,38779.28,Ethics and Sustainability,AI Policy,Transparency and Explainability,22.61,4.98
+MYS,Malaysia,22-84-32-16,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,Upper middle income,38779.28,Ethics and Sustainability,AI Policy,Transparency and Explainability,24.2,5.33
 MUS,Mauritius,28-85-57-95,Africa,East Africa,Developing,Sub-Saharan Africa ,Upper middle income,31839.76,Labour and Skills,AI Policy,AI Literacy,26.14,5.75
 MUS,Mauritius,70-35-54-46,Africa,East Africa,Developing,Sub-Saharan Africa ,Upper middle income,31839.76,Trust and Safety,AI Policy,AI-facilitated Misinformation and Violence,0,0
 MUS,Mauritius,73-83-08-48,Africa,East Africa,Developing,Sub-Saharan Africa ,Upper middle income,31839.76,Trust and Safety,AI Policy,Access to Redress and Remedy,0,0
@@ -1431,8 +1431,8 @@ NLD,Netherlands,05-46-51-67,Europe,Western Europe,Developed,Europe & Central Asi
 NLD,Netherlands,35-17-75-15,Europe,Western Europe,Developed,Europe & Central Asia,High income,86173.63,Trust and Safety,AI Policy,AI-facilitated Misinformation and Violence,97.73,21.5
 NLD,Netherlands,18-58-94-01,Europe,Western Europe,Developed,Europe & Central Asia,High income,86173.63,Trust and Safety,AI Policy,Access to Redress and Remedy,73.86,16.25
 NLD,Netherlands,96-43-89-65,Europe,Western Europe,Developed,Europe & Central Asia,High income,86173.63,Inclusion and Diversity,AI Policy,Children's Rights,98.48,21.67
-NLD,Netherlands,66-24-60-25,Europe,Western Europe,Developed,Europe & Central Asia,High income,86173.63,Inclusion and Diversity,AI Policy,Cultural and Linguistic Diversity,80.3,17.67
-NLD,Netherlands,74-52-13-60,Europe,Western Europe,Developed,Europe & Central Asia,High income,86173.63,Ethics and Sustainability,AI Policy,Environmental Impact,78.03,17.17
+NLD,Netherlands,66-24-60-25,Europe,Western Europe,Developed,Europe & Central Asia,High income,86173.63,Inclusion and Diversity,AI Policy,Cultural and Linguistic Diversity,79.17,17.42
+NLD,Netherlands,74-52-13-60,Europe,Western Europe,Developed,Europe & Central Asia,High income,86173.63,Ethics and Sustainability,AI Policy,Environmental Impact,76.89,16.92
 NLD,Netherlands,94-53-59-59,Europe,Western Europe,Developed,Europe & Central Asia,High income,86173.63,Ethics and Sustainability,AI Policy,Fairness and Non-discrimination,92.05,20.25
 NLD,Netherlands,11-58-37-74,Europe,Western Europe,Developed,Europe & Central Asia,High income,86173.63,Inclusion and Diversity,AI Policy,Gender Equality,72.5,15.95
 NLD,Netherlands,98-02-15-41,Europe,Western Europe,Developed,Europe & Central Asia,High income,86173.63,Ethics and Sustainability,AI Policy,Human Oversight and Determination,92.05,20.25
@@ -1450,7 +1450,7 @@ NZL,New Zealand,78-83-77-95,Asia and Oceania,Oceania (Pacific),Developed,East As
 NZL,New Zealand,62-20-47-94,Asia and Oceania,Oceania (Pacific),Developed,East Asia & Pacific,High income,55551.14,Inclusion and Diversity,AI Policy,Children's Rights,9.09,2
 NZL,New Zealand,54-53-09-31,Asia and Oceania,Oceania (Pacific),Developed,East Asia & Pacific,High income,55551.14,Inclusion and Diversity,AI Policy,Cultural and Linguistic Diversity,46.21,10.17
 NZL,New Zealand,79-07-48-60,Asia and Oceania,Oceania (Pacific),Developed,East Asia & Pacific,High income,55551.14,Ethics and Sustainability,AI Policy,Environmental Impact,0,0
-NZL,New Zealand,82-16-09-37,Asia and Oceania,Oceania (Pacific),Developed,East Asia & Pacific,High income,55551.14,Ethics and Sustainability,AI Policy,Fairness and Non-discrimination,58.71,12.92
+NZL,New Zealand,82-16-09-37,Asia and Oceania,Oceania (Pacific),Developed,East Asia & Pacific,High income,55551.14,Ethics and Sustainability,AI Policy,Fairness and Non-discrimination,48.48,10.67
 NZL,New Zealand,83-20-67-03,Asia and Oceania,Oceania (Pacific),Developed,East Asia & Pacific,High income,55551.14,Inclusion and Diversity,AI Policy,Gender Equality,0,0
 NZL,New Zealand,76-67-07-14,Asia and Oceania,Oceania (Pacific),Developed,East Asia & Pacific,High income,55551.14,Ethics and Sustainability,AI Policy,Human Oversight and Determination,47.73,10.5
 NZL,New Zealand,99-17-84-37,Asia and Oceania,Oceania (Pacific),Developed,East Asia & Pacific,High income,55551.14,Trust and Safety,AI Policy,Impact Assessments,47.73,10.5
@@ -1486,13 +1486,13 @@ NGA,Nigeria,75-65-24-98,Africa,West Africa,Developing,Sub-Saharan Africa ,Lower 
 NGA,Nigeria,38-62-15-31,Africa,West Africa,Developing,Sub-Saharan Africa ,Lower middle income,9086.88,Ethics and Sustainability,AI Policy,Environmental Impact,63.26,13.92
 NGA,Nigeria,66-13-58-93,Africa,West Africa,Developing,Sub-Saharan Africa ,Lower middle income,9086.88,Ethics and Sustainability,AI Policy,Fairness and Non-discrimination,82.95,18.25
 NGA,Nigeria,55-86-65-56,Africa,West Africa,Developing,Sub-Saharan Africa ,Lower middle income,9086.88,Inclusion and Diversity,AI Policy,Gender Equality,74.62,16.42
-NGA,Nigeria,25-77-85-77,Africa,West Africa,Developing,Sub-Saharan Africa ,Lower middle income,9086.88,Ethics and Sustainability,AI Policy,Human Oversight and Determination,56.82,12.5
+NGA,Nigeria,25-77-85-77,Africa,West Africa,Developing,Sub-Saharan Africa ,Lower middle income,9086.88,Ethics and Sustainability,AI Policy,Human Oversight and Determination,57.27,12.6
 NGA,Nigeria,07-97-01-82,Africa,West Africa,Developing,Sub-Saharan Africa ,Lower middle income,9086.88,Trust and Safety,AI Policy,Impact Assessments,64.02,14.08
 NGA,Nigeria,06-77-12-90,Africa,West Africa,Developing,Sub-Saharan Africa ,Lower middle income,9086.88,Labour and Skills,AI Policy,Labour Protections,0,0
 NGA,Nigeria,43-30-90-45,Africa,West Africa,Developing,Sub-Saharan Africa ,Lower middle income,9086.88,AI Use in Public Service,AI Policy,Public Disclosure of Government Algorithmic Systems,0,0
 NGA,Nigeria,31-88-58-33,Africa,West Africa,Developing,Sub-Saharan Africa ,Lower middle income,9086.88,AI Use in Public Service,AI Policy,Public Procurement,0,0
 NGA,Nigeria,54-08-07-95,Africa,West Africa,Developing,Sub-Saharan Africa ,Lower middle income,9086.88,AI Use in Public Service,AI Policy,Public Sector Skills Development,0,0
-NGA,Nigeria,94-05-24-63,Africa,West Africa,Developing,Sub-Saharan Africa ,Lower middle income,9086.88,Labour and Skills,AI Policy,Reskilling and upskilling initiatives,71.97,15.83
+NGA,Nigeria,94-05-24-63,Africa,West Africa,Developing,Sub-Saharan Africa ,Lower middle income,9086.88,Labour and Skills,AI Policy,Reskilling and upskilling initiatives,73.11,16.08
 NGA,Nigeria,91-66-53-27,Africa,West Africa,Developing,Sub-Saharan Africa ,Lower middle income,9086.88,Trust and Safety,AI Policy,Safety and Security,73.86,16.25
 NGA,Nigeria,80-76-55-70,Africa,West Africa,Developing,Sub-Saharan Africa ,Lower middle income,9086.88,Ethics and Sustainability,AI Policy,Transparency and Explainability,63.26,13.92
 MKD,North Macedonia,83-26-31-35,Europe,Balkans (South East Europe),Developed,Europe & Central Asia,Upper middle income,26995.43,Labour and Skills,AI Policy,AI Literacy,71.21,15.67
@@ -1511,7 +1511,7 @@ MKD,North Macedonia,67-95-16-76,Europe,Balkans (South East Europe),Developed,Eur
 MKD,North Macedonia,42-06-44-30,Europe,Balkans (South East Europe),Developed,Europe & Central Asia,Upper middle income,26995.43,AI Use in Public Service,AI Policy,Public Sector Skills Development,39.39,8.67
 MKD,North Macedonia,24-94-12-58,Europe,Balkans (South East Europe),Developed,Europe & Central Asia,Upper middle income,26995.43,Labour and Skills,AI Policy,Reskilling and upskilling initiatives,80.3,17.67
 MKD,North Macedonia,07-35-30-19,Europe,Balkans (South East Europe),Developed,Europe & Central Asia,Upper middle income,26995.43,Trust and Safety,AI Policy,Safety and Security,0,0
-MKD,North Macedonia,54-14-62-70,Europe,Balkans (South East Europe),Developed,Europe & Central Asia,Upper middle income,26995.43,Ethics and Sustainability,AI Policy,Transparency and Explainability,62.5,13.75
+MKD,North Macedonia,54-14-62-70,Europe,Balkans (South East Europe),Developed,Europe & Central Asia,Upper middle income,26995.43,Ethics and Sustainability,AI Policy,Transparency and Explainability,59.09,13
 NOR,Norway,58-64-56-13,Europe,North Europe,Developed,Europe & Central Asia,High income,102037.53,Labour and Skills,AI Policy,AI Literacy,66.02,14.52
 NOR,Norway,32-26-73-06,Europe,North Europe,Developed,Europe & Central Asia,High income,102037.53,Trust and Safety,AI Policy,AI-facilitated Misinformation and Violence,79.55,17.5
 NOR,Norway,56-98-03-95,Europe,North Europe,Developed,Europe & Central Asia,High income,102037.53,Trust and Safety,AI Policy,Access to Redress and Remedy,73.86,16.25
@@ -1533,7 +1533,7 @@ OMN,Oman,13-29-04-52,Middle East,,Developing,"Middle East, North Africa, Afghani
 OMN,Oman,79-07-07-94,Middle East,,Developing,"Middle East, North Africa, Afghanistan & Pakistan",High income,41740.17,Trust and Safety,AI Policy,AI-facilitated Misinformation and Violence,0,0
 OMN,Oman,66-76-32-11,Middle East,,Developing,"Middle East, North Africa, Afghanistan & Pakistan",High income,41740.17,Trust and Safety,AI Policy,Access to Redress and Remedy,0,0
 OMN,Oman,64-88-45-50,Middle East,,Developing,"Middle East, North Africa, Afghanistan & Pakistan",High income,41740.17,Inclusion and Diversity,AI Policy,Children's Rights,54.55,12
-OMN,Oman,83-72-89-30,Middle East,,Developing,"Middle East, North Africa, Afghanistan & Pakistan",High income,41740.17,Inclusion and Diversity,AI Policy,Cultural and Linguistic Diversity,69.32,15.25
+OMN,Oman,83-72-89-30,Middle East,,Developing,"Middle East, North Africa, Afghanistan & Pakistan",High income,41740.17,Inclusion and Diversity,AI Policy,Cultural and Linguistic Diversity,70.45,15.5
 OMN,Oman,34-19-61-27,Middle East,,Developing,"Middle East, North Africa, Afghanistan & Pakistan",High income,41740.17,Ethics and Sustainability,AI Policy,Environmental Impact,0,0
 OMN,Oman,62-10-30-71,Middle East,,Developing,"Middle East, North Africa, Afghanistan & Pakistan",High income,41740.17,Ethics and Sustainability,AI Policy,Fairness and Non-discrimination,70.45,15.5
 OMN,Oman,74-13-99-86,Middle East,,Developing,"Middle East, North Africa, Afghanistan & Pakistan",High income,41740.17,Inclusion and Diversity,AI Policy,Gender Equality,57.58,12.67
@@ -1643,7 +1643,7 @@ POL,Poland,04-32-29-81,Europe,Central Europe,Developed,Europe & Central Asia,Hig
 POL,Poland,06-34-45-01,Europe,Central Europe,Developed,Europe & Central Asia,High income,51262.51,Trust and Safety,AI Policy,Impact Assessments,64.09,14.1
 POL,Poland,10-35-03-20,Europe,Central Europe,Developed,Europe & Central Asia,High income,51262.51,Labour and Skills,AI Policy,Labour Protections,64.09,14.1
 POL,Poland,88-90-02-80,Europe,Central Europe,Developed,Europe & Central Asia,High income,51262.51,AI Use in Public Service,AI Policy,Public Disclosure of Government Algorithmic Systems,0,0
-POL,Poland,48-57-97-36,Europe,Central Europe,Developed,Europe & Central Asia,High income,51262.51,AI Use in Public Service,AI Policy,Public Procurement,52.16,11.48
+POL,Poland,48-57-97-36,Europe,Central Europe,Developed,Europe & Central Asia,High income,51262.51,AI Use in Public Service,AI Policy,Public Procurement,56.25,12.38
 POL,Poland,91-59-29-74,Europe,Central Europe,Developed,Europe & Central Asia,High income,51262.51,AI Use in Public Service,AI Policy,Public Sector Skills Development,38.24,8.41
 POL,Poland,13-78-74-96,Europe,Central Europe,Developed,Europe & Central Asia,High income,51262.51,Labour and Skills,AI Policy,Reskilling and upskilling initiatives,67.39,14.82
 POL,Poland,74-93-57-15,Europe,Central Europe,Developed,Europe & Central Asia,High income,51262.51,Trust and Safety,AI Policy,Safety and Security,74.55,16.4
@@ -1779,7 +1779,7 @@ SEN,Senegal,78-53-58-78,Africa,West Africa,Developing,Sub-Saharan Africa ,Lower 
 SEN,Senegal,77-71-78-93,Africa,West Africa,Developing,Sub-Saharan Africa ,Lower middle income,5070.65,Trust and Safety,AI Policy,Impact Assessments,65.91,14.5
 SEN,Senegal,94-48-12-05,Africa,West Africa,Developing,Sub-Saharan Africa ,Lower middle income,5070.65,Labour and Skills,AI Policy,Labour Protections,0,0
 SEN,Senegal,44-05-68-63,Africa,West Africa,Developing,Sub-Saharan Africa ,Lower middle income,5070.65,AI Use in Public Service,AI Policy,Public Disclosure of Government Algorithmic Systems,0,0
-SEN,Senegal,85-36-09-24,Africa,West Africa,Developing,Sub-Saharan Africa ,Lower middle income,5070.65,AI Use in Public Service,AI Policy,Public Procurement,60.23,13.25
+SEN,Senegal,85-36-09-24,Africa,West Africa,Developing,Sub-Saharan Africa ,Lower middle income,5070.65,AI Use in Public Service,AI Policy,Public Procurement,63.64,14
 SEN,Senegal,59-02-40-36,Africa,West Africa,Developing,Sub-Saharan Africa ,Lower middle income,5070.65,AI Use in Public Service,AI Policy,Public Sector Skills Development,74.24,16.33
 SEN,Senegal,60-26-04-45,Africa,West Africa,Developing,Sub-Saharan Africa ,Lower middle income,5070.65,Labour and Skills,AI Policy,Reskilling and upskilling initiatives,74.24,16.33
 SEN,Senegal,70-80-76-51,Africa,West Africa,Developing,Sub-Saharan Africa ,Lower middle income,5070.65,Trust and Safety,AI Policy,Safety and Security,0,0
@@ -1796,7 +1796,7 @@ SRB,Serbia,10-83-76-94,Europe,Balkans (South East Europe),Developed,Europe & Cen
 SRB,Serbia,82-36-75-09,Europe,Balkans (South East Europe),Developed,Europe & Central Asia,Upper middle income,32832.18,Trust and Safety,AI Policy,Impact Assessments,64.39,14.17
 SRB,Serbia,86-01-62-34,Europe,Balkans (South East Europe),Developed,Europe & Central Asia,Upper middle income,32832.18,Labour and Skills,AI Policy,Labour Protections,36.36,8
 SRB,Serbia,91-08-77-79,Europe,Balkans (South East Europe),Developed,Europe & Central Asia,Upper middle income,32832.18,AI Use in Public Service,AI Policy,Public Disclosure of Government Algorithmic Systems,0,0
-SRB,Serbia,88-14-43-13,Europe,Balkans (South East Europe),Developed,Europe & Central Asia,Upper middle income,32832.18,AI Use in Public Service,AI Policy,Public Procurement,62.5,13.75
+SRB,Serbia,88-14-43-13,Europe,Balkans (South East Europe),Developed,Europe & Central Asia,Upper middle income,32832.18,AI Use in Public Service,AI Policy,Public Procurement,63.64,14
 SRB,Serbia,49-56-43-10,Europe,Balkans (South East Europe),Developed,Europe & Central Asia,Upper middle income,32832.18,AI Use in Public Service,AI Policy,Public Sector Skills Development,76.52,16.83
 SRB,Serbia,08-37-66-53,Europe,Balkans (South East Europe),Developed,Europe & Central Asia,Upper middle income,32832.18,Labour and Skills,AI Policy,Reskilling and upskilling initiatives,65.91,14.5
 SRB,Serbia,28-92-48-88,Europe,Balkans (South East Europe),Developed,Europe & Central Asia,Upper middle income,32832.18,Trust and Safety,AI Policy,Safety and Security,47.73,10.5
@@ -1831,7 +1831,7 @@ SGP,Singapore,63-46-04-27,Asia and Oceania,South East Asia,Developing,East Asia 
 SGP,Singapore,61-14-72-13,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,High income,150689.3,Labour and Skills,AI Policy,Labour Protections,31.06,6.83
 SGP,Singapore,46-15-03-74,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,High income,150689.3,AI Use in Public Service,AI Policy,Public Disclosure of Government Algorithmic Systems,0,0
 SGP,Singapore,86-31-96-87,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,High income,150689.3,AI Use in Public Service,AI Policy,Public Procurement,0,0
-SGP,Singapore,27-10-60-25,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,High income,150689.3,AI Use in Public Service,AI Policy,Public Sector Skills Development,41.29,9.08
+SGP,Singapore,27-10-60-25,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,High income,150689.3,AI Use in Public Service,AI Policy,Public Sector Skills Development,39.02,8.58
 SGP,Singapore,50-81-28-38,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,High income,150689.3,Labour and Skills,AI Policy,Reskilling and upskilling initiatives,36.36,8
 SGP,Singapore,33-75-35-63,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,High income,150689.3,Trust and Safety,AI Policy,Safety and Security,50,11
 SGP,Singapore,43-43-63-49,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,High income,150689.3,Ethics and Sustainability,AI Policy,Transparency and Explainability,39.39,8.67
@@ -1962,7 +1962,7 @@ LKA,Sri Lanka,22-93-48-52,Asia and Oceania,South West Asia,Developing,South Asia
 LKA,Sri Lanka,98-13-70-37,Asia and Oceania,South West Asia,Developing,South Asia,Lower middle income,15632.59,Ethics and Sustainability,AI Policy,Environmental Impact,10.61,2.33
 LKA,Sri Lanka,89-68-42-15,Asia and Oceania,South West Asia,Developing,South Asia,Lower middle income,15632.59,Ethics and Sustainability,AI Policy,Fairness and Non-discrimination,11.36,2.5
 LKA,Sri Lanka,11-08-80-19,Asia and Oceania,South West Asia,Developing,South Asia,Lower middle income,15632.59,Inclusion and Diversity,AI Policy,Gender Equality,20.45,4.5
-LKA,Sri Lanka,42-23-12-32,Asia and Oceania,South West Asia,Developing,South Asia,Lower middle income,15632.59,Ethics and Sustainability,AI Policy,Human Oversight and Determination,59.09,13
+LKA,Sri Lanka,42-23-12-32,Asia and Oceania,South West Asia,Developing,South Asia,Lower middle income,15632.59,Ethics and Sustainability,AI Policy,Human Oversight and Determination,68.18,15
 LKA,Sri Lanka,17-46-10-71,Asia and Oceania,South West Asia,Developing,South Asia,Lower middle income,15632.59,Trust and Safety,AI Policy,Impact Assessments,67.42,14.83
 LKA,Sri Lanka,18-10-88-44,Asia and Oceania,South West Asia,Developing,South Asia,Lower middle income,15632.59,Labour and Skills,AI Policy,Labour Protections,0,0
 LKA,Sri Lanka,09-29-60-22,Asia and Oceania,South West Asia,Developing,South Asia,Lower middle income,15632.59,AI Use in Public Service,AI Policy,Public Disclosure of Government Algorithmic Systems,0,0
@@ -1993,18 +1993,18 @@ CHE,Switzerland,24-15-68-29,Europe,Western Europe,Developed,Europe & Central Asi
 CHE,Switzerland,66-43-65-59,Europe,Western Europe,Developed,Europe & Central Asia,High income,96497.69,Trust and Safety,AI Policy,Access to Redress and Remedy,81.06,17.83
 CHE,Switzerland,47-84-86-76,Europe,Western Europe,Developed,Europe & Central Asia,High income,96497.69,Inclusion and Diversity,AI Policy,Children's Rights,9.09,2
 CHE,Switzerland,38-47-55-94,Europe,Western Europe,Developed,Europe & Central Asia,High income,96497.69,Inclusion and Diversity,AI Policy,Cultural and Linguistic Diversity,9.09,2
-CHE,Switzerland,27-20-98-80,Europe,Western Europe,Developed,Europe & Central Asia,High income,96497.69,Ethics and Sustainability,AI Policy,Environmental Impact,46.97,10.33
-CHE,Switzerland,28-88-07-56,Europe,Western Europe,Developed,Europe & Central Asia,High income,96497.69,Ethics and Sustainability,AI Policy,Fairness and Non-discrimination,57.58,12.67
+CHE,Switzerland,27-20-98-80,Europe,Western Europe,Developed,Europe & Central Asia,High income,96497.69,Ethics and Sustainability,AI Policy,Environmental Impact,66.29,14.58
+CHE,Switzerland,28-88-07-56,Europe,Western Europe,Developed,Europe & Central Asia,High income,96497.69,Ethics and Sustainability,AI Policy,Fairness and Non-discrimination,76.89,16.92
 CHE,Switzerland,34-14-93-13,Europe,Western Europe,Developed,Europe & Central Asia,High income,96497.69,Inclusion and Diversity,AI Policy,Gender Equality,9.09,2
-CHE,Switzerland,24-61-08-19,Europe,Western Europe,Developed,Europe & Central Asia,High income,96497.69,Ethics and Sustainability,AI Policy,Human Oversight and Determination,39.39,8.67
-CHE,Switzerland,44-31-73-43,Europe,Western Europe,Developed,Europe & Central Asia,High income,96497.69,Trust and Safety,AI Policy,Impact Assessments,48.48,10.67
+CHE,Switzerland,24-61-08-19,Europe,Western Europe,Developed,Europe & Central Asia,High income,96497.69,Ethics and Sustainability,AI Policy,Human Oversight and Determination,58.71,12.92
+CHE,Switzerland,44-31-73-43,Europe,Western Europe,Developed,Europe & Central Asia,High income,96497.69,Trust and Safety,AI Policy,Impact Assessments,67.8,14.92
 CHE,Switzerland,18-56-48-78,Europe,Western Europe,Developed,Europe & Central Asia,High income,96497.69,Labour and Skills,AI Policy,Labour Protections,78.79,17.33
 CHE,Switzerland,45-59-87-44,Europe,Western Europe,Developed,Europe & Central Asia,High income,96497.69,AI Use in Public Service,AI Policy,Public Disclosure of Government Algorithmic Systems,67.61,14.88
 CHE,Switzerland,50-49-51-40,Europe,Western Europe,Developed,Europe & Central Asia,High income,96497.69,AI Use in Public Service,AI Policy,Public Procurement,59.09,13
 CHE,Switzerland,76-01-58-29,Europe,Western Europe,Developed,Europe & Central Asia,High income,96497.69,AI Use in Public Service,AI Policy,Public Sector Skills Development,48.67,10.71
 CHE,Switzerland,66-52-39-27,Europe,Western Europe,Developed,Europe & Central Asia,High income,96497.69,Labour and Skills,AI Policy,Reskilling and upskilling initiatives,0,0
-CHE,Switzerland,62-70-18-58,Europe,Western Europe,Developed,Europe & Central Asia,High income,96497.69,Trust and Safety,AI Policy,Safety and Security,47.16,10.38
-CHE,Switzerland,62-61-26-33,Europe,Western Europe,Developed,Europe & Central Asia,High income,96497.69,Ethics and Sustainability,AI Policy,Transparency and Explainability,57.58,12.67
+CHE,Switzerland,62-70-18-58,Europe,Western Europe,Developed,Europe & Central Asia,High income,96497.69,Trust and Safety,AI Policy,Safety and Security,66.48,14.62
+CHE,Switzerland,62-61-26-33,Europe,Western Europe,Developed,Europe & Central Asia,High income,96497.69,Ethics and Sustainability,AI Policy,Transparency and Explainability,76.89,16.92
 TJK,Tajikistan,55-69-38-65,Asia and Oceania,NorthWest Asia,Developing,Europe & Central Asia,Lower middle income,5405.98,Labour and Skills,AI Policy,AI Literacy,40.15,8.83
 TJK,Tajikistan,58-47-85-47,Asia and Oceania,NorthWest Asia,Developing,Europe & Central Asia,Lower middle income,5405.98,Trust and Safety,AI Policy,AI-facilitated Misinformation and Violence,0,0
 TJK,Tajikistan,03-90-39-63,Asia and Oceania,NorthWest Asia,Developing,Europe & Central Asia,Lower middle income,5405.98,Trust and Safety,AI Policy,Access to Redress and Remedy,0,0
@@ -2018,11 +2018,11 @@ TJK,Tajikistan,14-22-19-21,Asia and Oceania,NorthWest Asia,Developing,Europe & C
 TJK,Tajikistan,42-81-34-45,Asia and Oceania,NorthWest Asia,Developing,Europe & Central Asia,Lower middle income,5405.98,Labour and Skills,AI Policy,Labour Protections,0,0
 TJK,Tajikistan,16-26-90-22,Asia and Oceania,NorthWest Asia,Developing,Europe & Central Asia,Lower middle income,5405.98,AI Use in Public Service,AI Policy,Public Disclosure of Government Algorithmic Systems,0,0
 TJK,Tajikistan,45-57-62-35,Asia and Oceania,NorthWest Asia,Developing,Europe & Central Asia,Lower middle income,5405.98,AI Use in Public Service,AI Policy,Public Procurement,0,0
-TJK,Tajikistan,50-57-62-11,Asia and Oceania,NorthWest Asia,Developing,Europe & Central Asia,Lower middle income,5405.98,AI Use in Public Service,AI Policy,Public Sector Skills Development,28.41,6.25
+TJK,Tajikistan,50-57-62-11,Asia and Oceania,NorthWest Asia,Developing,Europe & Central Asia,Lower middle income,5405.98,AI Use in Public Service,AI Policy,Public Sector Skills Development,29.55,6.5
 TJK,Tajikistan,05-18-99-35,Asia and Oceania,NorthWest Asia,Developing,Europe & Central Asia,Lower middle income,5405.98,Labour and Skills,AI Policy,Reskilling and upskilling initiatives,0,0
 TJK,Tajikistan,64-04-27-20,Asia and Oceania,NorthWest Asia,Developing,Europe & Central Asia,Lower middle income,5405.98,Trust and Safety,AI Policy,Safety and Security,59.09,13
 TJK,Tajikistan,90-71-70-43,Asia and Oceania,NorthWest Asia,Developing,Europe & Central Asia,Lower middle income,5405.98,Ethics and Sustainability,AI Policy,Transparency and Explainability,59.09,13
-THA,Thailand,32-83-40-32,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,Upper middle income,24712.07,Labour and Skills,AI Policy,AI Literacy,71.59,15.75
+THA,Thailand,32-83-40-32,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,Upper middle income,24712.07,Labour and Skills,AI Policy,AI Literacy,76.14,16.75
 THA,Thailand,09-42-86-37,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,Upper middle income,24712.07,Trust and Safety,AI Policy,AI-facilitated Misinformation and Violence,0,0
 THA,Thailand,73-33-99-56,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,Upper middle income,24712.07,Trust and Safety,AI Policy,Access to Redress and Remedy,0,0
 THA,Thailand,57-64-30-65,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,Upper middle income,24712.07,Inclusion and Diversity,AI Policy,Children's Rights,9.09,2
@@ -2035,8 +2035,8 @@ THA,Thailand,45-77-14-72,Asia and Oceania,South East Asia,Developing,East Asia &
 THA,Thailand,85-95-64-47,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,Upper middle income,24712.07,Labour and Skills,AI Policy,Labour Protections,0,0
 THA,Thailand,98-25-01-58,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,Upper middle income,24712.07,AI Use in Public Service,AI Policy,Public Disclosure of Government Algorithmic Systems,0,0
 THA,Thailand,90-35-88-44,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,Upper middle income,24712.07,AI Use in Public Service,AI Policy,Public Procurement,38.07,8.38
-THA,Thailand,01-23-20-82,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,Upper middle income,24712.07,AI Use in Public Service,AI Policy,Public Sector Skills Development,67.05,14.75
-THA,Thailand,45-13-93-96,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,Upper middle income,24712.07,Labour and Skills,AI Policy,Reskilling and upskilling initiatives,69.32,15.25
+THA,Thailand,01-23-20-82,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,Upper middle income,24712.07,AI Use in Public Service,AI Policy,Public Sector Skills Development,71.59,15.75
+THA,Thailand,45-13-93-96,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,Upper middle income,24712.07,Labour and Skills,AI Policy,Reskilling and upskilling initiatives,73.86,16.25
 THA,Thailand,70-04-00-26,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,Upper middle income,24712.07,Trust and Safety,AI Policy,Safety and Security,39.2,8.62
 THA,Thailand,74-47-98-13,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,Upper middle income,24712.07,Ethics and Sustainability,AI Policy,Transparency and Explainability,39.39,8.67
 TGO,Togo,51-78-49-96,Africa,West Africa,Developing,Sub-Saharan Africa ,Low income,3365.46,Labour and Skills,AI Policy,AI Literacy,18.18,4
@@ -2144,8 +2144,8 @@ UKR,Ukraine,68-63-02-51,Europe,Eastern Europe,Developed,Europe & Central Asia,Up
 ARE,United Arab Emirates,76-01-77-08,Middle East,,Developing,"Middle East, North Africa, Afghanistan & Pakistan",High income,79228.74,Labour and Skills,AI Policy,AI Literacy,9.09,2
 ARE,United Arab Emirates,36-94-60-65,Middle East,,Developing,"Middle East, North Africa, Afghanistan & Pakistan",High income,79228.74,Trust and Safety,AI Policy,AI-facilitated Misinformation and Violence,0,0
 ARE,United Arab Emirates,28-88-22-06,Middle East,,Developing,"Middle East, North Africa, Afghanistan & Pakistan",High income,79228.74,Trust and Safety,AI Policy,Access to Redress and Remedy,30.34,6.68
-ARE,United Arab Emirates,43-99-96-25,Middle East,,Developing,"Middle East, North Africa, Afghanistan & Pakistan",High income,79228.74,Inclusion and Diversity,AI Policy,Children's Rights,59.09,13
-ARE,United Arab Emirates,24-26-16-96,Middle East,,Developing,"Middle East, North Africa, Afghanistan & Pakistan",High income,79228.74,Inclusion and Diversity,AI Policy,Cultural and Linguistic Diversity,65.91,14.5
+ARE,United Arab Emirates,43-99-96-25,Middle East,,Developing,"Middle East, North Africa, Afghanistan & Pakistan",High income,79228.74,Inclusion and Diversity,AI Policy,Children's Rights,63.64,14
+ARE,United Arab Emirates,24-26-16-96,Middle East,,Developing,"Middle East, North Africa, Afghanistan & Pakistan",High income,79228.74,Inclusion and Diversity,AI Policy,Cultural and Linguistic Diversity,57.95,12.75
 ARE,United Arab Emirates,90-72-48-48,Middle East,,Developing,"Middle East, North Africa, Afghanistan & Pakistan",High income,79228.74,Ethics and Sustainability,AI Policy,Environmental Impact,0,0
 ARE,United Arab Emirates,63-58-97-26,Middle East,,Developing,"Middle East, North Africa, Afghanistan & Pakistan",High income,79228.74,Ethics and Sustainability,AI Policy,Fairness and Non-discrimination,40.91,9
 ARE,United Arab Emirates,91-62-89-39,Middle East,,Developing,"Middle East, North Africa, Afghanistan & Pakistan",High income,79228.74,Inclusion and Diversity,AI Policy,Gender Equality,82.58,18.17
@@ -2161,7 +2161,7 @@ ARE,United Arab Emirates,91-21-38-00,Middle East,,Developing,"Middle East, North
 GBR,United Kingdom of Great Britain and Northern Ireland,58-23-77-55,Europe,North Europe,Developed,Europe & Central Asia,High income,62009.49,Labour and Skills,AI Policy,AI Literacy,83.71,18.42
 GBR,United Kingdom of Great Britain and Northern Ireland,43-48-93-12,Europe,North Europe,Developed,Europe & Central Asia,High income,62009.49,Trust and Safety,AI Policy,AI-facilitated Misinformation and Violence,47.84,10.52
 GBR,United Kingdom of Great Britain and Northern Ireland,42-65-49-32,Europe,North Europe,Developed,Europe & Central Asia,High income,62009.49,Trust and Safety,AI Policy,Access to Redress and Remedy,68.41,15.05
-GBR,United Kingdom of Great Britain and Northern Ireland,70-10-78-08,Europe,North Europe,Developed,Europe & Central Asia,High income,62009.49,Inclusion and Diversity,AI Policy,Children's Rights,91.33,20.09
+GBR,United Kingdom of Great Britain and Northern Ireland,70-10-78-08,Europe,North Europe,Developed,Europe & Central Asia,High income,62009.49,Inclusion and Diversity,AI Policy,Children's Rights,87.95,19.35
 GBR,United Kingdom of Great Britain and Northern Ireland,69-37-78-62,Europe,North Europe,Developed,Europe & Central Asia,High income,62009.49,Inclusion and Diversity,AI Policy,Cultural and Linguistic Diversity,81.44,17.92
 GBR,United Kingdom of Great Britain and Northern Ireland,55-29-49-39,Europe,North Europe,Developed,Europe & Central Asia,High income,62009.49,Ethics and Sustainability,AI Policy,Environmental Impact,82.2,18.08
 GBR,United Kingdom of Great Britain and Northern Ireland,88-61-81-51,Europe,North Europe,Developed,Europe & Central Asia,High income,62009.49,Ethics and Sustainability,AI Policy,Fairness and Non-discrimination,76.82,16.9
@@ -2194,7 +2194,7 @@ TZA,United Republic of Tanzania,84-41-48-94,Africa,East Africa,Developing,Sub-Sa
 TZA,United Republic of Tanzania,07-81-77-65,Africa,East Africa,Developing,Sub-Saharan Africa ,Lower middle income,4220.8,Ethics and Sustainability,AI Policy,Transparency and Explainability,12.88,2.83
 USA,United States of America,66-69-61-18,Northern America,,Developed,North America,High income,85809.9,Labour and Skills,AI Policy,AI Literacy,69.7,15.33
 USA,United States of America,91-33-99-39,Northern America,,Developed,North America,High income,85809.9,Trust and Safety,AI Policy,AI-facilitated Misinformation and Violence,59.09,13
-USA,United States of America,31-34-28-34,Northern America,,Developed,North America,High income,85809.9,Trust and Safety,AI Policy,Access to Redress and Remedy,30.51,6.71
+USA,United States of America,31-34-28-34,Northern America,,Developed,North America,High income,85809.9,Trust and Safety,AI Policy,Access to Redress and Remedy,28.47,6.26
 USA,United States of America,48-83-57-82,Northern America,,Developed,North America,High income,85809.9,Inclusion and Diversity,AI Policy,Children's Rights,71.97,15.83
 USA,United States of America,61-64-20-69,Northern America,,Developed,North America,High income,85809.9,Inclusion and Diversity,AI Policy,Cultural and Linguistic Diversity,0,0
 USA,United States of America,66-34-52-75,Northern America,,Developed,North America,High income,85809.9,Ethics and Sustainability,AI Policy,Environmental Impact,9.09,2
@@ -2205,10 +2205,10 @@ USA,United States of America,52-19-81-64,Northern America,,Developed,North Ameri
 USA,United States of America,61-64-39-60,Northern America,,Developed,North America,High income,85809.9,Labour and Skills,AI Policy,Labour Protections,38.64,8.5
 USA,United States of America,15-63-59-95,Northern America,,Developed,North America,High income,85809.9,AI Use in Public Service,AI Policy,Public Disclosure of Government Algorithmic Systems,66.36,14.6
 USA,United States of America,53-33-55-46,Northern America,,Developed,North America,High income,85809.9,AI Use in Public Service,AI Policy,Public Procurement,76.99,16.94
-USA,United States of America,58-83-27-06,Northern America,,Developed,North America,High income,85809.9,AI Use in Public Service,AI Policy,Public Sector Skills Development,42.23,9.29
+USA,United States of America,58-83-27-06,Northern America,,Developed,North America,High income,85809.9,AI Use in Public Service,AI Policy,Public Sector Skills Development,38.92,8.56
 USA,United States of America,59-10-01-17,Northern America,,Developed,North America,High income,85809.9,Labour and Skills,AI Policy,Reskilling and upskilling initiatives,83.71,18.42
-USA,United States of America,23-13-47-44,Northern America,,Developed,North America,High income,85809.9,Trust and Safety,AI Policy,Safety and Security,40.8,8.98
-USA,United States of America,49-97-07-24,Northern America,,Developed,North America,High income,85809.9,Ethics and Sustainability,AI Policy,Transparency and Explainability,39.94,8.79
+USA,United States of America,23-13-47-44,Northern America,,Developed,North America,High income,85809.9,Trust and Safety,AI Policy,Safety and Security,38.75,8.52
+USA,United States of America,49-97-07-24,Northern America,,Developed,North America,High income,85809.9,Ethics and Sustainability,AI Policy,Transparency and Explainability,37.9,8.34
 URY,Uruguay,21-22-71-64,South and Central America,South America,Developing,Latin America & Caribbean ,High income,36417.87,Labour and Skills,AI Policy,AI Literacy,9.09,2
 URY,Uruguay,92-79-92-83,South and Central America,South America,Developing,Latin America & Caribbean ,High income,36417.87,Trust and Safety,AI Policy,AI-facilitated Misinformation and Violence,61.93,13.62
 URY,Uruguay,45-43-18-24,South and Central America,South America,Developing,Latin America & Caribbean ,High income,36417.87,Trust and Safety,AI Policy,Access to Redress and Remedy,62.73,13.8
@@ -2256,8 +2256,8 @@ VNM,Viet Nam,75-72-42-21,Asia and Oceania,South East Asia,Developing,East Asia &
 VNM,Viet Nam,08-83-04-63,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,Lower middle income,16385.51,Labour and Skills,AI Policy,Labour Protections,9.09,2
 VNM,Viet Nam,10-58-29-76,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,Lower middle income,16385.51,AI Use in Public Service,AI Policy,Public Disclosure of Government Algorithmic Systems,19.32,4.25
 VNM,Viet Nam,25-10-95-93,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,Lower middle income,16385.51,AI Use in Public Service,AI Policy,Public Procurement,56.82,12.5
-VNM,Viet Nam,44-75-58-25,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,Lower middle income,16385.51,AI Use in Public Service,AI Policy,Public Sector Skills Development,78.79,17.33
-VNM,Viet Nam,10-21-29-02,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,Lower middle income,16385.51,Labour and Skills,AI Policy,Reskilling and upskilling initiatives,69.7,15.33
+VNM,Viet Nam,44-75-58-25,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,Lower middle income,16385.51,AI Use in Public Service,AI Policy,Public Sector Skills Development,77.65,17.08
+VNM,Viet Nam,10-21-29-02,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,Lower middle income,16385.51,Labour and Skills,AI Policy,Reskilling and upskilling initiatives,68.56,15.08
 VNM,Viet Nam,60-39-45-38,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,Lower middle income,16385.51,Trust and Safety,AI Policy,Safety and Security,20.34,4.47
 VNM,Viet Nam,16-80-40-32,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,Lower middle income,16385.51,Ethics and Sustainability,AI Policy,Transparency and Explainability,20.68,4.55
 ZMB,Zambia,76-61-04-19,Africa,East Africa,Developing,Sub-Saharan Africa ,Lower middle income,4214.89,Labour and Skills,AI Policy,AI Literacy,74.62,16.42
@@ -2848,7 +2848,7 @@ BHR,Bahrain,89-43-45-56,Middle East,,Developing,"Middle East, North Africa, Afgh
 BGD,Bangladesh,32-82-85-53,Asia and Oceania,South West Asia,Developing,South Asia,Lower middle income,9646.77,AI Use in Public Service,CSO Engagement,Government Mechanisms for CSO Inclusion in AI Policy and Governance,8.75,0.09
 BRB,Barbados,34-41-22-38,Caribbean,,Developing,Latin America & Caribbean ,High income,24822.53,AI Use in Public Service,CSO Engagement,Government Mechanisms for CSO Inclusion in AI Policy and Governance,40,0.4
 BLR,Belarus,78-40-84-01,Europe,Eastern Europe,Developed,Europe & Central Asia,Upper middle income,33010.33,AI Use in Public Service,CSO Engagement,Government Mechanisms for CSO Inclusion in AI Policy and Governance,0,0
-BEL,Belgium,12-31-23-21,Europe,Western Europe,Developed,Europe & Central Asia,High income,73514.48,AI Use in Public Service,CSO Engagement,Government Mechanisms for CSO Inclusion in AI Policy and Governance,85,0.85
+BEL,Belgium,12-31-23-21,Europe,Western Europe,Developed,Europe & Central Asia,High income,73514.48,AI Use in Public Service,CSO Engagement,Government Mechanisms for CSO Inclusion in AI Policy and Governance,55,0.55
 BLZ,Belize,17-78-33-77,Caribbean,,Developing,Latin America & Caribbean ,Upper middle income,14346.52,AI Use in Public Service,CSO Engagement,Government Mechanisms for CSO Inclusion in AI Policy and Governance,0,0
 BEN,Benin,63-82-83-75,Africa,West Africa,Developing,Sub-Saharan Africa ,Lower middle income,4434.56,AI Use in Public Service,CSO Engagement,Government Mechanisms for CSO Inclusion in AI Policy and Governance,47.5,0.48
 BTN,Bhutan,83-09-51-85,Asia and Oceania,South West Asia,Developing,South Asia,Lower middle income,16215.15,AI Use in Public Service,CSO Engagement,Government Mechanisms for CSO Inclusion in AI Policy and Governance,0,0
@@ -2869,7 +2869,7 @@ HKG,China Hong Kong Special Administrative Region,45-63-93-73,Asia and Oceania,E
 COL,Colombia,96-08-54-39,South and Central America,South America,Developing,Latin America & Caribbean ,Upper middle income,22349.44,AI Use in Public Service,CSO Engagement,Government Mechanisms for CSO Inclusion in AI Policy and Governance,30,0.3
 COG,Congo,05-87-27-44,Africa,Central Africa,Developing,Sub-Saharan Africa ,Lower middle income,7026.36,AI Use in Public Service,CSO Engagement,Government Mechanisms for CSO Inclusion in AI Policy and Governance,0,0
 CRI,Costa Rica,80-43-56-71,South and Central America,Central America,Developing,Latin America & Caribbean ,High income,31106.76,AI Use in Public Service,CSO Engagement,Government Mechanisms for CSO Inclusion in AI Policy and Governance,32.5,0.32
-CIV,Cote d'Ivoire,63-54-60-85,Africa,West Africa,Developing,Sub-Saharan Africa ,Lower middle income,7669.23,AI Use in Public Service,CSO Engagement,Government Mechanisms for CSO Inclusion in AI Policy and Governance,15,0.15
+CIV,Cote d'Ivoire,63-54-60-85,Africa,West Africa,Developing,Sub-Saharan Africa ,Lower middle income,7669.23,AI Use in Public Service,CSO Engagement,Government Mechanisms for CSO Inclusion in AI Policy and Governance,45,0.45
 HRV,Croatia,19-09-81-64,Europe,Balkans (South East Europe),Developed,Europe & Central Asia,High income,49550.79,AI Use in Public Service,CSO Engagement,Government Mechanisms for CSO Inclusion in AI Policy and Governance,0,0
 COD,Democratic Republic of the Congo,69-80-72-47,Africa,Central Africa,Developing,Sub-Saharan Africa ,Low income,1821.05,AI Use in Public Service,CSO Engagement,Government Mechanisms for CSO Inclusion in AI Policy and Governance,0,0
 DOM,Dominican Republic,98-36-67-92,Caribbean,,Developing,Latin America & Caribbean ,Upper middle income,27541.66,AI Use in Public Service,CSO Engagement,Government Mechanisms for CSO Inclusion in AI Policy and Governance,30,0.3
@@ -2923,8 +2923,8 @@ NZL,New Zealand,21-12-87-13,Asia and Oceania,Oceania (Pacific),Developed,East As
 NER,Niger,11-38-94-27,Africa,West Africa,Developing,Sub-Saharan Africa ,Low income,2049.93,AI Use in Public Service,CSO Engagement,Government Mechanisms for CSO Inclusion in AI Policy and Governance,0,0
 NGA,Nigeria,79-91-79-22,Africa,West Africa,Developing,Sub-Saharan Africa ,Lower middle income,9086.88,AI Use in Public Service,CSO Engagement,Government Mechanisms for CSO Inclusion in AI Policy and Governance,90,0.9
 MKD,North Macedonia,88-78-45-21,Europe,Balkans (South East Europe),Developed,Europe & Central Asia,Upper middle income,26995.43,AI Use in Public Service,CSO Engagement,Government Mechanisms for CSO Inclusion in AI Policy and Governance,40,0.4
-NOR,Norway,15-50-06-01,Europe,North Europe,Developed,Europe & Central Asia,High income,102037.53,AI Use in Public Service,CSO Engagement,Government Mechanisms for CSO Inclusion in AI Policy and Governance,40,0.4
-OMN,Oman,17-63-77-17,Middle East,,Developing,"Middle East, North Africa, Afghanistan & Pakistan",High income,41740.17,AI Use in Public Service,CSO Engagement,Government Mechanisms for CSO Inclusion in AI Policy and Governance,2.5,0.02
+NOR,Norway,15-50-06-01,Europe,North Europe,Developed,Europe & Central Asia,High income,102037.53,AI Use in Public Service,CSO Engagement,Government Mechanisms for CSO Inclusion in AI Policy and Governance,70,0.7
+OMN,Oman,17-63-77-17,Middle East,,Developing,"Middle East, North Africa, Afghanistan & Pakistan",High income,41740.17,AI Use in Public Service,CSO Engagement,Government Mechanisms for CSO Inclusion in AI Policy and Governance,32.5,0.32
 PAK,Pakistan,65-37-24-32,Asia and Oceania,South West Asia,Developing,"Middle East, North Africa, Afghanistan & Pakistan",Lower middle income,6252.12,AI Use in Public Service,CSO Engagement,Government Mechanisms for CSO Inclusion in AI Policy and Governance,47.5,0.48
 PAN,Panama,37-28-19-33,South and Central America,Central America,Developing,Latin America & Caribbean ,High income,41369.42,AI Use in Public Service,CSO Engagement,Government Mechanisms for CSO Inclusion in AI Policy and Governance,31.25,0.31
 PRY,Paraguay,79-97-78-51,South and Central America,South America,Developing,Latin America & Caribbean ,Upper middle income,18523.68,AI Use in Public Service,CSO Engagement,Government Mechanisms for CSO Inclusion in AI Policy and Governance,0,0
@@ -2951,7 +2951,7 @@ SSD,South Sudan,45-31-26-71,Africa,East Africa,Developing,Sub-Saharan Africa ,Lo
 ESP,Spain,96-91-73-31,Europe,Western Europe,Developed,Europe & Central Asia,High income,57965.29,AI Use in Public Service,CSO Engagement,Government Mechanisms for CSO Inclusion in AI Policy and Governance,2.5,0.02
 LKA,Sri Lanka,08-26-16-78,Asia and Oceania,South West Asia,Developing,South Asia,Lower middle income,15632.59,AI Use in Public Service,CSO Engagement,Government Mechanisms for CSO Inclusion in AI Policy and Governance,30,0.3
 PSE,State of Palestine,88-30-85-01,Middle East,,Developing,"Middle East, North Africa, Afghanistan & Pakistan",Lower middle income,4371.11,AI Use in Public Service,CSO Engagement,Government Mechanisms for CSO Inclusion in AI Policy and Governance,2.5,0.02
-CHE,Switzerland,90-17-33-76,Europe,Western Europe,Developed,Europe & Central Asia,High income,96497.69,AI Use in Public Service,CSO Engagement,Government Mechanisms for CSO Inclusion in AI Policy and Governance,85,0.85
+CHE,Switzerland,90-17-33-76,Europe,Western Europe,Developed,Europe & Central Asia,High income,96497.69,AI Use in Public Service,CSO Engagement,Government Mechanisms for CSO Inclusion in AI Policy and Governance,55,0.55
 TJK,Tajikistan,12-66-21-53,Asia and Oceania,NorthWest Asia,Developing,Europe & Central Asia,Lower middle income,5405.98,AI Use in Public Service,CSO Engagement,Government Mechanisms for CSO Inclusion in AI Policy and Governance,15,0.15
 THA,Thailand,85-42-50-32,Asia and Oceania,South East Asia,Developing,East Asia & Pacific,Upper middle income,24712.07,AI Use in Public Service,CSO Engagement,Government Mechanisms for CSO Inclusion in AI Policy and Governance,30,0.3
 TGO,Togo,24-40-37-11,Africa,West Africa,Developing,Sub-Saharan Africa ,Low income,3365.46,AI Use in Public Service,CSO Engagement,Government Mechanisms for CSO Inclusion in AI Policy and Governance,0,0

@@ -34,7 +34,7 @@ export function MethodologyFooterHero({
         />
 
         <div className="relative z-10 flex min-h-[360px] flex-col justify-center px-8 py-14 sm:px-12 md:min-h-[480px] md:px-14 md:py-16 lg:min-h-[565px] lg:max-w-[56%] lg:px-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl max-w-lg font-medium leading-[1.12] tracking-tight md:leading-[1.1]">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl max-w-lg font-semibold leading-[1.12] tracking-tight md:leading-[1.1]">
             <span className="text-white">{content.footerHeadingLine1}</span>
             <br />
             <span className="text-hero-accent">{content.footerHeadingLine2}</span>

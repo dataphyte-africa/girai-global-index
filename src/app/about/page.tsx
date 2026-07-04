@@ -9,9 +9,10 @@ import {
   AboutContributorsSection,
   AboutWhoGiraiIsForSection,
   AboutPeopleBehindResearchSection,
+  AboutAdvisoryCommitteeSection,
   AboutFooterHero,
 } from "@/components/about";
-import { IndicatorCategorySection } from "@/components/indicator-category-section";
+import { OurImpactSection } from "@/components/our-impact-section";
 import { ShapingIntelligenceSection } from "@/components/shaping-intelligence-section";
 import { getAboutContent } from "@/content/about";
 
@@ -35,9 +36,19 @@ export default async function AboutPage() {
         <AboutGcgLedSection content={content} />
         <AboutWhatIndexMeasuresSection content={content} />
         <AboutContributorsSection content={content} />
-        <IndicatorCategorySection />
+        <OurImpactSection
+          content={{
+            impactHeadingLead: content.impactHeadingLead,
+            impactHeadingAccent: content.impactHeadingAccent,
+            impactSubtitle: content.impactSubtitle,
+            impactCards: content.impactCards,
+            impactCtaLabel: content.impactCtaLabel,
+            impactCtaHref: content.impactCtaHref,
+          }}
+        />
         <AboutWhoGiraiIsForSection content={content} />
         <AboutPeopleBehindResearchSection content={content} />
+        <AboutAdvisoryCommitteeSection content={content} />
         <ShapingIntelligenceSection />
         <AboutFooterHero content={content} />
       </main>

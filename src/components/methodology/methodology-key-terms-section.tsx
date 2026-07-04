@@ -73,7 +73,7 @@ export function MethodologyKeyTermsSection({
 
       <div className="relative mx-auto max-w-3xl">
         <header className="mx-auto mb-10 max-w-2xl text-center md:mb-12 lg:mb-14">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight lg:leading-[1.12]">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight lg:leading-[1.12]">
             <span className="text-primary">{content.keyTermsHeadingAccent}</span>
             <span className="text-foreground">{content.keyTermsHeadingTail}</span>
           </h2>

@@ -2,9 +2,6 @@ import Image from "next/image";
 import { aboutDefaults, type AboutContent } from "@/content/about.defaults";
 
 const PURPLE = "#7150F4";
-const HEADING_DARK = "#1A1A2E";
-const BODY_COLOR = "#6B7280";
-const SUBTITLE_COLOR = "#6B7280";
 
 function AudienceCard({
   index,
@@ -16,7 +13,7 @@ function AudienceCard({
   description: string;
 }) {
   return (
-    <article className="flex gap-4 rounded-[18px] bg-white p-5 shadow-[0_2px_24px_rgba(26,26,46,0.06)] md:gap-5 md:p-6">
+    <article className="flex gap-4 rounded-[18px] bg-white p-5 shadow-[0_2px_24px_rgba(26,26,46,0.06)] dark:bg-card dark:shadow-[0_2px_24px_rgba(0,0,0,0.25)] md:gap-5 md:p-6">
       <div className="relative mt-0.5 shrink-0">
         <div
           aria-hidden
@@ -31,16 +28,10 @@ function AudienceCard({
       </div>
 
       <div className="min-w-0 flex-1">
-        <h3
-          className="text-base font-medium leading-snug tracking-tight md:text-[1.0625rem]"
-          style={{ color: HEADING_DARK }}
-        >
+        <h3 className="text-base font-semibold leading-snug tracking-tight text-foreground md:text-[1.0625rem]">
           {title}
         </h3>
-        <p
-          className="mt-1.5 text-sm leading-[1.6] md:text-[0.9375rem]"
-          style={{ color: BODY_COLOR }}
-        >
+        <p className="mt-1.5 text-sm leading-[1.6] text-muted-foreground md:text-[0.9375rem]">
           {description}
         </p>
       </div>
@@ -58,18 +49,15 @@ export function AboutWhoGiraiIsForSection({
 }) {
   const image = content.whoForImage.url ?? aboutDefaults.whoForImage.url!;
   return (
-    <section className="w-full bg-white px-4 py-16 md:px-6 md:py-24 lg:py-28">
+    <section className="w-full bg-white px-4 py-16 dark:bg-background md:px-6 md:py-24 lg:py-28">
       <div className="mx-auto max-w-7xl">
         <header className="mx-auto mb-12 max-w-3xl text-center md:mb-14 lg:mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium leading-[1.18] tracking-tight md:leading-[1.15]">
-            <span style={{ color: HEADING_DARK }}>{content.whoForHeadingLead}</span>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold leading-[1.18] tracking-tight md:leading-[1.15]">
+            <span className="text-foreground">{content.whoForHeadingLead}</span>
             <span style={{ color: PURPLE }}>{content.whoForHeadingAccent}</span>
           </h2>
 
-          <p
-            className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed md:text-base md:leading-[1.65]"
-            style={{ color: SUBTITLE_COLOR }}
-          >
+          <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground md:text-base md:leading-[1.65]">
             {content.whoForSubtitle}
           </p>
         </header>
@@ -96,10 +84,7 @@ export function AboutWhoGiraiIsForSection({
               sizes="(max-width: 1024px) 100vw, 50vw"
             />
 
-            <p
-              className="mt-6 max-w-lg text-base leading-[1.65] md:mt-7 md:text-[1.0625rem]"
-              style={{ color: BODY_COLOR }}
-            >
+            <p className="mt-6 max-w-lg text-base leading-[1.65] text-muted-foreground md:mt-7 md:text-[1.0625rem]">
               {content.whoForSummary}
             </p>
           </div>

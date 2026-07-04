@@ -165,7 +165,12 @@ const FACETS: FacetSpec[] = [
     label: "DIMENSIONS",
     chipLabel: "Dimension",
     placeholder: "All Dimensions",
-    resolve: (r) => r.dimensionSlug,
+    // URAI / government-misuse evidence has no real dimension — the source
+    // sheet marks its dimension as n/a, and the taxonomy only files it under
+    // a dimension as a convenience (URAI is a penalty multiplier, not a
+    // dimension member). Treat it as dimensionless so it never surfaces as a
+    // Dimensions filter option and a dimension filter never matches it.
+    resolve: (r) => (r.kind === "government-misuse" ? [] : r.dimensionSlug),
   },
 ];
 
@@ -894,9 +899,23 @@ export function EvidenceExplorer({
     setSearchInput("");
   }, [writeState, presetCountryIso3, presetIndicatorSlug]);
 
+  // Scroll-to-top on page change lands on the stat cards just above the
+  // results. The filter bar is sticky (top-16 / 64px below the site header)
+  // and its height changes with breakpoint, so measure it at click time and
+  // offset by it instead of guessing a fixed scroll-margin.
+  const listTopRef = React.useRef<HTMLDivElement>(null);
+  const filterBarRef = React.useRef<HTMLDivElement>(null);
+  const STICKY_TOP_PX = 64; // matches the filter bar's `top-16`
+
   const goToPage = React.useCallback(
     (page: number) => {
       writeState({ ...urlState, page });
+      const anchor = listTopRef.current;
+      if (!anchor) return;
+      const barHeight = filterBarRef.current?.getBoundingClientRect().height ?? 0;
+      const offset = STICKY_TOP_PX + barHeight + 12; // 12px breathing gap
+      const top = anchor.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top, behavior: "smooth" });
     },
     [urlState, writeState]
   );
@@ -934,7 +953,7 @@ export function EvidenceExplorer({
     >
       {/* Heading */}
       <div className="mx-auto mb-8 max-w-3xl text-center md:mb-10">
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight text-foreground">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight text-foreground">
           {heading}
         </h2>
         <p className="mt-3 text-sm text-muted-foreground md:text-base">
@@ -945,7 +964,10 @@ export function EvidenceExplorer({
         </p>
       </div>
 
-      <div className="sticky top-16 z-40 -mx-4 mb-6 border-b border-border/60 bg-background/95 px-4 pb-4 pt-2 backdrop-blur-md supports-backdrop-filter:bg-background/80 md:-mx-6 md:px-6">
+      <div
+        ref={filterBarRef}
+        className="sticky top-16 z-40 -mx-4 mb-6 border-b border-border/60 bg-background/95 px-4 pb-4 pt-2 backdrop-blur-md supports-backdrop-filter:bg-background/80 md:-mx-6 md:px-6"
+      >
         {/* Search */}
         <div className="relative mb-4">
           <Search
@@ -1025,7 +1047,7 @@ export function EvidenceExplorer({
       </div>
 
       {/* Stat cards */}
-      <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-2">
+      <div ref={listTopRef} className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-2">
         <StatCard
           loading={isLoadingIndex}
           value={stats.total}
@@ -1221,6 +1243,11 @@ function FacetDropdown({
         ? options.find((o) => o.value === selected[0])?.label ?? selected[0]
         : `${selected.length} selected`;
 
+  // Nothing to filter on (e.g. the Dimensions facet while viewing the
+  // dimensionless government-misuse evidence) — present a non-interactive,
+  // muted control instead of an openable dropdown that reads "No matches".
+  const isEmpty = options.length === 0 && selected.length === 0;
+
   return (
     <div ref={containerRef} className="relative">
       <label className="mb-1 block text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
@@ -1228,11 +1255,13 @@ function FacetDropdown({
       </label>
       <button
         type="button"
+        disabled={isEmpty}
         onClick={() => setOpen((o) => !o)}
         className={cn(
           "flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 text-sm shadow-sm transition-colors",
           "hover:bg-muted/30 focus:outline-none focus:ring-2 focus:ring-primary",
-          open && "ring-2 ring-primary"
+          open && "ring-2 ring-primary",
+          isEmpty && "cursor-not-allowed opacity-50 hover:bg-background"
         )}
       >
         <span
@@ -1679,7 +1708,7 @@ function EmptyState({ onClear }: { onClear: () => void }) {
     <div className="flex flex-col items-center justify-center gap-4 rounded-xl border border-dashed bg-card px-6 py-16 text-center">
       <SearchX className="h-10 w-10 text-muted-foreground/70" aria-hidden />
       <div>
-        <h3 className="text-base font-medium text-foreground">No evidence matches these filters</h3>
+        <h3 className="text-base font-semibold text-foreground">No evidence matches these filters</h3>
         <p className="mt-1 text-sm text-muted-foreground">
           Try removing a filter or widening your search.
         </p>

@@ -15,12 +15,21 @@ export const EMPTY_SCORE_FILTER: ScoreFilterSelection = {
 /**
  * Resolve the score used for map colouring, table columns, and sorting.
  *
- * Homepage: averages all selected dimension + pillar scores; falls back to
- * overall GIRAI when none are selected.
+ * The filter is constrained to at most one dimension and at most one pillar
+ * (combinable), so each selection maps to a single measured value — never an
+ * average across unrelated aggregates:
+ *
+ *   • dimension only        → that dimension's score
+ *   • pillar only           → that pillar's score
+ *   • dimension + pillar    → the matrix intersection cell (the pillar's
+ *                             score *within* that dimension)
+ *   • nothing               → overall GIRAI
  *
  * Dimension page (lockedDimensionSlug): defaults to that dimension's score;
- * when pillars are selected, averages those pillars within the dimension
- * matrix instead.
+ * when a pillar is selected, shows that pillar's cell within the dimension.
+ *
+ * Multi-select arrays are still averaged as a defensive fallback for any
+ * caller that bypasses the single-select UI.
  */
 export function resolvePerformanceScore(
   country: CountryRanking,
@@ -40,6 +49,15 @@ export function resolvePerformanceScore(
       }
     }
     return country.dimensionScores[locked] ?? null;
+  }
+
+  // One dimension + one pillar → the matrix intersection cell.
+  if (scoreFilter.dimensions.length === 1 && scoreFilter.pillars.length === 1) {
+    const cell =
+      country.dimPillarMatrix[scoreFilter.dimensions[0] as DimensionSlug]?.[
+        scoreFilter.pillars[0] as PillarSlug
+      ];
+    return cell ?? null;
   }
 
   const values: number[] = [];
@@ -122,6 +140,11 @@ export function scoreColumnLabel(
   if (dimNames.length === 0 && pillarNames.length === 0) return "Index";
   if (dimNames.length === 1 && pillarNames.length === 0) return dimNames[0];
   if (pillarNames.length === 1 && dimNames.length === 0) return pillarNames[0];
+  // One dimension + one pillar → the intersection cell, e.g.
+  // "AI Policy in Trust and Safety" (pillar within dimension).
+  if (dimNames.length === 1 && pillarNames.length === 1) {
+    return `${pillarNames[0]} in ${dimNames[0]}`;
+  }
   return "Avg. score";
 }
 

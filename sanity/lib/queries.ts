@@ -30,6 +30,13 @@ export const aboutPageQuery = groq`
   peopleHeadingLead, peopleHeadingAccent, peopleHeadingTail, peopleSubtitle,
   people,
 
+  committeeHeading, committeeSubtitle,
+  committeeMembers[]{ name, affiliation },
+
+  impactHeadingLead, impactHeadingAccent, impactSubtitle,
+  impactCards[]{ title, description },
+  impactCtaLabel, impactCtaHref,
+
   footerHeading, footerBody,
   footerCta{ label, href },
   "footerImage": footerImage${imageProjection}
@@ -43,6 +50,29 @@ export const takeawaysPageQuery = groq`
   introHeadingLead, introHeadingMuted,
   keyInsightsHeadingAccent, keyInsightsHeadingTail, keyInsightsSubtitle,
   insights[]{ title, description }
+}`;
+
+export const keyFindingsQuery = groq`
+*[_type == "keyFindings"][0]{
+  headingAccent, headingTail, subtitle,
+  findings[]{
+    _key,
+    title,
+    summary,
+    body[]{
+      ...,
+      _type == "findingChart" => {
+        ...,
+        "url": asset->url,
+        "width": asset->metadata.dimensions.width,
+        "height": asset->metadata.dimensions.height,
+        alt,
+        caption
+      }
+    },
+    brightSpotCountry,
+    brightSpotBody
+  }
 }`;
 
 export const methodologyPageQuery = groq`
@@ -99,13 +129,15 @@ export const homePageQuery = groq`
 
   dimensionsHeadingLead, dimensionsHeadingAccent, dimensionsSubtitle,
 
-  reportBadge, reportHeadingLead, reportHeadingAccent, reportBody,
-  reportPrimaryCtaLabel, reportSecondaryCtaLabel,
-
   takeawaysBadge, takeawaysHeadingAccent, takeawaysHeadingTail,
   takeawaysSubtitle, takeawaysViewAllLabel,
+  takeawaysCards[]{ category, title, description, stat, statCaption },
 
   evidenceBadge, evidenceHeading, evidenceBody, evidenceCtaLabel, evidenceNote,
+
+  performanceHeadingLead, performanceHeadingAccent, performanceHeadingTail, performanceSubtitle,
+
+  compareHeadingLead, compareHeadingAccent, compareSubheading,
 
   indicatorsHeadingAccent, indicatorsHeadingTail, indicatorsSubtitle,
 
@@ -114,6 +146,10 @@ export const homePageQuery = groq`
 
   impactHeadingLead, impactHeadingAccent, impactSubtitle,
   impactCards[]{ title, description },
+  impactCtaLabel, impactCtaHref,
+
+  usedByHeading, usedBySubtitle,
+  usedByPartners[]{ name, "logo": logo${imageProjection} },
 
   shapingHeadingLines
 }`;
@@ -131,7 +167,11 @@ export const footerQuery = groq`
   resultsLinks[]{ label, href },
   regionLinks[]{ label, href },
   otherProjectsLinks[]{ label, href },
-  socialLinks[]{ label, href }
+  socialLinks[]{ label, href },
+  funderNoteText,
+  funderLogos[]{ name, url, "logo": logo${imageProjection} },
+  "funderLogo": funderLogo${imageProjection},
+  funderLink
 }`;
 
 export const siteSettingsQuery = groq`
@@ -167,7 +207,75 @@ export const regionsPageQuery = groq`
 export const countriesPageQuery = groq`
 *[_type == "countriesPage"][0]{
   heroTitleLine1, heroTitleAccent, heroSubtitle,
+  performanceHeadingLead, performanceHeadingAccent, performanceHeadingTail, performanceSubtitle,
   compareHeadingLead, compareHeadingAccent, compareSubheading,
   takeawaysHeadingAccent, takeawaysHeadingTail, takeawaysSubtitle,
   seoTitle, seoDescription
 }`;
+
+export const regionPagesQuery = groq`
+*[_type == "regionPage"]{ slug, adjective, blurb, footerBlurb }`;
+
+export const pillarsQuery = groq`
+*[_type == "pillar"]{ slug, heading, body, driversDescription, "image": image${imageProjection} }`;
+
+export const dimensionsCopyQuery = groq`
+*[_type == "dimensionCopy"]{
+  slug, subtitle, description, eyebrow, heroLead, rankingSubtitle
+}`;
+
+export const pathwaysCopyQuery = groq`
+*[_type == "evidencePathway"]{ pathwayId, title, tableTitle, description, itemNoun }`;
+
+export const indicatorPageBySlugQuery = groq`
+*[_type == "indicatorPage" && slug == $slug][0]{
+  heroLead, introPrimary, introSecondary, background, relevance
+}`;
+
+export const downloadModalQuery = groq`
+*[_type == "downloadModal"][0]{
+  title, description,
+  editionFirstLabel, editionSecondLabel,
+  "formImage": formImage${imageProjection},
+  fullNameLabel, fullNamePlaceholder,
+  emailLabel, emailPlaceholder,
+  organizationLabel, organizationPlaceholder,
+  roleLabel, rolePlaceholder,
+  reasonLabel, reasonPlaceholder,
+  reasons[]{ value, label },
+  licenseTextBefore, licenseLinkLabel, licenseLinkHref,
+  submitLabel, submittingLabel, imageAlt,
+  citationHeadingTemplate, citationBody, methodologyHeading, methodologyBody
+}`;
+
+export const reportDownloadQuery = groq`
+*[_type == "reportDownload"][0]{
+  badge, headingLead, headingAccent, body,
+  "coverImage": coverImage${imageProjection},
+  primaryCtaLabel, secondaryCtaLabel
+}`;
+
+// --- Updates (blog) ---------------------------------------------------------
+
+/** Card-level fields shared by the list, featured and sidebar views. */
+const updateCardProjection = `
+  _id, title, "slug": slug.current, category, publishedAt, author, featured, excerpt,
+  "coverImage": coverImage${imageProjection}
+`;
+
+export const updatesListQuery = groq`
+*[_type == "updatePost" && defined(slug.current)] | order(publishedAt desc){
+  ${updateCardProjection}
+}`;
+
+export const updateBySlugQuery = groq`
+*[_type == "updatePost" && slug.current == $slug][0]{
+  ${updateCardProjection},
+  body[]{
+    ...,
+    _type == "contentImage" => { "url": asset->url, alt }
+  }
+}`;
+
+export const updateSlugsQuery = groq`
+*[_type == "updatePost" && defined(slug.current)].slug.current`;

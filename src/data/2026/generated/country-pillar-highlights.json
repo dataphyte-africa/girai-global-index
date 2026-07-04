@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-06-19T12:52:11.868Z",
-  "sourceHash": "ea87a4164f58f0330a86eaebf998dd66d5c3c626ce2e3e2a2352b933405fd20d",
+  "generatedAt": "2026-07-02T13:57:36.680Z",
+  "sourceHash": "58c0ac0fc02ad292aca2bef4d9b1f624c970dda35bfe8de559f60cc5357a5e30",
   "countries": [
     {
       "iso3": "NOR",
@@ -15,7 +15,7 @@
         "cso-engagement": {
           "bullets": [
             "9 civil society initiatives on file",
-            "1 multi-stakeholder governance item documented",
+            "2 multi-stakeholder governance items documented",
             "5 of 5 civil society indicators with documented engagement"
           ]
         },
@@ -211,32 +211,6 @@
       }
     },
     {
-      "iso3": "EST",
-      "pillars": {
-        "ai-policy": {
-          "bullets": [
-            "15 AI Policy indicators covered by a framework",
-            "17 government initiatives documented",
-            "Dedicated implementing body on 15 indicators"
-          ]
-        },
-        "cso-engagement": {
-          "bullets": [
-            "5 civil society initiatives on file",
-            "0 multi-stakeholder governance items documented",
-            "5 of 5 civil society indicators with documented engagement"
-          ]
-        },
-        "enabling-conditions": {
-          "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
-            "Public Service Delivery (100.0)",
-            "Civil Society Oversight (96.5)"
-          ]
-        }
-      }
-    },
-    {
       "iso3": "LVA",
       "pillars": {
         "ai-policy": {
@@ -258,6 +232,32 @@
             "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
             "Public Service Delivery (94.7)",
             "Data Protection and Privacy (91.8)"
+          ]
+        }
+      }
+    },
+    {
+      "iso3": "EST",
+      "pillars": {
+        "ai-policy": {
+          "bullets": [
+            "15 AI Policy indicators covered by a framework",
+            "17 government initiatives documented",
+            "Dedicated implementing body on 15 indicators"
+          ]
+        },
+        "cso-engagement": {
+          "bullets": [
+            "5 civil society initiatives on file",
+            "0 multi-stakeholder governance items documented",
+            "5 of 5 civil society indicators with documented engagement"
+          ]
+        },
+        "enabling-conditions": {
+          "bullets": [
+            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Public Service Delivery (100.0)",
+            "Civil Society Oversight (96.5)"
           ]
         }
       }
@@ -405,7 +405,7 @@
         "cso-engagement": {
           "bullets": [
             "6 civil society initiatives on file",
-            "4 multi-stakeholder governance items documented",
+            "3 multi-stakeholder governance items documented",
             "5 of 5 civil society indicators with documented engagement"
           ]
         },
@@ -466,6 +466,32 @@
             "Strongest context signal: Data Protection and Privacy (100.0)",
             "Data Sharing and Access (100.0)",
             "Cybersecurity (99.8)"
+          ]
+        }
+      }
+    },
+    {
+      "iso3": "CHE",
+      "pillars": {
+        "ai-policy": {
+          "bullets": [
+            "12 AI Policy indicators covered by a framework",
+            "15 government initiatives documented",
+            "Dedicated implementing body on 6 indicators"
+          ]
+        },
+        "cso-engagement": {
+          "bullets": [
+            "12 civil society initiatives on file",
+            "2 multi-stakeholder governance items documented",
+            "5 of 5 civil society indicators with documented engagement"
+          ]
+        },
+        "enabling-conditions": {
+          "bullets": [
+            "Strongest context signal: Socioeconomic Inclusion in Connectivity (100.0)",
+            "Gender Inclusion in Connectivity (100.0)",
+            "Data Sharing and Access (100.0)"
           ]
         }
       }
@@ -544,32 +570,6 @@
             "Strongest context signal: Environmental Performance (98.9)",
             "Gender Inclusion in Connectivity (95.7)",
             "Public Service Delivery (94.6)"
-          ]
-        }
-      }
-    },
-    {
-      "iso3": "CHE",
-      "pillars": {
-        "ai-policy": {
-          "bullets": [
-            "12 AI Policy indicators covered by a framework",
-            "15 government initiatives documented",
-            "Dedicated implementing body on 6 indicators"
-          ]
-        },
-        "cso-engagement": {
-          "bullets": [
-            "12 civil society initiatives on file",
-            "4 multi-stakeholder governance items documented",
-            "5 of 5 civil society indicators with documented engagement"
-          ]
-        },
-        "enabling-conditions": {
-          "bullets": [
-            "Strongest context signal: Socioeconomic Inclusion in Connectivity (100.0)",
-            "Gender Inclusion in Connectivity (100.0)",
-            "Data Sharing and Access (100.0)"
           ]
         }
       }
@@ -705,32 +705,6 @@
       }
     },
     {
-      "iso3": "HUN",
-      "pillars": {
-        "ai-policy": {
-          "bullets": [
-            "14 AI Policy indicators covered by a framework",
-            "2 government initiatives documented",
-            "Dedicated implementing body on 14 indicators"
-          ]
-        },
-        "cso-engagement": {
-          "bullets": [
-            "3 civil society initiatives on file",
-            "0 multi-stakeholder governance items documented",
-            "5 of 5 civil society indicators with documented engagement"
-          ]
-        },
-        "enabling-conditions": {
-          "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
-            "Data Protection and Privacy (100.0)",
-            "Consumer Protection (95.1)"
-          ]
-        }
-      }
-    },
-    {
       "iso3": "CRI",
       "pillars": {
         "ai-policy": {
@@ -752,6 +726,32 @@
             "Strongest context signal: Environmental Performance (99.9)",
             "Gender Inclusion in Connectivity (97.7)",
             "Consumer Protection (95.8)"
+          ]
+        }
+      }
+    },
+    {
+      "iso3": "HUN",
+      "pillars": {
+        "ai-policy": {
+          "bullets": [
+            "14 AI Policy indicators covered by a framework",
+            "2 government initiatives documented",
+            "Dedicated implementing body on 14 indicators"
+          ]
+        },
+        "cso-engagement": {
+          "bullets": [
+            "3 civil society initiatives on file",
+            "0 multi-stakeholder governance items documented",
+            "5 of 5 civil society indicators with documented engagement"
+          ]
+        },
+        "enabling-conditions": {
+          "bullets": [
+            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Data Protection and Privacy (100.0)",
+            "Consumer Protection (95.1)"
           ]
         }
       }
@@ -965,32 +965,6 @@
       }
     },
     {
-      "iso3": "NZL",
-      "pillars": {
-        "ai-policy": {
-          "bullets": [
-            "19 AI Policy indicators covered by a framework",
-            "12 government initiatives documented",
-            "Dedicated implementing body on 1 indicator"
-          ]
-        },
-        "cso-engagement": {
-          "bullets": [
-            "10 civil society initiatives on file",
-            "0 multi-stakeholder governance items documented",
-            "5 of 5 civil society indicators with documented engagement"
-          ]
-        },
-        "enabling-conditions": {
-          "bullets": [
-            "Strongest context signal: Global Peace (99.0)",
-            "Gender Inclusion in Connectivity (95.7)",
-            "Population Digital Readiness (93.3)"
-          ]
-        }
-      }
-    },
-    {
       "iso3": "NGA",
       "pillars": {
         "ai-policy": {
@@ -1017,6 +991,32 @@
       }
     },
     {
+      "iso3": "NZL",
+      "pillars": {
+        "ai-policy": {
+          "bullets": [
+            "19 AI Policy indicators covered by a framework",
+            "12 government initiatives documented",
+            "No dedicated implementing bodies identified on frameworks"
+          ]
+        },
+        "cso-engagement": {
+          "bullets": [
+            "10 civil society initiatives on file",
+            "0 multi-stakeholder governance items documented",
+            "5 of 5 civil society indicators with documented engagement"
+          ]
+        },
+        "enabling-conditions": {
+          "bullets": [
+            "Strongest context signal: Global Peace (99.0)",
+            "Gender Inclusion in Connectivity (95.7)",
+            "Population Digital Readiness (93.3)"
+          ]
+        }
+      }
+    },
+    {
       "iso3": "SGP",
       "pillars": {
         "ai-policy": {
@@ -1038,6 +1038,32 @@
             "Strongest context signal: Socioeconomic Inclusion in Connectivity (100.0)",
             "Gender Inclusion in Connectivity (100.0)",
             "Data Sharing and Access (100.0)"
+          ]
+        }
+      }
+    },
+    {
+      "iso3": "ISR",
+      "pillars": {
+        "ai-policy": {
+          "bullets": [
+            "18 AI Policy indicators covered by a framework",
+            "12 government initiatives documented",
+            "Dedicated implementing body on 9 indicators"
+          ]
+        },
+        "cso-engagement": {
+          "bullets": [
+            "11 civil society initiatives on file",
+            "3 multi-stakeholder governance items documented",
+            "5 of 5 civil society indicators with documented engagement"
+          ]
+        },
+        "enabling-conditions": {
+          "bullets": [
+            "Strongest context signal: Gender Inclusion in Connectivity (95.3)",
+            "Cybersecurity (93.5)",
+            "Population Digital Readiness (91.2)"
           ]
         }
       }
@@ -1095,39 +1121,13 @@
       }
     },
     {
-      "iso3": "ISR",
-      "pillars": {
-        "ai-policy": {
-          "bullets": [
-            "18 AI Policy indicators covered by a framework",
-            "12 government initiatives documented",
-            "Dedicated implementing body on 8 indicators"
-          ]
-        },
-        "cso-engagement": {
-          "bullets": [
-            "11 civil society initiatives on file",
-            "3 multi-stakeholder governance items documented",
-            "5 of 5 civil society indicators with documented engagement"
-          ]
-        },
-        "enabling-conditions": {
-          "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (95.3)",
-            "Cybersecurity (93.5)",
-            "Population Digital Readiness (91.2)"
-          ]
-        }
-      }
-    },
-    {
       "iso3": "UKR",
       "pillars": {
         "ai-policy": {
           "bullets": [
             "12 AI Policy indicators covered by a framework",
             "10 government initiatives documented",
-            "Dedicated implementing body on 2 indicators"
+            "Dedicated implementing body on 3 indicators"
           ]
         },
         "cso-engagement": {
@@ -1173,27 +1173,27 @@
       }
     },
     {
-      "iso3": "EGY",
+      "iso3": "IND",
       "pillars": {
         "ai-policy": {
           "bullets": [
-            "13 AI Policy indicators covered by a framework",
-            "10 government initiatives documented",
-            "Dedicated implementing body on 5 indicators"
+            "14 AI Policy indicators covered by a framework",
+            "15 government initiatives documented",
+            "Dedicated implementing body on 8 indicators"
           ]
         },
         "cso-engagement": {
           "bullets": [
-            "7 civil society initiatives on file",
-            "1 multi-stakeholder governance item documented",
+            "14 civil society initiatives on file",
+            "0 multi-stakeholder governance items documented",
             "5 of 5 civil society indicators with documented engagement"
           ]
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Cybersecurity (100.0)",
-            "Public Service Delivery (96.2)",
-            "Data Sharing and Access (87.5)"
+            "Strongest context signal: Data Sharing and Access (100.0)",
+            "Cybersecurity (98.4)",
+            "Public Service Delivery (98.2)"
           ]
         }
       }
@@ -1225,27 +1225,27 @@
       }
     },
     {
-      "iso3": "IND",
+      "iso3": "EGY",
       "pillars": {
         "ai-policy": {
           "bullets": [
-            "14 AI Policy indicators covered by a framework",
-            "15 government initiatives documented",
-            "Dedicated implementing body on 6 indicators"
+            "13 AI Policy indicators covered by a framework",
+            "10 government initiatives documented",
+            "Dedicated implementing body on 5 indicators"
           ]
         },
         "cso-engagement": {
           "bullets": [
-            "14 civil society initiatives on file",
-            "0 multi-stakeholder governance items documented",
+            "7 civil society initiatives on file",
+            "1 multi-stakeholder governance item documented",
             "5 of 5 civil society indicators with documented engagement"
           ]
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Data Sharing and Access (100.0)",
-            "Cybersecurity (98.4)",
-            "Public Service Delivery (98.2)"
+            "Strongest context signal: Cybersecurity (100.0)",
+            "Public Service Delivery (96.2)",
+            "Data Sharing and Access (87.5)"
           ]
         }
       }
@@ -1381,32 +1381,6 @@
       }
     },
     {
-      "iso3": "ARE",
-      "pillars": {
-        "ai-policy": {
-          "bullets": [
-            "11 AI Policy indicators covered by a framework",
-            "13 government initiatives documented",
-            "Dedicated implementing body on 7 indicators"
-          ]
-        },
-        "cso-engagement": {
-          "bullets": [
-            "1 civil society initiative on file",
-            "0 multi-stakeholder governance items documented",
-            "5 of 5 civil society indicators with documented engagement"
-          ]
-        },
-        "enabling-conditions": {
-          "bullets": [
-            "Strongest context signal: Socioeconomic Inclusion in Connectivity (100.0)",
-            "Gender Inclusion in Connectivity (100.0)",
-            "Cybersecurity (100.0)"
-          ]
-        }
-      }
-    },
-    {
       "iso3": "MYS",
       "pillars": {
         "ai-policy": {
@@ -1428,6 +1402,32 @@
             "Strongest context signal: Cybersecurity (98.8)",
             "Consumer Protection (94.5)",
             "Public Service Delivery (93.9)"
+          ]
+        }
+      }
+    },
+    {
+      "iso3": "ARE",
+      "pillars": {
+        "ai-policy": {
+          "bullets": [
+            "11 AI Policy indicators covered by a framework",
+            "13 government initiatives documented",
+            "Dedicated implementing body on 7 indicators"
+          ]
+        },
+        "cso-engagement": {
+          "bullets": [
+            "1 civil society initiative on file",
+            "0 multi-stakeholder governance items documented",
+            "5 of 5 civil society indicators with documented engagement"
+          ]
+        },
+        "enabling-conditions": {
+          "bullets": [
+            "Strongest context signal: Socioeconomic Inclusion in Connectivity (100.0)",
+            "Gender Inclusion in Connectivity (100.0)",
+            "Cybersecurity (100.0)"
           ]
         }
       }
@@ -1537,6 +1537,32 @@
       }
     },
     {
+      "iso3": "THA",
+      "pillars": {
+        "ai-policy": {
+          "bullets": [
+            "10 AI Policy indicators covered by a framework",
+            "4 government initiatives documented",
+            "Dedicated implementing body on 3 indicators"
+          ]
+        },
+        "cso-engagement": {
+          "bullets": [
+            "4 civil society initiatives on file",
+            "1 multi-stakeholder governance item documented",
+            "5 of 5 civil society indicators with documented engagement"
+          ]
+        },
+        "enabling-conditions": {
+          "bullets": [
+            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Cybersecurity (99.2)",
+            "Consumer Protection (95.1)"
+          ]
+        }
+      }
+    },
+    {
       "iso3": "SLV",
       "pillars": {
         "ai-policy": {
@@ -1563,27 +1589,27 @@
       }
     },
     {
-      "iso3": "THA",
+      "iso3": "OMN",
       "pillars": {
         "ai-policy": {
           "bullets": [
             "10 AI Policy indicators covered by a framework",
             "4 government initiatives documented",
-            "Dedicated implementing body on 3 indicators"
+            "Dedicated implementing body on 8 indicators"
           ]
         },
         "cso-engagement": {
           "bullets": [
-            "4 civil society initiatives on file",
+            "0 civil society initiatives on file",
             "1 multi-stakeholder governance item documented",
             "5 of 5 civil society indicators with documented engagement"
           ]
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
-            "Cybersecurity (99.2)",
-            "Consumer Protection (95.1)"
+            "Strongest context signal: Cybersecurity (96.8)",
+            "Data Sharing and Access (87.5)",
+            "Consumer Protection (84.5)"
           ]
         }
       }
@@ -1615,32 +1641,6 @@
       }
     },
     {
-      "iso3": "OMN",
-      "pillars": {
-        "ai-policy": {
-          "bullets": [
-            "10 AI Policy indicators covered by a framework",
-            "4 government initiatives documented",
-            "Dedicated implementing body on 8 indicators"
-          ]
-        },
-        "cso-engagement": {
-          "bullets": [
-            "0 civil society initiatives on file",
-            "0 multi-stakeholder governance items documented",
-            "5 of 5 civil society indicators with documented engagement"
-          ]
-        },
-        "enabling-conditions": {
-          "bullets": [
-            "Strongest context signal: Cybersecurity (96.8)",
-            "Data Sharing and Access (87.5)",
-            "Consumer Protection (84.5)"
-          ]
-        }
-      }
-    },
-    {
       "iso3": "CIV",
       "pillars": {
         "ai-policy": {
@@ -1653,7 +1653,7 @@
         "cso-engagement": {
           "bullets": [
             "0 civil society initiatives on file",
-            "2 multi-stakeholder governance items documented",
+            "3 multi-stakeholder governance items documented",
             "5 of 5 civil society indicators with documented engagement"
           ]
         },
@@ -1849,32 +1849,6 @@
       }
     },
     {
-      "iso3": "ETH",
-      "pillars": {
-        "ai-policy": {
-          "bullets": [
-            "9 AI Policy indicators covered by a framework",
-            "3 government initiatives documented",
-            "Dedicated implementing body on 9 indicators"
-          ]
-        },
-        "cso-engagement": {
-          "bullets": [
-            "1 civil society initiative on file",
-            "0 multi-stakeholder governance items documented",
-            "5 of 5 civil society indicators with documented engagement"
-          ]
-        },
-        "enabling-conditions": {
-          "bullets": [
-            "Strongest context signal: Environmental Performance (100.0)",
-            "Public Service Delivery (77.9)",
-            "Cybersecurity (75.3)"
-          ]
-        }
-      }
-    },
-    {
       "iso3": "LKA",
       "pillars": {
         "ai-policy": {
@@ -1901,13 +1875,39 @@
       }
     },
     {
+      "iso3": "ETH",
+      "pillars": {
+        "ai-policy": {
+          "bullets": [
+            "9 AI Policy indicators covered by a framework",
+            "3 government initiatives documented",
+            "Dedicated implementing body on 9 indicators"
+          ]
+        },
+        "cso-engagement": {
+          "bullets": [
+            "1 civil society initiative on file",
+            "0 multi-stakeholder governance items documented",
+            "5 of 5 civil society indicators with documented engagement"
+          ]
+        },
+        "enabling-conditions": {
+          "bullets": [
+            "Strongest context signal: Environmental Performance (100.0)",
+            "Public Service Delivery (77.9)",
+            "Cybersecurity (75.3)"
+          ]
+        }
+      }
+    },
+    {
       "iso3": "SEN",
       "pillars": {
         "ai-policy": {
           "bullets": [
             "6 AI Policy indicators covered by a framework",
             "4 government initiatives documented",
-            "Dedicated implementing body on 5 indicators"
+            "Dedicated implementing body on 6 indicators"
           ]
         },
         "cso-engagement": {
@@ -1922,32 +1922,6 @@
             "Strongest context signal: Data Protection and Privacy (100.0)",
             "Consumer Protection (80.7)",
             "Civil Society Oversight (77.8)"
-          ]
-        }
-      }
-    },
-    {
-      "iso3": "AZE",
-      "pillars": {
-        "ai-policy": {
-          "bullets": [
-            "5 AI Policy indicators covered by a framework",
-            "5 government initiatives documented",
-            "Dedicated implementing body on 5 indicators"
-          ]
-        },
-        "cso-engagement": {
-          "bullets": [
-            "2 civil society initiatives on file",
-            "1 multi-stakeholder governance item documented",
-            "5 of 5 civil society indicators with documented engagement"
-          ]
-        },
-        "enabling-conditions": {
-          "bullets": [
-            "Strongest context signal: Public Service Delivery (97.4)",
-            "Cybersecurity (93.6)",
-            "Data Sharing and Access (87.5)"
           ]
         }
       }
@@ -1974,6 +1948,32 @@
             "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
             "Cybersecurity (97.8)",
             "Public Service Delivery (95.7)"
+          ]
+        }
+      }
+    },
+    {
+      "iso3": "AZE",
+      "pillars": {
+        "ai-policy": {
+          "bullets": [
+            "5 AI Policy indicators covered by a framework",
+            "5 government initiatives documented",
+            "Dedicated implementing body on 5 indicators"
+          ]
+        },
+        "cso-engagement": {
+          "bullets": [
+            "2 civil society initiatives on file",
+            "1 multi-stakeholder governance item documented",
+            "5 of 5 civil society indicators with documented engagement"
+          ]
+        },
+        "enabling-conditions": {
+          "bullets": [
+            "Strongest context signal: Public Service Delivery (97.4)",
+            "Cybersecurity (93.6)",
+            "Data Sharing and Access (87.5)"
           ]
         }
       }

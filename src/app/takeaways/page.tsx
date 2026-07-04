@@ -8,15 +8,19 @@ import {
   TakeawaysKeyInsightsSection,
 } from "@/components/takeaways";
 import { getTakeawaysContent } from "@/content/takeaways";
+import { getReportDownloadContent } from "@/content/reportDownload";
+import { getKeyFindings } from "@/content/keyFindings";
 
 export const metadata = {
-  title: "Top 10 Takeaways | GIRAI Global Index",
+  title: "Key Findings | GIRAI Global Index",
   description:
     "The most important insights shaping how countries govern artificial intelligence responsibly across regions and contexts.",
 };
 
 export default async function TakeawaysPage() {
   const content = await getTakeawaysContent();
+  const reportDownload = await getReportDownloadContent();
+  const keyFindings = await getKeyFindings();
 
   return (
     <div className="flex min-h-screen flex-col bg-background font-sans dark:bg-black">
@@ -25,9 +29,19 @@ export default async function TakeawaysPage() {
       <main className="flex-1">
         <TakeawaysHero content={content} />
         <TakeawaysIntroSection content={content} />
-        <TopTakeawaysSection showHeader={true} showCta={true} />
+        <TopTakeawaysSection
+          findings={keyFindings?.findings}
+          showHeader={true}
+          showCta={true}
+          headingAccent={keyFindings?.headingAccent ?? "Key"}
+          headingTail={keyFindings?.headingTail ?? "Findings"}
+          headerSubtitle={
+            keyFindings?.subtitle ??
+            "Strengthening Clarity, Comparability, and Implementation Focus"
+          }
+        />
         <TakeawaysKeyInsightsSection content={content} />
-        <ReportDownloadSection />
+        <ReportDownloadSection content={reportDownload} />
       </main>
 
       <SiteFooter />

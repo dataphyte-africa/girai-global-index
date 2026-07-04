@@ -31,7 +31,7 @@ export function TakeawaysHero({ content = takeawaysDefaults }: { content?: Takea
 
           <div className="relative flex min-h-[360px] flex-col justify-center px-8 py-12 md:min-h-[565px] md:max-w-[58%] md:px-14 md:py-16 lg:min-h-[565px]">
             <div>
-              <h1 className="text-[2rem] font-medium leading-[1.12] tracking-tight md:text-6xl lg:text-[3.25rem]">
+              <h1 className="text-[2rem] font-semibold leading-[1.12] tracking-tight md:text-6xl lg:text-[3.25rem]">
                 <span className="text-white">{content.heroTitleLead}</span>
                 <span style={{ color: HERO_TITLE_ACCENT }}>{content.heroTitleAccent}</span>
               </h1>

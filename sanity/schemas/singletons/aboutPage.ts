@@ -15,6 +15,8 @@ export const aboutPage = defineType({
     { name: "contributors", title: "Contributors" },
     { name: "whoFor", title: "Who It's For" },
     { name: "people", title: "People" },
+    { name: "committee", title: "Advisory Committee" },
+    { name: "impact", title: "Our Impact" },
     { name: "footerCta", title: "Footer CTA" },
   ],
   fields: [
@@ -93,6 +95,38 @@ export const aboutPage = defineType({
       group: "people",
       of: [defineArrayMember({ type: "string" })],
       options: { layout: "tags" },
+    }),
+
+    // Advisory Committee
+    defineField({ name: "committeeHeading", title: "Heading", type: "string", group: "committee" }),
+    defineField({ name: "committeeSubtitle", title: "Subtitle", type: "text", rows: 2, group: "committee" }),
+    defineField({
+      name: "committeeMembers",
+      title: "Members",
+      type: "array",
+      group: "committee",
+      of: [defineArrayMember({ type: "committeeMember" })],
+    }),
+
+    // Our Impact
+    defineField({ name: "impactHeadingLead", title: "Heading (dark)", type: "string", group: "impact" }),
+    defineField({ name: "impactHeadingAccent", title: "Heading (accent)", type: "string", group: "impact" }),
+    defineField({ name: "impactSubtitle", title: "Subtitle", type: "text", rows: 2, group: "impact" }),
+    defineField({
+      name: "impactCards",
+      title: "Cards",
+      type: "array",
+      group: "impact",
+      of: [defineArrayMember({ type: "titledCard" })],
+    }),
+    defineField({ name: "impactCtaLabel", title: "Button label", type: "string", group: "impact" }),
+    defineField({
+      name: "impactCtaHref",
+      title: "Button link",
+      description:
+        "Link for the 'GIRAI in Action' button — e.g. an Updates article (/updates/<slug>). Leave empty to hide the button.",
+      type: "string",
+      group: "impact",
     }),
 
     // Footer CTA

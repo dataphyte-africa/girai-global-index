@@ -11,12 +11,6 @@ import { getRegionDisplayName, regionToSlug } from "@/lib/regions";
 import { cn } from "@/lib/utils";
 import { regionsDefaults, type RegionsContent } from "@/content/regions.defaults";
 
-const HEADING_DARK = "#1A1A2E";
-const SUBTITLE_COLOR = "#6B7280";
-const LINK_COLOR = "#6366F1";
-const RANK_BADGE_BG = "#EDE9FE";
-const RANK_BADGE_TEXT = "#7C3AED";
-
 /** Bar colours left-to-right, matching the Figma comp. */
 const DIMENSION_BAR_COLORS: Record<DimensionSlug, string> = {
   "inclusion-diversity": "#8B5CF6",
@@ -78,27 +72,21 @@ export function RegionsPerformanceOverview({
     <section className="w-full bg-[#f8f9ff] px-4 py-16 dark:bg-muted/20 md:px-6 md:py-24 lg:py-28">
       <div className="mx-auto max-w-6xl">
         <header className="mx-auto mb-10 max-w-2xl text-center md:mb-12">
-          <h2
-            className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight"
-            style={{ color: HEADING_DARK }}
-          >
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight text-foreground">
             {content.overviewHeading}
           </h2>
-          <p
-            className="mt-4 text-sm leading-relaxed md:text-base md:leading-[1.65]"
-            style={{ color: SUBTITLE_COLOR }}
-          >
+          <p className="mt-4 text-sm leading-relaxed md:text-base md:leading-[1.65] text-muted-foreground">
             {content.overviewSubtitle}
           </p>
 
-          <div className="mt-8 inline-flex rounded-full border border-border/60 bg-[#ECEEF2] p-1 text-sm shadow-sm">
+          <div className="mt-8 inline-flex rounded-full border border-border/60 bg-muted p-1 text-sm shadow-sm">
             <button
               type="button"
               onClick={() => setMode("dimensions")}
               className={cn(
                 "rounded-full px-5 py-2 font-medium transition-all",
                 mode === "dimensions"
-                  ? "bg-white text-foreground shadow-sm"
+                  ? "bg-background text-foreground shadow-sm"
                   : "text-muted-foreground hover:text-foreground"
               )}
             >
@@ -110,7 +98,7 @@ export function RegionsPerformanceOverview({
               className={cn(
                 "rounded-full px-5 py-2 font-medium transition-all",
                 mode === "pillars"
-                  ? "bg-white text-foreground shadow-sm"
+                  ? "bg-background text-foreground shadow-sm"
                   : "text-muted-foreground hover:text-foreground"
               )}
             >
@@ -170,28 +158,19 @@ function RegionOverviewCard({
       className="flex flex-col rounded-xl border border-border/40 bg-white p-5 shadow-[0_2px_12px_rgba(15,23,42,0.06)] dark:bg-card md:p-6"
     >
       <div className="flex items-start justify-between gap-3">
-        <h3
-          className="text-base font-medium leading-snug md:text-[1.05rem]"
-          style={{ color: HEADING_DARK }}
-        >
+        <h3 className="text-base font-medium leading-snug md:text-[1.05rem] text-foreground">
           {displayName}
         </h3>
-        <span
-          className="shrink-0 rounded-full px-2.5 py-1 text-xs font-semibold"
-          style={{ backgroundColor: RANK_BADGE_BG, color: RANK_BADGE_TEXT }}
-        >
+        <span className="shrink-0 rounded-full bg-violet-100 px-2.5 py-1 text-xs font-semibold text-violet-700 dark:bg-violet-500/15 dark:text-violet-300">
           Rank #{summary.globalRank}
         </span>
       </div>
 
       <p className="mt-4 flex items-baseline gap-1">
-        <span
-          className="text-4xl font-bold tabular-nums tracking-tight"
-          style={{ color: HEADING_DARK }}
-        >
+        <span className="text-4xl font-bold tabular-nums tracking-tight text-foreground">
           {summary.averageGirai.toFixed(1)}
         </span>
-        <span className="text-sm font-medium" style={{ color: SUBTITLE_COLOR }}>
+        <span className="text-sm font-medium text-muted-foreground">
           / 100 overall
         </span>
       </p>
@@ -202,8 +181,7 @@ function RegionOverviewCard({
 
       <Link
         href={href}
-        className="mt-5 inline-flex items-center gap-1 text-sm font-semibold transition-opacity hover:opacity-80"
-        style={{ color: LINK_COLOR }}
+        className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-primary transition-opacity hover:opacity-80"
       >
         View Region
         <ArrowRight className="size-4" strokeWidth={2.25} />

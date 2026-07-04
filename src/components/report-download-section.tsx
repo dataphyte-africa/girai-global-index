@@ -5,20 +5,24 @@ import Image from "next/image";
 import { motion, useInView } from "motion/react";
 import { Download, Sparkles } from "lucide-react";
 import { DataDownloadTrigger } from "@/components/data-download/data-download-trigger";
-import { homeDefaults, type HomeContent } from "@/content/home.defaults";
+import {
+  reportDownloadDefaults,
+  type ReportDownloadContent,
+} from "@/content/reportDownload.defaults";
 
 export function ReportDownloadSection({
-  content = homeDefaults,
+  content = reportDownloadDefaults,
 }: {
-  content?: HomeContent;
+  content?: ReportDownloadContent;
 }) {
   const sectionRef = React.useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
 
   return (
     <section
+      id="report-download"
       ref={sectionRef}
-      className="relative overflow-hidden py-20 md:py-28"
+      className="relative scroll-mt-24 overflow-hidden py-20 md:py-28"
     >
       {/* Subtle backdrop accents to match adjacent sections */}
       <div
@@ -50,8 +54,11 @@ export function ReportDownloadSection({
                 className="absolute -inset-6 -z-10 rounded-3xl bg-primary/10 blur-2xl dark:bg-primary/20"
               />
               <Image
-                src="/report-image.png"
-                alt="Global Index on Responsible AI 2026 Report cover"
+                src={content.coverImage.url ?? "/report-image.jpg"}
+                alt={
+                  content.coverImage.alt ??
+                  "Global Index on Responsible AI 2026 Report cover"
+                }
                 width={420}
                 height={560}
                 priority={false}
@@ -69,40 +76,28 @@ export function ReportDownloadSection({
           >
             <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary ring-1 ring-inset ring-primary/20">
               <Sparkles className="h-3.5 w-3.5" aria-hidden />
-              {content.reportBadge}
+              {content.badge}
             </span>
 
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight leading-[1.1]">
-              <span className="text-foreground">{content.reportHeadingLead}</span>
-              <span className="text-primary">{content.reportHeadingAccent}</span>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight leading-[1.1]">
+              <span className="text-foreground">{content.headingLead}</span>
+              <span className="text-primary">{content.headingAccent}</span>
             </h2>
 
             <p className="max-w-xl text-sm md:text-base leading-relaxed text-muted-foreground">
-              {content.reportBody}
+              {content.body}
             </p>
 
             <div className="flex flex-col gap-3 pt-2 sm:flex-row sm:items-center">
               <DataDownloadTrigger
                 assetType="report"
-                edition="first"
+                edition="second"
                 source="report-download-section-primary"
                 size="lg"
                 className="bg-primary px-6 text-primary-foreground shadow-lg shadow-primary/25 hover:bg-primary/90"
               >
                 <Download className="h-4 w-4" aria-hidden />
-                {content.reportPrimaryCtaLabel}
-              </DataDownloadTrigger>
-
-              <DataDownloadTrigger
-                assetType="report"
-                edition="second"
-                source="report-download-section-secondary"
-                variant="outline"
-                size="lg"
-                className="border-primary/40 bg-background/60 px-6 text-primary hover:bg-primary/5 hover:text-primary dark:bg-background/30 dark:hover:bg-primary/10"
-              >
-                <Download className="h-4 w-4" aria-hidden />
-                {content.reportSecondaryCtaLabel}
+                {content.primaryCtaLabel}
               </DataDownloadTrigger>
             </div>
           </motion.div>

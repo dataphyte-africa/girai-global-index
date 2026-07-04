@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-06-19T12:52:11.868Z",
-  "sourceHash": "ea87a4164f58f0330a86eaebf998dd66d5c3c626ce2e3e2a2352b933405fd20d",
+  "generatedAt": "2026-07-02T13:57:36.680Z",
+  "sourceHash": "58c0ac0fc02ad292aca2bef4d9b1f624c970dda35bfe8de559f60cc5357a5e30",
   "countries": [
     {
       "iso3": "NOR",
@@ -83,16 +83,6 @@
       "gdpPerCapitaPpp": 57186.37
     },
     {
-      "iso3": "EST",
-      "name": "Estonia",
-      "region": "Europe",
-      "subregion": "North Europe",
-      "developing": "Developed",
-      "wbRegion": "Europe & Central Asia",
-      "incomeGroup": "High income",
-      "gdpPerCapitaPpp": 49968.71
-    },
-    {
       "iso3": "LVA",
       "name": "Latvia",
       "region": "Europe",
@@ -101,6 +91,16 @@
       "wbRegion": "Europe & Central Asia",
       "incomeGroup": "High income",
       "gdpPerCapitaPpp": 43394.27
+    },
+    {
+      "iso3": "EST",
+      "name": "Estonia",
+      "region": "Europe",
+      "subregion": "North Europe",
+      "developing": "Developed",
+      "wbRegion": "Europe & Central Asia",
+      "incomeGroup": "High income",
+      "gdpPerCapitaPpp": 49968.71
     },
     {
       "iso3": "BRA",
@@ -183,6 +183,16 @@
       "gdpPerCapitaPpp": 51679.89
     },
     {
+      "iso3": "CHE",
+      "name": "Switzerland",
+      "region": "Europe",
+      "subregion": "Western Europe",
+      "developing": "Developed",
+      "wbRegion": "Europe & Central Asia",
+      "incomeGroup": "High income",
+      "gdpPerCapitaPpp": 96497.69
+    },
+    {
       "iso3": "AUT",
       "name": "Austria",
       "region": "Europe",
@@ -211,16 +221,6 @@
       "wbRegion": "Latin America & Caribbean ",
       "incomeGroup": "High income",
       "gdpPerCapitaPpp": 36417.87
-    },
-    {
-      "iso3": "CHE",
-      "name": "Switzerland",
-      "region": "Europe",
-      "subregion": "Western Europe",
-      "developing": "Developed",
-      "wbRegion": "Europe & Central Asia",
-      "incomeGroup": "High income",
-      "gdpPerCapitaPpp": 96497.69
     },
     {
       "iso3": "AUS",
@@ -273,16 +273,6 @@
       "gdpPerCapitaPpp": 85809.9
     },
     {
-      "iso3": "HUN",
-      "name": "Hungary",
-      "region": "Europe",
-      "subregion": "Central Europe",
-      "developing": "Developed",
-      "wbRegion": "Europe & Central Asia",
-      "incomeGroup": "High income",
-      "gdpPerCapitaPpp": 48552.47
-    },
-    {
       "iso3": "CRI",
       "name": "Costa Rica",
       "region": "South and Central America",
@@ -291,6 +281,16 @@
       "wbRegion": "Latin America & Caribbean ",
       "incomeGroup": "High income",
       "gdpPerCapitaPpp": 31106.76
+    },
+    {
+      "iso3": "HUN",
+      "name": "Hungary",
+      "region": "Europe",
+      "subregion": "Central Europe",
+      "developing": "Developed",
+      "wbRegion": "Europe & Central Asia",
+      "incomeGroup": "High income",
+      "gdpPerCapitaPpp": 48552.47
     },
     {
       "iso3": "ROU",
@@ -373,16 +373,6 @@
       "gdpPerCapitaPpp": 61051.35
     },
     {
-      "iso3": "NZL",
-      "name": "New Zealand",
-      "region": "Asia and Oceania",
-      "subregion": "Oceania (Pacific)",
-      "developing": "Developed",
-      "wbRegion": "East Asia & Pacific",
-      "incomeGroup": "High income",
-      "gdpPerCapitaPpp": 55551.14
-    },
-    {
       "iso3": "NGA",
       "name": "Nigeria",
       "region": "Africa",
@@ -393,6 +383,16 @@
       "gdpPerCapitaPpp": 9086.88
     },
     {
+      "iso3": "NZL",
+      "name": "New Zealand",
+      "region": "Asia and Oceania",
+      "subregion": "Oceania (Pacific)",
+      "developing": "Developed",
+      "wbRegion": "East Asia & Pacific",
+      "incomeGroup": "High income",
+      "gdpPerCapitaPpp": 55551.14
+    },
+    {
       "iso3": "SGP",
       "name": "Singapore",
       "region": "Asia and Oceania",
@@ -401,6 +401,16 @@
       "wbRegion": "East Asia & Pacific",
       "incomeGroup": "High income",
       "gdpPerCapitaPpp": 150689.3
+    },
+    {
+      "iso3": "ISR",
+      "name": "Israel",
+      "region": "Middle East",
+      "subregion": "",
+      "developing": "Developed",
+      "wbRegion": "Middle East, North Africa, Afghanistan & Pakistan",
+      "incomeGroup": "High income",
+      "gdpPerCapitaPpp": 57235.78
     },
     {
       "iso3": "CHN",
@@ -423,16 +433,6 @@
       "gdpPerCapitaPpp": 75195.99
     },
     {
-      "iso3": "ISR",
-      "name": "Israel",
-      "region": "Middle East",
-      "subregion": "",
-      "developing": "Developed",
-      "wbRegion": "Middle East, North Africa, Afghanistan & Pakistan",
-      "incomeGroup": "High income",
-      "gdpPerCapitaPpp": 57235.78
-    },
-    {
       "iso3": "UKR",
       "name": "Ukraine",
       "region": "Europe",
@@ -453,14 +453,14 @@
       "gdpPerCapitaPpp": 18614.99
     },
     {
-      "iso3": "EGY",
-      "name": "Egypt",
-      "region": "Africa",
-      "subregion": "North Africa",
+      "iso3": "IND",
+      "name": "India",
+      "region": "Asia and Oceania",
+      "subregion": "South West Asia",
       "developing": "Developing",
-      "wbRegion": "Middle East, North Africa, Afghanistan & Pakistan",
+      "wbRegion": "South Asia",
       "incomeGroup": "Lower middle income",
-      "gdpPerCapitaPpp": 19094.14
+      "gdpPerCapitaPpp": 11159.99
     },
     {
       "iso3": "VNM",
@@ -473,14 +473,14 @@
       "gdpPerCapitaPpp": 16385.51
     },
     {
-      "iso3": "IND",
-      "name": "India",
-      "region": "Asia and Oceania",
-      "subregion": "South West Asia",
+      "iso3": "EGY",
+      "name": "Egypt",
+      "region": "Africa",
+      "subregion": "North Africa",
       "developing": "Developing",
-      "wbRegion": "South Asia",
+      "wbRegion": "Middle East, North Africa, Afghanistan & Pakistan",
       "incomeGroup": "Lower middle income",
-      "gdpPerCapitaPpp": 11159.99
+      "gdpPerCapitaPpp": 19094.14
     },
     {
       "iso3": "JOR",
@@ -533,16 +533,6 @@
       "gdpPerCapitaPpp": 16448.28
     },
     {
-      "iso3": "ARE",
-      "name": "United Arab Emirates",
-      "region": "Middle East",
-      "subregion": "",
-      "developing": "Developing",
-      "wbRegion": "Middle East, North Africa, Afghanistan & Pakistan",
-      "incomeGroup": "High income",
-      "gdpPerCapitaPpp": 79228.74
-    },
-    {
       "iso3": "MYS",
       "name": "Malaysia",
       "region": "Asia and Oceania",
@@ -551,6 +541,16 @@
       "wbRegion": "East Asia & Pacific",
       "incomeGroup": "Upper middle income",
       "gdpPerCapitaPpp": 38779.28
+    },
+    {
+      "iso3": "ARE",
+      "name": "United Arab Emirates",
+      "region": "Middle East",
+      "subregion": "",
+      "developing": "Developing",
+      "wbRegion": "Middle East, North Africa, Afghanistan & Pakistan",
+      "incomeGroup": "High income",
+      "gdpPerCapitaPpp": 79228.74
     },
     {
       "iso3": "GHA",
@@ -593,16 +593,6 @@
       "gdpPerCapitaPpp": 4434.56
     },
     {
-      "iso3": "SLV",
-      "name": "El Salvador",
-      "region": "South and Central America",
-      "subregion": "Central America",
-      "developing": "Developing",
-      "wbRegion": "Latin America & Caribbean ",
-      "incomeGroup": "Upper middle income",
-      "gdpPerCapitaPpp": 13264.03
-    },
-    {
       "iso3": "THA",
       "name": "Thailand",
       "region": "Asia and Oceania",
@@ -613,14 +603,14 @@
       "gdpPerCapitaPpp": 24712.07
     },
     {
-      "iso3": "MAR",
-      "name": "Morocco",
-      "region": "Africa",
-      "subregion": "North Africa",
+      "iso3": "SLV",
+      "name": "El Salvador",
+      "region": "South and Central America",
+      "subregion": "Central America",
       "developing": "Developing",
-      "wbRegion": "Middle East, North Africa, Afghanistan & Pakistan",
-      "incomeGroup": "Lower middle income",
-      "gdpPerCapitaPpp": 10415.12
+      "wbRegion": "Latin America & Caribbean ",
+      "incomeGroup": "Upper middle income",
+      "gdpPerCapitaPpp": 13264.03
     },
     {
       "iso3": "OMN",
@@ -631,6 +621,16 @@
       "wbRegion": "Middle East, North Africa, Afghanistan & Pakistan",
       "incomeGroup": "High income",
       "gdpPerCapitaPpp": 41740.17
+    },
+    {
+      "iso3": "MAR",
+      "name": "Morocco",
+      "region": "Africa",
+      "subregion": "North Africa",
+      "developing": "Developing",
+      "wbRegion": "Middle East, North Africa, Afghanistan & Pakistan",
+      "incomeGroup": "Lower middle income",
+      "gdpPerCapitaPpp": 10415.12
     },
     {
       "iso3": "CIV",
@@ -713,16 +713,6 @@
       "gdpPerCapitaPpp": 26701.67
     },
     {
-      "iso3": "ETH",
-      "name": "Ethiopia",
-      "region": "Africa",
-      "subregion": "East Africa",
-      "developing": "Developing",
-      "wbRegion": "Sub-Saharan Africa ",
-      "incomeGroup": "Low income",
-      "gdpPerCapitaPpp": 3287.53
-    },
-    {
       "iso3": "LKA",
       "name": "Sri Lanka",
       "region": "Asia and Oceania",
@@ -731,6 +721,16 @@
       "wbRegion": "South Asia",
       "incomeGroup": "Lower middle income",
       "gdpPerCapitaPpp": 15632.59
+    },
+    {
+      "iso3": "ETH",
+      "name": "Ethiopia",
+      "region": "Africa",
+      "subregion": "East Africa",
+      "developing": "Developing",
+      "wbRegion": "Sub-Saharan Africa ",
+      "incomeGroup": "Low income",
+      "gdpPerCapitaPpp": 3287.53
     },
     {
       "iso3": "SEN",
@@ -743,16 +743,6 @@
       "gdpPerCapitaPpp": 5070.65
     },
     {
-      "iso3": "AZE",
-      "name": "Azerbaijan",
-      "region": "Asia and Oceania",
-      "subregion": "NorthWest Asia",
-      "developing": "Developing",
-      "wbRegion": "Europe & Central Asia",
-      "incomeGroup": "Upper middle income",
-      "gdpPerCapitaPpp": 25089
-    },
-    {
       "iso3": "BHR",
       "name": "Bahrain",
       "region": "Middle East",
@@ -761,6 +751,16 @@
       "wbRegion": "Middle East, North Africa, Afghanistan & Pakistan",
       "incomeGroup": "High income",
       "gdpPerCapitaPpp": 66941.24
+    },
+    {
+      "iso3": "AZE",
+      "name": "Azerbaijan",
+      "region": "Asia and Oceania",
+      "subregion": "NorthWest Asia",
+      "developing": "Developing",
+      "wbRegion": "Europe & Central Asia",
+      "incomeGroup": "Upper middle income",
+      "gdpPerCapitaPpp": 25089
     },
     {
       "iso3": "ZAF",
