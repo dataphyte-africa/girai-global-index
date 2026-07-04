@@ -103,6 +103,23 @@ export async function getAboutContent(): Promise<AboutContent> {
         ? data.people.filter((n): n is string => typeof n === "string" && n.length > 0)
         : d.people,
 
+    committeeHeading: str(data.committeeHeading, d.committeeHeading),
+    committeeSubtitle: str(data.committeeSubtitle, d.committeeSubtitle),
+    committeeMembers:
+      Array.isArray(data.committeeMembers) && data.committeeMembers.length > 0
+        ? data.committeeMembers.map((m, i) => ({
+            name: str(m?.name, d.committeeMembers[i]?.name ?? ""),
+            affiliation: str(m?.affiliation, d.committeeMembers[i]?.affiliation ?? ""),
+          }))
+        : d.committeeMembers,
+
+    impactHeadingLead: str(data.impactHeadingLead, d.impactHeadingLead),
+    impactHeadingAccent: str(data.impactHeadingAccent, d.impactHeadingAccent),
+    impactSubtitle: str(data.impactSubtitle, d.impactSubtitle),
+    impactCards: cards(data.impactCards, d.impactCards),
+    impactCtaLabel: str(data.impactCtaLabel, d.impactCtaLabel),
+    impactCtaHref: str(data.impactCtaHref, d.impactCtaHref),
+
     footerHeading: str(data.footerHeading, d.footerHeading),
     footerBody: str(data.footerBody, d.footerBody),
     footerCta: cta(data.footerCta, d.footerCta),

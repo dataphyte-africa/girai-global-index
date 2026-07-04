@@ -17,11 +17,14 @@ export function indicatorSource(slug: string, name: string): GiraiSource {
   };
 }
 
-export function evidenceSource(id: string, title: string): GiraiSource {
+// Evidence has no dedicated on-site page in production, so link straight to the
+// item's real external source URL (its `link`, falling back to the Drive mirror).
+export function evidenceSource(title: string, url: string): GiraiSource {
   return {
     label: title.length > 60 ? `${title.slice(0, 57)}…` : title,
-    href: `/evidence/${encodeURIComponent(id)}`,
+    href: url,
     kind: "evidence",
+    external: true,
   };
 }
 

@@ -9,6 +9,7 @@
       ".firebase",
       "*.tsbuildinfo",
       ".DS_Store",
+      "**/.DS_Store",
       "firebase-debug.log",
       "firebase-debug.*.log",
       "functions",

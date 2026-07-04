@@ -1,6 +1,9 @@
 import { createSign } from "crypto";
 import { DOWNLOAD_REASONS } from "@/lib/data-download/config";
-import type { DataDownloadSubmission } from "@/lib/data-download/types";
+import type {
+  DataDownloadSubmission,
+  DownloadReferralEvent,
+} from "@/lib/data-download/types";
 
 type SheetsConfig = {
   spreadsheetId: string;
@@ -183,6 +186,106 @@ export async function appendDataDownloadSubmission(
     console.warn(
       "[data-download] Google Sheets not configured — submission logged to console only:",
       submissionToRow(submission)
+    );
+    return;
+  }
+
+  throw new Error("Google Sheets is not configured");
+}
+
+function referralToRow(event: DownloadReferralEvent): string[] {
+  return [
+    new Date().toISOString(),
+    "",
+    "",
+    "",
+    "",
+    "Referral (link click)",
+    event.edition === "first"
+      ? "First Edition"
+      : event.edition === "second"
+        ? "Second Edition"
+        : "",
+    event.assetType,
+    event.source,
+  ];
+}
+
+async function appendReferralViaServiceAccount(
+  config: SheetsConfig,
+  event: DownloadReferralEvent
+): Promise<void> {
+  const accessToken = await getGoogleAccessToken(config);
+  const range = encodeURIComponent(`${config.sheetName}!A:I`);
+  const url = `https://sheets.googleapis.com/v4/spreadsheets/${config.spreadsheetId}/values/${range}:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`;
+
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      values: [referralToRow(event)],
+    }),
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Google Sheets referral append failed: ${errorText}`);
+  }
+}
+
+async function appendReferralViaWebApp(
+  config: WebAppConfig,
+  event: DownloadReferralEvent
+): Promise<void> {
+  const response = await fetch(config.webAppUrl, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      timestamp: new Date().toISOString(),
+      fullName: "",
+      email: "",
+      organization: "",
+      role: "",
+      reason: "Referral (link click)",
+      edition:
+        event.edition === "first"
+          ? "First Edition"
+          : event.edition === "second"
+            ? "Second Edition"
+            : "",
+      assetType: event.assetType,
+      source: event.source,
+    }),
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Google Apps Script referral append failed: ${errorText}`);
+  }
+}
+
+export async function appendDownloadReferralEvent(
+  event: DownloadReferralEvent
+): Promise<void> {
+  const serviceAccountConfig = getServiceAccountConfig();
+  if (serviceAccountConfig) {
+    await appendReferralViaServiceAccount(serviceAccountConfig, event);
+    return;
+  }
+
+  const webAppConfig = getWebAppConfig();
+  if (webAppConfig) {
+    await appendReferralViaWebApp(webAppConfig, event);
+    return;
+  }
+
+  if (process.env.NODE_ENV === "development") {
+    console.warn(
+      "[data-download] Google Sheets not configured — referral logged to console only:",
+      referralToRow(event)
     );
     return;
   }

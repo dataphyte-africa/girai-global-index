@@ -74,26 +74,12 @@ export function deterministicHeroNarrative(hero: HeroFacts): string {
     return ` It scores ahead of ${pct}% of the ${hero.totalCountriesScored} economies assessed this edition.`;
   })();
 
-  const execLine = (() => {
-    if (hero.frameworkScore === null || hero.implementationScore === null) {
-      return "";
-    }
-    const gap = hero.frameworkScore - hero.implementationScore;
-    if (gap >= 3) {
-      return ` Framework substance (${fmt1(hero.frameworkScore)}) runs ${fmt1(gap)} points ahead of implementation depth (${fmt1(hero.implementationScore)}) — policy is further developed on paper than in delivery.`;
-    }
-    if (gap <= -3) {
-      return ` Implementation depth (${fmt1(hero.implementationScore)}) outpaces framework substance (${fmt1(hero.frameworkScore)}) by ${fmt1(Math.abs(gap))} points — delivery is running ahead of formal policy design.`;
-    }
-    return ` Framework substance (${fmt1(hero.frameworkScore)}) and implementation depth (${fmt1(hero.implementationScore)}) move broadly in step.`;
-  })();
-
   const evidenceLine =
     hero.evidenceTotals.allItems > 0
       ? ` The profile rests on ${hero.evidenceTotals.allItems} documented evidence items spanning policy frameworks, government initiatives and civil society activity.`
       : "";
 
-  return `${leadLine}${percentileLine}${uraiClause(hero)}${execLine}${evidenceLine}`.trim();
+  return `${leadLine}${percentileLine}${uraiClause(hero)}${evidenceLine}`.trim();
 }
 
 export function deterministicDimensionNarrative(
@@ -126,12 +112,12 @@ export function deterministicDimensionNarrative(
   const relativePart =
     facts.relativeToCountryRank &&
     facts.relativeToCountryRank.isRelativeStrength
-      ? ` This dimension ranks ahead of the country's overall global position (${rankPhrase(facts.relativeToCountryRank.countryRankGlobal)}).`
+      ? ` This dimension ranks ${rankPhrase(facts.relativeToCountryRank.dimensionRankGlobal)} globally — ahead of the country's overall position (${rankPhrase(facts.relativeToCountryRank.countryRankGlobal)}).`
       : facts.relativeToCountryRank &&
           !facts.relativeToCountryRank.isRelativeStrength &&
           facts.relativeToCountryRank.dimensionRankGlobal >
             facts.relativeToCountryRank.countryRankGlobal
-        ? ` This dimension trails the country's overall global rank (${rankPhrase(facts.relativeToCountryRank.countryRankGlobal)}).`
+        ? ` This dimension ranks ${rankPhrase(facts.relativeToCountryRank.dimensionRankGlobal)} globally — behind the country's overall position (${rankPhrase(facts.relativeToCountryRank.countryRankGlobal)}).`
         : "";
 
   const evClause = evidenceIncludingClause(

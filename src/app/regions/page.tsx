@@ -8,6 +8,7 @@ import {
   RegionsPerformanceOverview,
 } from "@/components/regions";
 import { getRegionsContent } from "@/content/regions";
+import { getReportDownloadContent } from "@/content/reportDownload";
 import {
   getAllCountries,
   getGlobalAverages,
@@ -26,6 +27,7 @@ const DEFAULT_COMPARE_REGION_COUNT = 3;
 
 export default async function RegionsPage() {
   const content = await getRegionsContent();
+  const reportDownload = await getReportDownloadContent();
   const allCountries = getAllCountries();
   const regions = getRegions();
   const regionAverages = getRegionAverages();
@@ -55,7 +57,7 @@ export default async function RegionsPage() {
           }
           subheading={content.compareSubheading}
         />
-        <ReportDownloadSection />
+        <ReportDownloadSection content={reportDownload} />
       </main>
       <SiteFooter />
     </div>

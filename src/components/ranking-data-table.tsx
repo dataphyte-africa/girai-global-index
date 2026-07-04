@@ -224,7 +224,7 @@ export function RankingDataTable({
   );
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [globalFilter, setGlobalFilter] = useState("");
-  const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 10 });
+  const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 15 });
   const [selectedDimensions, setSelectedDimensions] = useState<DimensionSlug[]>(
     []
   );
@@ -450,7 +450,7 @@ export function RankingDataTable({
       },
       {
         id: "incomeGroup",
-        accessorFn: (row) => row.incomeGroup,
+        accessorFn: (row) => row.rankIncomeGroup ?? Number.MAX_SAFE_INTEGER,
         header: "Income Group Rank",
         filterFn: (row, _id, value) => {
           const list = value as string[] | undefined;
@@ -464,15 +464,20 @@ export function RankingDataTable({
           }
           const rank = row.original.rankIncomeGroup;
           const total = incomeRankTotal.get(group) ?? data.length;
+          if (rank == null) {
+            return <span className="text-sm text-muted-foreground">{group}</span>;
+          }
           const tone = rankTone(rank, total);
           return (
             <span
               className={cn(
-                "inline-flex max-w-[160px] items-center rounded-full px-2.5 py-0.5 text-xs font-medium",
+                "inline-flex max-w-[240px] items-center rounded-full px-2.5 py-0.5 text-xs font-medium tabular-nums",
                 RANK_BADGE_STYLES[tone]
               )}
             >
-              <span className="truncate">{group}</span>
+              <span className="truncate">
+                {ordinal(rank)} of {total} – {group}
+              </span>
             </span>
           );
         },
@@ -547,6 +552,7 @@ export function RankingDataTable({
               placeholder="Overall GIRAI"
               groups={scoreFilterGroups}
               selected={scoreFilterSelected}
+              singlePerGroup
               onChange={(values) => {
                 const { dimensions, pillars } = parseScoreFilterValues(values);
                 setSelectedDimensions(dimensions);
@@ -666,7 +672,7 @@ export function RankingDataTable({
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              {[10, 25, 50, 100].map((n) => (
+              {[15, 25, 50, 100].map((n) => (
                 <SelectItem key={n} value={String(n)}>
                   {n} entries
                 </SelectItem>

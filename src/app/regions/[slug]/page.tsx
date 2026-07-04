@@ -3,20 +3,23 @@ import { notFound } from "next/navigation";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { ComparisonSection } from "@/components/comparison-section";
+import { ReportDownloadSection } from "@/components/report-download-section";
 import {
   RegionHero,
   RegionCountryExplorer,
-  RegionFooterHero,
   RegionEvidenceExplorerSection,
 } from "@/components/region";
+import { getReportDownloadContent } from "@/content/reportDownload";
 import {
   getAllCountries,
   getEvidenceByRegion,
+  countUniqueEvidence,
   getGlobalAverages,
   getRegionAverages,
   getRegions,
 } from "@/lib/girai";
-import { getRegionCopy, regionToSlug } from "@/lib/regions";
+import { regionToSlug } from "@/lib/regions";
+import { getRegionCopy } from "@/content/regionCopy";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -39,7 +42,7 @@ export async function generateMetadata({
   if (!regionName) return { title: "Region not found | GIRAI Global Index" };
   return {
     title: `${regionName} | GIRAI Global Index`,
-    description: getRegionCopy(regionName).blurb,
+    description: (await getRegionCopy(regionName)).blurb,
   };
 }
 
@@ -48,7 +51,8 @@ export default async function RegionPage({ params }: PageProps) {
   const regionName = regionFromSlug(slug);
   if (!regionName) notFound();
 
-  const copy = getRegionCopy(regionName);
+  const copy = await getRegionCopy(regionName);
+  const reportDownload = await getReportDownloadContent();
   const regionCountries = getAllCountries().filter(
     (c) => c.region === regionName
   );
@@ -100,10 +104,11 @@ export default async function RegionPage({ params }: PageProps) {
 
         <RegionEvidenceExplorerSection
           regionName={regionName}
-          evidenceCount={regionEvidence.length}
+          uniqueEvidenceCount={countUniqueEvidence(regionEvidence)}
+          indicatorCaseCount={regionEvidence.length}
         />
 
-        <RegionFooterHero regionName={regionName} blurb={copy.footerBlurb} />
+        <ReportDownloadSection content={reportDownload} />
       </main>
       <SiteFooter />
     </div>

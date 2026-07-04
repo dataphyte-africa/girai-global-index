@@ -1,7 +1,13 @@
 import Image from "next/image";
+import Link from "next/link";
+import { BookOpen, Download, Search } from "lucide-react";
+import { DataDownloadOpenButton } from "@/components/data-download/data-download-trigger";
 import { aboutDefaults, type AboutContent } from "@/content/about.defaults";
 
 const HERO_TITLE_ACCENT = "#9FE8C7";
+
+const SECONDARY_CTA_CLASS =
+  "inline-flex items-center gap-2.5 rounded-full border border-white/40 bg-white/10 px-6 py-3 text-sm font-semibold text-white backdrop-blur-sm transition-colors hover:bg-white/20";
 
 /**
  * Wide banner hero for the About page. Matches dimension detail hero sizing;
@@ -30,7 +36,7 @@ export function AboutHero({ content = aboutDefaults }: { content?: AboutContent 
           />
 
           <div className="relative flex min-h-[360px] flex-col justify-center px-8 py-12 md:min-h-[565px] md:max-w-[58%] md:px-14 md:py-16 lg:min-h-[565px]">
-            <h1 className="text-[2rem] font-medium leading-[1.12] tracking-tight md:text-5xl lg:text-[3.25rem]">
+            <h1 className="text-[2rem] font-semibold leading-[1.12] tracking-tight md:text-5xl lg:text-[3.25rem]">
               <span className="text-white">{content.heroTitleLead}</span>
               <span style={{ color: HERO_TITLE_ACCENT }}>{content.heroTitleAccent}</span>
             </h1>
@@ -38,6 +44,28 @@ export function AboutHero({ content = aboutDefaults }: { content?: AboutContent 
             <p className="mt-5 max-w-xl text-base leading-relaxed text-white md:mt-6 md:text-lg">
               {content.heroLead}
             </p>
+
+            <div className="mt-8 flex flex-col flex-wrap gap-3 sm:flex-row sm:items-center">
+              <DataDownloadOpenButton
+                assetType="report"
+                edition="second"
+                source="about-hero"
+                className="inline-flex items-center gap-2.5 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-lg shadow-black/25 transition-opacity hover:opacity-90"
+              >
+                <Download className="size-4" aria-hidden />
+                Read the Report
+              </DataDownloadOpenButton>
+
+              <Link href="/evidence" className={SECONDARY_CTA_CLASS}>
+                <Search className="size-4" aria-hidden />
+                Explore the Evidence
+              </Link>
+
+              <Link href="/methodology" className={SECONDARY_CTA_CLASS}>
+                <BookOpen className="size-4" aria-hidden />
+                Understand the Methodology
+              </Link>
+            </div>
           </div>
         </div>
       </div>

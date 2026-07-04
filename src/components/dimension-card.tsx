@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { BookOpen, CircleCheck, Share2 } from "lucide-react";
+import { BookOpen, CircleCheck } from "lucide-react";
 import {
   Card,
   CardHeader,
@@ -50,7 +50,12 @@ export function DimensionCard({ dimension }: DimensionCardProps) {
               </div>
             </CardHeader>
             <CardContent className="space-y-5 pt-6">
-              <h3 className="text-base font-medium leading-snug">
+              {dimension.description && (
+                <p className="text-sm leading-relaxed text-muted-foreground">
+                  {dimension.description}
+                </p>
+              )}
+              <h3 className="text-base font-semibold leading-snug">
                 See how indicators are distributed across the{" "}
                 {dimension.pillarGroups.length} pillars
               </h3>
@@ -82,10 +87,6 @@ export function DimensionCard({ dimension }: DimensionCardProps) {
                   Read more
                 </Button>
               </Link>
-              <Button variant="outline" size="sm">
-                <Share2 className="size-4" />
-                Share
-              </Button>
             </CardFooter>
           </Card>
         </motion.div>

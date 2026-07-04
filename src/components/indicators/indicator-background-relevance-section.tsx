@@ -1,65 +1,76 @@
-import type { IndicatorParagraph } from "@/lib/indicator-copy";
+import {
+  PortableText,
+  type PortableTextComponents,
+} from "@portabletext/react";
 
-const PURPLE = "#7150F4";
-const HEADING_DARK = "#1A1A2E";
-const BODY_COLOR = "#6B7280";
-const DIVIDER_COLOR = "#E5E7EB";
+import type { PortableBlock } from "@/content/updates";
 
 export interface IndicatorBackgroundRelevanceSectionProps {
   indicatorName: string;
-  background: IndicatorParagraph[];
-  relevance: IndicatorParagraph[];
+  background: PortableBlock[];
+  relevance: PortableBlock[];
 }
 
-function RichParagraph({ segments }: { segments: IndicatorParagraph }) {
-  return (
-    <p
-      className="text-base leading-[1.7] md:text-[1.0625rem] md:leading-[1.75]"
-      style={{ color: BODY_COLOR }}
-    >
-      {segments.map((segment, index) =>
-        segment.href ? (
-          <a
-            key={`${segment.text}-${index}`}
-            href={segment.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline decoration-[#9CA3AF] underline-offset-[3px] transition-colors hover:decoration-[#7150F4]"
-            style={{ color: BODY_COLOR }}
-          >
-            {segment.text}
-          </a>
-        ) : (
-          <span key={`${segment.text}-${index}`}>{segment.text}</span>
-        )
-      )}
-    </p>
-  );
-}
+const richTextComponents: PortableTextComponents = {
+  block: {
+    normal: ({ children }) => (
+      <p className="text-base leading-[1.7] text-muted-foreground md:text-[1.0625rem] md:leading-[1.75]">
+        {children}
+      </p>
+    ),
+  },
+  list: {
+    bullet: ({ children }) => (
+      <ul className="list-disc space-y-2 pl-6 text-base leading-[1.7] text-muted-foreground md:text-[1.0625rem] md:leading-[1.75]">
+        {children}
+      </ul>
+    ),
+    number: ({ children }) => (
+      <ol className="list-decimal space-y-2 pl-6 text-base leading-[1.7] text-muted-foreground md:text-[1.0625rem] md:leading-[1.75]">
+        {children}
+      </ol>
+    ),
+  },
+  marks: {
+    strong: ({ children }) => (
+      <strong className="font-semibold text-foreground">{children}</strong>
+    ),
+    em: ({ children }) => <em className="italic">{children}</em>,
+    link: ({ children, value }) => {
+      const href = (value as { href?: string })?.href ?? "#";
+      const external = /^https?:\/\//.test(href);
+      return (
+        <a
+          href={href}
+          className="text-muted-foreground underline decoration-muted-foreground/60 underline-offset-[3px] transition-colors hover:decoration-primary"
+          {...(external
+            ? { target: "_blank", rel: "noopener noreferrer" }
+            : {})}
+        >
+          {children}
+        </a>
+      );
+    },
+  },
+};
 
 function Column({
   label,
   indicatorName,
-  paragraphs,
+  body,
 }: {
   label: string;
   indicatorName: string;
-  paragraphs: IndicatorParagraph[];
+  body: PortableBlock[];
 }) {
   return (
     <div>
-      <h2
-        className="text-3xl md:text-4xl lg:text-5xl font-medium leading-[1.2] tracking-tight md:leading-[1.18]"
-        style={{ color: HEADING_DARK }}
-      >
-        {label}{" "}
-        <span style={{ color: PURPLE }}>{indicatorName}</span>
+      <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium leading-[1.2] tracking-tight text-foreground md:leading-[1.18]">
+        {label} <span className="text-primary">{indicatorName}</span>
       </h2>
 
       <div className="mt-6 space-y-5 md:mt-8 md:space-y-6">
-        {paragraphs.map((paragraph, index) => (
-          <RichParagraph key={index} segments={paragraph} />
-        ))}
+        <PortableText value={body} components={richTextComponents} />
       </div>
     </div>
   );
@@ -67,6 +78,8 @@ function Column({
 
 /**
  * Two-column Background / Relevance section below the indicator choropleth.
+ * Copy is Portable Text (rich text with links) authored in Sanity, with a
+ * code fallback (see src/content/indicatorPages.ts).
  */
 export function IndicatorBackgroundRelevanceSection({
   indicatorName,
@@ -74,25 +87,22 @@ export function IndicatorBackgroundRelevanceSection({
   relevance,
 }: IndicatorBackgroundRelevanceSectionProps) {
   return (
-    <section className="w-full bg-white px-4 py-16 md:px-6 md:py-24 lg:py-28">
+    <section className="w-full bg-background px-4 py-16 md:px-6 md:py-24 lg:py-28">
       <div className="mx-auto max-w-6xl">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-2 md:gap-0">
           <div className="md:pr-10 lg:pr-14">
             <Column
               label="Background of"
               indicatorName={indicatorName}
-              paragraphs={background}
+              body={background}
             />
           </div>
 
-          <div
-            className="md:border-l md:pl-10 lg:pl-14"
-            style={{ borderColor: DIVIDER_COLOR }}
-          >
+          <div className="md:border-l md:border-border md:pl-10 lg:pl-14">
             <Column
               label="Relevance of"
               indicatorName={indicatorName}
-              paragraphs={relevance}
+              body={relevance}
             />
           </div>
         </div>

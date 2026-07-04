@@ -19,10 +19,7 @@ import {
   getIndicatorRegionalAverages,
   getEvidenceByIndicator,
 } from "@/lib/girai";
-import {
-  getIndicatorBackgroundRelevance,
-  getIndicatorPageCopy,
-} from "@/lib/indicator-copy";
+import { getIndicatorPageContent } from "@/content/indicatorPages";
 import {
   INDICATORS,
   getIndicator,
@@ -56,11 +53,7 @@ export default async function IndicatorPage({ params }: PageProps) {
     notFound();
   }
 
-  const pageCopy = getIndicatorPageCopy(ind.slug);
-  const { background, relevance } = getIndicatorBackgroundRelevance(
-    ind.slug,
-    ind.name
-  );
+  const pageCopy = await getIndicatorPageContent(ind.slug, ind.name);
   const allCountries = getAllCountries();
   const scoreStats = getIndicatorScoreStats(ind.slug);
   const regionalScores = getIndicatorRegionalAverages(ind.slug);
@@ -94,14 +87,19 @@ export default async function IndicatorPage({ params }: PageProps) {
 
         <IndicatorBackgroundRelevanceSection
           indicatorName={ind.name}
-          background={background}
-          relevance={relevance}
+          background={pageCopy.background}
+          relevance={pageCopy.relevance}
         />
 
-        <IndicatorEvidenceExplorerSection
-          indicatorSlug={ind.slug}
-          indicatorName={ind.name}
-        />
+        {/* Indicators sourced from external indices (hasEvidence: false) have
+            no GIRAI-collected evidence rows, so the explorer would render empty.
+            Hide it for them. The flag is build-asserted to match actual rows. */}
+        {ind.hasEvidence ? (
+          <IndicatorEvidenceExplorerSection
+            indicatorSlug={ind.slug}
+            indicatorName={ind.name}
+          />
+        ) : null}
 
 
         <IndicatorPerformanceByRegionSection
@@ -114,7 +112,7 @@ export default async function IndicatorPage({ params }: PageProps) {
 
         {/* <div className="container mx-auto grid grid-cols-1 gap-10 px-4 py-12 lg:grid-cols-3 lg:gap-12">
           <section className="lg:col-span-2">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl mb-4 font-medium">Top countries</h2>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl mb-4 font-semibold">Top countries</h2>
             <ScoreLeaderboard entries={leaderboard} limit={20} />
             <p className="mt-3 text-sm text-muted-foreground">
               Showing the top {Math.min(20, leaderboard.length)} of{" "}

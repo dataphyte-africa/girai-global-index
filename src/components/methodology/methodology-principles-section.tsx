@@ -29,7 +29,7 @@ function PrincipleCard({
         </span>
       </div>
 
-      <h3 className="text-[1.75rem] font-medium leading-[1.2] tracking-tight text-foreground md:text-[2rem] md:leading-[1.18]">
+      <h3 className="text-[1.75rem] font-semibold leading-[1.2] tracking-tight text-foreground md:text-[2rem] md:leading-[1.18]">
         {title}
       </h3>
 
@@ -87,7 +87,7 @@ export function MethodologyPrinciplesSection({
                 {content.principlesBadge}
               </span>
 
-              <h2 className="text-3xl md:text-4xl lg:text-5xl mt-5 font-medium leading-[1.18] tracking-tight md:leading-[1.15]">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl mt-5 font-semibold leading-[1.18] tracking-tight md:leading-[1.15]">
                 <span className="text-primary">{content.principlesHeadingLead}</span>
                 <span className="text-foreground">{content.principlesHeadingTail}</span>
               </h2>

@@ -6,6 +6,10 @@ import { DataDownloadProvider } from "@/components/data-download/data-download-p
 import { AiAssistantProvider } from "@/components/ai-assistant/ai-assistant-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { getSiteSettings } from "@/content/siteSettings";
+import { getDownloadModalContent } from "@/content/downloadModal";
+
+/** CMS pages must SSR — see src/lib/cms-rendering.ts */
+export const dynamic = "force-dynamic";
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
@@ -42,16 +46,18 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const downloadModalContent = await getDownloadModalContent();
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${dmSans.variable} font-sans antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <DataDownloadProvider>
+          <DataDownloadProvider content={downloadModalContent}>
             <AiAssistantProvider>
               <TooltipProvider>{children}</TooltipProvider>
             </AiAssistantProvider>

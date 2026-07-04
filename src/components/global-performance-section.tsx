@@ -144,7 +144,7 @@ export function GlobalPerformanceSection({
               <div className="p-2 rounded-lg bg-emerald-100 dark:bg-emerald-900/30">
                 <TrendingUp className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
               </div>
-              <h3 className="text-lg font-medium">Top 10 Countries</h3>
+              <h3 className="text-lg font-semibold">Top 10 Countries</h3>
             </div>
 
             <div className="space-y-3">
@@ -171,7 +171,7 @@ export function GlobalPerformanceSection({
               <div className="p-2 rounded-lg bg-red-100 dark:bg-red-900/30">
                 <TrendingDown className="w-5 h-5 text-red-600 dark:text-red-400" />
               </div>
-              <h3 className="text-lg font-medium">Bottom 10 Countries</h3>
+              <h3 className="text-lg font-semibold">Bottom 10 Countries</h3>
             </div>
 
             <div className="space-y-3">

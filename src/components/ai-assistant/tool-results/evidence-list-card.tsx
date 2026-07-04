@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { FileText } from "lucide-react";
+import { ExternalLink, FileText } from "lucide-react";
 import { InsightCard } from "../viz/insight-card";
 import { SourcesFooter } from "./sources-footer";
 import type { GiraiSource } from "@/lib/ai/types";
@@ -13,6 +13,8 @@ type EvidenceRow = {
   country: string;
   countryIso3: string;
   indicatorSlug: string;
+  /** Real external source URL — evidence has no dedicated on-site page. */
+  link?: string | null;
 };
 
 const KIND_COLORS: Record<string, string> = {
@@ -57,12 +59,21 @@ export function EvidenceListCard({
               <FileText className="size-3.5 text-muted-foreground" />
             </div>
             <div className="min-w-0 flex-1">
-              <Link
-                href={`/evidence/${encodeURIComponent(item.id)}`}
-                className="font-medium text-sm leading-snug hover:text-primary hover:underline"
-              >
-                {item.title}
-              </Link>
+              {item.link ? (
+                <a
+                  href={item.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-start gap-1 font-medium text-sm leading-snug hover:text-primary hover:underline"
+                >
+                  {item.title}
+                  <ExternalLink className="mt-0.5 size-3 shrink-0 opacity-60" />
+                </a>
+              ) : (
+                <span className="font-medium text-sm leading-snug">
+                  {item.title}
+                </span>
+              )}
               <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
                 <Link
                   href={`/countries/${item.countryIso3}`}

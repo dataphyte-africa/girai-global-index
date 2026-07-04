@@ -1,6 +1,5 @@
 "use client";
 
-import { CountryMapSVG } from "./country-map-svg";
 import { EvidenceLinkedText } from "./evidence-linked-text";
 import { iso3ToIso2 } from "@/data/countries";
 import { getCountryHeroNarrative } from "@/lib/country-narratives";
@@ -66,21 +65,6 @@ export function CountryScoreHero({ country, className }: CountryScoreHeroProps) 
         className
       )}
     >
-      {/* Country map silhouette */}
-      <div
-        className="pointer-events-none absolute inset-0 flex items-center justify-center text-[#C4B5FD] opacity-[0.28] dark:text-[#6D28D9] dark:opacity-20"
-        aria-hidden
-      >
-        <CountryMapSVG
-          iso3={country.iso3}
-          fillColor="currentColor"
-          strokeWidth={0}
-          width={720}
-          height={560}
-          className="h-auto w-[min(92vw,640px)] max-w-none select-none"
-        />
-      </div>
-
       <div className="relative z-10 mx-auto flex max-w-2xl flex-col items-center text-center">
         <img
           src={flagUrl}

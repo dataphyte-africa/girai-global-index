@@ -78,89 +78,6 @@ const cardThemes: CardTheme[] = [
   },
 ];
 
-const takeaways: CarouselTakeaway[] = [
-  {
-    category: "Governance",
-    title: "AI is accelerating faster than governments can govern it in the public interest",
-    description:
-      "Diffusion of AI is expanding, with 53% of the global population having used generative AI tools. Yet average GIRAI scores remain low, at roughly 35 out of 100, and evidence of implementation exists in only 55% of cases where frameworks are active, falling to 45% in Global South countries.",
-    stat: "53%",
-    statCaption: "of the global population has used generative AI tools",
-  },
-  {
-    category: "Global South",
-    title: "Responsible AI governance is expanding but binding protections remain weak",
-    description:
-      "Global South countries substantially broadened responsible AI content in their national frameworks — topics covered rose from 2.5 to 4.7, an 88% increase. Yet 78% of responsible AI framework cases in these countries are non-binding, compared with 42% in Global North countries.",
-    stat: "88%",
-    statCaption: "increase in responsible AI topics covered by Global South frameworks",
-  },
-  {
-    category: "Safety",
-    title: "AI safety is governed as a technical problem while human harms remain under-addressed",
-    description:
-      "AI safety and security is one of the fastest-growing areas, but much of it focuses on technical safeguards. The Index found credible evidence of government misuse of AI in 35 of 135 countries, and only 36% of countries have frameworks addressing AI-facilitated misinformation and violence.",
-    stat: "35",
-    statCaption: "countries with credible evidence of government AI misuse",
-  },
-  {
-    category: "Transparency",
-    title: "Governments are regulating AI transparency but not disclosing their own use of AI",
-    description:
-      "Transparency and Explainability is the strongest-performing indicator, with 58% of countries having some form of framework. Yet Public Disclosure of Government Algorithmic Systems is the weakest-performing indicator.",
-    stat: "18%",
-    statCaption: "of countries require disclosure of government AI systems",
-  },
-  {
-    category: "Gender",
-    title: "Gender is increasingly recognised but protection from gendered harms remains weak",
-    description:
-      "Gender equality is gaining visibility, with 29 new countries addressing gender and AI since the 1st Edition, but only 24 of 55 countries with gender-related frameworks show evidence of implementation.",
-    stat: "29",
-    statCaption: "new countries addressing gender and AI since the 1st Edition",
-  },
-  {
-    category: "Education",
-    title: "Future generations are prepared for the AI economy but not protected from harms",
-    description:
-      "AI Literacy is one of the strongest-performing indicators, with 71 countries (53%) having a framework in place. By contrast, only 55 countries (41%) have frameworks addressing Children's Rights in AI, and only 27 show evidence of implementation.",
-    stat: "53%",
-    statCaption: "of countries have an AI literacy framework in place",
-  },
-  {
-    category: "Environment",
-    title: "AI's environmental footprint remains a blind spot in responsible AI governance",
-    description:
-      "Only 27% of countries have frameworks addressing AI's environmental effects, and 83% of those frameworks are non-binding. Very few governments require disclosure of AI's energy use, water use, or environmental impact.",
-    stat: "27%",
-    statCaption: "of countries have frameworks on AI's environmental effects",
-  },
-  {
-    category: "Inclusion",
-    title: "Governments recognise the need for local-language AI but do not require developers to deliver it",
-    description:
-      "Governments are investing in local-language technologies, with 52 countries (39%) showing government-led initiatives. Only 47 countries (35%) have frameworks addressing Cultural and Linguistic Diversity, and few require developers to use diverse datasets.",
-    stat: "35%",
-    statCaption: "of countries have a cultural and linguistic diversity framework",
-  },
-  {
-    category: "Labour",
-    title: "Governments are investing in AI skills but neglecting workers' rights",
-    description:
-      "Labour protection frameworks exist in only 39 countries (29%), compared with 72 countries (53%) with frameworks on reskilling and upskilling. Few countries address workers' rights to organise and collectively bargain.",
-    stat: "29%",
-    statCaption: "of countries have a labour protection framework",
-  },
-  {
-    category: "Equity",
-    title: "Global AI governance is fragmenting before a shared floor of protection is established",
-    description:
-      "Average GIRAI scores range from 55 in Global North to 27 in Global South countries. Only 73 of 135 countries (54%) have adopted a national AI policy, and just 36 countries (27%) have operational mechanisms for civil society participation.",
-    stat: "54%",
-    statCaption: "of countries have adopted a national AI policy or equivalent",
-  },
-];
-
 function TakeawayCarouselCard({
   item,
   index,
@@ -168,7 +85,8 @@ function TakeawayCarouselCard({
   item: CarouselTakeaway;
   index: number;
 }) {
-  const theme = cardThemes[index] ?? cardThemes[0];
+  // Single shared color for all cards — use the first card's theme throughout.
+  const theme = cardThemes[0];
   const numberLabel = String(index + 1).padStart(2, "0");
 
   return (
@@ -199,7 +117,7 @@ function TakeawayCarouselCard({
         </span>
       </div>
 
-      <h3 className="mt-6 text-lg font-medium leading-snug tracking-tight text-foreground sm:text-xl">
+      <h3 className="mt-6 text-lg font-semibold leading-snug tracking-tight text-foreground sm:text-xl">
         {item.title}
       </h3>
 
@@ -320,7 +238,7 @@ export function TopTakeawaysCarouselSection({
                 <Sparkles className="h-3.5 w-3.5" strokeWidth={2.2} />
                 {content.takeawaysBadge}
               </span>
-              <h2 className="text-3xl font-medium tracking-tight md:text-4xl lg:text-5xl">
+              <h2 className="text-3xl font-semibold tracking-tight md:text-4xl lg:text-5xl">
                 <span className="text-primary">{content.takeawaysHeadingAccent}</span>{" "}
                 <span className="text-foreground">{content.takeawaysHeadingTail}</span>
               </h2>
@@ -347,7 +265,7 @@ export function TopTakeawaysCarouselSection({
             ref={scrollRef}
             className="flex snap-x snap-mandatory gap-5 overflow-x-auto pb-6 scroll-pl-[max(1rem,calc((100vw-72rem)/2+1rem))] pl-[max(1rem,calc((100vw-72rem)/2+1rem))] pr-[max(1rem,calc((100vw-72rem)/2+1rem))] [-ms-overflow-style:none] scrollbar-none md:scroll-pl-[max(1.5rem,calc((100vw-72rem)/2+1.5rem))] md:pl-[max(1.5rem,calc((100vw-72rem)/2+1.5rem))] md:pr-[max(1.5rem,calc((100vw-72rem)/2+1.5rem))] [&::-webkit-scrollbar]:hidden"
           >
-            {takeaways.map((item, index) => (
+            {content.takeawaysCards.map((item, index) => (
               <TakeawayCarouselCard key={item.title} item={item} index={index} />
             ))}
           </div>

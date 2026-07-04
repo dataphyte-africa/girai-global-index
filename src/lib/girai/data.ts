@@ -258,6 +258,38 @@ export function getEvidenceByRegion(region: string): EvidenceItem[] {
   return evidence.items.filter((it) => it.country.region === region);
 }
 
+function normalizeEvidenceText(value: string | null | undefined): string {
+  return (value ?? "").trim().toLowerCase().replace(/\s+/g, " ");
+}
+
+function normalizeEvidenceUrl(value: string | null | undefined): string {
+  return normalizeEvidenceText(value)
+    .replace(/^https?:\/\/(www\.)?/, "")
+    .replace(/[#?].*$/, "")
+    .replace(/\/$/, "");
+}
+
+function evidenceIdentity(item: EvidenceItem): string {
+  if (item.kind === "framework") return normalizeEvidenceText(item.title) || item.id;
+  return normalizeEvidenceUrl(item.link) || normalizeEvidenceText(item.title) || item.id;
+}
+
+/**
+ * Count distinct evidence items, deduped the same way the Evidence Explorer's
+ * stats card does: by normalized URL (or title for frameworks) within each kind.
+ * A single piece of evidence is assessed under multiple indicators, so the raw
+ * item count (one row per indicator case) is larger than this unique count.
+ */
+export function countUniqueEvidence(items: EvidenceItem[]): number {
+  const byKind = new Map<EvidenceKind, Set<string>>();
+  for (const item of items) {
+    const set = byKind.get(item.kind) ?? new Set<string>();
+    set.add(evidenceIdentity(item));
+    byKind.set(item.kind, set);
+  }
+  return Array.from(byKind.values()).reduce((sum, set) => sum + set.size, 0);
+}
+
 /** URAI / government-misuse cases for a country (Unacceptable Risk AI Systems). */
 export function getGovernmentMisuseByCountry(iso3: string): EvidenceItem[] {
   const code = iso3.toUpperCase();

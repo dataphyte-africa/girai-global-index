@@ -1,7 +1,8 @@
 import { NextStudio } from "next-sanity/studio";
 import config from "../../../../sanity.config";
 
-export const dynamic = "force-static";
+// Must match the root layout (`force-dynamic`); `force-static` here 500s at runtime.
+export const dynamic = "force-dynamic";
 
 export { metadata, viewport } from "next-sanity/studio";
 

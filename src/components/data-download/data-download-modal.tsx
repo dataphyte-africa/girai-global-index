@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import * as React from "react";
-import { Loader2 } from "lucide-react";
+import { ChevronDown, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -11,23 +11,19 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { DOWNLOAD_REASONS } from "@/lib/data-download/config";
 import type {
   DataDownloadFormValues,
   DataDownloadOpenOptions,
   DownloadEdition,
 } from "@/lib/data-download/types";
+import {
+  downloadModalDefaults,
+  type DownloadModalContent,
+} from "@/content/downloadModal.defaults";
 import { cn } from "@/lib/utils";
 
 const EMPTY_FORM: DataDownloadFormValues = {
-  edition: "first",
+  edition: "second",
   fullName: "",
   email: "",
   organization: "",
@@ -40,6 +36,7 @@ type DataDownloadModalProps = {
   onOpenChange: (open: boolean) => void;
   options: DataDownloadOpenOptions | null;
   onSubmitSuccess?: () => void;
+  content?: DownloadModalContent;
 };
 
 export function DataDownloadModal({
@@ -47,6 +44,7 @@ export function DataDownloadModal({
   onOpenChange,
   options,
   onSubmitSuccess,
+  content = downloadModalDefaults,
 }: DataDownloadModalProps) {
   const [form, setForm] = React.useState<DataDownloadFormValues>(EMPTY_FORM);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
@@ -56,11 +54,18 @@ export function DataDownloadModal({
     if (!open) return;
     setForm({
       ...EMPTY_FORM,
-      edition: options?.edition ?? "first",
+      edition: options?.edition ?? "second",
     });
     setError(null);
     setIsSubmitting(false);
   }, [open, options?.edition]);
+
+  const assetLabel =
+    options?.assetType === "report"
+      ? "Report"
+      : options?.assetType === "methodology"
+        ? "Methodology"
+        : "Dataset";
 
   const setField = <K extends keyof DataDownloadFormValues>(
     key: K,
@@ -132,92 +137,114 @@ export function DataDownloadModal({
       >
         <div className="grid min-h-0 grid-cols-1 md:grid-cols-2">
           <div className="flex flex-col bg-white px-6 py-8 sm:px-10 sm:py-10 dark:bg-card">
+            <span className="mb-3 inline-flex w-fit items-center rounded-full bg-primary/10 px-3 py-1 text-xs font-medium uppercase tracking-wide text-primary">
+              GIRAI {assetLabel}
+            </span>
             <DialogTitle className="text-[1.375rem] font-semibold leading-snug tracking-tight text-[#1a1a2e] dark:text-foreground">
-              Thank you for your interest in GIRAI
+              {content.title}
             </DialogTitle>
             <DialogDescription className="mt-2 text-sm leading-relaxed text-[#6b6b80] dark:text-muted-foreground">
-              Please fill out this form so we can better understand how the data
-              is being used and improve its accessibility and impact.
+              {content.description}
             </DialogDescription>
 
             <form onSubmit={handleSubmit} className="mt-6 flex flex-1 flex-col">
               <EditionToggle
                 value={form.edition}
                 onChange={(edition) => setField("edition", edition)}
+                locked={options?.lockEdition}
+                firstLabel={content.editionFirstLabel}
+                secondLabel={content.editionSecondLabel}
               />
 
               <div className="mt-5 space-y-4">
-                <Field label="Full Name">
+                <Field label={content.fullNameLabel}>
                   <Input
                     required
                     value={form.fullName}
                     onChange={(event) => setField("fullName", event.target.value)}
-                    placeholder="Input your name"
+                    placeholder={content.fullNamePlaceholder}
                     className="h-11 rounded-lg border-[#e2e2ea] bg-white px-3.5 text-sm text-[#1a1a2e] placeholder:text-[#b8b8c8] dark:border-input dark:bg-background"
                   />
                 </Field>
 
-                <Field label="Email">
+                <Field label={content.emailLabel}>
                   <Input
                     required
                     type="email"
                     value={form.email}
                     onChange={(event) => setField("email", event.target.value)}
-                    placeholder="Enter email"
+                    placeholder={content.emailPlaceholder}
                     className="h-11 rounded-lg border-[#e2e2ea] bg-white px-3.5 text-sm text-[#1a1a2e] placeholder:text-[#b8b8c8] dark:border-input dark:bg-background"
                   />
                 </Field>
 
-                <Field label="Organization (Optional)">
+                <Field label={content.organizationLabel}>
                   <Input
                     value={form.organization}
                     onChange={(event) =>
                       setField("organization", event.target.value)
                     }
-                    placeholder="Input name"
+                    placeholder={content.organizationPlaceholder}
                     className="h-11 rounded-lg border-[#e2e2ea] bg-white px-3.5 text-sm text-[#1a1a2e] placeholder:text-[#b8b8c8] dark:border-input dark:bg-background"
                   />
                 </Field>
 
-                <Field label="Current role (Optional)">
+                <Field label={content.roleLabel}>
                   <Input
                     value={form.role}
                     onChange={(event) => setField("role", event.target.value)}
-                    placeholder="Input role"
+                    placeholder={content.rolePlaceholder}
                     className="h-11 rounded-lg border-[#e2e2ea] bg-white px-3.5 text-sm text-[#1a1a2e] placeholder:text-[#b8b8c8] dark:border-input dark:bg-background"
                   />
                 </Field>
 
-                <Field label="Reason for download">
-                  <Select
-                    value={form.reason || undefined}
-                    onValueChange={(value) =>
-                      setField("reason", value as DataDownloadFormValues["reason"])
-                    }
-                  >
-                    <SelectTrigger className="h-11 rounded-lg border-[#e2e2ea] bg-white px-3.5 text-sm text-[#1a1a2e] data-[placeholder]:text-[#b8b8c8] dark:border-input dark:bg-background">
-                      <SelectValue placeholder="Select reason" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {DOWNLOAD_REASONS.map((reason) => (
-                        <SelectItem key={reason.value} value={reason.value}>
+                {/*
+                  Native <select> rather than the Radix Select: inside the Radix
+                  Dialog the custom popover-based trigger failed to open, so a
+                  native control is used for reliability (no portal/focus-trap).
+                */}
+                <Field label={content.reasonLabel}>
+                  <div className="relative">
+                    <select
+                      required
+                      value={form.reason}
+                      onChange={(event) =>
+                        setField(
+                          "reason",
+                          event.target.value as DataDownloadFormValues["reason"]
+                        )
+                      }
+                      className={cn(
+                        "h-11 w-full appearance-none rounded-lg border border-[#e2e2ea] bg-white px-3.5 pr-10 text-sm text-[#1a1a2e] focus:outline-none focus:ring-2 focus:ring-primary/40 dark:border-input dark:bg-background",
+                        !form.reason && "text-[#b8b8c8]"
+                      )}
+                    >
+                      <option value="" disabled>
+                        {content.reasonPlaceholder}
+                      </option>
+                      {content.reasons.map((reason) => (
+                        <option key={reason.value} value={reason.value}>
                           {reason.label}
-                        </SelectItem>
+                        </option>
                       ))}
-                    </SelectContent>
-                  </Select>
+                    </select>
+                    <ChevronDown
+                      className="pointer-events-none absolute right-3.5 top-1/2 size-4 -translate-y-1/2 text-[#8b8b9e]"
+                      aria-hidden
+                    />
+                  </div>
                 </Field>
               </div>
 
               <p className="mt-5 text-xs leading-relaxed text-[#6b6b80] dark:text-muted-foreground">
-                This work is licensed under a{" "}
+                {content.licenseTextBefore}
                 <a
-                  href="https://creativecommons.org/licenses/by/4.0/"
+                  href={content.licenseLinkHref}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="font-medium text-primary underline-offset-2 hover:underline"
                 >
-                  Creative Commons Attribution 4.0 International License.
+                  {content.licenseLinkLabel}
                 </a>
               </p>
 
@@ -235,10 +262,10 @@ export function DataDownloadModal({
                 {isSubmitting ? (
                   <>
                     <Loader2 className="size-4 animate-spin" aria-hidden />
-                    Submitting…
+                    {content.submittingLabel}
                   </>
                 ) : (
-                  "Submit"
+                  content.submitLabel
                 )}
               </Button>
             </form>
@@ -246,8 +273,8 @@ export function DataDownloadModal({
 
           <div className="relative hidden min-h-[280px] md:block md:min-h-[640px]">
             <Image
-              src="/download.png"
-              alt="Hand holding the GIRAI report"
+              src={content.formImage.url ?? "/download.png"}
+              alt={content.formImage.alt ?? content.imageAlt}
               fill
               className="object-cover"
               sizes="460px"
@@ -263,16 +290,31 @@ export function DataDownloadModal({
 function EditionToggle({
   value,
   onChange,
+  locked = false,
+  firstLabel,
+  secondLabel,
 }: {
   value: DownloadEdition;
   onChange: (edition: DownloadEdition) => void;
+  locked?: boolean;
+  firstLabel: string;
+  secondLabel: string;
 }) {
+  if (locked) {
+    const label = value === "first" ? firstLabel : secondLabel;
+    return (
+      <p className="text-sm font-medium text-[#1a1a2e] dark:text-foreground">
+        {label}
+      </p>
+    );
+  }
+
   return (
     <div className="inline-flex w-full rounded-full bg-[#f3f3f7] p-1 dark:bg-muted">
       {(
         [
-          { id: "first" as const, label: "First Edition" },
-          { id: "second" as const, label: "Second Edition" },
+          { id: "second" as const, label: secondLabel },
+          { id: "first" as const, label: firstLabel },
         ] as const
       ).map((edition) => {
         const isActive = value === edition.id;

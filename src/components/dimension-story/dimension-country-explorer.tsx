@@ -68,7 +68,7 @@ export function DimensionCountryExplorer({
     <section className="w-full bg-[#f8f9ff] px-4 py-16 dark:bg-muted/20 md:px-8 md:py-24">
       <div className="mx-auto max-w-6xl">
         <div className="mx-auto mb-12 max-w-2xl text-center">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight">
             <span className="text-primary">Explore</span>{" "}
             <span className="text-foreground">a Country&apos;s Performance</span>
           </h2>
@@ -178,7 +178,7 @@ function CountryCard({
     <div className="rounded-3xl border border-border/70 bg-card p-4 shadow-sm md:p-5">
       {/* Header panel */}
       <div className="rounded-2xl bg-primary/10 px-6 py-6 dark:bg-primary/15">
-        <h3 className="text-2xl font-medium text-foreground md:text-3xl">
+        <h3 className="text-2xl font-semibold text-foreground md:text-3xl">
           {country.name}
         </h3>
         <dl className="mt-5 grid grid-cols-3 gap-4">

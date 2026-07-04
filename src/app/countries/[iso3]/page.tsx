@@ -5,6 +5,7 @@ import {
   getDatasetProvenance,
   getGovernmentMisuseByCountry,
   getEvidenceByCountry,
+  countUniqueEvidence,
   getCountryPillarHighlights,
   getGlobalAverages,
   getRegionAverages,
@@ -22,6 +23,7 @@ import {
 } from "@/components/country-story";
 import { ComparisonSection } from "@/components/comparison-section";
 import { SiteHeader } from "@/components/site-header";
+import { getPillarCopy } from "@/content/pillars";
 
 interface PageProps {
   params: Promise<{ iso3: string }>;
@@ -54,6 +56,7 @@ export default async function CountryStoryPage({ params }: PageProps) {
   if (!country) notFound();
 
   const allCountries = getAllCountries();
+  const pillarCopy = await getPillarCopy();
   const regions = getRegions();
   const regionAverages = getRegionAverages();
 
@@ -100,12 +103,14 @@ export default async function CountryStoryPage({ params }: PageProps) {
             country={country}
             highlights={pillarHighlights}
             allCountries={allCountries}
+            pillarCopy={pillarCopy}
           />
         ) : null}
         <CountryEvidenceExplorerSection
           iso3={country.iso3}
           countryName={country.name}
-          evidenceCount={countryEvidence.length}
+          uniqueEvidenceCount={countUniqueEvidence(countryEvidence)}
+          indicatorCaseCount={countryEvidence.length}
         />
       </main>
 

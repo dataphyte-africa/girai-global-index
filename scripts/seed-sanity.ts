@@ -20,9 +20,27 @@ import { indicatorsDefaults } from "../src/content/indicators.defaults";
 import { evidenceDefaults } from "../src/content/evidence.defaults";
 import { regionsDefaults } from "../src/content/regions.defaults";
 import { countriesDefaults } from "../src/content/countries.defaults";
+import { downloadModalDefaults } from "../src/content/downloadModal.defaults";
+import { reportDownloadDefaults } from "../src/content/reportDownload.defaults";
+import { PILLAR_COPY } from "../src/lib/pillar-copy";
+import { REGION_COPY, regionToSlug } from "../src/lib/regions";
+import { DIMENSIONS as DIMENSIONS_UI } from "../src/data/dimensions-data";
+import { INDICATORS } from "../src/data/2026/taxonomy";
+import {
+  getIndicatorPageCopy,
+  getIndicatorBackgroundRelevance,
+  type IndicatorParagraph,
+} from "../src/lib/indicator-copy";
+import { PATHWAYS } from "../src/components/evidence-hub/pathway-config";
 import { headerDefaults } from "../src/content/header.defaults";
 import { footerDefaults } from "../src/content/footer.defaults";
 import { siteSettingsDefaults } from "../src/content/siteSettings.defaults";
+import { updatesSeed } from "../src/content/updates.defaults";
+import { TAKEAWAYS } from "../src/components/takeaways/takeaways-data";
+import type {
+  Takeaway,
+  TakeawayVisual,
+} from "../src/components/takeaways/types";
 import { uploadPublicImage } from "./seed-sanity-images";
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
@@ -50,6 +68,16 @@ const key = () => `k${(keySeq++).toString(36)}`;
 const cards = (items: { title: string; description: string }[]) =>
   items.map((c) => ({ _key: key(), _type: "titledCard", ...c }));
 
+const takeawayCards = (
+  items: {
+    category: string;
+    title: string;
+    description: string;
+    stat: string;
+    statCaption: string;
+  }[]
+) => items.map((c) => ({ _key: key(), _type: "object", ...c }));
+
 const ctas = (items: { label: string; href: string }[]) =>
   items.map((c) => ({ _key: key(), _type: "ctaLink", ...c }));
 
@@ -68,6 +96,196 @@ const terms = (items: { title: string; definition: string }[]) =>
 const img = (field: Awaited<ReturnType<typeof uploadPublicImage>>) =>
   field ?? undefined;
 
+/** Turn plain paragraphs into Portable Text `block` nodes. */
+const blockBody = (items: string[]) =>
+  items.map((text) => ({
+    _key: key(),
+    _type: "block",
+    style: "normal",
+    markDefs: [],
+    children: [{ _key: key(), _type: "span", text, marks: [] }],
+  }));
+
+/** Turn plain strings into Portable Text bullet-list `block` nodes. */
+const bulletList = (items: string[]) =>
+  items.map((text) => ({
+    _key: key(),
+    _type: "block",
+    style: "normal",
+    listItem: "bullet",
+    level: 1,
+    markDefs: [],
+    children: [{ _key: key(), _type: "span", text, marks: [] }],
+  }));
+
+/** A `findingTable` block for the Key Findings body. */
+const findingTableNode = (
+  columns: string[],
+  rows: string[][],
+  caption?: string,
+  emphasizeLastRow?: boolean
+) => ({
+  _key: key(),
+  _type: "findingTable",
+  columns,
+  rows: rows.map((cells) => ({ _key: key(), _type: "row", cells })),
+  ...(caption ? { caption } : {}),
+  ...(emphasizeLastRow ? { emphasizeLastRow: true } : {}),
+});
+
+/** Upload a chart image and return a `findingChart` block, or null on failure. */
+async function findingChartNode(
+  src: string,
+  alt: string,
+  caption?: string
+) {
+  const uploaded = await uploadPublicImage(client, { url: src, alt });
+  if (!uploaded) return null;
+  return {
+    _key: key(),
+    ...uploaded,
+    _type: "findingChart",
+    ...(caption ? { caption } : {}),
+  };
+}
+
+/**
+ * Convert one report visual into body block(s). Visuals with an exported chart
+ * image become inline `findingChart` images; data-only visuals become
+ * `findingTable`s so no numbers are lost. Hidden visuals are skipped.
+ */
+async function visualToBlocks(v: TakeawayVisual) {
+  if (v.hidden) return [];
+
+  if (v.image) {
+    const node = await findingChartNode(
+      v.image.src,
+      v.image.alt,
+      v.caption ?? v.title
+    );
+    return node ? [node] : [];
+  }
+
+  switch (v.kind) {
+    case "table":
+      return [
+        findingTableNode(v.columns, v.rows, v.caption ?? v.title, v.emphasizeLastRow),
+      ];
+    case "indicatorRankBar":
+      return [
+        findingTableNode(
+          ["Indicator", "Value"],
+          v.data.map((d) => [d.label, `${d.value}%`]),
+          v.caption ?? v.title
+        ),
+      ];
+    case "regionalBar":
+      return [
+        findingTableNode(
+          ["Region", "Value", "Regional avg", "Deviation (pp)"],
+          v.data.map((d) => [
+            d.region,
+            `${d.value}%`,
+            `${d.regionalAvg}%`,
+            `${d.deviationPp > 0 ? "+" : ""}${d.deviationPp}`,
+          ]),
+          v.caption ?? v.title
+        ),
+      ];
+    case "ratioBar":
+      return [
+        findingTableNode(
+          ["Indicator", "Framework", "Implementation", "Ratio"],
+          v.data.map((d) => [
+            d.label,
+            String(d.framework),
+            String(d.implementation),
+            `${d.ratio}%`,
+          ]),
+          v.caption ?? v.title
+        ),
+      ];
+    case "groupedBar": {
+      const unit = v.unit === "count" ? "" : "%";
+      return [
+        findingTableNode(
+          ["Group", ...v.series.map((s) => s.label)],
+          v.categories.map((c) => [
+            c.category,
+            ...v.series.map((s) => {
+              const bar = c.bars.find((b) => b.seriesKey === s.key);
+              return bar ? `${bar.value}${unit}` : "—";
+            }),
+          ]),
+          v.caption ?? v.title
+        ),
+      ];
+    }
+    default:
+      // comparisonColumns / heatmap / bubbleMap always ship with an image in the
+      // report data and are handled by the `v.image` branch above.
+      return [];
+  }
+}
+
+/** Build the Portable Text `findingBody` for one takeaway. */
+async function buildFindingBody(t: Takeaway) {
+  const body: unknown[] = [...bulletList(t.narrative)];
+  for (const v of t.visuals) {
+    body.push(...(await visualToBlocks(v)));
+  }
+  return body;
+}
+
+async function buildKeyFindingsDoc() {
+  console.log("Uploading Key Findings chart images...");
+  const findings = [];
+  for (const t of TAKEAWAYS) {
+    findings.push({
+      _key: key(),
+      _type: "keyFinding",
+      title: t.title,
+      summary: blockBody([t.summary]),
+      body: await buildFindingBody(t),
+      ...(t.brightSpot
+        ? {
+            brightSpotCountry: t.brightSpot.country,
+            brightSpotBody: blockBody([t.brightSpot.body]),
+          }
+        : {}),
+    });
+  }
+
+  return {
+    _id: "keyFindings",
+    _type: "keyFindings",
+    headingAccent: "Key",
+    headingTail: "Findings",
+    subtitle:
+      "Strengthening Clarity, Comparability, and Implementation Focus",
+    findings,
+  };
+}
+
+/**
+ * Turn inline text/link segment paragraphs (indicator Background / Relevance
+ * defaults) into Portable Text `block` nodes with `link` annotations.
+ */
+const richTextBody = (paragraphs: IndicatorParagraph[]) =>
+  paragraphs.map((segments) => {
+    const markDefs: { _key: string; _type: "link"; href: string }[] = [];
+    const children = segments.map((seg) => {
+      const marks: string[] = [];
+      if (seg.href) {
+        const linkKey = key();
+        markDefs.push({ _key: linkKey, _type: "link", href: seg.href });
+        marks.push(linkKey);
+      }
+      return { _key: key(), _type: "span", text: seg.text, marks };
+    });
+    return { _key: key(), _type: "block", style: "normal", markDefs, children };
+  });
+
 async function buildAboutDoc() {
   console.log("Uploading About page images...");
   const [heroImage, gcgImage, measuresImage, whoForImage, footerImage] = await Promise.all([
@@ -77,6 +295,18 @@ async function buildAboutDoc() {
     uploadPublicImage(client, aboutDefaults.whoForImage),
     uploadPublicImage(client, aboutDefaults.footerImage),
   ]);
+
+  const partners = await Promise.all(
+    aboutDefaults.partners.map(async (p) => {
+      const logo = await uploadPublicImage(client, p.logo);
+      return {
+        _key: key(),
+        _type: "partnerItem",
+        name: p.name,
+        ...(logo ? { logo } : {}),
+      };
+    })
+  );
 
   return {
     _id: "aboutPage",
@@ -105,11 +335,7 @@ async function buildAboutDoc() {
     measuresImage: img(measuresImage),
     contributorsHeading: aboutDefaults.contributorsHeading,
     contributorsSubtitle: aboutDefaults.contributorsSubtitle,
-    partners: aboutDefaults.partners.map((p) => ({
-      _key: key(),
-      _type: "partnerItem",
-      name: p.name,
-    })),
+    partners,
     whoForHeadingLead: aboutDefaults.whoForHeadingLead,
     whoForHeadingAccent: aboutDefaults.whoForHeadingAccent,
     whoForSubtitle: aboutDefaults.whoForSubtitle,
@@ -121,6 +347,20 @@ async function buildAboutDoc() {
     peopleHeadingTail: aboutDefaults.peopleHeadingTail,
     peopleSubtitle: aboutDefaults.peopleSubtitle,
     people: aboutDefaults.people,
+    committeeHeading: aboutDefaults.committeeHeading,
+    committeeSubtitle: aboutDefaults.committeeSubtitle,
+    committeeMembers: aboutDefaults.committeeMembers.map((m) => ({
+      _key: key(),
+      _type: "committeeMember",
+      name: m.name,
+      affiliation: m.affiliation,
+    })),
+    impactHeadingLead: aboutDefaults.impactHeadingLead,
+    impactHeadingAccent: aboutDefaults.impactHeadingAccent,
+    impactSubtitle: aboutDefaults.impactSubtitle,
+    impactCards: cards(aboutDefaults.impactCards),
+    impactCtaLabel: aboutDefaults.impactCtaLabel,
+    impactCtaHref: aboutDefaults.impactCtaHref,
     footerHeading: aboutDefaults.footerHeading,
     footerBody: aboutDefaults.footerBody,
     footerCta: { _type: "ctaLink", ...aboutDefaults.footerCta },
@@ -232,7 +472,7 @@ async function buildTakeawaysDoc() {
 async function buildSiteSettingsDoc() {
   console.log("Uploading Site Settings images...");
   const ogImage = await uploadPublicImage(client, {
-    url: "/report-image.png",
+    url: "/report-image.jpg",
     alt: "Global Index on Responsible AI 2026 Report cover",
   });
 
@@ -249,7 +489,20 @@ async function buildSiteSettingsDoc() {
   };
 }
 
-function buildHomeDoc() {
+async function buildHomeDoc() {
+  console.log("Uploading Home 'trusted by' partner logos...");
+  const usedByPartners = await Promise.all(
+    homeDefaults.usedByPartners.map(async (p) => {
+      const logo = await uploadPublicImage(client, p.logo);
+      return {
+        _key: key(),
+        _type: "partnerItem",
+        name: p.name,
+        ...(logo ? { logo } : {}),
+      };
+    })
+  );
+
   return {
     _id: "homePage",
     _type: "homePage",
@@ -264,22 +517,24 @@ function buildHomeDoc() {
     dimensionsHeadingLead: homeDefaults.dimensionsHeadingLead,
     dimensionsHeadingAccent: homeDefaults.dimensionsHeadingAccent,
     dimensionsSubtitle: homeDefaults.dimensionsSubtitle,
-    reportBadge: homeDefaults.reportBadge,
-    reportHeadingLead: homeDefaults.reportHeadingLead,
-    reportHeadingAccent: homeDefaults.reportHeadingAccent,
-    reportBody: homeDefaults.reportBody,
-    reportPrimaryCtaLabel: homeDefaults.reportPrimaryCtaLabel,
-    reportSecondaryCtaLabel: homeDefaults.reportSecondaryCtaLabel,
     takeawaysBadge: homeDefaults.takeawaysBadge,
     takeawaysHeadingAccent: homeDefaults.takeawaysHeadingAccent,
     takeawaysHeadingTail: homeDefaults.takeawaysHeadingTail,
     takeawaysSubtitle: homeDefaults.takeawaysSubtitle,
     takeawaysViewAllLabel: homeDefaults.takeawaysViewAllLabel,
+    takeawaysCards: takeawayCards(homeDefaults.takeawaysCards),
     evidenceBadge: homeDefaults.evidenceBadge,
     evidenceHeading: homeDefaults.evidenceHeading,
     evidenceBody: homeDefaults.evidenceBody,
     evidenceCtaLabel: homeDefaults.evidenceCtaLabel,
     evidenceNote: homeDefaults.evidenceNote,
+    performanceHeadingLead: homeDefaults.performanceHeadingLead,
+    performanceHeadingAccent: homeDefaults.performanceHeadingAccent,
+    performanceHeadingTail: homeDefaults.performanceHeadingTail,
+    performanceSubtitle: homeDefaults.performanceSubtitle,
+    compareHeadingLead: homeDefaults.compareHeadingLead,
+    compareHeadingAccent: homeDefaults.compareHeadingAccent,
+    compareSubheading: homeDefaults.compareSubheading,
     indicatorsHeadingAccent: homeDefaults.indicatorsHeadingAccent,
     indicatorsHeadingTail: homeDefaults.indicatorsHeadingTail,
     indicatorsSubtitle: homeDefaults.indicatorsSubtitle,
@@ -291,6 +546,13 @@ function buildHomeDoc() {
     impactHeadingAccent: homeDefaults.impactHeadingAccent,
     impactSubtitle: homeDefaults.impactSubtitle,
     impactCards: cards(homeDefaults.impactCards),
+    impactCtaLabel: homeDefaults.impactCtaLabel,
+    ...(homeDefaults.impactCtaHref
+      ? { impactCtaHref: homeDefaults.impactCtaHref }
+      : {}),
+    usedByHeading: homeDefaults.usedByHeading,
+    usedBySubtitle: homeDefaults.usedBySubtitle,
+    usedByPartners,
     shapingHeadingLines: homeDefaults.shapingHeadingLines,
   };
 }
@@ -305,7 +567,24 @@ function buildHeaderDoc() {
   };
 }
 
-function buildFooterDoc() {
+async function buildFooterDoc() {
+  console.log("Uploading Footer funder logos...");
+  const funderLogos = (
+    await Promise.all(
+      footerDefaults.funderLogos.map(async (f) => {
+        const logo = await uploadPublicImage(client, f.logo);
+        if (!logo) return null;
+        return {
+          _key: key(),
+          _type: "funderLogo",
+          name: f.name,
+          logo,
+          ...(f.url ? { url: f.url } : {}),
+        };
+      })
+    )
+  ).filter((f): f is NonNullable<typeof f> => f !== null);
+
   return {
     _id: "footer",
     _type: "footer",
@@ -318,6 +597,11 @@ function buildFooterDoc() {
     regionLinks: ctas(footerDefaults.regionLinks),
     otherProjectsLinks: ctas(footerDefaults.otherProjectsLinks),
     socialLinks: ctas(footerDefaults.socialLinks),
+    funderNoteText: footerDefaults.funderNoteText,
+    funderLogos,
+    ...(footerDefaults.funderLink
+      ? { funderLink: footerDefaults.funderLink }
+      : {}),
   };
 }
 
@@ -376,6 +660,10 @@ function buildCountriesDoc() {
     heroTitleLine1: countriesDefaults.heroTitleLine1,
     heroTitleAccent: countriesDefaults.heroTitleAccent,
     heroSubtitle: countriesDefaults.heroSubtitle,
+    performanceHeadingLead: countriesDefaults.performanceHeadingLead,
+    performanceHeadingAccent: countriesDefaults.performanceHeadingAccent,
+    performanceHeadingTail: countriesDefaults.performanceHeadingTail,
+    performanceSubtitle: countriesDefaults.performanceSubtitle,
     compareHeadingLead: countriesDefaults.compareHeadingLead,
     compareHeadingAccent: countriesDefaults.compareHeadingAccent,
     compareSubheading: countriesDefaults.compareSubheading,
@@ -387,14 +675,179 @@ function buildCountriesDoc() {
   };
 }
 
+async function buildDownloadModalDoc() {
+  console.log("Uploading Download Modal image...");
+  const formImage = await uploadPublicImage(client, downloadModalDefaults.formImage);
+  return {
+    _id: "downloadModal",
+    _type: "downloadModal",
+    title: downloadModalDefaults.title,
+    description: downloadModalDefaults.description,
+    editionFirstLabel: downloadModalDefaults.editionFirstLabel,
+    editionSecondLabel: downloadModalDefaults.editionSecondLabel,
+    formImage: img(formImage),
+    fullNameLabel: downloadModalDefaults.fullNameLabel,
+    fullNamePlaceholder: downloadModalDefaults.fullNamePlaceholder,
+    emailLabel: downloadModalDefaults.emailLabel,
+    emailPlaceholder: downloadModalDefaults.emailPlaceholder,
+    organizationLabel: downloadModalDefaults.organizationLabel,
+    organizationPlaceholder: downloadModalDefaults.organizationPlaceholder,
+    roleLabel: downloadModalDefaults.roleLabel,
+    rolePlaceholder: downloadModalDefaults.rolePlaceholder,
+    reasonLabel: downloadModalDefaults.reasonLabel,
+    reasonPlaceholder: downloadModalDefaults.reasonPlaceholder,
+    reasons: downloadModalDefaults.reasons.map((r) => ({ _key: key(), ...r })),
+    licenseTextBefore: downloadModalDefaults.licenseTextBefore,
+    licenseLinkLabel: downloadModalDefaults.licenseLinkLabel,
+    licenseLinkHref: downloadModalDefaults.licenseLinkHref,
+    submitLabel: downloadModalDefaults.submitLabel,
+    submittingLabel: downloadModalDefaults.submittingLabel,
+    imageAlt: downloadModalDefaults.imageAlt,
+    citationHeadingTemplate: downloadModalDefaults.citationHeadingTemplate,
+    citationBody: downloadModalDefaults.citationBody,
+    methodologyHeading: downloadModalDefaults.methodologyHeading,
+    methodologyBody: downloadModalDefaults.methodologyBody,
+  };
+}
+
+async function buildReportDownloadDoc() {
+  console.log("Uploading Report Download cover image...");
+  const coverImage = await uploadPublicImage(client, reportDownloadDefaults.coverImage);
+  return {
+    _id: "reportDownload",
+    _type: "reportDownload",
+    badge: reportDownloadDefaults.badge,
+    headingLead: reportDownloadDefaults.headingLead,
+    headingAccent: reportDownloadDefaults.headingAccent,
+    body: reportDownloadDefaults.body,
+    coverImage: img(coverImage),
+    primaryCtaLabel: reportDownloadDefaults.primaryCtaLabel,
+    secondaryCtaLabel: reportDownloadDefaults.secondaryCtaLabel,
+  };
+}
+
+/** Fixed collections — stable ids must match sanity/structure.ts. */
+async function buildPillarDocs() {
+  console.log("Uploading Pillar card images...");
+  const slugs = Object.keys(PILLAR_COPY) as (keyof typeof PILLAR_COPY)[];
+  return Promise.all(
+    slugs.map(async (slug) => {
+      const c = PILLAR_COPY[slug];
+      const image = await uploadPublicImage(client, { url: c.image, alt: c.heading });
+      return {
+        _id: `pillar-${slug}`,
+        _type: "pillar",
+        slug,
+        heading: c.heading,
+        body: c.body,
+        image: img(image),
+        driversDescription: c.driversDescription,
+      };
+    })
+  );
+}
+
+function buildDimensionDocs() {
+  return DIMENSIONS_UI.map((d) => ({
+    _id: `dimension-${d.id}`,
+    _type: "dimensionCopy",
+    slug: d.id,
+    subtitle: d.subtitle,
+    description: d.description,
+    eyebrow: d.eyebrow,
+    heroLead: d.heroLead,
+    rankingSubtitle: d.rankingSubtitle,
+  }));
+}
+
+async function buildUpdateDocs() {
+  console.log("Uploading Update images...");
+  return Promise.all(
+    updatesSeed.map(async (u) => {
+      const cover = await uploadPublicImage(client, u.image);
+      return {
+        _id: `update-${u.slug}`,
+        _type: "updatePost",
+        title: u.title,
+        slug: { _type: "slug", current: u.slug },
+        category: u.category,
+        publishedAt: u.publishedAt,
+        ...(u.author ? { author: u.author } : {}),
+        featured: Boolean(u.featured),
+        coverImage: img(cover),
+        excerpt: u.excerpt,
+        body: blockBody(u.body),
+      };
+    })
+  );
+}
+
+function buildIndicatorPageDocs() {
+  return INDICATORS.map((ind) => {
+    const copy = getIndicatorPageCopy(ind.slug);
+    const { background, relevance } = getIndicatorBackgroundRelevance(
+      ind.slug,
+      ind.name
+    );
+    return {
+      _id: `indicator-${ind.slug}`,
+      _type: "indicatorPage",
+      title: ind.name,
+      slug: ind.slug,
+      heroLead: copy.heroLead,
+      introPrimary: copy.introPrimary,
+      introSecondary: copy.introSecondary,
+      background: richTextBody(background),
+      relevance: richTextBody(relevance),
+    };
+  });
+}
+
+function buildPathwayDocs() {
+  return PATHWAYS.map((p) => ({
+    _id: `pathway-${p.id}`,
+    _type: "evidencePathway",
+    pathwayId: p.id,
+    title: p.title,
+    tableTitle: p.tableTitle,
+    description: p.description,
+    itemNoun: p.itemNoun,
+  }));
+}
+
+function buildRegionPageDocs() {
+  return Object.entries(REGION_COPY).map(([name, c]) => ({
+    _id: `region-${regionToSlug(name)}`,
+    _type: "regionPage",
+    title: name,
+    slug: regionToSlug(name),
+    blurb: c.blurb,
+    footerBlurb: c.footerBlurb,
+    adjective: c.adjective,
+  }));
+}
+
 async function main() {
-  console.log(`Seeding "${dataset}" (project ${projectId})...`);
+  // Optional label filters: `tsx scripts/seed-sanity.ts keyFindings` seeds only
+  // documents whose label equals or is nested under a given prefix. Without
+  // filters every document is (re)seeded. Filtering avoids clobbering unrelated
+  // Studio edits when you only need to seed one section.
+  const filters = process.argv.slice(2).filter((a) => !a.startsWith("-"));
+  const matches = (label: string) =>
+    filters.length === 0 ||
+    filters.some((f) => label === f || label.startsWith(`${f}/`));
+
+  console.log(
+    `Seeding "${dataset}" (project ${projectId})${
+      filters.length ? ` — only [${filters.join(", ")}]` : ""
+    }...`
+  );
 
   const docs = [
     { label: "siteSettings", doc: await buildSiteSettingsDoc() },
     { label: "header", doc: buildHeaderDoc() },
-    { label: "footer", doc: buildFooterDoc() },
-    { label: "homePage", doc: buildHomeDoc() },
+    { label: "footer", doc: await buildFooterDoc() },
+    { label: "homePage", doc: await buildHomeDoc() },
     { label: "aboutPage", doc: await buildAboutDoc() },
     { label: "methodologyPage", doc: await buildMethodologyDoc() },
     { label: "takeawaysPage", doc: await buildTakeawaysDoc() },
@@ -402,13 +855,30 @@ async function main() {
     { label: "evidencePage", doc: buildEvidenceDoc() },
     { label: "regionsPage", doc: buildRegionsDoc() },
     { label: "countriesPage", doc: buildCountriesDoc() },
+    { label: "downloadModal", doc: await buildDownloadModalDoc() },
+    { label: "reportDownload", doc: await buildReportDownloadDoc() },
+    { label: "keyFindings", doc: await buildKeyFindingsDoc() },
+    ...(await buildPillarDocs()).map((doc) => ({ label: `pillar/${doc.slug}`, doc })),
+    ...buildDimensionDocs().map((doc) => ({ label: `dimension/${doc.slug}`, doc })),
+    ...buildIndicatorPageDocs().map((doc) => ({ label: `indicator/${doc.slug}`, doc })),
+    ...buildPathwayDocs().map((doc) => ({ label: `pathway/${doc.pathwayId}`, doc })),
+    ...buildRegionPageDocs().map((doc) => ({ label: `region/${doc.slug}`, doc })),
+    ...(await buildUpdateDocs()).map((doc) => ({ label: `update/${doc._id}`, doc })),
   ];
 
+  let seeded = 0;
   for (const { label, doc } of docs) {
+    if (!matches(label)) continue;
     await client.createOrReplace(doc as Parameters<typeof client.createOrReplace>[0]);
     console.log(`✓ ${label} seeded`);
+    seeded += 1;
   }
 
+  if (seeded === 0) {
+    console.warn(
+      `No documents matched [${filters.join(", ")}]. Nothing was written.`
+    );
+  }
   console.log("Done. Open /studio to review and publish.");
 }
 

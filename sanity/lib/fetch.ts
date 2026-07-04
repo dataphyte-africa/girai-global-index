@@ -10,11 +10,10 @@ const token = process.env.SANITY_API_READ_TOKEN;
 /**
  * Draft-Mode-aware Sanity fetch.
  *
- * - Published mode: served from the CDN and tagged for on-demand revalidation.
- * - Draft mode (Presentation tool): reads drafts with the viewer token.
- *
- * Pass `tags` so the `/api/revalidate` webhook can invalidate exactly the
- * affected documents when the client publishes.
+ * Published reads skip both Next.js fetch cache and the Sanity CDN so CMS edits
+ * appear on the next request once pages are rendered dynamically (root layout
+ * `export const dynamic = 'force-dynamic'`). Tags are kept for hosts where on-demand
+ * revalidation works (e.g. Vercel).
  */
 export async function sanityFetch<QueryResponse>({
   query,
@@ -39,8 +38,11 @@ export async function sanityFetch<QueryResponse>({
       perspective: "drafts",
       useCdn: false,
     }),
+    ...(!isDraftMode && {
+      useCdn: false,
+    }),
     next: {
-      revalidate: isDraftMode ? 0 : false,
+      revalidate: 0,
       tags,
     },
   });

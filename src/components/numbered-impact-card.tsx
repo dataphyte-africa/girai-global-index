@@ -31,7 +31,7 @@ export function NumberedImpactCard({
           {index}
         </span>
 
-        <h3 className="mt-5 text-lg font-medium leading-snug tracking-tight text-foreground md:text-[1.2rem] md:leading-[1.3]">
+        <h3 className="mt-5 text-lg font-semibold leading-snug tracking-tight text-foreground md:text-[1.2rem] md:leading-[1.3]">
           {title}
         </h3>
 

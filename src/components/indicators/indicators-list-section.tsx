@@ -1,6 +1,7 @@
 import {
   DIMENSIONS,
   INDICATORS,
+  URAI_INDICATOR_SLUG,
   type DimensionDef,
   type IndicatorDef,
 } from "@/data/2026/taxonomy";
@@ -15,7 +16,14 @@ function dimensionDisplayName(dimension: DimensionDef): string {
 }
 
 function indicatorsForDimension(slug: DimensionDef["slug"]): IndicatorDef[] {
-  return INDICATORS.filter((indicator) => indicator.dimension === slug);
+  return INDICATORS.filter(
+    (indicator) =>
+      indicator.dimension === slug && indicator.slug !== URAI_INDICATOR_SLUG
+  );
+}
+
+function scoreAdjustmentIndicators(): IndicatorDef[] {
+  return INDICATORS.filter((indicator) => indicator.slug === URAI_INDICATOR_SLUG);
 }
 
 /**
@@ -23,6 +31,7 @@ function indicatorsForDimension(slug: DimensionDef["slug"]): IndicatorDef[] {
  */
 export function IndicatorsListSection() {
   const sortedDimensions = [...DIMENSIONS].sort((a, b) => a.order - b.order);
+  const scoreAdjustments = scoreAdjustmentIndicators();
 
   return (
     <section className="w-full bg-white px-4 py-16 md:px-6 md:py-24 lg:py-28">
@@ -52,6 +61,28 @@ export function IndicatorsListSection() {
             </div>
           );
         })}
+
+        {scoreAdjustments.length > 0 && (
+          <div>
+            <h2
+              className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight"
+              style={{ color: HEADING_DARK }}
+            >
+              Score Adjustments
+            </h2>
+
+            <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+              {scoreAdjustments.map((indicator, index) => (
+                <IndicatorCard
+                  key={indicator.slug}
+                  index={index + 1}
+                  slug={indicator.slug}
+                  name={indicator.name}
+                />
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );

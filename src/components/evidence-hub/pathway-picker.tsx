@@ -22,6 +22,7 @@ import {
   scrollToEvidenceHubSection,
 } from "./scroll";
 import { evidenceDefaults, type EvidenceContent } from "@/content/evidence.defaults";
+import { PATHWAY_COPY_DEFAULTS, type PathwayCopyMap } from "@/content/pathways.defaults";
 
 const PATHWAY_ICONS: Record<PathwayConfig["id"], LucideIcon> = {
   frameworks: FileText,
@@ -33,9 +34,14 @@ const PATHWAY_ICONS: Record<PathwayConfig["id"], LucideIcon> = {
 export interface PathwayPickerProps {
   totals: EvidenceArtifact["totals"];
   content?: EvidenceContent;
+  pathwayCopy?: PathwayCopyMap;
 }
 
-export function PathwayPicker({ totals, content = evidenceDefaults }: PathwayPickerProps) {
+export function PathwayPicker({
+  totals,
+  content = evidenceDefaults,
+  pathwayCopy = PATHWAY_COPY_DEFAULTS,
+}: PathwayPickerProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -56,7 +62,7 @@ export function PathwayPicker({ totals, content = evidenceDefaults }: PathwayPic
       className="scroll-mt-20 border-b border-border/60 bg-background py-12 md:py-16"
     >
       <div className="mx-auto max-w-6xl px-4 md:px-6">
-        <h2 className="text-3xl md:text-4xl lg:text-5xl text-center font-medium tracking-tight text-foreground">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl text-center font-semibold tracking-tight text-foreground">
           {content.pathwayHeading}
         </h2>
         <p className="mx-auto mt-2 max-w-xl text-center text-sm text-muted-foreground md:text-base">
@@ -66,6 +72,7 @@ export function PathwayPicker({ totals, content = evidenceDefaults }: PathwayPic
         <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {PATHWAYS.map((pathway) => {
             const Icon = PATHWAY_ICONS[pathway.id];
+            const copy = pathwayCopy[pathway.id];
             const isActive = pathway.id === activePathway.id;
             const itemCount = itemCountForPathway(
               pathway,
@@ -78,7 +85,7 @@ export function PathwayPicker({ totals, content = evidenceDefaults }: PathwayPic
             const meta =
               pathway.id === "misuse"
                 ? `${countryCount} countries`
-                : `${itemCount.toLocaleString()} ${pathway.itemNoun} · ${countryCount} countries`;
+                : `${itemCount.toLocaleString()} ${copy.itemNoun} · ${countryCount} countries`;
 
             return (
               <button
@@ -105,10 +112,10 @@ export function PathwayPicker({ totals, content = evidenceDefaults }: PathwayPic
                   />
                 </div>
                 <h3 className="text-sm font-medium text-foreground md:text-base">
-                  {pathway.title}
+                  {copy.title}
                 </h3>
                 <p className="mt-2 flex-1 text-xs leading-relaxed text-muted-foreground">
-                  {pathway.description}
+                  {copy.description}
                 </p>
                 <span
                   className={cn(

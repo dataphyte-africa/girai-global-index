@@ -1,6 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
-import { footerDefaults, type FooterContent } from "@/content/footer.defaults";
+import {
+  footerDefaults,
+  type FooterContent,
+  type FunderLogo,
+} from "@/content/footer.defaults";
+import { FooterSubscribeForm } from "@/components/footer-subscribe-form";
 
 function SocialIcon({
   href,
@@ -54,6 +59,14 @@ function socialIconSvg(label: string) {
           <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
         </svg>
       );
+    case "email":
+    case "mail":
+      return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+          <rect x="2" y="4" width="20" height="16" rx="2" />
+          <path d="m22 7-10 6L2 7" />
+        </svg>
+      );
     default:
       return <span className="text-xs">{label[0]}</span>;
   }
@@ -65,28 +78,18 @@ export function FooterSection({ content = footerDefaults }: { content?: FooterCo
       <div className="max-w-6xl mx-auto px-6 pt-16 pb-12">
         <div className="bg-[#241960] rounded-2xl p-8 md:p-12 flex flex-col md:flex-row gap-8 md:gap-16 items-start">
           <div className="flex-1">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium italic mb-4">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold italic mb-4">
               {content.subscribeHeading}
             </h2>
             <p className="text-white/70 text-sm max-w-xs">{content.subscribeBody}</p>
           </div>
 
           <div className="flex-1 w-full">
-            <div className="flex flex-col sm:flex-row gap-3 mb-3">
-              <input
-                type="text"
-                placeholder={content.namePlaceholder}
-                className="flex-1 bg-transparent border border-white/30 rounded-md px-4 py-2.5 text-sm text-white placeholder:text-white/50 focus:outline-none focus:border-white/60 transition-colors"
-              />
-              <input
-                type="email"
-                placeholder={content.emailPlaceholder}
-                className="flex-1 bg-transparent border border-white/30 rounded-md px-4 py-2.5 text-sm text-white placeholder:text-white/50 focus:outline-none focus:border-white/60 transition-colors"
-              />
-            </div>
-            <button className="w-full border-2 border-[#7c3aed] hover:bg-[#7c3aed] text-white rounded-md py-2.5 text-sm font-medium transition-colors cursor-pointer">
-              {content.submitLabel}
-            </button>
+            <FooterSubscribeForm
+              namePlaceholder={content.namePlaceholder}
+              emailPlaceholder={content.emailPlaceholder}
+              submitLabel={content.submitLabel}
+            />
           </div>
         </div>
       </div>
@@ -105,13 +108,62 @@ export function FooterSection({ content = footerDefaults }: { content?: FooterCo
           </div>
 
           <div className="flex flex-wrap gap-10 md:gap-16 flex-2">
-            <FooterLinkGroup title="Results 2024" links={content.resultsLinks} />
+            <FooterLinkGroup title="Results 2025" links={content.resultsLinks} />
             <FooterLinkGroup title="Explore Regions" links={content.regionLinks} />
             <FooterLinkGroup title="Other Projects" links={content.otherProjectsLinks} />
           </div>
         </div>
       </div>
+
+      {content.funderNoteText || content.funderLogos.length > 0 ? (
+        <div className="border-t border-white/10">
+          <div className="max-w-6xl mx-auto px-6 py-8 flex flex-col items-center gap-6 text-center">
+            {content.funderLogos.length > 0 ? (
+              <ul className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+                {content.funderLogos.map((funder) => (
+                  <li key={funder.name || funder.logo.url}>
+                    <FunderLogoItem funder={funder} />
+                  </li>
+                ))}
+              </ul>
+            ) : null}
+            {content.funderNoteText ? (
+              <p className="text-xs leading-relaxed text-white/50 max-w-4xl mx-auto">
+                {content.funderNoteText}
+              </p>
+            ) : null}
+          </div>
+        </div>
+      ) : null}
     </footer>
+  );
+}
+
+function FunderLogoItem({ funder }: { funder: FunderLogo }) {
+  const image = (
+    <Image
+      src={funder.logo.url ?? ""}
+      alt={funder.logo.alt ?? funder.name}
+      width={200}
+      height={64}
+      className="h-9 w-auto object-contain sm:h-10"
+    />
+  );
+  const chipClass =
+    "flex h-16 items-center justify-center rounded-lg bg-white px-4 py-3 transition-opacity hover:opacity-90";
+
+  return funder.url ? (
+    <a
+      href={funder.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      title={funder.name}
+      className={chipClass}
+    >
+      {image}
+    </a>
+  ) : (
+    <div className={chipClass}>{image}</div>
   );
 }
 
@@ -126,13 +178,22 @@ function FooterLinkGroup({
     <div className="min-w-[120px]">
       <h3 className="text-xs font-medium tracking-widest text-white/50 uppercase mb-4">{title}</h3>
       <ul className="space-y-2.5">
-        {links.map((link) => (
-          <li key={link.label}>
-            <Link href={link.href} className="text-sm text-white/70 hover:text-white transition-colors">
-              {link.label}
-            </Link>
-          </li>
-        ))}
+        {links.map((link) => {
+          const isExternal = /^https?:\/\//.test(link.href);
+          return (
+            <li key={link.label}>
+              <Link
+                href={link.href}
+                {...(isExternal
+                  ? { target: "_blank", rel: "noopener noreferrer" }
+                  : {})}
+                className="text-sm text-white/70 hover:text-white transition-colors"
+              >
+                {link.label}
+              </Link>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

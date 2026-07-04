@@ -10,12 +10,14 @@ export const homePage = defineType({
     { name: "hero", title: "Hero" },
     { name: "whyIntro", title: "Why GIRAI Intro" },
     { name: "dimensions", title: "Dimensions" },
-    { name: "report", title: "Report Download" },
     { name: "takeaways", title: "Takeaways Carousel" },
     { name: "evidence", title: "Evidence Explorer" },
+    { name: "performance", title: "Performance Across Countries" },
+    { name: "compare", title: "Compare Section" },
     { name: "indicators", title: "Indicator Categories" },
     { name: "limits", title: "Limits of Measurement" },
     { name: "impact", title: "Our Impact" },
+    { name: "usedBy", title: "Used By (Logos)" },
     { name: "shaping", title: "Shaping Intelligence" },
   ],
   fields: [
@@ -42,20 +44,31 @@ export const homePage = defineType({
     defineField({ name: "dimensionsHeadingAccent", title: "Heading (accent)", type: "string", group: "dimensions" }),
     defineField({ name: "dimensionsSubtitle", title: "Subtitle", type: "text", rows: 2, group: "dimensions" }),
 
-    // Report Download
-    defineField({ name: "reportBadge", title: "Badge", type: "string", group: "report" }),
-    defineField({ name: "reportHeadingLead", title: "Heading (dark)", type: "string", group: "report" }),
-    defineField({ name: "reportHeadingAccent", title: "Heading (accent)", type: "string", group: "report" }),
-    defineField({ name: "reportBody", title: "Body", type: "text", rows: 3, group: "report" }),
-    defineField({ name: "reportPrimaryCtaLabel", title: "Primary CTA label", type: "string", group: "report" }),
-    defineField({ name: "reportSecondaryCtaLabel", title: "Secondary CTA label", type: "string", group: "report" }),
-
     // Takeaways Carousel
     defineField({ name: "takeawaysBadge", title: "Badge", type: "string", group: "takeaways" }),
     defineField({ name: "takeawaysHeadingAccent", title: "Heading (accent)", type: "string", group: "takeaways" }),
     defineField({ name: "takeawaysHeadingTail", title: "Heading (dark)", type: "string", group: "takeaways" }),
     defineField({ name: "takeawaysSubtitle", title: "Subtitle", type: "text", rows: 2, group: "takeaways" }),
     defineField({ name: "takeawaysViewAllLabel", title: "View-all label", type: "string", group: "takeaways" }),
+    defineField({
+      name: "takeawaysCards",
+      title: "Carousel cards",
+      type: "array",
+      group: "takeaways",
+      of: [
+        defineArrayMember({
+          type: "object",
+          fields: [
+            { name: "category", title: "Category (pill)", type: "string" },
+            { name: "title", title: "Title", type: "text", rows: 2 },
+            { name: "description", title: "Description", type: "text", rows: 4 },
+            { name: "stat", title: "Stat (big number)", type: "string" },
+            { name: "statCaption", title: "Stat caption", type: "string" },
+          ],
+          preview: { select: { title: "title", subtitle: "category" } },
+        }),
+      ],
+    }),
 
     // Evidence Explorer
     defineField({ name: "evidenceBadge", title: "Badge", type: "string", group: "evidence" }),
@@ -63,6 +76,17 @@ export const homePage = defineType({
     defineField({ name: "evidenceBody", title: "Body", type: "text", rows: 3, group: "evidence" }),
     defineField({ name: "evidenceCtaLabel", title: "CTA label", type: "string", group: "evidence" }),
     defineField({ name: "evidenceNote", title: "Card note", type: "text", rows: 3, group: "evidence" }),
+
+    // Performance Across Countries (map/list section)
+    defineField({ name: "performanceHeadingLead", title: "Heading (lead)", type: "string", group: "performance" }),
+    defineField({ name: "performanceHeadingAccent", title: "Heading (accent)", type: "string", group: "performance" }),
+    defineField({ name: "performanceHeadingTail", title: "Heading (tail)", type: "string", group: "performance" }),
+    defineField({ name: "performanceSubtitle", title: "Subtitle", type: "text", rows: 2, group: "performance" }),
+
+    // Compare Section
+    defineField({ name: "compareHeadingLead", title: "Heading (lead)", type: "string", group: "compare" }),
+    defineField({ name: "compareHeadingAccent", title: "Heading (accent)", type: "string", group: "compare" }),
+    defineField({ name: "compareSubheading", title: "Subheading", type: "text", rows: 2, group: "compare" }),
 
     // Indicator Categories
     defineField({ name: "indicatorsHeadingAccent", title: "Heading (accent)", type: "string", group: "indicators" }),
@@ -91,6 +115,28 @@ export const homePage = defineType({
       type: "array",
       group: "impact",
       of: [defineArrayMember({ type: "titledCard" })],
+    }),
+    defineField({ name: "impactCtaLabel", title: "CTA button label", type: "string", group: "impact" }),
+    defineField({
+      name: "impactCtaHref",
+      title: "CTA button link (GIRAI in Action)",
+      type: "url",
+      description:
+        "Link to the article showcasing high-level citations of the Index. The button is hidden while this is empty.",
+      group: "impact",
+    }),
+
+    // Used By (logo marquee)
+    defineField({ name: "usedByHeading", title: "Heading", type: "string", group: "usedBy" }),
+    defineField({ name: "usedBySubtitle", title: "Subtitle", type: "text", rows: 2, group: "usedBy" }),
+    defineField({
+      name: "usedByPartners",
+      title: "Organisations",
+      description:
+        "Each entry shows its logo in the scrolling strip. If no logo is uploaded, the name is shown as a text placeholder.",
+      type: "array",
+      group: "usedBy",
+      of: [defineArrayMember({ type: "partnerItem" })],
     }),
 
     // Shaping Intelligence

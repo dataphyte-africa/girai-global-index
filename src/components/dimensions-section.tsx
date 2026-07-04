@@ -4,22 +4,24 @@ import { useState, useCallback, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { RadialDimensionsChart } from "@/components/radial-dimensions-chart";
 import { DimensionCard } from "@/components/dimension-card";
-import { DIMENSIONS } from "@/data/dimensions-data";
+import { DIMENSIONS, type Dimension } from "@/data/dimensions-data";
 import { homeDefaults, type HomeContent } from "@/content/home.defaults";
 
 export function DimensionsSection({
   content = homeDefaults,
+  dimensions = DIMENSIONS,
 }: {
   content?: HomeContent;
+  dimensions?: Dimension[];
 }) {
   const [selectedId, setSelectedId] = useState<string | null>(
-    DIMENSIONS[0]?.id ?? null,
+    dimensions[0]?.id ?? null,
   );
   const headingRef = useRef(null);
   const isInView = useInView(headingRef, { once: false, amount: 0.8 });
 
   const selectedDimension = selectedId
-    ? DIMENSIONS.find((d) => d.id === selectedId) ?? null
+    ? dimensions.find((d) => d.id === selectedId) ?? null
     : null;
 
   const handleSelect = useCallback((id: string | null) => {
@@ -54,7 +56,7 @@ export function DimensionsSection({
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12 overflow-visible">
           <div className="flex flex-col md:min-h-[500px]  md:justify-center overflow-visible">
             <RadialDimensionsChart
-              dimensions={DIMENSIONS}
+              dimensions={dimensions}
               selectedId={selectedId}
               onSelect={handleSelect}
             />

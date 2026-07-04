@@ -10,6 +10,7 @@ export type SanityImage = { url: string | null; alt: string | null };
 export type Card = { title: string; description: string };
 export type Cta = { label: string; href: string };
 export type Partner = { name: string; logo: SanityImage | null };
+export type CommitteeMember = { name: string; affiliation: string };
 
 export type AboutContent = {
   heroTitleLead: string;
@@ -55,6 +56,17 @@ export type AboutContent = {
   peopleHeadingTail: string;
   peopleSubtitle: string;
   people: string[];
+
+  committeeHeading: string;
+  committeeSubtitle: string;
+  committeeMembers: CommitteeMember[];
+
+  impactHeadingLead: string;
+  impactHeadingAccent: string;
+  impactSubtitle: string;
+  impactCards: Card[];
+  impactCtaLabel: string;
+  impactCtaHref: string;
 
   footerHeading: string;
   footerBody: string;
@@ -133,12 +145,22 @@ export const aboutDefaults: AboutContent = {
   contributorsSubtitle:
     "Recognising the researchers, authors, and organisations whose expertise and support make GIRAI possible.",
   partners: [
-    { name: "Google", logo: null },
-    { name: "Microsoft", logo: null },
-    { name: "Facebook", logo: null },
-    { name: "IBM", logo: null },
-    { name: "Andela", logo: null },
-    { name: "Internet Society Foundation", logo: null },
+    {
+      name: "Local Development Research Institute (LDRI)",
+      logo: { url: "/about-partners/ldri.png", alt: "Local Development Research Institute" },
+    },
+    {
+      name: "East-West Management Institute (EWMI)",
+      logo: { url: "/about-partners/ewmi.png", alt: "East-West Management Institute" },
+    },
+    {
+      name: "LIRNEasia",
+      logo: { url: "/about-partners/lirneasia.png", alt: "LIRNEasia" },
+    },
+    {
+      name: "MENA Observatory on Responsible AI",
+      logo: { url: "/about-partners/mena.png", alt: "MENA Observatory on Responsible AI" },
+    },
   ],
 
   whoForHeadingLead: "Who GIRAI Is For in a ",
@@ -236,6 +258,67 @@ export const aboutDefaults: AboutContent = {
     "Anna Kowalczyk",
     "Omar Hassan",
   ],
+
+  committeeHeading: "Scientific Advisory Committee",
+  committeeSubtitle:
+    "An independent group of experts whose scientific guidance shapes the rigour, credibility, and integrity of GIRAI.",
+  committeeMembers: [
+    {
+      name: "Prof. David Leslie",
+      affiliation:
+        "Director of Ethics and Responsible Innovation Research, Public Policy Programme, The Alan Turing Institute",
+    },
+    {
+      name: "Dr. Paola Ricaurte Quijano",
+      affiliation: "Professor and Senior Researcher, Tecnológico de Monterrey",
+    },
+    {
+      name: "Dr. Chinasa T. Okolo",
+      affiliation: "Founder and Scientific Director, Technecultura",
+    },
+    {
+      name: "Jennifer Louie",
+      affiliation:
+        "AI Trust and Safety Expert, United Nations Development Programme (UNDP)",
+    },
+    {
+      name: "Prof. Matt Jones",
+      affiliation: "Chief Operating Officer, Responsible AI UK",
+    },
+    {
+      name: "Dr. Aubra Anthony",
+      affiliation: "University of Tennessee",
+    },
+    {
+      name: "Prof. Yuval Shany",
+      affiliation:
+        "Accelerator Fellow, Institute for Ethics in AI, University of Oxford",
+    },
+  ],
+
+  impactHeadingLead: "Our Impact on ",
+  impactHeadingAccent: "Responsible AI Governance",
+  impactSubtitle:
+    "How GIRAI is helping governments, researchers, civil society, and institutions understand and strengthen responsible AI governance worldwide.",
+  impactCards: [
+    {
+      title: "International Organisations",
+      description:
+        "GIRAI provides clear benchmarks and comparative insights that help policymakers identify gaps, track progress, and design stronger governance frameworks for artificial intelligence.",
+    },
+    {
+      title: "Global Policymakers",
+      description:
+        "By making scores traceable to public evidence, GIRAI promotes greater openness in how AI governance is measured and encourages accountable decision-making across institutions.",
+    },
+    {
+      title: "Media & Civil Society",
+      description:
+        "Researchers, advocates, and civil society organisations use GIRAI data to inform public debate, support advocacy efforts, and advance more inclusive approaches to responsible AI.",
+    },
+  ],
+  impactCtaLabel: "GIRAI in Action",
+  impactCtaHref: "/updates/girai-2026-launches-in-geneva",
 
   footerHeading: "Discover How AI Is Governed",
   footerBody:

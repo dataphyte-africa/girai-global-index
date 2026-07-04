@@ -52,7 +52,7 @@ function ProcessStepCard({
           </span>
         </div>
 
-        <h3 className="text-lg font-medium leading-snug tracking-tight text-foreground md:text-xl">
+        <h3 className="text-lg font-semibold leading-snug tracking-tight text-foreground md:text-xl">
           {title}
         </h3>
 
@@ -120,7 +120,7 @@ export function MethodologyResearchProcessSection({
 
       <div className="relative mx-auto max-w-7xl">
         <header className="mx-auto max-w-3xl text-center">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight lg:leading-[1.12]">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight lg:leading-[1.12]">
             <span className="text-foreground">{content.processHeadingLead}</span>
             <span className="text-primary">{content.processHeadingAccent}</span>
           </h2>
@@ -158,7 +158,7 @@ export function MethodologyResearchProcessSection({
               {content.processBadge}
             </span>
 
-            <h3 className="mt-5 text-[1.75rem] font-medium leading-[1.18] tracking-tight md:text-4xl md:leading-[1.15] lg:text-[2.5rem]">
+            <h3 className="mt-5 text-[1.75rem] font-semibold leading-[1.18] tracking-tight md:text-4xl md:leading-[1.15] lg:text-[2.5rem]">
               <span className="text-primary">{content.processStagesHeadingAccent}</span>
               <span className="text-foreground">{content.processStagesHeadingTail}</span>
             </h3>

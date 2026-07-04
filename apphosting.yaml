@@ -71,9 +71,11 @@ env:
     availability:
       - RUNTIME
 
-  # Uncomment after setting the secret:
-  # firebase apphosting:secrets:set GOOGLE_SHEETS_WEB_APP_URL --data-file - --force
-  # - variable: GOOGLE_SHEETS_WEB_APP_URL
-  #   secret: GOOGLE_SHEETS_WEB_APP_URL
-  #   availability:
-  #     - RUNTIME
+  # Download logging -> Google Sheets (Apps Script web app).
+  # Set the secret BEFORE deploying, or the deploy will fail:
+  #   firebase apphosting:secrets:set GOOGLE_SHEETS_WEB_APP_URL --data-file - --force
+  # (paste the /exec URL, then Ctrl-D). See scripts/google-sheets-download-logger.gs.
+  - variable: GOOGLE_SHEETS_WEB_APP_URL
+    secret: GOOGLE_SHEETS_WEB_APP_URL
+    availability:
+      - RUNTIME

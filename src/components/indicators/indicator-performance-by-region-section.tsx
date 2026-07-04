@@ -1,12 +1,9 @@
 import { regionColor } from "@/lib/girai";
 import type { IndicatorRegionalScore } from "@/lib/girai";
 
-const PURPLE = "#7150F4";
-const HEADING_DARK = "#1A1A2E";
-const SUBTITLE_COLOR = "#6B7280";
-const TRACK_BG = "#ECEEF2";
 const DOT_PATTERN = {
-  backgroundImage: "radial-gradient(circle, #D1D5DB 1px, transparent 1px)",
+  backgroundImage:
+    "radial-gradient(circle, color-mix(in oklab, var(--muted-foreground) 35%, transparent) 1px, transparent 1px)",
   backgroundSize: "10px 10px",
 };
 
@@ -47,8 +44,8 @@ function RegionBar({
 
   return (
     <div
-      className="relative h-9 w-full overflow-hidden rounded-full"
-      style={{ backgroundColor: TRACK_BG, ...DOT_PATTERN }}
+      className="relative h-9 w-full overflow-hidden rounded-full bg-muted"
+      style={DOT_PATTERN}
     >
       <div
         className="absolute inset-y-0 left-0 flex items-center justify-end rounded-full"
@@ -61,10 +58,7 @@ function RegionBar({
         ) : null}
       </div>
       {!showInside ? (
-        <span
-          className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-semibold tabular-nums"
-          style={{ color: HEADING_DARK }}
-        >
+        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-semibold tabular-nums text-foreground">
           {score.toFixed(1)}
         </span>
       ) : null}
@@ -99,18 +93,15 @@ export function IndicatorPerformanceByRegionSection({
   const indicatorLabel = indicatorName.toLowerCase();
 
   return (
-    <section className="w-full bg-white px-4 py-16 md:px-6 md:py-24 lg:py-28">
+    <section className="w-full bg-background px-4 py-16 md:px-6 md:py-24 lg:py-28">
       <div className="mx-auto max-w-5xl">
         <header className="mx-auto mb-10 max-w-2xl text-center md:mb-12">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight lg:leading-[1.12]">
-            <span style={{ color: PURPLE }}>Performance </span>
-            <span style={{ color: HEADING_DARK }}>by Region</span>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight lg:leading-[1.12]">
+            <span className="text-primary">Performance </span>
+            <span className="text-foreground">by Region</span>
           </h2>
 
-          <p
-            className="mt-4 text-sm leading-relaxed md:text-base md:leading-[1.65]"
-            style={{ color: SUBTITLE_COLOR }}
-          >
+          <p className="mt-4 text-sm leading-relaxed text-muted-foreground md:text-base md:leading-[1.65]">
             How different regions perform in the {indicatorLabel} indicator,
             revealing both progress and persistent challenges
           </p>
@@ -123,10 +114,7 @@ export function IndicatorPerformanceByRegionSection({
                 className="size-3.5 shrink-0 rounded-[4px]"
                 style={{ backgroundColor: regionColor(region) }}
               />
-              <span
-                className="text-sm font-medium"
-                style={{ color: SUBTITLE_COLOR }}
-              >
+              <span className="text-sm font-medium text-muted-foreground">
                 {regionLabel(region)}
               </span>
             </div>
@@ -134,10 +122,7 @@ export function IndicatorPerformanceByRegionSection({
         </div>
 
         <div className="mx-auto max-w-4xl">
-          <p
-            className="mb-4 text-sm font-semibold"
-            style={{ color: HEADING_DARK }}
-          >
+          <p className="mb-4 text-sm font-semibold text-foreground">
             {indicatorName}
           </p>
 

@@ -7,6 +7,8 @@ import { ComparisonSection } from "@/components/comparison-section";
 import { TopTakeawaysSection } from "@/components/top-takeaways-section";
 import { ReportDownloadSection } from "@/components/report-download-section";
 import { getCountriesContent } from "@/content/countries";
+import { getReportDownloadContent } from "@/content/reportDownload";
+import { getKeyFindings } from "@/content/keyFindings";
 import {
   getAllCountries,
   getGlobalAverages,
@@ -27,6 +29,8 @@ export const metadata: Metadata = {
 
 export default async function CountriesPage() {
   const content = await getCountriesContent();
+  const reportDownload = await getReportDownloadContent();
+  const keyFindings = await getKeyFindings();
   const allCountries = getAllCountries();
   const regions = getRegions();
   const regionAverages = getRegionAverages();
@@ -46,7 +50,15 @@ export default async function CountriesPage() {
       <SiteHeader />
       <main className="flex-1">
         <CountriesHero arcData={arcData} markers={markers} content={content} />
-        <ChoroplethMapSection />
+        <ChoroplethMapSection
+          listTable="heatmap"
+          content={{
+            headingLead: content.performanceHeadingLead,
+            headingAccent: content.performanceHeadingAccent,
+            headingTail: content.performanceHeadingTail,
+            subtitle: content.performanceSubtitle,
+          }}
+        />
         <ComparisonSection
           countries={allCountries}
           regions={regions}
@@ -61,11 +73,12 @@ export default async function CountriesPage() {
           subheading={content.compareSubheading}
         />
         <TopTakeawaysSection
+          findings={keyFindings?.findings}
           headingAccent={content.takeawaysHeadingAccent}
           headingTail={content.takeawaysHeadingTail}
           headerSubtitle={content.takeawaysSubtitle}
         />
-        <ReportDownloadSection />
+        <ReportDownloadSection content={reportDownload} />
       </main>
       <SiteFooter />
     </div>

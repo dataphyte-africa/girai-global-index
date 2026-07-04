@@ -54,7 +54,7 @@ function LimitCardItem({ item, index }: { item: LimitCard; index: number }) {
       >
         <Icon className="h-5 w-5" aria-hidden />
       </span>
-      <h3 className="text-lg md:text-xl font-medium text-foreground">
+      <h3 className="text-lg md:text-xl font-semibold text-foreground">
         {item.title}
       </h3>
       <p className="text-sm leading-relaxed text-muted-foreground">
@@ -72,6 +72,10 @@ export function LimitsOfMeasurementSection({
   const sectionRef = React.useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
   const cards = toLimitCards(content.limitsCards);
+  // Framing: all but the last card are the "problem" (what the Index can / cannot
+  // do); the final card is GIRAI's "response", rendered as a prominent block.
+  const limitationCards = cards.slice(0, -1);
+  const responseCard = cards[cards.length - 1];
 
   return (
     <section
@@ -98,7 +102,7 @@ export function LimitsOfMeasurementSection({
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="mx-auto mb-12 flex max-w-3xl flex-col items-center gap-4 text-center md:mb-16"
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight leading-[1.1]">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight leading-[1.1]">
             <span className="text-foreground">{content.limitsHeadingLead}</span>
             <span className="text-primary">{content.limitsHeadingAccent}</span>
           </h2>
@@ -107,10 +111,45 @@ export function LimitsOfMeasurementSection({
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-3 md:gap-6">
-          {cards.map((item, index) => (
-            <LimitCardItem key={item.title} item={item} index={index} />
-          ))}
+        <div className="flex flex-col gap-6">
+          {/* The framing: what the Index can and cannot do */}
+          <div className="grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-6">
+            {limitationCards.map((item, index) => (
+              <LimitCardItem key={item.title} item={item} index={index} />
+            ))}
+          </div>
+
+          {/* GIRAI's response — deliberately distinct and prominent */}
+          {responseCard ? (
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+              transition={{ duration: 0.55, ease: "easeOut", delay: 0.2 }}
+              className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary to-violet-600 p-8 text-primary-foreground shadow-xl shadow-primary/25 md:p-10"
+            >
+              <div
+                aria-hidden
+                className="pointer-events-none absolute -right-16 -top-16 h-52 w-52 rounded-full bg-white/10 blur-2xl"
+              />
+              <div
+                aria-hidden
+                className="pointer-events-none absolute -bottom-20 -left-10 h-52 w-52 rounded-full bg-white/5 blur-2xl"
+              />
+              <div className="relative flex flex-col gap-5 md:flex-row md:items-start md:gap-8">
+                <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white/15 ring-1 ring-inset ring-white/25">
+                  <Lightbulb className="h-6 w-6" aria-hidden />
+                </span>
+                <div className="flex flex-col gap-3">
+                  <h3 className="text-xl md:text-2xl font-semibold">
+                    {responseCard.title}
+                  </h3>
+                  <p className="max-w-3xl text-sm leading-relaxed text-primary-foreground/90 md:text-base">
+                    {responseCard.description}
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          ) : null}
         </div>
       </div>
     </section>

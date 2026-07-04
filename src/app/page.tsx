@@ -24,9 +24,13 @@ import { TopTakeawaysCarouselSection } from "@/components/top-takeaways-carousel
 import { ReportDownloadSection } from "@/components/report-download-section";
 import { EvidenceExplorerSection } from "@/components/evidence-explorer-section";
 import { OurImpactSection } from "@/components/our-impact-section";
+import { UsedByMarqueeSection } from "@/components/used-by-marquee-section";
 import { LimitsOfMeasurementSection } from "@/components/limits-of-measurement-section";
 import { SiteFooter } from "@/components/site-footer";
 import { getHomeContent } from "@/content/home";
+import { getPillarCopy } from "@/content/pillars";
+import { getDimensionsUi } from "@/content/dimensions";
+import { getReportDownloadContent } from "@/content/reportDownload";
 
 // Rounds an exact count down to the nearest 100 and appends a "+" so the
 // stat reads as a confident floor (e.g. 2,977 → "2,900+").
@@ -38,6 +42,9 @@ function formatRoundedCount(n: number): string {
 
 export default async function Home() {
   const content = await getHomeContent();
+  const pillarCopy = await getPillarCopy();
+  const dimensions = await getDimensionsUi();
+  const reportDownload = await getReportDownloadContent();
   const allCountries = getAllCountries();
 
   // Hero globe: pick a mix of countries with known coordinates and flag art.
@@ -80,20 +87,35 @@ export default async function Home() {
       <SiteHeader />
       <HeroSection arcData={arcData} markers={markers} content={content} />
       <WhyGIRAIMattersIntroSection content={content} />
-      <DimensionsSection content={content} />
-      <ReportDownloadSection content={content} />
+      <DimensionsSection content={content} dimensions={dimensions} />
+      <ReportDownloadSection content={reportDownload} />
       <TopTakeawaysCarouselSection content={content} />
       <EvidenceExplorerSection stats={evidenceStats} content={content} />
-      <ChoroplethMapSection />
+      <ChoroplethMapSection
+        content={{
+          headingLead: content.performanceHeadingLead,
+          headingAccent: content.performanceHeadingAccent,
+          headingTail: content.performanceHeadingTail,
+          subtitle: content.performanceSubtitle,
+        }}
+      />
       <ComparisonSection
         countries={allCountries}
         regions={regions}
         regionAverages={regionAverages}
         globalAverages={getGlobalAverages()}
+        heading={
+          <>
+            {content.compareHeadingLead}
+            <span className="text-primary">{content.compareHeadingAccent}</span>
+          </>
+        }
+        subheading={content.compareSubheading}
       />
-      <IndicatorCategorySection content={content} />
+      <IndicatorCategorySection content={content} pillarCopy={pillarCopy} />
       <LimitsOfMeasurementSection content={content} />
       <OurImpactSection content={content} />
+      <UsedByMarqueeSection content={content} />
       <ShapingIntelligenceSection content={content} />
 
       <SiteFooter />

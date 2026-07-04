@@ -6,6 +6,7 @@ import { LayoutGrid, Map as MapIcon } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ChoroplethMapClient } from "@/components/choropleth-map-client";
 import { RankingDataTable } from "@/components/ranking-data-table";
+import { CountryHeatmapTable } from "@/components/country-heatmap-table";
 import {
   PerformanceFilterBar,
   applyPerformanceFilter,
@@ -19,10 +20,34 @@ import {
 } from "@/lib/performance-score";
 import type { CountryRanking } from "@/lib/girai";
 
+/** Editable copy for the performance section heading. */
+export type PerformanceSectionContent = {
+  headingLead: string;
+  headingAccent: string;
+  headingTail: string;
+  subtitle: string;
+};
+
+export const PERFORMANCE_SECTION_DEFAULTS: PerformanceSectionContent = {
+  headingLead: "Responsible ",
+  headingAccent: "AI Performance",
+  headingTail: " Across Countries",
+  subtitle:
+    "Switch between an interactive map and a full list to explore dimension and pillar scores for every country in the 2026 GIRAI edition.",
+};
+
 export function CountryPerformanceTabs({
   rankingData,
+  /**
+   * Which table to show in the List tab. Defaults to the original ranking
+   * table; the countries page opts into the dimension/pillar heat-map matrix.
+   */
+  listTable = "ranking",
+  content = PERFORMANCE_SECTION_DEFAULTS,
 }: {
   rankingData: CountryRanking[];
+  listTable?: "ranking" | "heatmap";
+  content?: PerformanceSectionContent;
 }) {
   const headingRef = useRef(null);
   const isInView = useInView(headingRef, { once: false, amount: 0.4 });
@@ -73,8 +98,10 @@ export function CountryPerformanceTabs({
             transition={{ duration: 0.6, ease: "easeOut" }}
             className="text-3xl font-medium leading-tight md:text-4xl"
           >
-            Responsible <span className="text-primary">AI Performance</span>
-            <br className="hidden sm:block" /> Across Countries
+            {content.headingLead}
+            <span className="text-primary">{content.headingAccent}</span>
+            <br className="hidden sm:block" />
+            {content.headingTail}
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -82,9 +109,7 @@ export function CountryPerformanceTabs({
             transition={{ duration: 0.6, delay: 0.15, ease: "easeOut" }}
             className="max-w-xl text-muted-foreground"
           >
-            Switch between an interactive map and a full list to explore
-            dimension and pillar scores for every country in the 2026 GIRAI
-            edition.
+            {content.subtitle}
           </motion.p>
         </div>
 
@@ -124,7 +149,11 @@ export function CountryPerformanceTabs({
       </TabsContent>
 
       <TabsContent value="list" className="mt-0">
-        <RankingDataTable data={rankingData} />
+        {listTable === "heatmap" ? (
+          <CountryHeatmapTable data={rankingData} />
+        ) : (
+          <RankingDataTable data={rankingData} />
+        )}
       </TabsContent>
     </Tabs>
   );

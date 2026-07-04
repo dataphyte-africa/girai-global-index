@@ -574,7 +574,7 @@ function ScoreBreakdownCard({
     <div className="bg-card border rounded-2xl p-5 md:p-6 shadow-sm">
       <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2">
-          <h4 className="text-base font-medium">
+          <h4 className="text-base font-semibold">
             {mode === "dimensions" ? "Dimension scores" : "Pillar scores"}
           </h4>
           <ComparisonHelpTip content="Switch between dimension-level and pillar-level aggregate scores for the selected countries or regions." />
@@ -845,7 +845,7 @@ function IndicatorTable({
     <div className="bg-card border rounded-2xl shadow-sm overflow-hidden">
       <div className="px-5 py-4 border-b flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2.5">
-          <h4 className="text-base font-medium">Indicators</h4>
+          <h4 className="text-base font-semibold">Indicators</h4>
           <ComparisonHelpTip content="Scores are 0–100. The star marks the highest score among selected entities when values differ." />
           <span className="text-xs text-muted-foreground">
             {visibleIndicators.length} of {REGULAR_INDICATORS.length}

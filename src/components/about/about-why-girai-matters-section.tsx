@@ -2,8 +2,6 @@ import { NumberedImpactCard } from "@/components/numbered-impact-card";
 import { aboutDefaults, type AboutContent } from "@/content/about.defaults";
 
 const PURPLE = "#7150F4";
-const HEADING_DARK = "#1A1A2E";
-const SUBTITLE_COLOR = "#6B7280";
 
 function SectionAccent({
   className,
@@ -31,7 +29,7 @@ export function AboutWhyGiraiMattersSection({
   content?: AboutContent;
 }) {
   return (
-    <section className="relative w-full overflow-hidden bg-[#F7F8FA] px-4 py-16 md:px-6 md:py-24 lg:py-28">
+    <section className="relative w-full overflow-hidden bg-[#F7F8FA] px-4 py-16 dark:bg-muted/20 md:px-6 md:py-24 lg:py-28">
       <span
         aria-hidden
         className="pointer-events-none absolute left-3 top-[58%] hidden h-20 w-px -translate-y-1/2 bg-[#3B82F6] md:left-5 lg:block"
@@ -45,16 +43,13 @@ export function AboutWhyGiraiMattersSection({
         <header className="mx-auto mb-12 flex max-w-2xl flex-col items-center text-center md:mb-14 lg:mb-16">
           <SectionAccent color="blue" className="mb-5" />
 
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight lg:leading-[1.12]">
-            <span style={{ color: HEADING_DARK }}>{content.whyHeadingLead}</span>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight lg:leading-[1.12]">
+            <span className="text-foreground">{content.whyHeadingLead}</span>
             <span style={{ color: PURPLE }}>{content.whyHeadingAccent}</span>
-            <span style={{ color: HEADING_DARK }}>{content.whyHeadingTail}</span>
+            <span className="text-foreground">{content.whyHeadingTail}</span>
           </h2>
 
-          <p
-            className="mt-4 max-w-xl text-sm leading-relaxed md:text-base md:leading-[1.65]"
-            style={{ color: SUBTITLE_COLOR }}
-          >
+          <p className="mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground md:text-base md:leading-[1.65]">
             {content.whySubtitle}
           </p>
 
