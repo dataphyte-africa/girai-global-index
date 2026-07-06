@@ -3,7 +3,7 @@
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
 import { AnimatePresence, motion } from "motion/react";
-import { MessageSquare, Sparkles, X } from "lucide-react";
+import { MessageSquare, SquarePen, Sparkles, X } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import {
   Conversation,
@@ -30,9 +30,10 @@ export function AiChatFullscreen({
   onOpenChange: (open: boolean) => void;
 }) {
   const [input, setInput] = useState("");
-  const { messages, sendMessage, status, error } = useChat<GiraiAgentUIMessage>({
-    transport: new DefaultChatTransport({ api: "/api/chat" }),
-  });
+  const { messages, sendMessage, setMessages, stop, status, error } =
+    useChat<GiraiAgentUIMessage>({
+      transport: new DefaultChatTransport({ api: "/api/chat" }),
+    });
 
   const handleSubmit = useCallback(
     (message: PromptInputMessage) => {
@@ -49,6 +50,12 @@ export function AiChatFullscreen({
     },
     [sendMessage]
   );
+
+  const handleNewChat = useCallback(() => {
+    void stop();
+    setMessages([]);
+    setInput("");
+  }, [stop, setMessages]);
 
   useEffect(() => {
     if (!open) return;
@@ -99,15 +106,28 @@ export function AiChatFullscreen({
                 </p>
               </div>
             </div>
-            <Button
-              aria-label="Close assistant"
-              className="rounded-full"
-              onClick={() => onOpenChange(false)}
-              size="icon"
-              variant="ghost"
-            >
-              <X className="size-5" />
-            </Button>
+            <div className="flex items-center gap-1">
+              <Button
+                aria-label="New conversation"
+                className="gap-2 rounded-full"
+                disabled={isEmpty}
+                onClick={handleNewChat}
+                size="sm"
+                variant="ghost"
+              >
+                <SquarePen className="size-4" />
+                <span className="hidden sm:inline">New chat</span>
+              </Button>
+              <Button
+                aria-label="Close assistant"
+                className="rounded-full"
+                onClick={() => onOpenChange(false)}
+                size="icon"
+                variant="ghost"
+              >
+                <X className="size-5" />
+              </Button>
+            </div>
           </header>
 
           <Conversation className="relative z-10 flex-1">

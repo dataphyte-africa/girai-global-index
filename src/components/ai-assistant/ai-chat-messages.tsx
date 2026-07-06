@@ -16,13 +16,6 @@ import {
   SourcesContent,
   SourcesTrigger,
 } from "@/components/ai-elements/sources";
-import {
-  Tool,
-  ToolContent,
-  ToolHeader,
-  ToolInput,
-  ToolOutput,
-} from "@/components/ai-elements/tool";
 import type { GiraiAgentUIMessage } from "@/lib/ai/agent";
 import type { ChatStatus } from "ai";
 import Link from "next/link";
@@ -170,34 +163,11 @@ function MessageParts({
             return <div key={`${message.id}-tool-${i}`}>{customCard}</div>;
           }
 
-          if (toolName === "file_search" && toolPart.state === "output-available") {
-            return null;
-          }
-
-          return (
-            <Tool key={`${message.id}-tool-${i}`} defaultOpen={false}>
-              <ToolHeader
-                type={toolPart.type as `tool-${string}`}
-                state={toolPart.state as never}
-                title={toolName.replace(/_/g, " ")}
-              />
-              <ToolContent>
-                {toolPart.input !== undefined && (
-                  <ToolInput input={toolPart.input} />
-                )}
-                <ToolOutput
-                  output={
-                    toolPart.output ? (
-                      <MessageResponse>
-                        {JSON.stringify(toolPart.output, null, 2)}
-                      </MessageResponse>
-                    ) : null
-                  }
-                  errorText={toolPart.errorText}
-                />
-              </ToolContent>
-            </Tool>
-          );
+          // Tools without a dedicated result card (e.g. file_search,
+          // lookup_country, lookup_indicator) are not surfaced in the UI —
+          // the assistant folds their results into its text response. We
+          // deliberately avoid rendering raw JSON tool output here.
+          return null;
         }
 
         return null;

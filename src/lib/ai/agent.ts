@@ -10,7 +10,7 @@ import { lookupIndicatorTool } from "./tools/lookup-indicator";
 import { searchCountriesTool } from "./tools/search-countries";
 import { searchEvidenceTool } from "./tools/search-evidence";
 
-const DEFAULT_MODEL = "gpt-4.1";
+const DEFAULT_MODEL = "gpt-5.1";
 const DEFAULT_VECTOR_STORE_ID = "vs_6a3a6e41c3548191b72539d24aa60b0b";
 
 function createGiraiAgent() {
