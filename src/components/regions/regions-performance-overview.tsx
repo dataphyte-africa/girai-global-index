@@ -155,7 +155,7 @@ function RegionOverviewCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.15 }}
       transition={{ duration: 0.4, delay: cardIndex * 0.04, ease: "easeOut" }}
-      className="flex flex-col rounded-xl border border-border/40 bg-white p-5 shadow-[0_2px_12px_rgba(15,23,42,0.06)] dark:bg-card md:p-6"
+      className="flex flex-col rounded-xl border border-border/40 bg-card p-5 shadow-[0_2px_12px_rgba(15,23,42,0.06)] md:p-6"
     >
       <div className="flex items-start justify-between gap-3">
         <h3 className="text-base font-medium leading-snug md:text-[1.05rem] text-foreground">

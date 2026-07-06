@@ -5,8 +5,6 @@ import { Button } from "@/components/ui/button";
 import { getIndicatorCopy } from "@/lib/indicator-copy";
 
 const PURPLE = "#7150F4";
-const HEADING_DARK = "#1A1A2E";
-const BODY_COLOR = "#6B7280";
 const NUMBER_DECORATOR = "/methodology/number-decorator.svg";
 
 export interface IndicatorCardProps {
@@ -23,7 +21,7 @@ export function IndicatorCard({ index, slug, name }: IndicatorCardProps) {
   const copy = getIndicatorCopy(slug);
 
   return (
-    <article className="flex h-full flex-col rounded-[20px] border border-[#ECEEF2] bg-white p-6 shadow-[0_2px_28px_rgba(26,26,46,0.06)] md:p-7">
+    <article className="flex h-full flex-col rounded-[20px] border border-border bg-card p-6 shadow-[0_2px_28px_rgba(26,26,46,0.06)] md:p-7">
       <div className="relative mb-5 w-fit md:mb-6">
         <Image
           src={NUMBER_DECORATOR}
@@ -41,17 +39,11 @@ export function IndicatorCard({ index, slug, name }: IndicatorCardProps) {
         </span>
       </div>
 
-      <h3
-        className="text-lg font-medium leading-snug tracking-tight md:text-[1.2rem] md:leading-[1.3]"
-        style={{ color: HEADING_DARK }}
-      >
+      <h3 className="text-lg font-medium leading-snug tracking-tight text-foreground md:text-[1.2rem] md:leading-[1.3]">
         {name}
       </h3>
 
-      <p
-        className="mt-3 flex-1 text-sm leading-[1.65] md:text-[0.9375rem]"
-        style={{ color: BODY_COLOR }}
-      >
+      <p className="mt-3 flex-1 text-sm leading-[1.65] text-muted-foreground md:text-[0.9375rem]">
         {copy.description}
       </p>
 
