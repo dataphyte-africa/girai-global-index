@@ -39,7 +39,7 @@ export function IndicatorEvidenceExplorerSection({
     <section
       id="indicator-evidence"
       aria-labelledby="indicator-evidence-heading"
-      className="scroll-mt-20 bg-[#F7F8FA] py-16 md:py-24"
+      className="scroll-mt-20 bg-muted py-16 md:py-24"
     >
       <h2 id="indicator-evidence-heading" className="text-3xl md:text-4xl lg:text-5xl sr-only">
         Evidence for {indicatorName}

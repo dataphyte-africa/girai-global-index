@@ -7,8 +7,6 @@ import {
 } from "@/data/2026/taxonomy";
 import { IndicatorCard } from "./indicator-card";
 
-const HEADING_DARK = "#1A1A2E";
-
 /** Prefer the ampersand alias when present (matches Figma headings). */
 function dimensionDisplayName(dimension: DimensionDef): string {
   const ampersandAlias = dimension.aliases.find((alias) => alias.includes("&"));
@@ -34,17 +32,14 @@ export function IndicatorsListSection() {
   const scoreAdjustments = scoreAdjustmentIndicators();
 
   return (
-    <section className="w-full bg-white px-4 py-16 md:px-6 md:py-24 lg:py-28">
+    <section className="w-full bg-background px-4 py-16 md:px-6 md:py-24 lg:py-28">
       <div className="mx-auto max-w-7xl space-y-16 md:space-y-20 lg:space-y-24">
         {sortedDimensions.map((dimension) => {
           const indicators = indicatorsForDimension(dimension.slug);
 
           return (
             <div key={dimension.slug}>
-              <h2
-                className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight"
-                style={{ color: HEADING_DARK }}
-              >
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight text-foreground">
                 {dimensionDisplayName(dimension)}
               </h2>
 
@@ -64,10 +59,7 @@ export function IndicatorsListSection() {
 
         {scoreAdjustments.length > 0 && (
           <div>
-            <h2
-              className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight"
-              style={{ color: HEADING_DARK }}
-            >
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight text-foreground">
               Score Adjustments
             </h2>
 

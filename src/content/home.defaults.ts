@@ -92,8 +92,8 @@ export const homeDefaults: HomeContent = {
     "Explore the framework used to assess national AI governance across countries",
 
   takeawaysBadge: "Takeaway",
-  takeawaysHeadingAccent: "Top 10",
-  takeawaysHeadingTail: "take away",
+  takeawaysHeadingAccent: "Key",
+  takeawaysHeadingTail: "Findings",
   takeawaysSubtitle:
     "What the data from 135 countries and jurisdictions reveals about the state of AI governance worldwide.",
   takeawaysViewAllLabel: "View All Takeaways",

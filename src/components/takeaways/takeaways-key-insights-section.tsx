@@ -5,11 +5,6 @@ import { cn } from "@/lib/utils";
 import { takeawaysDefaults, type TakeawaysContent } from "@/content/takeaways.defaults";
 
 const PURPLE = "#7150F4";
-const HEADING_DARK = "#1A1A2E";
-const SUBTITLE_COLOR = "#6B7280";
-const BODY_COLOR = "#6B7280";
-const BORDER_COLOR = "#ECEEF2";
-const LABEL_COLOR = "#B8BDC6";
 
 function InsightCard({
   index,
@@ -27,37 +22,25 @@ function InsightCard({
   return (
     <article
       className={cn(
-        "flex snap-start flex-col bg-white px-8 py-10 md:px-10 md:py-12 lg:px-12 lg:py-14",
+        "flex snap-start flex-col bg-card px-8 py-10 md:px-10 md:py-12 lg:px-12 lg:py-14",
         "w-[min(85vw,20rem)] shrink-0 md:w-[22rem] lg:w-[23rem]",
         className
       )}
     >
       <div className="flex flex-col">
-        <span
-          className="text-[2.5rem] font-medium leading-none tabular-nums md:text-[2.75rem]"
-          style={{ color: LABEL_COLOR }}
-        >
+        <span className="text-[2.5rem] font-medium leading-none tabular-nums text-muted-foreground md:text-[2.75rem]">
           {numberLabel}
         </span>
-        <span
-          className="mt-1.5 text-[0.625rem] font-medium uppercase tracking-[0.22em]"
-          style={{ color: LABEL_COLOR }}
-        >
+        <span className="mt-1.5 text-[0.625rem] font-medium uppercase tracking-[0.22em] text-muted-foreground">
           Priority
         </span>
       </div>
 
-      <h3
-        className="mt-8 text-lg font-medium leading-snug tracking-tight md:mt-9 md:text-xl md:leading-[1.3]"
-        style={{ color: HEADING_DARK }}
-      >
+      <h3 className="mt-8 text-lg font-medium leading-snug tracking-tight text-foreground md:mt-9 md:text-xl md:leading-[1.3]">
         {title}
       </h3>
 
-      <p
-        className="mt-4 max-w-[38ch] text-sm leading-[1.68] md:mt-5 md:text-[0.9375rem] md:leading-[1.7]"
-        style={{ color: BODY_COLOR }}
-      >
+      <p className="mt-4 max-w-[38ch] text-sm leading-[1.68] text-muted-foreground md:mt-5 md:text-[0.9375rem] md:leading-[1.7]">
         {description}
       </p>
     </article>
@@ -80,11 +63,10 @@ function ArrowButton({
       onClick={onClick}
       disabled={disabled}
       className={cn(
-        "flex h-11 w-11 items-center justify-center rounded-full border bg-white transition",
+        "flex h-11 w-11 items-center justify-center rounded-full border border-border bg-card text-foreground transition",
         "hover:border-[#7150F4] hover:text-[#7150F4]",
-        "disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:border-[#ECEEF2] disabled:hover:text-current"
+        "disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:border-border disabled:hover:text-current"
       )}
-      style={{ borderColor: BORDER_COLOR, color: HEADING_DARK }}
     >
       <svg
         width="18"
@@ -147,19 +129,16 @@ export function TakeawaysKeyInsightsSection({
   }, []);
 
   return (
-    <section className="w-full bg-white px-4 py-16 md:px-6 md:py-24 lg:py-28">
+    <section className="w-full bg-background px-4 py-16 md:px-6 md:py-24 lg:py-28">
       <div className="mx-auto max-w-6xl">
         <header className="mx-auto mb-12 flex max-w-4xl flex-col items-center gap-6 text-center md:mb-14 md:flex-row md:items-end md:justify-between md:gap-8 md:text-left lg:mb-16">
           <div className="max-w-2xl">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight lg:leading-[1.12]">
               <span style={{ color: PURPLE }}>{content.keyInsightsHeadingAccent}</span>
-              <span style={{ color: HEADING_DARK }}>{content.keyInsightsHeadingTail}</span>
+              <span className="text-foreground">{content.keyInsightsHeadingTail}</span>
             </h2>
 
-            <p
-              className="mt-4 text-sm leading-relaxed md:text-base md:leading-[1.65]"
-              style={{ color: SUBTITLE_COLOR }}
-            >
+            <p className="mt-4 text-sm leading-relaxed text-muted-foreground md:text-base md:leading-[1.65]">
               {content.keyInsightsSubtitle}
             </p>
           </div>
@@ -178,10 +157,7 @@ export function TakeawaysKeyInsightsSection({
           </div>
         </header>
 
-        <div
-          className="overflow-hidden border bg-white"
-          style={{ borderColor: BORDER_COLOR }}
-        >
+        <div className="overflow-hidden border border-border bg-card">
           <div
             ref={scrollerRef}
             className="flex snap-x snap-mandatory overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
@@ -194,7 +170,7 @@ export function TakeawaysKeyInsightsSection({
                 description={item.description}
                 className={cn(
                   index < insights.length - 1 && "border-r",
-                  "border-[#ECEEF2]"
+                  "border-border"
                 )}
               />
             ))}
