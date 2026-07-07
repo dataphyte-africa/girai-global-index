@@ -849,6 +849,36 @@ function buildIndicatorTitlePatches() {
   }));
 }
 
+/**
+ * Slugs whose display name changed in the taxonomy and whose Sanity `title`
+ * must be force-synced to match. Unlike buildIndicatorTitlePatches
+ * (`setIfMissing`), the rename pass OVERWRITES an existing title — but only the
+ * `title`, on only these docs, leaving all editorial copy and hero images
+ * untouched. Run with `pnpm seed:sanity indicator-rename`. Extend this list the
+ * next time an indicator is renamed in src/data/2026/taxonomy.ts.
+ */
+const RENAMED_INDICATOR_SLUGS = [
+  "socioeconomic-inclusion-connectivity", // → Device Affordability
+  "gender-inclusion-connectivity", // → Gender Gap in Mobile Internet
+  "environmental-performance", // → Low-Carbon Energy Share
+  "population-digital-readiness", // → Skills & Literacy
+  "labour-rights", // → Labour Rights & Compliance
+  "civil-society-oversight", // → Civil Society Accountability
+  "right-to-information", // → Access to Public Information
+];
+
+function buildIndicatorRenamePatches() {
+  return RENAMED_INDICATOR_SLUGS.map((slug) => {
+    const ind = INDICATORS.find((i) => i.slug === slug);
+    if (!ind) throw new Error(`Unknown indicator slug in rename list: ${slug}`);
+    return {
+      label: `indicator-rename/${slug}`,
+      id: `indicator-${slug}`,
+      title: ind.name,
+    };
+  });
+}
+
 function buildPathwayDocs() {
   return PATHWAYS.map((p) => ({
     _id: `pathway-${p.id}`,
@@ -945,6 +975,17 @@ async function main() {
     seeded += 1;
   }
 
+  // Renames: force-sync the `title` of specific indicator docs to the current
+  // taxonomy name (overwrites the title only, on only these docs — copy and
+  // images are left untouched). Scoped run: `pnpm seed:sanity indicator-rename`.
+  const renamePatches = buildIndicatorRenamePatches();
+  for (const { label, id, title } of renamePatches) {
+    if (!matches(label)) continue;
+    await client.patch(id).set({ title }).commit();
+    console.log(`✓ ${label} title synced → "${title}"`);
+    seeded += 1;
+  }
+
   // Non-destructive pass: add the Evidence Explorer stat cards only where the
   // `homePage` doc has none yet. `setIfMissing` leaves an editor's existing
   // stat cards (and the rest of the doc) untouched, so this is safe to run
@@ -956,6 +997,21 @@ async function main() {
       .setIfMissing({ evidenceStats: stats(homeDefaults.evidenceStats) })
       .commit();
     console.log("✓ home-evidence-stats set (if missing)");
+    seeded += 1;
+  }
+
+  // Scoped copy update: overwrite ONLY the Shaping section heading on the
+  // `homePage` doc, leaving every other field (and all other docs) untouched.
+  // Uses `.set` — not `setIfMissing` — because this is a deliberate copy change
+  // that must replace the previously seeded value. Non-destructive in that it
+  // never re-seeds the whole doc; run it alone with
+  // `pnpm seed:sanity home-shaping-heading`.
+  if (matches("home-shaping-heading")) {
+    await client
+      .patch("homePage")
+      .set({ shapingHeadingLines: homeDefaults.shapingHeadingLines })
+      .commit();
+    console.log("✓ home-shaping-heading set");
     seeded += 1;
   }
 

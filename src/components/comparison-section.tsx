@@ -2,6 +2,7 @@
 
 import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import {
   Check,
@@ -194,6 +195,48 @@ function buildRandomSlots(
     c2 ? { kind: "country", iso3: c2.iso3 } : null,
     region ? { kind: "region", name: region } : null,
   ];
+}
+
+// ---------------------------------------------------------------------------
+// URL persistence
+//
+// The selection is mirrored into a single `?compare=` search param: an ordered,
+// pipe-delimited list of tokens so slot positions round-trip. Countries use
+// their ISO3 code; regions use an `r:` prefix on the region name; empty slots
+// serialize to an empty token. Pipe is the delimiter because no region name
+// contains one, whereas some do contain commas (e.g. "Middle East, North
+// Africa, Afghanistan & Pakistan"). URLSearchParams handles the percent-
+// encoding, so the raw values are stored verbatim.
+
+const COMPARE_PARAM = "compare";
+const SLOT_DELIMITER = "|";
+const REGION_PREFIX = "r:";
+
+function serializeSlots(slots: EntityRef[]): string {
+  return slots
+    .map((ref) => {
+      if (!ref) return "";
+      return ref.kind === "country" ? ref.iso3 : `${REGION_PREFIX}${ref.name}`;
+    })
+    .join(SLOT_DELIMITER);
+}
+
+/** Parse a `?compare=` value back into slots, dropping tokens that no longer
+ *  match a known country or region so a stale/hand-edited URL degrades to
+ *  empty slots rather than breaking the table. */
+function parseSlots(
+  value: string,
+  countryMap: Map<string, CountryRanking>,
+  regionMap: Map<string, ScoreAggregates>
+): EntityRef[] {
+  return value.split(SLOT_DELIMITER).map((token) => {
+    if (!token) return null;
+    if (token.startsWith(REGION_PREFIX)) {
+      const name = token.slice(REGION_PREFIX.length);
+      return regionMap.has(name) ? { kind: "region", name } : null;
+    }
+    return countryMap.has(token) ? { kind: "country", iso3: token } : null;
+  });
 }
 
 function resolveRef(
@@ -1128,10 +1171,31 @@ export function ComparisonSection({
     ];
   });
 
-  // Randomize the pre-selection once after mount (skipped when explicit
-  // initial slots are provided). Running client-side keeps SSR output stable.
+  const router = useRouter();
+  const pathname = usePathname();
+
+  // Restore the selection from `?compare=` on mount if present; otherwise fall
+  // back to the randomized default. Runs once. Reads window.location directly
+  // (rather than useSearchParams) so the statically-rendered home page doesn't
+  // need a Suspense boundary. Skipped when explicit initial slots are provided.
+  const seededRef = useRef(false);
   useEffect(() => {
+    if (seededRef.current) return;
+    seededRef.current = true;
     if (initialSlots?.length) return;
+    const fromUrl = new URLSearchParams(window.location.search).get(
+      COMPARE_PARAM
+    );
+    if (fromUrl) {
+      const parsed = parseSlots(fromUrl, countryMap, regionMap).slice(
+        0,
+        MAX_SLOTS
+      );
+      if (parsed.some((ref) => ref !== null)) {
+        setSlots(parsed);
+        return;
+      }
+    }
     setSlots(buildRandomSlots(countries, regionAverages));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -1149,15 +1213,25 @@ export function ComparisonSection({
     [slots]
   );
 
+  // Apply a new slot selection and mirror it into the URL. The initial random
+  // default is intentionally left out of the URL — it's only written once the
+  // user actually changes something, so a clean `/` visit keeps a clean URL.
+  const applySlots = (next: EntityRef[]) => {
+    setSlots(next);
+    const params = new URLSearchParams(window.location.search);
+    params.set(COMPARE_PARAM, serializeSlots(next));
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+  };
+
   const updateSlot = (idx: number, next: EntityRef) =>
-    setSlots((prev) => prev.map((r, i) => (i === idx ? next : r)));
+    applySlots(slots.map((r, i) => (i === idx ? next : r)));
 
   const removeSlot = (idx: number) =>
-    setSlots((prev) => prev.filter((_, i) => i !== idx));
+    applySlots(slots.filter((_, i) => i !== idx));
 
   const addSlot = () => {
     if (slots.length >= MAX_SLOTS) return;
-    setSlots((prev) => [...prev, null]);
+    applySlots([...slots, null]);
   };
 
   return (

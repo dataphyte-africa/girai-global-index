@@ -204,7 +204,7 @@ export const homeDefaults: HomeContent = {
   evidenceNote:
     "Every score in GIRAI is grounded in publicly verifiable evidence, reviewed through a structured research and validation process.",
   evidenceStats: [
-    { value: "2,900+", label: "Documents reviewed" },
+    { value: "1,872", label: "Documents reviewed" },
     { value: "135", label: "Countries assessed" },
     { value: "38", label: "Indicators covered" },
     { value: "7", label: "Global regions" },
@@ -310,5 +310,5 @@ export const homeDefaults: HomeContent = {
     { name: "KG Labs", logo: { url: "/partners/kg-labs.png", alt: "KG Labs" } },
   ],
 
-  shapingHeadingLines: ["Shaping", "Responsible", "Intelligence"],
+  shapingHeadingLines: ["Shaping", "Responsible", "Artificial Intelligence", "Governance"],
 };

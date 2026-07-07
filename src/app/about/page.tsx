@@ -15,6 +15,7 @@ import {
 import { OurImpactSection } from "@/components/our-impact-section";
 import { ShapingIntelligenceSection } from "@/components/shaping-intelligence-section";
 import { getAboutContent } from "@/content/about";
+import { getFooterContent } from "@/content/footer";
 
 export const metadata = {
   title: "About | GIRAI Global Index",
@@ -23,7 +24,10 @@ export const metadata = {
 };
 
 export default async function AboutPage() {
-  const content = await getAboutContent();
+  const [content, footerContent] = await Promise.all([
+    getAboutContent(),
+    getFooterContent(),
+  ]);
 
   return (
     <div className="flex min-h-screen flex-col bg-background font-sans dark:bg-black">
@@ -35,7 +39,6 @@ export default async function AboutPage() {
         <AboutWhyGiraiMattersSection content={content} />
         <AboutGcgLedSection content={content} />
         <AboutWhatIndexMeasuresSection content={content} />
-        <AboutContributorsSection content={content} />
         <OurImpactSection
           content={{
             impactHeadingLead: content.impactHeadingLead,
@@ -46,9 +49,13 @@ export default async function AboutPage() {
             impactCtaHref: content.impactCtaHref,
           }}
         />
-        <AboutWhoGiraiIsForSection content={content} />
+        <AboutContributorsSection
+          content={content}
+          funderLogos={footerContent.funderLogos}
+        />
         <AboutPeopleBehindResearchSection content={content} />
         <AboutAdvisoryCommitteeSection content={content} />
+        <AboutWhoGiraiIsForSection content={content} />
         <ShapingIntelligenceSection />
         <AboutFooterHero content={content} />
       </main>

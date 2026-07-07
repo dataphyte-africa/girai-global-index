@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-06T12:12:44.189Z",
+  "generatedAt": "2026-07-07T15:33:29.818Z",
   "sourceHash": "805076eec44668e5d51a6fd04aedcc6988cc57707ad27ebe27cb9a046c53c439",
   "dimensions": [
     {
@@ -132,7 +132,7 @@
     },
     {
       "slug": "socioeconomic-inclusion-connectivity",
-      "name": "Socioeconomic Inclusion in Connectivity",
+      "name": "Device Affordability",
       "aliases": [
         "Socioeconomic Inclusion in Connectivity",
         "Device affordability"
@@ -144,7 +144,7 @@
     },
     {
       "slug": "gender-inclusion-connectivity",
-      "name": "Gender Inclusion in Connectivity",
+      "name": "Gender Gap in Mobile Internet",
       "aliases": [
         "Gender Inclusion in Connectivity",
         "Gender gap in mobile internet"
@@ -212,10 +212,21 @@
     },
     {
       "slug": "environmental-performance",
-      "name": "Environmental Performance",
+      "name": "Low-Carbon Energy Share",
       "aliases": [
         "Environmental Performance",
         "Low-Carbon Energy Share"
+      ],
+      "dimension": "ethics-sustainability",
+      "pillar": "enabling-conditions",
+      "family": "enabling-conditions",
+      "hasEvidence": false
+    },
+    {
+      "slug": "rule-of-law",
+      "name": "Rule of Law",
+      "aliases": [
+        "Rule of Law"
       ],
       "dimension": "ethics-sustainability",
       "pillar": "enabling-conditions",
@@ -272,7 +283,7 @@
     },
     {
       "slug": "labour-rights",
-      "name": "Labour Rights",
+      "name": "Labour Rights & Compliance",
       "aliases": [
         "Labour Rights",
         "Labour Rights Compliance"
@@ -284,7 +295,7 @@
     },
     {
       "slug": "population-digital-readiness",
-      "name": "Population Digital Readiness",
+      "name": "Skills & Literacy",
       "aliases": [
         "Population Digital Readiness",
         "Skills and Literacy"
@@ -395,17 +406,6 @@
       "hasEvidence": false
     },
     {
-      "slug": "rule-of-law",
-      "name": "Rule of Law",
-      "aliases": [
-        "Rule of Law"
-      ],
-      "dimension": "trust-safety",
-      "pillar": "enabling-conditions",
-      "family": "enabling-conditions",
-      "hasEvidence": false
-    },
-    {
       "slug": "global-peace",
       "name": "Global Peace",
       "aliases": [
@@ -462,7 +462,7 @@
     },
     {
       "slug": "civil-society-oversight",
-      "name": "Civil Society Oversight",
+      "name": "Civil Society Accountability",
       "aliases": [
         "Civil Society Oversight",
         "Civil Society Accountability"
@@ -485,7 +485,7 @@
     },
     {
       "slug": "right-to-information",
-      "name": "Right to Information",
+      "name": "Access to Public Information",
       "aliases": [
         "Right to Information",
         "Access to Public Information"

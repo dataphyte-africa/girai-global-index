@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { aboutDefaults, type AboutContent, type Partner } from "@/content/about.defaults";
+import { type FunderLogo } from "@/content/footer.defaults";
 
 function SectionAccent({
   className,
@@ -95,14 +96,64 @@ function PartnerMarquee({ partners }: { partners: Partner[] }) {
   );
 }
 
+function FunderChip({ funder }: { funder: FunderLogo }) {
+  const logo = funder.logo?.url ? (
+    <Image
+      src={funder.logo.url}
+      alt={funder.logo.alt ?? funder.name}
+      width={200}
+      height={56}
+      className="h-9 w-auto max-w-[11rem] object-contain object-center md:h-11 md:max-w-[13rem]"
+    />
+  ) : (
+    <span className="text-sm font-semibold tracking-tight text-[#9CA3AF] dark:text-muted-foreground">
+      {funder.name}
+    </span>
+  );
+  // Match the white-chip treatment used for the partner logos above so the two
+  // rows read as one section on both light and dark backgrounds.
+  const chipClass =
+    "flex h-16 items-center justify-center rounded-xl bg-white px-5 shadow-sm ring-1 ring-black/5 transition duration-300 hover:shadow-md md:h-[4.5rem] md:px-6";
+
+  return funder.url ? (
+    <a
+      href={funder.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      title={funder.name}
+      className={chipClass}
+    >
+      {logo}
+    </a>
+  ) : (
+    <div className={chipClass}>{logo}</div>
+  );
+}
+
+/**
+ * Static row of funder logos, sourced from the same footer Sanity section
+ * (`footer.funderLogos`) so the two stay in sync — edit once, updates both.
+ */
+function FunderRow({ funders }: { funders: FunderLogo[] }) {
+  return (
+    <div className="mt-14 flex flex-wrap items-center justify-center gap-4 md:mt-16 md:gap-6">
+      {funders.map((funder, index) => (
+        <FunderChip key={`${funder.name || funder.logo?.url}-${index}`} funder={funder} />
+      ))}
+    </div>
+  );
+}
+
 /**
  * Contributors and partners — centered header with an infinitely scrolling
  * logo strip (placeholder logos until assets are supplied).
  */
 export function AboutContributorsSection({
   content = aboutDefaults,
+  funderLogos = [],
 }: {
   content?: AboutContent;
+  funderLogos?: FunderLogo[];
 }) {
   return (
     <section className="w-full bg-[#F7F8FA] px-4 py-16 dark:bg-muted/20 md:px-6 md:py-24 lg:py-28">
@@ -122,6 +173,8 @@ export function AboutContributorsSection({
         </header>
 
         <PartnerMarquee partners={content.partners} />
+
+        {funderLogos.length > 0 ? <FunderRow funders={funderLogos} /> : null}
 
         <div className="mt-14 flex justify-center md:mt-16">
           <SectionAccent color="blue" />

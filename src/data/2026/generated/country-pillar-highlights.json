@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-06T12:12:44.189Z",
+  "generatedAt": "2026-07-07T15:33:29.818Z",
   "sourceHash": "805076eec44668e5d51a6fd04aedcc6988cc57707ad27ebe27cb9a046c53c439",
   "countries": [
     {
@@ -22,8 +22,8 @@
         "enabling-conditions": {
           "bullets": [
             "Strongest context signal: Egalitarian Democracy (100.0)",
-            "Labour Rights (100.0)",
-            "Data Sharing and Access (100.0)"
+            "Rule of Law (100.0)",
+            "Labour Rights & Compliance (100.0)"
           ]
         }
       }
@@ -47,7 +47,7 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
             "Data Protection and Privacy (100.0)",
             "Consumer Protection (100.0)"
           ]
@@ -73,8 +73,8 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Socioeconomic Inclusion in Connectivity (100.0)",
-            "Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Device Affordability (100.0)",
+            "Gender Gap in Mobile Internet (100.0)",
             "Data Protection and Privacy (100.0)"
           ]
         }
@@ -100,8 +100,8 @@
         "enabling-conditions": {
           "bullets": [
             "Strongest context signal: Cybersecurity (98.9)",
-            "Gender Inclusion in Connectivity (97.7)",
-            "Socioeconomic Inclusion in Connectivity (97.2)"
+            "Gender Gap in Mobile Internet (97.7)",
+            "Device Affordability (97.2)"
           ]
         }
       }
@@ -127,7 +127,7 @@
           "bullets": [
             "Strongest context signal: Data Protection and Privacy (100.0)",
             "Cybersecurity (99.2)",
-            "Population Digital Readiness (97.6)"
+            "Skills & Literacy (97.6)"
           ]
         }
       }
@@ -153,7 +153,7 @@
           "bullets": [
             "Strongest context signal: Data Protection and Privacy (100.0)",
             "Cybersecurity (97.8)",
-            "Population Digital Readiness (97.6)"
+            "Skills & Literacy (97.6)"
           ]
         }
       }
@@ -177,9 +177,9 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Population Digital Readiness (100.0)",
+            "Strongest context signal: Skills & Literacy (100.0)",
             "Cybersecurity (100.0)",
-            "Gender Inclusion in Connectivity (97.7)"
+            "Gender Gap in Mobile Internet (97.7)"
           ]
         }
       }
@@ -229,7 +229,7 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
             "Public Service Delivery (94.7)",
             "Data Protection and Privacy (91.8)"
           ]
@@ -255,9 +255,9 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
             "Public Service Delivery (100.0)",
-            "Civil Society Oversight (96.5)"
+            "Civil Society Accountability (96.5)"
           ]
         }
       }
@@ -281,7 +281,7 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
             "Public Service Delivery (99.1)",
             "Consumer Protection (96.6)"
           ]
@@ -309,7 +309,7 @@
           "bullets": [
             "Strongest context signal: Data Protection and Privacy (100.0)",
             "Cybersecurity (99.7)",
-            "Population Digital Readiness (94.7)"
+            "Skills & Literacy (94.7)"
           ]
         }
       }
@@ -334,7 +334,7 @@
         "enabling-conditions": {
           "bullets": [
             "Strongest context signal: Cybersecurity (97.0)",
-            "Population Digital Readiness (94.9)",
+            "Skills & Literacy (94.9)",
             "Public Service Delivery (93.9)"
           ]
         }
@@ -359,7 +359,7 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
             "Public Service Delivery (91.1)",
             "Data Sharing and Access (87.5)"
           ]
@@ -385,7 +385,7 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
             "Consumer Protection (94.7)",
             "Public Service Delivery (92.7)"
           ]
@@ -438,7 +438,7 @@
         "enabling-conditions": {
           "bullets": [
             "Strongest context signal: Data Protection and Privacy (100.0)",
-            "Gender Inclusion in Connectivity (97.6)",
+            "Gender Gap in Mobile Internet (97.6)",
             "Data Sharing and Access (93.8)"
           ]
         }
@@ -489,8 +489,8 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Socioeconomic Inclusion in Connectivity (100.0)",
-            "Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Device Affordability (100.0)",
+            "Gender Gap in Mobile Internet (100.0)",
             "Data Sharing and Access (100.0)"
           ]
         }
@@ -515,7 +515,7 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Socioeconomic Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Device Affordability (100.0)",
             "Data Protection and Privacy (100.0)",
             "Global Peace (98.4)"
           ]
@@ -543,7 +543,7 @@
           "bullets": [
             "Strongest context signal: Data Protection and Privacy (100.0)",
             "Consumer Protection (99.6)",
-            "Gender Inclusion in Connectivity (94.9)"
+            "Gender Gap in Mobile Internet (94.9)"
           ]
         }
       }
@@ -567,8 +567,8 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Environmental Performance (98.9)",
-            "Gender Inclusion in Connectivity (95.7)",
+            "Strongest context signal: Low-Carbon Energy Share (98.9)",
+            "Gender Gap in Mobile Internet (95.7)",
             "Public Service Delivery (94.6)"
           ]
         }
@@ -593,9 +593,9 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Socioeconomic Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Device Affordability (100.0)",
             "Public Service Delivery (99.2)",
-            "Gender Inclusion in Connectivity (97.8)"
+            "Gender Gap in Mobile Internet (97.8)"
           ]
         }
       }
@@ -620,7 +620,7 @@
         "enabling-conditions": {
           "bullets": [
             "Strongest context signal: Cybersecurity (97.5)",
-            "Socioeconomic Inclusion in Connectivity (96.6)",
+            "Device Affordability (96.6)",
             "Public Service Delivery (94.4)"
           ]
         }
@@ -646,8 +646,8 @@
         "enabling-conditions": {
           "bullets": [
             "Strongest context signal: Public Service Delivery (96.9)",
-            "Population Digital Readiness (96.8)",
-            "Gender Inclusion in Connectivity (95.1)"
+            "Skills & Literacy (96.8)",
+            "Gender Gap in Mobile Internet (95.1)"
           ]
         }
       }
@@ -671,7 +671,7 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
             "Consumer Protection (92.0)",
             "Data Sharing and Access (87.5)"
           ]
@@ -697,8 +697,8 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
-            "Population Digital Readiness (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
+            "Skills & Literacy (100.0)",
             "Cybersecurity (99.8)"
           ]
         }
@@ -723,8 +723,8 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Environmental Performance (99.9)",
-            "Gender Inclusion in Connectivity (97.7)",
+            "Strongest context signal: Low-Carbon Energy Share (99.9)",
+            "Gender Gap in Mobile Internet (97.7)",
             "Consumer Protection (95.8)"
           ]
         }
@@ -749,7 +749,7 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
             "Data Protection and Privacy (100.0)",
             "Consumer Protection (95.1)"
           ]
@@ -776,7 +776,7 @@
         "enabling-conditions": {
           "bullets": [
             "Strongest context signal: Data Protection and Privacy (100.0)",
-            "Gender Inclusion in Connectivity (97.3)",
+            "Gender Gap in Mobile Internet (97.3)",
             "Consumer Protection (97.0)"
           ]
         }
@@ -801,8 +801,8 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
-            "Environmental Performance (88.8)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
+            "Low-Carbon Energy Share (88.8)",
             "Data Sharing and Access (87.5)"
           ]
         }
@@ -829,7 +829,7 @@
           "bullets": [
             "Strongest context signal: Cybersecurity (94.2)",
             "Data Protection and Privacy (91.8)",
-            "Gender Inclusion in Connectivity (90.4)"
+            "Gender Gap in Mobile Internet (90.4)"
           ]
         }
       }
@@ -855,7 +855,7 @@
           "bullets": [
             "Strongest context signal: Cybersecurity (96.7)",
             "Public Service Delivery (96.0)",
-            "Gender Inclusion in Connectivity (94.9)"
+            "Gender Gap in Mobile Internet (94.9)"
           ]
         }
       }
@@ -880,7 +880,7 @@
         "enabling-conditions": {
           "bullets": [
             "Strongest context signal: Public Service Delivery (96.7)",
-            "Gender Inclusion in Connectivity (89.6)",
+            "Gender Gap in Mobile Internet (89.6)",
             "Data Sharing and Access (87.5)"
           ]
         }
@@ -931,8 +931,8 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
-            "Civil Society Oversight (87.5)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
+            "Civil Society Accountability (87.5)",
             "Consumer Protection (79.7)"
           ]
         }
@@ -959,7 +959,7 @@
           "bullets": [
             "Strongest context signal: Cybersecurity (100.0)",
             "Public Service Delivery (100.0)",
-            "Population Digital Readiness (95.5)"
+            "Skills & Literacy (95.5)"
           ]
         }
       }
@@ -1010,8 +1010,8 @@
         "enabling-conditions": {
           "bullets": [
             "Strongest context signal: Global Peace (99.0)",
-            "Gender Inclusion in Connectivity (95.7)",
-            "Population Digital Readiness (93.3)"
+            "Gender Gap in Mobile Internet (95.7)",
+            "Skills & Literacy (93.3)"
           ]
         }
       }
@@ -1035,8 +1035,8 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Socioeconomic Inclusion in Connectivity (100.0)",
-            "Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Device Affordability (100.0)",
+            "Gender Gap in Mobile Internet (100.0)",
             "Data Sharing and Access (100.0)"
           ]
         }
@@ -1061,9 +1061,9 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (95.3)",
+            "Strongest context signal: Gender Gap in Mobile Internet (95.3)",
             "Cybersecurity (93.5)",
-            "Population Digital Readiness (91.2)"
+            "Skills & Literacy (91.2)"
           ]
         }
       }
@@ -1087,9 +1087,9 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (91.9)",
+            "Strongest context signal: Gender Gap in Mobile Internet (91.9)",
             "Cybersecurity (91.3)",
-            "Population Digital Readiness (79.7)"
+            "Skills & Literacy (79.7)"
           ]
         }
       }
@@ -1113,9 +1113,9 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
             "Cybersecurity (99.8)",
-            "Population Digital Readiness (98.1)"
+            "Skills & Literacy (98.1)"
           ]
         }
       }
@@ -1139,7 +1139,7 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
             "Public Service Delivery (97.3)",
             "Data Sharing and Access (93.8)"
           ]
@@ -1167,7 +1167,7 @@
           "bullets": [
             "Strongest context signal: Data Sharing and Access (93.8)",
             "Consumer Protection (92.6)",
-            "Gender Inclusion in Connectivity (85.5)"
+            "Gender Gap in Mobile Internet (85.5)"
           ]
         }
       }
@@ -1219,7 +1219,7 @@
           "bullets": [
             "Strongest context signal: Cybersecurity (99.7)",
             "Data Sharing and Access (87.5)",
-            "Gender Inclusion in Connectivity (85.7)"
+            "Gender Gap in Mobile Internet (85.7)"
           ]
         }
       }
@@ -1296,7 +1296,7 @@
         "enabling-conditions": {
           "bullets": [
             "Strongest context signal: Cybersecurity (98.5)",
-            "Environmental Performance (91.5)",
+            "Low-Carbon Energy Share (91.5)",
             "Public Service Delivery (83.9)"
           ]
         }
@@ -1347,7 +1347,7 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
             "Cybersecurity (100.0)",
             "Public Service Delivery (89.3)"
           ]
@@ -1425,8 +1425,8 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Socioeconomic Inclusion in Connectivity (100.0)",
-            "Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Device Affordability (100.0)",
+            "Gender Gap in Mobile Internet (100.0)",
             "Cybersecurity (100.0)"
           ]
         }
@@ -1477,8 +1477,8 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Environmental Performance (100.0)",
-            "Civil Society Oversight (73.7)",
+            "Strongest context signal: Low-Carbon Energy Share (100.0)",
+            "Civil Society Accountability (73.7)",
             "Consumer Protection (73.5)"
           ]
         }
@@ -1503,7 +1503,7 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
             "Consumer Protection (96.8)",
             "Data Sharing and Access (87.5)"
           ]
@@ -1555,7 +1555,7 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
             "Cybersecurity (99.2)",
             "Consumer Protection (95.1)"
           ]
@@ -1581,7 +1581,7 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Environmental Performance (90.8)",
+            "Strongest context signal: Low-Carbon Energy Share (90.8)",
             "Public Service Delivery (87.5)",
             "Data Sharing and Access (87.5)"
           ]
@@ -1685,7 +1685,7 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
             "Consumer Protection (94.5)",
             "Public Service Delivery (90.4)"
           ]
@@ -1763,7 +1763,7 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
             "Data Protection and Privacy (100.0)",
             "Cybersecurity (93.2)"
           ]
@@ -1789,7 +1789,7 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (95.2)",
+            "Strongest context signal: Gender Gap in Mobile Internet (95.2)",
             "Consumer Protection (94.3)",
             "Data Sharing and Access (93.8)"
           ]
@@ -1815,7 +1815,7 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
             "Public Service Delivery (99.4)",
             "Cybersecurity (93.8)"
           ]
@@ -1841,8 +1841,8 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
-            "Environmental Performance (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
+            "Low-Carbon Energy Share (100.0)",
             "Consumer Protection (94.9)"
           ]
         }
@@ -1868,8 +1868,8 @@
         "enabling-conditions": {
           "bullets": [
             "Strongest context signal: Cybersecurity (86.4)",
-            "Civil Society Oversight (78.3)",
-            "Population Digital Readiness (69.3)"
+            "Civil Society Accountability (78.3)",
+            "Skills & Literacy (69.3)"
           ]
         }
       }
@@ -1893,7 +1893,7 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Environmental Performance (100.0)",
+            "Strongest context signal: Low-Carbon Energy Share (100.0)",
             "Public Service Delivery (77.9)",
             "Cybersecurity (75.3)"
           ]
@@ -1921,7 +1921,7 @@
           "bullets": [
             "Strongest context signal: Data Protection and Privacy (100.0)",
             "Consumer Protection (80.7)",
-            "Civil Society Oversight (77.8)"
+            "Civil Society Accountability (77.8)"
           ]
         }
       }
@@ -1945,7 +1945,7 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
             "Cybersecurity (97.8)",
             "Public Service Delivery (95.7)"
           ]
@@ -1998,7 +1998,7 @@
         "enabling-conditions": {
           "bullets": [
             "Strongest context signal: Consumer Protection (96.0)",
-            "Gender Inclusion in Connectivity (93.8)",
+            "Gender Gap in Mobile Internet (93.8)",
             "Data Sharing and Access (87.5)"
           ]
         }
@@ -2023,8 +2023,8 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
-            "Population Digital Readiness (68.8)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
+            "Skills & Literacy (68.8)",
             "Cybersecurity (66.5)"
           ]
         }
@@ -2050,7 +2050,7 @@
         "enabling-conditions": {
           "bullets": [
             "Strongest context signal: Cybersecurity (92.2)",
-            "Environmental Performance (87.5)",
+            "Low-Carbon Energy Share (87.5)",
             "Consumer Protection (81.4)"
           ]
         }
@@ -2076,8 +2076,8 @@
         "enabling-conditions": {
           "bullets": [
             "Strongest context signal: Consumer Protection (87.7)",
-            "Gender Inclusion in Connectivity (84.6)",
-            "Civil Society Oversight (78.5)"
+            "Gender Gap in Mobile Internet (84.6)",
+            "Civil Society Accountability (78.5)"
           ]
         }
       }
@@ -2101,7 +2101,7 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (95.9)",
+            "Strongest context signal: Gender Gap in Mobile Internet (95.9)",
             "Public Service Delivery (89.2)",
             "Cybersecurity (85.0)"
           ]
@@ -2127,7 +2127,7 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (95.3)",
+            "Strongest context signal: Gender Gap in Mobile Internet (95.3)",
             "Consumer Protection (94.5)",
             "Data Sharing and Access (87.5)"
           ]
@@ -2205,8 +2205,8 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
-            "Environmental Performance (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
+            "Low-Carbon Energy Share (100.0)",
             "Data Sharing and Access (87.5)"
           ]
         }
@@ -2231,9 +2231,9 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
             "Consumer Protection (97.9)",
-            "Civil Society Oversight (82.8)"
+            "Civil Society Accountability (82.8)"
           ]
         }
       }
@@ -2258,8 +2258,8 @@
         "enabling-conditions": {
           "bullets": [
             "Strongest context signal: Data Sharing and Access (87.5)",
-            "Socioeconomic Inclusion in Connectivity (83.3)",
-            "Civil Society Oversight (79.2)"
+            "Device Affordability (83.3)",
+            "Civil Society Accountability (79.2)"
           ]
         }
       }
@@ -2283,8 +2283,8 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
-            "Civil Society Oversight (91.8)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
+            "Civil Society Accountability (91.8)",
             "Egalitarian Democracy (77.5)"
           ]
         }
@@ -2311,7 +2311,7 @@
           "bullets": [
             "Strongest context signal: Data Sharing and Access (100.0)",
             "Public Service Delivery (74.3)",
-            "Gender Inclusion in Connectivity (70.4)"
+            "Gender Gap in Mobile Internet (70.4)"
           ]
         }
       }
@@ -2335,7 +2335,7 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
             "Consumer Protection (92.0)",
             "Data Sharing and Access (87.5)"
           ]
@@ -2361,8 +2361,8 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
-            "Environmental Performance (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
+            "Low-Carbon Energy Share (100.0)",
             "Global Peace (87.3)"
           ]
         }
@@ -2389,7 +2389,7 @@
           "bullets": [
             "Strongest context signal: Consumer Protection (94.1)",
             "Data Sharing and Access (87.5)",
-            "Gender Inclusion in Connectivity (81.1)"
+            "Gender Gap in Mobile Internet (81.1)"
           ]
         }
       }
@@ -2439,8 +2439,8 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
-            "Environmental Performance (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
+            "Low-Carbon Energy Share (100.0)",
             "Data Sharing and Access (87.5)"
           ]
         }
@@ -2465,7 +2465,7 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
             "Consumer Protection (92.2)",
             "Public Service Delivery (80.7)"
           ]
@@ -2491,7 +2491,7 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
             "Public Service Delivery (90.5)",
             "Data Sharing and Access (87.5)"
           ]
@@ -2517,7 +2517,7 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
             "Consumer Protection (81.8)",
             "Public Service Delivery (80.6)"
           ]
@@ -2543,8 +2543,8 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (91.9)",
-            "Population Digital Readiness (74.7)",
+            "Strongest context signal: Gender Gap in Mobile Internet (91.9)",
+            "Skills & Literacy (74.7)",
             "Public Service Delivery (64.0)"
           ]
         }
@@ -2569,9 +2569,9 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (97.8)",
-            "Civil Society Oversight (87.4)",
-            "Population Digital Readiness (81.3)"
+            "Strongest context signal: Gender Gap in Mobile Internet (97.8)",
+            "Civil Society Accountability (87.4)",
+            "Skills & Literacy (81.3)"
           ]
         }
       }
@@ -2595,7 +2595,7 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Environmental Performance (95.6)",
+            "Strongest context signal: Low-Carbon Energy Share (95.6)",
             "Consumer Protection (92.2)",
             "Cybersecurity (79.4)"
           ]
@@ -2649,7 +2649,7 @@
           "bullets": [
             "Strongest context signal: Data Sharing and Access (87.5)",
             "Public Service Delivery (75.9)",
-            "Environmental Performance (73.7)"
+            "Low-Carbon Energy Share (73.7)"
           ]
         }
       }
@@ -2674,7 +2674,7 @@
         "enabling-conditions": {
           "bullets": [
             "Strongest context signal: Data Protection and Privacy (100.0)",
-            "Gender Inclusion in Connectivity (96.2)",
+            "Gender Gap in Mobile Internet (96.2)",
             "Consumer Protection (95.1)"
           ]
         }
@@ -2699,7 +2699,7 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Environmental Performance (94.6)",
+            "Strongest context signal: Low-Carbon Energy Share (94.6)",
             "Data Sharing and Access (68.8)",
             "Data Protection and Privacy (66.8)"
           ]
@@ -2725,9 +2725,9 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
-            "Environmental Performance (87.2)",
-            "Population Digital Readiness (68.0)"
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
+            "Low-Carbon Energy Share (87.2)",
+            "Skills & Literacy (68.0)"
           ]
         }
       }
@@ -2751,9 +2751,9 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (98.9)",
-            "Labour Rights (90.5)",
-            "Civil Society Oversight (85.1)"
+            "Strongest context signal: Gender Gap in Mobile Internet (98.9)",
+            "Labour Rights & Compliance (90.5)",
+            "Civil Society Accountability (85.1)"
           ]
         }
       }
@@ -2777,7 +2777,7 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Environmental Performance (97.1)",
+            "Strongest context signal: Low-Carbon Energy Share (97.1)",
             "Data Sharing and Access (93.8)",
             "Consumer Protection (91.5)"
           ]
@@ -2803,7 +2803,7 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (89.7)",
+            "Strongest context signal: Gender Gap in Mobile Internet (89.7)",
             "Data Sharing and Access (87.5)",
             "Consumer Protection (82.0)"
           ]
@@ -2829,8 +2829,8 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
-            "Civil Society Oversight (89.6)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
+            "Civil Society Accountability (89.6)",
             "Consumer Protection (68.9)"
           ]
         }
@@ -2857,7 +2857,7 @@
           "bullets": [
             "Strongest context signal: Data Protection and Privacy (91.8)",
             "Cybersecurity (81.0)",
-            "Gender Inclusion in Connectivity (77.8)"
+            "Gender Gap in Mobile Internet (77.8)"
           ]
         }
       }
@@ -2881,9 +2881,9 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
             "Data Sharing and Access (87.5)",
-            "Population Digital Readiness (84.0)"
+            "Skills & Literacy (84.0)"
           ]
         }
       }
@@ -2907,9 +2907,9 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (91.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (91.0)",
             "Consumer Protection (87.5)",
-            "Civil Society Oversight (81.4)"
+            "Civil Society Accountability (81.4)"
           ]
         }
       }
@@ -2933,7 +2933,7 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
             "Public Service Delivery (75.6)",
             "Consumer Protection (72.7)"
           ]
@@ -2959,8 +2959,8 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Environmental Performance (95.2)",
-            "Civil Society Oversight (80.8)",
+            "Strongest context signal: Low-Carbon Energy Share (95.2)",
+            "Civil Society Accountability (80.8)",
             "Global Peace (71.2)"
           ]
         }
@@ -2985,9 +2985,9 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (90.9)",
-            "Population Digital Readiness (75.2)",
-            "Civil Society Oversight (70.0)"
+            "Strongest context signal: Gender Gap in Mobile Internet (90.9)",
+            "Skills & Literacy (75.2)",
+            "Civil Society Accountability (70.0)"
           ]
         }
       }
@@ -3012,8 +3012,8 @@
         "enabling-conditions": {
           "bullets": [
             "Strongest context signal: Data Sharing and Access (93.8)",
-            "Gender Inclusion in Connectivity (78.5)",
-            "Environmental Performance (76.7)"
+            "Gender Gap in Mobile Internet (78.5)",
+            "Low-Carbon Energy Share (76.7)"
           ]
         }
       }
@@ -3064,7 +3064,7 @@
         "enabling-conditions": {
           "bullets": [
             "Strongest context signal: Consumer Protection (87.1)",
-            "Environmental Performance (75.2)",
+            "Low-Carbon Energy Share (75.2)",
             "Public Service Delivery (71.7)"
           ]
         }
@@ -3090,8 +3090,8 @@
         "enabling-conditions": {
           "bullets": [
             "Strongest context signal: Consumer Protection (92.6)",
-            "Gender Inclusion in Connectivity (87.2)",
-            "Environmental Performance (73.1)"
+            "Gender Gap in Mobile Internet (87.2)",
+            "Low-Carbon Energy Share (73.1)"
           ]
         }
       }
@@ -3115,7 +3115,7 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Environmental Performance (83.4)",
+            "Strongest context signal: Low-Carbon Energy Share (83.4)",
             "Consumer Protection (68.6)",
             "Cybersecurity (64.4)"
           ]
@@ -3168,7 +3168,7 @@
         "enabling-conditions": {
           "bullets": [
             "Strongest context signal: Data Sharing and Access (87.5)",
-            "Civil Society Oversight (78.3)",
+            "Civil Society Accountability (78.3)",
             "Consumer Protection (76.5)"
           ]
         }
@@ -3219,8 +3219,8 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Civil Society Oversight (56.4)",
-            "Gender Inclusion in Connectivity (44.5)",
+            "Strongest context signal: Civil Society Accountability (56.4)",
+            "Gender Gap in Mobile Internet (44.5)",
             "Consumer Protection (42.6)"
           ]
         }
@@ -3245,9 +3245,9 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
             "Data Protection and Privacy (83.4)",
-            "Civil Society Oversight (69.8)"
+            "Civil Society Accountability (69.8)"
           ]
         }
       }
@@ -3273,7 +3273,7 @@
           "bullets": [
             "Strongest context signal: Data Sharing and Access (87.5)",
             "Cybersecurity (72.3)",
-            "Gender Inclusion in Connectivity (69.1)"
+            "Gender Gap in Mobile Internet (69.1)"
           ]
         }
       }
@@ -3297,8 +3297,8 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
-            "Population Digital Readiness (77.3)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
+            "Skills & Literacy (77.3)",
             "Global Peace (65.1)"
           ]
         }
@@ -3323,7 +3323,7 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Environmental Performance (100.0)",
+            "Strongest context signal: Low-Carbon Energy Share (100.0)",
             "Consumer Protection (63.1)",
             "Data Sharing and Access (62.5)"
           ]
@@ -3349,9 +3349,9 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Environmental Performance (100.0)",
+            "Strongest context signal: Low-Carbon Energy Share (100.0)",
             "Consumer Protection (67.0)",
-            "Civil Society Oversight (47.6)"
+            "Civil Society Accountability (47.6)"
           ]
         }
       }
@@ -3376,8 +3376,8 @@
         "enabling-conditions": {
           "bullets": [
             "Strongest context signal: Consumer Protection (77.8)",
-            "Civil Society Oversight (71.3)",
-            "Gender Inclusion in Connectivity (70.7)"
+            "Civil Society Accountability (71.3)",
+            "Gender Gap in Mobile Internet (70.7)"
           ]
         }
       }
@@ -3427,9 +3427,9 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Environmental Performance (75.5)",
+            "Strongest context signal: Low-Carbon Energy Share (75.5)",
             "Consumer Protection (51.1)",
-            "Population Digital Readiness (41.6)"
+            "Skills & Literacy (41.6)"
           ]
         }
       }
@@ -3479,7 +3479,7 @@
         },
         "enabling-conditions": {
           "bullets": [
-            "Strongest context signal: Environmental Performance (86.9)",
+            "Strongest context signal: Low-Carbon Energy Share (86.9)",
             "Consumer Protection (55.3)",
             "Public Service Delivery (25.6)"
           ]
