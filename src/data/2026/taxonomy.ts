@@ -154,7 +154,7 @@ export const INDICATORS: IndicatorDef[] = [
   },
   {
     slug: "socioeconomic-inclusion-connectivity",
-    name: "Socioeconomic Inclusion in Connectivity",
+    name: "Device Affordability",
     aliases: ["Socioeconomic Inclusion in Connectivity", "Device affordability"],
     dimension: "inclusion-diversity",
     pillar: "enabling-conditions",
@@ -163,7 +163,7 @@ export const INDICATORS: IndicatorDef[] = [
   },
   {
     slug: "gender-inclusion-connectivity",
-    name: "Gender Inclusion in Connectivity",
+    name: "Gender Gap in Mobile Internet",
     aliases: ["Gender Inclusion in Connectivity", "Gender gap in mobile internet"],
     dimension: "inclusion-diversity",
     pillar: "enabling-conditions",
@@ -219,8 +219,17 @@ export const INDICATORS: IndicatorDef[] = [
   },
   {
     slug: "environmental-performance",
-    name: "Environmental Performance",
+    name: "Low-Carbon Energy Share",
     aliases: ["Environmental Performance", "Low-Carbon Energy Share"],
+    dimension: "ethics-sustainability",
+    pillar: "enabling-conditions",
+    family: "enabling-conditions",
+    hasEvidence: false,
+  },
+  {
+    slug: "rule-of-law",
+    name: "Rule of Law",
+    aliases: ["Rule of Law"],
     dimension: "ethics-sustainability",
     pillar: "enabling-conditions",
     family: "enabling-conditions",
@@ -271,7 +280,7 @@ export const INDICATORS: IndicatorDef[] = [
   },
   {
     slug: "labour-rights",
-    name: "Labour Rights",
+    name: "Labour Rights & Compliance",
     aliases: ["Labour Rights", "Labour Rights Compliance"],
     dimension: "labour-skills",
     pillar: "enabling-conditions",
@@ -280,7 +289,7 @@ export const INDICATORS: IndicatorDef[] = [
   },
   {
     slug: "population-digital-readiness",
-    name: "Population Digital Readiness",
+    name: "Skills & Literacy",
     aliases: ["Population Digital Readiness", "Skills and Literacy"],
     dimension: "labour-skills",
     pillar: "enabling-conditions",
@@ -374,15 +383,6 @@ export const INDICATORS: IndicatorDef[] = [
     hasEvidence: false,
   },
   {
-    slug: "rule-of-law",
-    name: "Rule of Law",
-    aliases: ["Rule of Law"],
-    dimension: "trust-safety",
-    pillar: "enabling-conditions",
-    family: "enabling-conditions",
-    hasEvidence: false,
-  },
-  {
     slug: "global-peace",
     name: "Global Peace",
     aliases: ["Global Peace"],
@@ -431,7 +431,7 @@ export const INDICATORS: IndicatorDef[] = [
   },
   {
     slug: "civil-society-oversight",
-    name: "Civil Society Oversight",
+    name: "Civil Society Accountability",
     aliases: ["Civil Society Oversight", "Civil Society Accountability"],
     dimension: "ai-use-public-service",
     pillar: "enabling-conditions",
@@ -449,7 +449,7 @@ export const INDICATORS: IndicatorDef[] = [
   },
   {
     slug: "right-to-information",
-    name: "Right to Information",
+    name: "Access to Public Information",
     aliases: ["Right to Information", "Access to Public Information"],
     dimension: "ai-use-public-service",
     pillar: "enabling-conditions",

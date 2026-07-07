@@ -85,7 +85,7 @@ export const downloadModalDefaults: DownloadModalContent = {
 
   consentTextBefore: "I agree to the ",
   consentLinkLabel: "GIRAI Data Policy",
-  consentLinkHref: "/data-policy",
+  consentLinkHref: "https://www.globalcenter.ai/privacy-policy",
   consentTextAfter:
     " and consent to my information being used as described.",
   consentErrorText: "Please agree to the Data Policy to continue.",
