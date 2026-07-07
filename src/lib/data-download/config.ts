@@ -20,7 +20,7 @@ type DownloadAsset = {
 
 const PUBLIC_DOWNLOADS = {
   firstReport: process.env.DOWNLOAD_FIRST_REPORT_PATH ?? "/downloads/GIRAI-2024-report.pdf",
-  secondReport: process.env.DOWNLOAD_SECOND_REPORT_PATH ?? "/downloads/GIRAI-2026-report.pdf",
+  secondReport: process.env.DOWNLOAD_SECOND_REPORT_PATH ?? "/downloads/Global-Index-on-Responsible-AI-2026.pdf",
   firstData: process.env.DOWNLOAD_FIRST_DATA_PATH ?? "/downloads/GIRAI_2024_dataset.xlsx",
   secondData: process.env.DOWNLOAD_SECOND_DATA_PATH ?? "/downloads/GIRAI_2026_dataset.xlsx",
   methodology:
@@ -64,7 +64,7 @@ export function getDownloadAsset(
       }
     : {
         path: PUBLIC_DOWNLOADS.secondReport,
-        filename: "GIRAI-2026-report.pdf",
+        filename: "Global-Index-on-Responsible-AI-2026.pdf",
         mimeType: "application/pdf",
       };
 }

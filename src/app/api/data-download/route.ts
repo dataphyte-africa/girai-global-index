@@ -67,7 +67,7 @@ export async function POST(request: Request) {
           ? "GIRAI-methodology.pdf"
           : submission.edition === "first"
             ? "GIRAI-2024-report.pdf"
-            : "GIRAI-2026-report.pdf";
+            : "Global-Index-on-Responsible-AI-2026.pdf";
 
     return NextResponse.json({
       ok: true,
