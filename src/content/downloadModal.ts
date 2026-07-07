@@ -74,5 +74,14 @@ export async function getDownloadModalContent(): Promise<DownloadModalContent> {
     citationBody: str(data.citationBody, d.citationBody),
     methodologyHeading: str(data.methodologyHeading, d.methodologyHeading),
     methodologyBody: str(data.methodologyBody, d.methodologyBody),
+
+    successBadge: str(data.successBadge, d.successBadge),
+    successTitle: str(data.successTitle, d.successTitle),
+    successBody: str(data.successBody, d.successBody),
+    successCtaLabel: str(data.successCtaLabel, d.successCtaLabel),
+    successCtaNote: str(data.successCtaNote, d.successCtaNote),
+    successDoneLabel: str(data.successDoneLabel, d.successDoneLabel),
+    datasetDriveUrl: str(data.datasetDriveUrl, d.datasetDriveUrl),
+    datasetDriveName: str(data.datasetDriveName, d.datasetDriveName),
   };
 }

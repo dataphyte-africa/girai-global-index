@@ -20,6 +20,13 @@ export type IndicatorTextSegment = { text: string; href?: string };
 /** One paragraph composed of inline segments. */
 export type IndicatorParagraph = IndicatorTextSegment[];
 
+/**
+ * Shared hero banner used on every indicator detail page unless an indicator
+ * overrides it (via `IndicatorCopy.heroImage`) or an editor uploads a distinct
+ * image on the `indicatorPage` document in the Studio.
+ */
+export const DEFAULT_INDICATOR_HERO_IMAGE = "/indicator/hero-indicator.png";
+
 export interface IndicatorCopy {
   /** Plain-language summary of what the indicator measures. */
   description: string;
@@ -27,6 +34,12 @@ export interface IndicatorCopy {
   whyItMatters: string;
   /** lucide-react icon name, resolved by the component. */
   icon: string;
+  /**
+   * Public path to the hero banner on the indicator detail page. Falls back to
+   * the shared `DEFAULT_INDICATOR_HERO_IMAGE`. Drop a distinct file in
+   * `/public/indicator/` and set this to give an indicator its own banner.
+   */
+  heroImage?: string;
   /** Hero paragraph on the indicator detail page. Falls back to `description`. */
   heroLead?: string;
   /** Split-tone intro — primary (dark) clause. Falls back to `description`. */
@@ -435,6 +448,7 @@ export function getIndicatorCopy(slug: string): IndicatorCopy {
 export function getIndicatorPageCopy(slug: string) {
   const copy = getIndicatorCopy(slug);
   return {
+    heroImage: copy.heroImage ?? DEFAULT_INDICATOR_HERO_IMAGE,
     heroLead: copy.heroLead ?? copy.description,
     introPrimary: copy.introPrimary ?? copy.description,
     introSecondary: copy.introSecondary ?? copy.whyItMatters,

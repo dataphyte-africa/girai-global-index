@@ -100,7 +100,7 @@ export function MethodologyResearchProcessSection({
   }, []);
 
   return (
-    <section className="relative w-full bg-card px-4 py-16 md:px-6 md:py-24 lg:py-28">
+    <section className="relative w-full overflow-x-clip bg-card px-4 py-16 md:px-6 md:py-24 lg:py-28">
       <Image
         src={RINGS_DECOR}
         alt=""

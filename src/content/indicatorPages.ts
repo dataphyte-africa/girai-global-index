@@ -5,13 +5,15 @@ import {
   getIndicatorBackgroundRelevance,
   type IndicatorParagraph,
 } from "@/lib/indicator-copy";
-import { str } from "./_merge";
+import { img, str } from "./_merge";
+import type { SanityImage } from "./about.defaults";
 import type { PortableBlock } from "./updates";
 
 export const INDICATOR_PAGE_TAG = "indicatorPage";
 
 /** Resolved copy for one indicator detail page. Background/Relevance are Portable Text. */
 export type IndicatorPageContent = {
+  heroImage: SanityImage;
   heroLead: string;
   introPrimary: string;
   introSecondary: string;
@@ -20,6 +22,7 @@ export type IndicatorPageContent = {
 };
 
 type IndicatorPageDoc = {
+  heroImage?: SanityImage | null;
   heroLead?: string;
   introPrimary?: string;
   introSecondary?: string;
@@ -77,6 +80,7 @@ export async function getIndicatorPageContent(
   const copy = getIndicatorPageCopy(slug);
   const { background, relevance } = getIndicatorBackgroundRelevance(slug, name);
   const fallback: IndicatorPageContent = {
+    heroImage: { url: copy.heroImage, alt: null },
     heroLead: copy.heroLead,
     introPrimary: copy.introPrimary,
     introSecondary: copy.introSecondary,
@@ -97,6 +101,7 @@ export async function getIndicatorPageContent(
   if (!doc) return fallback;
 
   return {
+    heroImage: img(doc.heroImage, fallback.heroImage),
     heroLead: str(doc.heroLead, fallback.heroLead),
     introPrimary: str(doc.introPrimary, fallback.introPrimary),
     introSecondary: str(doc.introSecondary, fallback.introSecondary),

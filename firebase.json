@@ -14,8 +14,9 @@
       "firebase-debug.*.log",
       "functions",
       "public/data/2026",
-      "public/downloads",
       "public/download1.png",
+      "public/downloads/GIRAI_2024_dataset.xlsx",
+      "public/downloads/GIRAI_2026_dataset.xlsx",
       "src/data/2026/generated",
       "src/data/2026/previous-version",
       "src/data/countries.json"

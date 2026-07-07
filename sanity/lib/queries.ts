@@ -229,6 +229,7 @@ export const pathwaysCopyQuery = groq`
 
 export const indicatorPageBySlugQuery = groq`
 *[_type == "indicatorPage" && slug == $slug][0]{
+  "heroImage": heroImage${imageProjection},
   heroLead, introPrimary, introSecondary, background, relevance
 }`;
 
@@ -245,7 +246,9 @@ export const downloadModalQuery = groq`
   reasons[]{ value, label },
   licenseTextBefore, licenseLinkLabel, licenseLinkHref,
   submitLabel, submittingLabel, imageAlt,
-  citationHeadingTemplate, citationBody, methodologyHeading, methodologyBody
+  citationHeadingTemplate, citationBody, methodologyHeading, methodologyBody,
+  successBadge, successTitle, successBody, successCtaLabel, successCtaNote,
+  successDoneLabel, datasetDriveUrl, datasetDriveName
 }`;
 
 export const reportDownloadQuery = groq`

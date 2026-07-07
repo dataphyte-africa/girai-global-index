@@ -1,23 +1,31 @@
 import Image from "next/image";
 
-const HERO_IMAGE = "/indicator/hero-indicator.png";
+import { DEFAULT_INDICATOR_HERO_IMAGE } from "@/lib/indicator-copy";
 
 export interface IndicatorDetailHeroProps {
   name: string;
   lead: string;
+  /** Per-indicator hero banner. Falls back to the shared default image. */
+  image?: { url: string | null; alt: string | null };
 }
 
 /**
  * Wide banner hero for a single indicator detail page.
  */
-export function IndicatorDetailHero({ name, lead }: IndicatorDetailHeroProps) {
+export function IndicatorDetailHero({
+  name,
+  lead,
+  image,
+}: IndicatorDetailHeroProps) {
+  const heroImage = image?.url ?? DEFAULT_INDICATOR_HERO_IMAGE;
+
   return (
     <section className="w-full px-4 pt-6 md:px-6 md:min-h-[565px]">
       <div className="w-full min-h-[565px]">
         <div className="relative overflow-hidden rounded-[28px] md:rounded-[32px]">
           <Image
-            src={HERO_IMAGE}
-            alt=""
+            src={heroImage}
+            alt={image?.alt ?? ""}
             fill
             priority
             sizes="(max-width: 1280px) 100vw, 1280px"

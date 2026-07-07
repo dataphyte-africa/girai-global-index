@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import * as React from "react";
-import { ChevronDown, Loader2 } from "lucide-react";
+import { ArrowUpRight, Check, ChevronDown, FolderOpen, Loader2, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -49,6 +49,7 @@ export function DataDownloadModal({
   const [form, setForm] = React.useState<DataDownloadFormValues>(EMPTY_FORM);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
+  const [showSuccess, setShowSuccess] = React.useState(false);
 
   React.useEffect(() => {
     if (!open) return;
@@ -58,6 +59,7 @@ export function DataDownloadModal({
     });
     setError(null);
     setIsSubmitting(false);
+    setShowSuccess(false);
   }, [open, options?.edition]);
 
   const assetLabel =
@@ -108,6 +110,15 @@ export function DataDownloadModal({
         throw new Error(payload.error ?? "Something went wrong. Please try again.");
       }
 
+      onSubmitSuccess?.();
+
+      // Datasets live in a shared Google Drive library, so rather than pushing a
+      // single file we surface a success screen linking to the full collection.
+      if (options.assetType === "data") {
+        setShowSuccess(true);
+        return;
+      }
+
       const anchor = document.createElement("a");
       anchor.href = payload.downloadUrl;
       anchor.download = payload.filename ?? "";
@@ -116,7 +127,6 @@ export function DataDownloadModal({
       anchor.click();
       anchor.remove();
 
-      onSubmitSuccess?.();
       onOpenChange(false);
     } catch (submitError) {
       setError(
@@ -136,6 +146,12 @@ export function DataDownloadModal({
         className="max-h-[calc(100vh-2rem)] w-[min(100%-2rem,920px)] max-w-none overflow-y-auto rounded-2xl p-0 sm:max-w-none"
       >
         <div className="grid min-h-0 grid-cols-1 md:grid-cols-2">
+          {showSuccess ? (
+            <DatasetSuccessView
+              content={content}
+              onDone={() => onOpenChange(false)}
+            />
+          ) : (
           <div className="flex flex-col bg-white px-6 py-8 sm:px-10 sm:py-10 dark:bg-card">
             <span className="mb-3 inline-flex w-fit items-center rounded-full bg-primary/10 px-3 py-1 text-xs font-medium uppercase tracking-wide text-primary">
               GIRAI {assetLabel}
@@ -270,6 +286,7 @@ export function DataDownloadModal({
               </Button>
             </form>
           </div>
+          )}
 
           <div className="relative hidden min-h-[280px] md:block md:min-h-[640px]">
             <Image
@@ -284,6 +301,102 @@ export function DataDownloadModal({
         </div>
       </DialogContent>
     </Dialog>
+  );
+}
+
+function DatasetSuccessView({
+  content,
+  onDone,
+}: {
+  content: DownloadModalContent;
+  onDone: () => void;
+}) {
+  return (
+    <div className="relative flex flex-col justify-center overflow-hidden bg-white px-6 py-10 sm:px-10 sm:py-12 dark:bg-card">
+      {/* Ambient glow echoing the GIRAI cover orb */}
+      <div
+        className="pointer-events-none absolute -top-20 left-1/2 size-56 -translate-x-1/2 rounded-full bg-primary/20 blur-3xl dark:bg-primary/25"
+        aria-hidden
+      />
+
+      <div className="relative">
+        {/* Animated success mark */}
+        <div
+          className="relative mb-6 flex size-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-teal-400 text-white shadow-lg shadow-primary/30 animate-in zoom-in-50 fade-in duration-500 fill-mode-both"
+          style={{ animationDelay: "40ms" }}
+        >
+          <span
+            className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary to-teal-400 opacity-60 blur-md"
+            aria-hidden
+          />
+          <Check className="relative size-8" strokeWidth={2.75} aria-hidden />
+        </div>
+
+        <span
+          className="inline-flex w-fit items-center gap-1.5 rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-medium uppercase tracking-wide text-emerald-600 animate-in fade-in slide-in-from-bottom-2 fill-mode-both dark:text-emerald-400"
+          style={{ animationDelay: "120ms" }}
+        >
+          <ShieldCheck className="size-3.5" aria-hidden />
+          {content.successBadge}
+        </span>
+
+        <DialogTitle
+          className="mt-4 text-[1.6rem] font-semibold leading-tight tracking-tight text-[#1a1a2e] animate-in fade-in slide-in-from-bottom-2 fill-mode-both dark:text-foreground"
+          style={{ animationDelay: "180ms" }}
+        >
+          {content.successTitle}
+        </DialogTitle>
+
+        <DialogDescription
+          className="mt-3 text-sm leading-relaxed text-[#6b6b80] animate-in fade-in slide-in-from-bottom-2 fill-mode-both dark:text-muted-foreground"
+          style={{ animationDelay: "240ms" }}
+        >
+          {content.successBody}
+        </DialogDescription>
+
+        {/* Primary action — the shared Google Drive dataset library */}
+        <a
+          href={content.datasetDriveUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group mt-7 flex items-center gap-4 rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/[0.07] to-primary/[0.02] p-4 transition-all animate-in fade-in slide-in-from-bottom-2 fill-mode-both hover:border-primary/45 hover:shadow-lg hover:shadow-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 dark:border-primary/25 dark:from-primary/12 dark:to-transparent"
+          style={{ animationDelay: "300ms" }}
+        >
+          <span className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+            <FolderOpen className="size-6" aria-hidden />
+          </span>
+          <span className="min-w-0 flex-1">
+            <span className="block truncate text-sm font-semibold text-[#1a1a2e] dark:text-foreground">
+              {content.successCtaLabel}
+            </span>
+            <span className="mt-0.5 block truncate text-xs text-[#6b6b80] dark:text-muted-foreground">
+              {content.datasetDriveName} · Google Drive
+            </span>
+          </span>
+          <ArrowUpRight
+            className="size-5 shrink-0 text-primary transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+            aria-hidden
+          />
+        </a>
+
+        <p
+          className="mt-3 flex items-center gap-1.5 text-xs text-[#8b8b9e] animate-in fade-in fill-mode-both dark:text-muted-foreground"
+          style={{ animationDelay: "360ms" }}
+        >
+          <ArrowUpRight className="size-3.5" aria-hidden />
+          {content.successCtaNote}
+        </p>
+
+        <button
+          type="button"
+          onClick={onDone}
+          className="mt-6 text-sm font-medium text-[#6b6b80] underline-offset-4 transition-colors animate-in fade-in fill-mode-both hover:text-[#1a1a2e] hover:underline dark:text-muted-foreground dark:hover:text-foreground"
+          style={{ animationDelay: "420ms" }}
+        >
+          {content.successDoneLabel}
+        </button>
+      </div>
+    </div>
   );
 }
 
