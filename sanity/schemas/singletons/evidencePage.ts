@@ -9,6 +9,7 @@ export const evidencePage = defineType({
   groups: [
     { name: "hero", title: "Hero" },
     { name: "pathway", title: "Pathway Picker" },
+    { name: "search", title: "Search Block" },
     { name: "seo", title: "SEO" },
   ],
   fields: [
@@ -26,6 +27,13 @@ export const evidencePage = defineType({
     }),
     defineField({ name: "pathwayHeading", title: "Pathway heading", type: "string", group: "pathway" }),
     defineField({ name: "pathwaySubtitle", title: "Pathway subtitle", type: "text", rows: 2, group: "pathway" }),
+    defineField({
+      name: "searchTitle",
+      title: "Search block title",
+      type: "string",
+      group: "search",
+      description: 'Heading above the search & filter tool (e.g. "Search & Filter Evidence").',
+    }),
     defineField({ name: "seoTitle", title: "Page title", type: "string", group: "seo" }),
     defineField({ name: "seoDescription", title: "Meta description", type: "text", rows: 3, group: "seo" }),
   ],

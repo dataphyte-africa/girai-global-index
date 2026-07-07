@@ -194,6 +194,7 @@ export const evidencePageQuery = groq`
   heroTitleLead, heroTitleAccent, heroSubtitle,
   heroStatLabels,
   pathwayHeading, pathwaySubtitle,
+  searchTitle,
   seoTitle, seoDescription
 }`;
 

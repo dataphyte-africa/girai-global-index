@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { ChevronRight, Download, Menu, Orbit } from "lucide-react";
 import { DIMENSIONS } from "@/data/dimensions-data";
 import { INDICATORS } from "@/data/2026/taxonomy";
@@ -86,7 +87,12 @@ export const Header = ({
   indicatorNames?: Record<string, string>;
 }) => {
   const { primaryNav, exploreLinks, downloadCta } = content;
+  const pathname = usePathname();
   const [sheetOpen, setSheetOpen] = useState(false);
+  const isActive = (href: string) => {
+    if (/^https?:\/\//.test(href)) return false;
+    return pathname === href || pathname.startsWith(`${href}/`);
+  };
   const indicatorLinks = useMemo(
     () => buildIndicatorLinks(indicatorNames),
     [indicatorNames]
@@ -138,9 +144,16 @@ export const Header = ({
 
               {primaryNav.map((item) => {
                 const isExternal = /^https?:\/\//.test(item.href);
+                const active = isActive(item.href);
                 return (
                   <NavigationMenuItem key={item.label}>
-                    <NavigationMenuLink asChild className={desktopNavLinkClass}>
+                    <NavigationMenuLink
+                      asChild
+                      className={cn(
+                        desktopNavLinkClass,
+                        active && "font-bold text-foreground"
+                      )}
+                    >
                       <Link
                         href={item.href}
                         {...(isExternal
@@ -211,6 +224,7 @@ export const Header = ({
                 <nav className="flex flex-col gap-2">
                   {primaryNav.map((item) => {
                     const isExternal = /^https?:\/\//.test(item.href);
+                    const active = isActive(item.href);
                     return (
                       <Link
                         key={item.label}
@@ -219,7 +233,10 @@ export const Header = ({
                           ? { target: "_blank", rel: "noopener noreferrer" }
                           : {})}
                         onClick={() => setSheetOpen(false)}
-                        className="rounded-xl px-3 py-3 text-base font-medium text-foreground/90 transition-colors hover:bg-muted hover:text-foreground"
+                        className={cn(
+                          "rounded-xl px-3 py-3 text-base font-medium text-foreground/90 transition-colors hover:bg-muted hover:text-foreground",
+                          active && "font-bold text-foreground"
+                        )}
                       >
                         {item.label}
                       </Link>

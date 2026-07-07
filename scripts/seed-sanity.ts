@@ -633,6 +633,7 @@ function buildEvidenceDoc() {
     heroStatLabels: evidenceDefaults.heroStatLabels,
     pathwayHeading: evidenceDefaults.pathwayHeading,
     pathwaySubtitle: evidenceDefaults.pathwaySubtitle,
+    searchTitle: evidenceDefaults.searchTitle,
     seoTitle: evidenceDefaults.seoTitle,
     seoDescription: evidenceDefaults.seoDescription,
   };
@@ -1076,6 +1077,34 @@ async function main() {
       .commit();
     console.log("✓ home-shaping-heading set");
     seeded += 1;
+  }
+
+  // Non-destructive pass for the Evidence Explorer page: hero stat labels, the
+  // pathway-card copy ("Government Frameworks", …) and the search-block title.
+  // `createIfNotExists` seeds a doc in full only when it's absent (leaving an
+  // existing, possibly edited doc completely untouched); the follow-up
+  // `setIfMissing` backfills only fields that are still missing — e.g. the new
+  // `searchTitle` on a doc seeded before this field existed — without
+  // overwriting any Studio edits. Run alone with `pnpm seed:sanity evidence-explorer`.
+  if (matches("evidence-explorer")) {
+    const evidenceDoc = buildEvidenceDoc();
+    await client.createIfNotExists(evidenceDoc);
+    const { _id: eid, _type: etype, ...evidenceFields } = evidenceDoc;
+    void eid;
+    void etype;
+    await client.patch("evidencePage").setIfMissing(evidenceFields).commit();
+    console.log("✓ evidence-explorer page copy set (if missing)");
+    seeded += 1;
+
+    for (const doc of buildPathwayDocs()) {
+      await client.createIfNotExists(doc);
+      const { _id, _type, pathwayId, ...pathwayFields } = doc;
+      void _type;
+      void pathwayId;
+      await client.patch(_id).setIfMissing(pathwayFields).commit();
+      console.log(`✓ evidence-explorer pathway "${doc.pathwayId}" set (if missing)`);
+      seeded += 1;
+    }
   }
 
   if (seeded === 0) {

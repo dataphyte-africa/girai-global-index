@@ -26,6 +26,7 @@ export async function getEvidencePageContent(): Promise<EvidenceContent> {
     heroStatLabels: strings(data.heroStatLabels, d.heroStatLabels),
     pathwayHeading: str(data.pathwayHeading, d.pathwayHeading),
     pathwaySubtitle: str(data.pathwaySubtitle, d.pathwaySubtitle),
+    searchTitle: str(data.searchTitle, d.searchTitle),
     seoTitle: str(data.seoTitle, d.seoTitle),
     seoDescription: str(data.seoDescription, d.seoDescription),
   };
