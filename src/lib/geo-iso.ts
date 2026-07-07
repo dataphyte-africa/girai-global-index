@@ -236,3 +236,17 @@ export function flagUrlForIso3(iso3: string, width = 40): string | null {
   const iso2 = getIso2FromIso3(iso3);
   return iso2 ? `https://flagcdn.com/w${width}/${iso2}.png` : null;
 }
+
+/**
+ * Flag emoji for an ISO3 code, derived from its ISO2 code using Unicode
+ * regional indicator symbols. Returns a white flag when the code is unknown.
+ */
+export function flagEmojiForIso3(iso3: string): string {
+  const iso2 = getIso2FromIso3(iso3);
+  if (!iso2) return "🏳️";
+  const codePoints = iso2
+    .toUpperCase()
+    .split("")
+    .map((char) => 0x1f1e6 + (char.charCodeAt(0) - 65));
+  return String.fromCodePoint(...codePoints);
+}

@@ -1,7 +1,7 @@
 import { sanityFetch } from "../../sanity/lib/fetch";
 import { homePageQuery } from "../../sanity/lib/queries";
 import { homeDefaults, type HomeContent } from "./home.defaults";
-import { cards, str, strings, type DeepPartial } from "./_merge";
+import { cards, stats, str, strings, type DeepPartial } from "./_merge";
 
 export const HOME_TAG = "homePage";
 
@@ -55,6 +55,7 @@ export async function getHomeContent(): Promise<HomeContent> {
     evidenceBody: str(data.evidenceBody, d.evidenceBody),
     evidenceCtaLabel: str(data.evidenceCtaLabel, d.evidenceCtaLabel),
     evidenceNote: str(data.evidenceNote, d.evidenceNote),
+    evidenceStats: stats(data.evidenceStats, d.evidenceStats),
 
     performanceHeadingLead: str(data.performanceHeadingLead, d.performanceHeadingLead),
     performanceHeadingAccent: str(data.performanceHeadingAccent, d.performanceHeadingAccent),

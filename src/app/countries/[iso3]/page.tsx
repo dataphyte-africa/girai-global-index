@@ -24,6 +24,7 @@ import {
 import { ComparisonSection } from "@/components/comparison-section";
 import { SiteHeader } from "@/components/site-header";
 import { getPillarCopy } from "@/content/pillars";
+import { getIndicatorNames } from "@/content/indicatorPages";
 
 interface PageProps {
   params: Promise<{ iso3: string }>;
@@ -57,6 +58,7 @@ export default async function CountryStoryPage({ params }: PageProps) {
 
   const allCountries = getAllCountries();
   const pillarCopy = await getPillarCopy();
+  const indicatorNames = await getIndicatorNames();
   const regions = getRegions();
   const regionAverages = getRegionAverages();
 
@@ -111,6 +113,7 @@ export default async function CountryStoryPage({ params }: PageProps) {
           countryName={country.name}
           uniqueEvidenceCount={countUniqueEvidence(countryEvidence)}
           indicatorCaseCount={countryEvidence.length}
+          indicatorNames={indicatorNames}
         />
       </main>
 

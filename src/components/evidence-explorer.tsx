@@ -481,6 +481,14 @@ export interface EvidenceExplorerProps {
    * on mount.
    */
   presetRegion?: string;
+  /**
+   * Studio-edited indicator display names, keyed by slug. Overrides the
+   * build-time `indicatorName` baked into the evidence index for labels only
+   * (dropdown, chips, row pills, search). Filtering stays keyed on slug, so an
+   * edit here never affects which rows match. Falls back to the baked name for
+   * any slug not present.
+   */
+  indicatorNames?: Record<string, string>;
 }
 
 export function EvidenceExplorer({
@@ -490,6 +498,7 @@ export function EvidenceExplorer({
   presetCountryIso3,
   presetIndicatorSlug,
   presetRegion,
+  indicatorNames = {},
 }: EvidenceExplorerProps) {
   const router = useRouter();
   const pathname = usePathname();
@@ -597,7 +606,30 @@ export function EvidenceExplorer({
     return map;
   }, [index]);
 
-  const allRows = React.useMemo(() => index?.rows ?? [], [index]);
+  // Overlay Studio-edited indicator names onto the baked rows (display only —
+  // `indicatorSlug` is untouched, so filtering/search-by-facet is unaffected).
+  // Downstream memos (facet options, Fuse index, row pills) all read
+  // `indicatorName`, so remapping here is the single point that aligns them.
+  const allRows = React.useMemo(() => {
+    const rows = index?.rows ?? [];
+    if (rows.length === 0 || Object.keys(indicatorNames).length === 0) return rows;
+    return rows.map((row) => {
+      const override = indicatorNames[row.indicatorSlug];
+      return override && override !== row.indicatorName
+        ? { ...row, indicatorName: override }
+        : row;
+    });
+  }, [index, indicatorNames]);
+
+  // Slug → display name, for surfaces that only carry the slug (e.g. the active
+  // filter chips). Built from the remapped rows so it reflects the overrides.
+  const indicatorNameBySlug = React.useMemo(() => {
+    const map = new Map<string, string>();
+    for (const row of allRows) {
+      if (!map.has(row.indicatorSlug)) map.set(row.indicatorSlug, row.indicatorName);
+    }
+    return map;
+  }, [allRows]);
 
   // Cascading nested options for the Pillar tree. Pre-filters rows by every
   // facet *except* `pillar` and `kind`, then groups by pillarSlug → kind.
@@ -1037,6 +1069,7 @@ export function EvidenceExplorer({
         <ActiveChips
           state={urlState}
           countryLookup={countryLookup}
+          indicatorLookup={indicatorNameBySlug}
           onRemove={(key, value) => clearFacet(key, value)}
           onClearSearch={() => {
             setSearchInput("");
@@ -1120,12 +1153,14 @@ function StatCard({
 function ActiveChips({
   state,
   countryLookup,
+  indicatorLookup,
   onRemove,
   onClearSearch,
   onClearAll,
 }: {
   state: ExplorerState;
   countryLookup: Map<string, string>;
+  indicatorLookup: Map<string, string>;
   onRemove: (key: FilterKey, value: string) => void;
   onClearSearch: () => void;
   onClearAll: () => void;
@@ -1151,6 +1186,9 @@ function ActiveChips({
           break;
         case "country":
           display = countryLookup.get(value) ?? value;
+          break;
+        case "indicator":
+          display = indicatorLookup.get(value) ?? value;
           break;
         case "kind":
           display = KIND_LABELS[value as EvidenceKind] ?? value;

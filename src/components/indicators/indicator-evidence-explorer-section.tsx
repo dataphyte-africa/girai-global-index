@@ -8,14 +8,18 @@ const PURPLE = "#7150F4";
 export interface IndicatorEvidenceExplorerSectionProps {
   indicatorSlug: string;
   indicatorName: string;
+  /** Studio-edited indicator names by slug, for the explorer's labels. */
+  indicatorNames?: Record<string, string>;
 }
 
 function IndicatorEvidenceExplorerInner({
   indicatorSlug,
+  indicatorNames,
 }: IndicatorEvidenceExplorerSectionProps) {
   return (
     <EvidenceExplorer
       presetIndicatorSlug={indicatorSlug}
+      indicatorNames={indicatorNames}
       heading={
         <>
           What&apos;s <span style={{ color: PURPLE }}>Behind</span> the Scores
@@ -34,6 +38,7 @@ function IndicatorEvidenceExplorerInner({
 export function IndicatorEvidenceExplorerSection({
   indicatorSlug,
   indicatorName,
+  indicatorNames,
 }: IndicatorEvidenceExplorerSectionProps) {
   return (
     <section
@@ -54,6 +59,7 @@ export function IndicatorEvidenceExplorerSection({
         <IndicatorEvidenceExplorerInner
           indicatorSlug={indicatorSlug}
           indicatorName={indicatorName}
+          indicatorNames={indicatorNames}
         />
       </Suspense>
     </section>

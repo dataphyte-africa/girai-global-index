@@ -19,7 +19,11 @@ import {
   getIndicatorRegionalAverages,
   getEvidenceByIndicator,
 } from "@/lib/girai";
-import { getIndicatorPageContent } from "@/content/indicatorPages";
+import {
+  getIndicatorPageContent,
+  getIndicatorName,
+  getIndicatorNames,
+} from "@/content/indicatorPages";
 import {
   INDICATORS,
   getIndicator,
@@ -38,9 +42,10 @@ export async function generateMetadata({ params }: PageProps) {
   const { slug } = await params;
   const ind = INDICATORS.find((i) => i.slug === slug);
   if (!ind) return { title: "Indicator not found | GIRAI Global Index" };
+  const name = await getIndicatorName(ind.slug, ind.name);
   return {
-    title: `${ind.name} | GIRAI Global Index 2026`,
-    description: `Country leaderboard and evidence for the ${ind.name} indicator (${ind.pillar} pillar) in the 2026 GIRAI Index.`,
+    title: `${name} | GIRAI Global Index 2026`,
+    description: `Country leaderboard and evidence for the ${name} indicator (${ind.pillar} pillar) in the 2026 GIRAI Index.`,
   };
 }
 
@@ -54,6 +59,7 @@ export default async function IndicatorPage({ params }: PageProps) {
   }
 
   const pageCopy = await getIndicatorPageContent(ind.slug, ind.name);
+  const indicatorNames = await getIndicatorNames();
   const allCountries = getAllCountries();
   const scoreStats = getIndicatorScoreStats(ind.slug);
   const regionalScores = getIndicatorRegionalAverages(ind.slug);
@@ -73,7 +79,7 @@ export default async function IndicatorPage({ params }: PageProps) {
 
       <main className="flex-1">
         <IndicatorDetailHero
-          name={ind.name}
+          name={pageCopy.name}
           lead={pageCopy.heroLead}
           image={pageCopy.heroImage}
         />
@@ -85,12 +91,12 @@ export default async function IndicatorPage({ params }: PageProps) {
         <IndicatorCountriesMap
           rankingData={allCountries}
           indicatorSlug={ind.slug}
-          indicatorName={ind.name}
+          indicatorName={pageCopy.name}
           scoreStats={scoreStats}
         />
 
         <IndicatorBackgroundRelevanceSection
-          indicatorName={ind.name}
+          indicatorName={pageCopy.name}
           background={pageCopy.background}
           relevance={pageCopy.relevance}
         />
@@ -101,13 +107,14 @@ export default async function IndicatorPage({ params }: PageProps) {
         {ind.hasEvidence ? (
           <IndicatorEvidenceExplorerSection
             indicatorSlug={ind.slug}
-            indicatorName={ind.name}
+            indicatorName={pageCopy.name}
+            indicatorNames={indicatorNames}
           />
         ) : null}
 
 
         <IndicatorPerformanceByRegionSection
-          indicatorName={ind.name}
+          indicatorName={pageCopy.name}
           regionalScores={regionalScores}
         />
 

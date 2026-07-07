@@ -134,6 +134,7 @@ export const homePageQuery = groq`
   takeawaysCards[]{ category, title, description, stat, statCaption },
 
   evidenceBadge, evidenceHeading, evidenceBody, evidenceCtaLabel, evidenceNote,
+  evidenceStats[]{ label, value },
 
   performanceHeadingLead, performanceHeadingAccent, performanceHeadingTail, performanceSubtitle,
 
@@ -229,9 +230,16 @@ export const pathwaysCopyQuery = groq`
 
 export const indicatorPageBySlugQuery = groq`
 *[_type == "indicatorPage" && slug == $slug][0]{
+  title,
   "heroImage": heroImage${imageProjection},
   heroLead, introPrimary, introSecondary, background, relevance
 }`;
+
+export const indicatorNameBySlugQuery = groq`
+*[_type == "indicatorPage" && slug == $slug][0].title`;
+
+export const indicatorNamesQuery = groq`
+*[_type == "indicatorPage" && defined(title)]{ slug, title }`;
 
 export const downloadModalQuery = groq`
 *[_type == "downloadModal"][0]{
@@ -245,6 +253,7 @@ export const downloadModalQuery = groq`
   reasonLabel, reasonPlaceholder,
   reasons[]{ value, label },
   licenseTextBefore, licenseLinkLabel, licenseLinkHref,
+  consentTextBefore, consentLinkLabel, consentLinkHref, consentTextAfter, consentErrorText,
   submitLabel, submittingLabel, imageAlt,
   citationHeadingTemplate, citationBody, methodologyHeading, methodologyBody,
   successBadge, successTitle, successBody, successCtaLabel, successCtaNote,

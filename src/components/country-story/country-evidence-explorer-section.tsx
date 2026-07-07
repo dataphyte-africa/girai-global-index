@@ -10,6 +10,8 @@ export interface CountryEvidenceExplorerSectionProps {
   uniqueEvidenceCount: number;
   /** Indicator cases — one row per indicator a piece of evidence is assessed under. */
   indicatorCaseCount: number;
+  /** Studio-edited indicator names by slug, for the explorer's labels. */
+  indicatorNames?: Record<string, string>;
 }
 
 function CountryEvidenceExplorerInner({
@@ -17,10 +19,12 @@ function CountryEvidenceExplorerInner({
   countryName,
   uniqueEvidenceCount,
   indicatorCaseCount,
+  indicatorNames,
 }: CountryEvidenceExplorerSectionProps) {
   return (
     <EvidenceExplorer
       presetCountryIso3={iso3}
+      indicatorNames={indicatorNames}
       heading={
         <>
           Evidence for <span className="text-[#6c5cff]">{countryName}</span>

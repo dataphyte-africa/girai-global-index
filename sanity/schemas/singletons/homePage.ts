@@ -76,6 +76,14 @@ export const homePage = defineType({
     defineField({ name: "evidenceBody", title: "Body", type: "text", rows: 3, group: "evidence" }),
     defineField({ name: "evidenceCtaLabel", title: "CTA label", type: "string", group: "evidence" }),
     defineField({ name: "evidenceNote", title: "Card note", type: "text", rows: 3, group: "evidence" }),
+    defineField({
+      name: "evidenceStats",
+      title: "Stat cards",
+      description: "The number + label tiles shown on the dark card (e.g. \"2,900+ Documents reviewed\").",
+      type: "array",
+      group: "evidence",
+      of: [defineArrayMember({ type: "statItem" })],
+    }),
 
     // Performance Across Countries (map/list section)
     defineField({ name: "performanceHeadingLead", title: "Heading (lead)", type: "string", group: "performance" }),

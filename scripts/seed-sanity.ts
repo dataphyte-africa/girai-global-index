@@ -528,6 +528,7 @@ async function buildHomeDoc() {
     evidenceBody: homeDefaults.evidenceBody,
     evidenceCtaLabel: homeDefaults.evidenceCtaLabel,
     evidenceNote: homeDefaults.evidenceNote,
+    evidenceStats: stats(homeDefaults.evidenceStats),
     performanceHeadingLead: homeDefaults.performanceHeadingLead,
     performanceHeadingAccent: homeDefaults.performanceHeadingAccent,
     performanceHeadingTail: homeDefaults.performanceHeadingTail,
@@ -700,6 +701,11 @@ async function buildDownloadModalDoc() {
     licenseTextBefore: downloadModalDefaults.licenseTextBefore,
     licenseLinkLabel: downloadModalDefaults.licenseLinkLabel,
     licenseLinkHref: downloadModalDefaults.licenseLinkHref,
+    consentTextBefore: downloadModalDefaults.consentTextBefore,
+    consentLinkLabel: downloadModalDefaults.consentLinkLabel,
+    consentLinkHref: downloadModalDefaults.consentLinkHref,
+    consentTextAfter: downloadModalDefaults.consentTextAfter,
+    consentErrorText: downloadModalDefaults.consentErrorText,
     submitLabel: downloadModalDefaults.submitLabel,
     submittingLabel: downloadModalDefaults.submittingLabel,
     imageAlt: downloadModalDefaults.imageAlt,
@@ -828,6 +834,21 @@ async function buildIndicatorHeroImagePatches() {
   );
 }
 
+/**
+ * Seed each indicator's display name onto its `indicatorPage` doc without
+ * clobbering an editor's rename. Written with `setIfMissing` (see main()) so it
+ * only adds a `title` where none exists — a full re-seed or a scoped
+ * `pnpm seed:sanity indicator-title` run leaves an existing (possibly edited)
+ * name untouched. The canonical fallback lives in src/data/2026/taxonomy.ts.
+ */
+function buildIndicatorTitlePatches() {
+  return INDICATORS.map((ind) => ({
+    label: `indicator-title/${ind.slug}`,
+    id: `indicator-${ind.slug}`,
+    title: ind.name,
+  }));
+}
+
 function buildPathwayDocs() {
   return PATHWAYS.map((p) => ({
     _id: `pathway-${p.id}`,
@@ -909,6 +930,32 @@ async function main() {
     if (!heroImage) continue;
     await client.patch(id).setIfMissing({ heroImage }).commit();
     console.log(`✓ ${label} hero image set (if missing)`);
+    seeded += 1;
+  }
+
+  // Non-destructive pass: add each indicator's display name only where the
+  // `indicatorPage` doc has none yet. `setIfMissing` leaves an editor's rename
+  // untouched. Backfill names alone (without touching copy) with
+  // `pnpm seed:sanity indicator-title`.
+  const titlePatches = buildIndicatorTitlePatches();
+  for (const { label, id, title } of titlePatches) {
+    if (!matches(label)) continue;
+    await client.patch(id).setIfMissing({ title }).commit();
+    console.log(`✓ ${label} name set (if missing)`);
+    seeded += 1;
+  }
+
+  // Non-destructive pass: add the Evidence Explorer stat cards only where the
+  // `homePage` doc has none yet. `setIfMissing` leaves an editor's existing
+  // stat cards (and the rest of the doc) untouched, so this is safe to run
+  // against production without clobbering Studio edits. Backfill the stat cards
+  // alone with `pnpm seed:sanity home-evidence-stats`.
+  if (matches("home-evidence-stats")) {
+    await client
+      .patch("homePage")
+      .setIfMissing({ evidenceStats: stats(homeDefaults.evidenceStats) })
+      .commit();
+    console.log("✓ home-evidence-stats set (if missing)");
     seeded += 1;
   }
 

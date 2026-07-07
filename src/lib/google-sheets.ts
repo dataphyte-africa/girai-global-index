@@ -109,6 +109,7 @@ function submissionToRow(submission: DataDownloadSubmission): string[] {
     submission.edition === "first" ? "First Edition" : "Second Edition",
     submission.assetType,
     submission.source ?? "",
+    submission.consent ? "Yes" : "No",
   ];
 }
 
@@ -117,7 +118,7 @@ async function appendViaServiceAccount(
   submission: DataDownloadSubmission
 ): Promise<void> {
   const accessToken = await getGoogleAccessToken(config);
-  const range = encodeURIComponent(`${config.sheetName}!A:I`);
+  const range = encodeURIComponent(`${config.sheetName}!A:J`);
   const url = `https://sheets.googleapis.com/v4/spreadsheets/${config.spreadsheetId}/values/${range}:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`;
 
   const response = await fetch(url, {
@@ -154,6 +155,7 @@ async function appendViaWebApp(
       edition: submission.edition === "first" ? "First Edition" : "Second Edition",
       assetType: submission.assetType,
       source: submission.source ?? "",
+      consent: submission.consent ? "Yes" : "No",
     }),
   });
 
@@ -208,6 +210,7 @@ function referralToRow(event: DownloadReferralEvent): string[] {
         : "",
     event.assetType,
     event.source,
+    "",
   ];
 }
 
@@ -216,7 +219,7 @@ async function appendReferralViaServiceAccount(
   event: DownloadReferralEvent
 ): Promise<void> {
   const accessToken = await getGoogleAccessToken(config);
-  const range = encodeURIComponent(`${config.sheetName}!A:I`);
+  const range = encodeURIComponent(`${config.sheetName}!A:J`);
   const url = `https://sheets.googleapis.com/v4/spreadsheets/${config.spreadsheetId}/values/${range}:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`;
 
   const response = await fetch(url, {

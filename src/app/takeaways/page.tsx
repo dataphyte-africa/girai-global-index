@@ -32,7 +32,7 @@ export default async function TakeawaysPage() {
         <TopTakeawaysSection
           findings={keyFindings?.findings}
           showHeader={true}
-          showCta={true}
+          showCta={false}
           headingAccent={keyFindings?.headingAccent ?? "Key"}
           headingTail={keyFindings?.headingTail ?? "Findings"}
           headerSubtitle={

@@ -1,5 +1,10 @@
+import { cache } from "react";
 import { sanityFetch } from "../../sanity/lib/fetch";
-import { indicatorPageBySlugQuery } from "../../sanity/lib/queries";
+import {
+  indicatorPageBySlugQuery,
+  indicatorNameBySlugQuery,
+  indicatorNamesQuery,
+} from "../../sanity/lib/queries";
 import {
   getIndicatorPageCopy,
   getIndicatorBackgroundRelevance,
@@ -13,6 +18,7 @@ export const INDICATOR_PAGE_TAG = "indicatorPage";
 
 /** Resolved copy for one indicator detail page. Background/Relevance are Portable Text. */
 export type IndicatorPageContent = {
+  name: string;
   heroImage: SanityImage;
   heroLead: string;
   introPrimary: string;
@@ -22,6 +28,7 @@ export type IndicatorPageContent = {
 };
 
 type IndicatorPageDoc = {
+  title?: string;
   heroImage?: SanityImage | null;
   heroLead?: string;
   introPrimary?: string;
@@ -80,6 +87,7 @@ export async function getIndicatorPageContent(
   const copy = getIndicatorPageCopy(slug);
   const { background, relevance } = getIndicatorBackgroundRelevance(slug, name);
   const fallback: IndicatorPageContent = {
+    name,
     heroImage: { url: copy.heroImage, alt: null },
     heroLead: copy.heroLead,
     introPrimary: copy.introPrimary,
@@ -101,6 +109,7 @@ export async function getIndicatorPageContent(
   if (!doc) return fallback;
 
   return {
+    name: str(doc.title, fallback.name),
     heroImage: img(doc.heroImage, fallback.heroImage),
     heroLead: str(doc.heroLead, fallback.heroLead),
     introPrimary: str(doc.introPrimary, fallback.introPrimary),
@@ -109,3 +118,52 @@ export async function getIndicatorPageContent(
     relevance: hasBlocks(doc.relevance) ? doc.relevance : fallback.relevance,
   };
 }
+
+/**
+ * Resolve just the indicator's display name (Sanity `title`, falling back to the
+ * code-defined name). A lightweight query for `generateMetadata`, so the page
+ * title reflects a Studio rename without fetching the full page copy.
+ */
+export async function getIndicatorName(
+  slug: string,
+  name: string
+): Promise<string> {
+  try {
+    const title = await sanityFetch<string | null>({
+      query: indicatorNameBySlugQuery,
+      params: { slug },
+      tags: [INDICATOR_PAGE_TAG],
+    });
+    return str(title, name);
+  } catch {
+    return name;
+  }
+}
+
+/**
+ * All Studio-edited indicator names as a `{ slug: title }` map, for surfaces
+ * that list several indicators at once (e.g. the header Explore menu). Only
+ * includes docs with a non-empty `title`; callers fall back to the code name
+ * for any slug not present. Returns `{}` when Sanity is unreachable.
+ */
+export const getIndicatorNames = cache(
+  async (): Promise<Record<string, string>> => {
+    try {
+      const rows = await sanityFetch<
+        { slug?: string; title?: string }[] | null
+      >({
+        query: indicatorNamesQuery,
+        tags: [INDICATOR_PAGE_TAG],
+      });
+      const map: Record<string, string> = {};
+      for (const row of rows ?? []) {
+        if (row?.slug && typeof row.title === "string" && row.title.trim()) {
+          map[row.slug] = row.title.trim();
+        }
+      }
+      return map;
+    } catch {
+      return {};
+    }
+  }
+);

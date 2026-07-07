@@ -640,19 +640,34 @@ export function RankingDataTable({
                 </TableCell>
               </TableRow>
             ) : (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  onClick={() => setSelectedCountry(row.original)}
-                  className="cursor-pointer border-b border-border/50 transition-colors hover:bg-muted/25"
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} className="px-4 py-3.5">
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+              <>
+                {table.getRowModel().rows.map((row) => (
+                  <TableRow
+                    key={row.id}
+                    onClick={() => setSelectedCountry(row.original)}
+                    className="cursor-pointer border-b border-border/50 transition-colors hover:bg-muted/25"
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id} className="px-4 py-3.5">
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))}
+                {Array.from({
+                  length: Math.max(0, pageSize - table.getRowModel().rows.length),
+                }).map((_, i) => (
+                  <TableRow
+                    key={`filler-${i}`}
+                    aria-hidden
+                    className="border-b border-border/50"
+                  >
+                    <TableCell colSpan={columns.length} className="px-4 py-3.5">
+                      <span className="invisible text-sm">&nbsp;</span>
                     </TableCell>
-                  ))}
-                </TableRow>
-              ))
+                  </TableRow>
+                ))}
+              </>
             )}
           </TableBody>
         </Table>
