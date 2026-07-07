@@ -7,6 +7,8 @@ import { AiAssistantProvider } from "@/components/ai-assistant/ai-assistant-prov
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { getSiteSettings } from "@/content/siteSettings";
 import { getDownloadModalContent } from "@/content/downloadModal";
+import { getCountdownModalContent } from "@/content/countdownModal";
+import { CountdownModal } from "@/components/countdown/countdown-modal";
 
 /** CMS pages must SSR — see src/lib/cms-rendering.ts */
 export const dynamic = "force-dynamic";
@@ -52,6 +54,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const downloadModalContent = await getDownloadModalContent();
+  const countdownContent = await getCountdownModalContent();
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -62,6 +65,7 @@ export default async function RootLayout({
               <TooltipProvider>{children}</TooltipProvider>
             </AiAssistantProvider>
           </DataDownloadProvider>
+          <CountdownModal content={countdownContent} />
         </ThemeProvider>
       </body>
     </html>

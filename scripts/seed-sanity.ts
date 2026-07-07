@@ -21,6 +21,7 @@ import { evidenceDefaults } from "../src/content/evidence.defaults";
 import { regionsDefaults } from "../src/content/regions.defaults";
 import { countriesDefaults } from "../src/content/countries.defaults";
 import { downloadModalDefaults } from "../src/content/downloadModal.defaults";
+import { countdownModalDefaults } from "../src/content/countdownModal.defaults";
 import { reportDownloadDefaults } from "../src/content/reportDownload.defaults";
 import { PILLAR_COPY } from "../src/lib/pillar-copy";
 import { REGION_COPY, regionToSlug } from "../src/lib/regions";
@@ -716,6 +717,18 @@ async function buildDownloadModalDoc() {
   };
 }
 
+function buildCountdownModalDoc() {
+  return {
+    _id: "countdownModal",
+    _type: "countdownModal",
+    enabled: countdownModalDefaults.enabled,
+    heading: countdownModalDefaults.heading,
+    headingAccent: countdownModalDefaults.headingAccent,
+    description: countdownModalDefaults.description,
+    targetDate: countdownModalDefaults.targetDate,
+  };
+}
+
 async function buildReportDownloadDoc() {
   console.log("Uploading Report Download cover image...");
   const coverImage = await uploadPublicImage(client, reportDownloadDefaults.coverImage);
@@ -753,17 +766,53 @@ async function buildPillarDocs() {
   );
 }
 
-function buildDimensionDocs() {
-  return DIMENSIONS_UI.map((d) => ({
-    _id: `dimension-${d.id}`,
-    _type: "dimensionCopy",
-    slug: d.id,
-    subtitle: d.subtitle,
-    description: d.description,
-    eyebrow: d.eyebrow,
-    heroLead: d.heroLead,
-    rankingSubtitle: d.rankingSubtitle,
-  }));
+async function buildDimensionDocs() {
+  console.log("Uploading Dimension card images...");
+  return Promise.all(
+    DIMENSIONS_UI.map(async (d) => {
+      const image = await uploadPublicImage(client, {
+        url: d.image ?? "",
+        alt: d.name,
+      });
+      return {
+        _id: `dimension-${d.id}`,
+        _type: "dimensionCopy",
+        slug: d.id,
+        image: img(image),
+        subtitle: d.subtitle,
+        description: d.description,
+        eyebrow: d.eyebrow,
+        heroLead: d.heroLead,
+        rankingSubtitle: d.rankingSubtitle,
+      };
+    })
+  );
+}
+
+/**
+ * Seed each dimension's card image onto its `dimensionCopy` doc without
+ * clobbering an editor's upload or copy edits. Written with `setIfMissing`
+ * (see main()) so it only adds an `image` where none exists — a full re-seed or
+ * a scoped `pnpm seed:sanity dimension-image` run leaves an existing image (and
+ * all copy) untouched. The card image doubles as the radial chart centre; the
+ * bundled fallback lives in src/data/dimensions-data.ts.
+ */
+async function buildDimensionImagePatches() {
+  // Images already uploaded (and cached) by buildDimensionDocs during the main
+  // docs build; this only resolves the cached asset refs for the patch pass.
+  return Promise.all(
+    DIMENSIONS_UI.map(async (d) => {
+      const image = await uploadPublicImage(client, {
+        url: d.image ?? "",
+        alt: d.name,
+      });
+      return {
+        label: `dimension-image/${d.id}`,
+        id: `dimension-${d.id}`,
+        image: img(image),
+      };
+    })
+  );
 }
 
 async function buildUpdateDocs() {
@@ -932,10 +981,11 @@ async function main() {
     { label: "regionsPage", doc: buildRegionsDoc() },
     { label: "countriesPage", doc: buildCountriesDoc() },
     { label: "downloadModal", doc: await buildDownloadModalDoc() },
+    { label: "countdownModal", doc: buildCountdownModalDoc() },
     { label: "reportDownload", doc: await buildReportDownloadDoc() },
     { label: "keyFindings", doc: await buildKeyFindingsDoc() },
     ...(await buildPillarDocs()).map((doc) => ({ label: `pillar/${doc.slug}`, doc })),
-    ...buildDimensionDocs().map((doc) => ({ label: `dimension/${doc.slug}`, doc })),
+    ...(await buildDimensionDocs()).map((doc) => ({ label: `dimension/${doc.slug}`, doc })),
     ...buildIndicatorPageDocs().map((doc) => ({ label: `indicator/${doc.slug}`, doc })),
     ...buildPathwayDocs().map((doc) => ({ label: `pathway/${doc.pathwayId}`, doc })),
     ...buildRegionPageDocs().map((doc) => ({ label: `region/${doc.slug}`, doc })),
@@ -960,6 +1010,19 @@ async function main() {
     if (!heroImage) continue;
     await client.patch(id).setIfMissing({ heroImage }).commit();
     console.log(`✓ ${label} hero image set (if missing)`);
+    seeded += 1;
+  }
+
+  // Non-destructive pass: add each dimension's card image only where the
+  // `dimensionCopy` doc has none yet. `setIfMissing` leaves existing copy and
+  // any editor-uploaded image untouched. Seed images alone (without touching
+  // copy) with `pnpm seed:sanity dimension-image`.
+  const dimensionImagePatches = await buildDimensionImagePatches();
+  for (const { label, id, image } of dimensionImagePatches) {
+    if (!matches(label)) continue;
+    if (!image) continue;
+    await client.patch(id).setIfMissing({ image }).commit();
+    console.log(`✓ ${label} card image set (if missing)`);
     seeded += 1;
   }
 

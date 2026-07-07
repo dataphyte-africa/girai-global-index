@@ -29,6 +29,7 @@ import { evidencePage } from "./singletons/evidencePage";
 import { regionsPage } from "./singletons/regionsPage";
 import { countriesPage } from "./singletons/countriesPage";
 import { downloadModal } from "./singletons/downloadModal";
+import { countdownModal } from "./singletons/countdownModal";
 import { reportDownload } from "./singletons/reportDownload";
 import { keyFindings } from "./singletons/keyFindings";
 
@@ -70,6 +71,7 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   regionsPage,
   countriesPage,
   downloadModal,
+  countdownModal,
   reportDownload,
   keyFindings,
   // Fixed collections (one document per entity)
@@ -96,6 +98,7 @@ export const singletonTypes = new Set([
   "regionsPage",
   "countriesPage",
   "downloadModal",
+  "countdownModal",
   "reportDownload",
   "keyFindings",
   // Fixed collections: a known set seeded with stable ids, edited in place.

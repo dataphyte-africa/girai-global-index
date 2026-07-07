@@ -9,6 +9,7 @@ const SINGLETONS: { id: string; type: string; title: string }[] = [
   { id: "header", type: "header", title: "Header / Navigation" },
   { id: "footer", type: "footer", title: "Footer" },
   { id: "downloadModal", type: "downloadModal", title: "Download Modal" },
+  { id: "countdownModal", type: "countdownModal", title: "Countdown Modal" },
   { id: "reportDownload", type: "reportDownload", title: "Report Download Section" },
   { id: "keyFindings", type: "keyFindings", title: "Key Findings (Accordion)" },
   { id: "homePage", type: "homePage", title: "Home Page" },
