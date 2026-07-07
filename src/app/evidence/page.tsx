@@ -12,6 +12,7 @@ import {
 import { getEvidencePageContent } from "@/content/evidencePage";
 import type { EvidenceContent } from "@/content/evidence.defaults";
 import { getPathwayCopy } from "@/content/pathways";
+import { getIndicatorNames } from "@/content/indicatorPages";
 import { getEvidenceArtifact, getTaxonomy } from "@/lib/girai";
 
 export const metadata = {
@@ -22,6 +23,7 @@ export const metadata = {
 
 async function EvidenceHubContent({ content }: { content: EvidenceContent }) {
   const pathwayCopy = await getPathwayCopy();
+  const indicatorNames = await getIndicatorNames();
   const { totals } = getEvidenceArtifact();
   const { indicators } = getTaxonomy();
   const countriesIndexed = totals.countriesIndexed ?? totals.countriesWithItems;
@@ -47,6 +49,7 @@ async function EvidenceHubContent({ content }: { content: EvidenceContent }) {
       <PathwayIndicatorTable pathwayCopy={pathwayCopy} />
       <EvidenceExplorer
         subheading={`${evidenceItemCount.toLocaleString()} unique evidence items from laws, strategies, policies, and institutional actions in the ${countriesIndexed}-country GIRAI index.`}
+        indicatorNames={indicatorNames}
       />
     </>
   );

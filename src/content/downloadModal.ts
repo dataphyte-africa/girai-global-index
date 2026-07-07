@@ -66,6 +66,12 @@ export async function getDownloadModalContent(): Promise<DownloadModalContent> {
     licenseTextBefore: str(data.licenseTextBefore, d.licenseTextBefore),
     licenseLinkLabel: str(data.licenseLinkLabel, d.licenseLinkLabel),
     licenseLinkHref: str(data.licenseLinkHref, d.licenseLinkHref),
+
+    consentTextBefore: str(data.consentTextBefore, d.consentTextBefore),
+    consentLinkLabel: str(data.consentLinkLabel, d.consentLinkLabel),
+    consentLinkHref: str(data.consentLinkHref, d.consentLinkHref),
+    consentTextAfter: str(data.consentTextAfter, d.consentTextAfter),
+    consentErrorText: str(data.consentErrorText, d.consentErrorText),
     submitLabel: str(data.submitLabel, d.submitLabel),
     submittingLabel: str(data.submittingLabel, d.submittingLabel),
     imageAlt: str(data.imageAlt, d.imageAlt),

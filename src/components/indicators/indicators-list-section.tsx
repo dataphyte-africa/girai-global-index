@@ -5,6 +5,7 @@ import {
   type DimensionDef,
   type IndicatorDef,
 } from "@/data/2026/taxonomy";
+import { getIndicatorNames } from "@/content/indicatorPages";
 import { IndicatorCard } from "./indicator-card";
 
 /** Prefer the ampersand alias when present (matches Figma headings). */
@@ -27,9 +28,11 @@ function scoreAdjustmentIndicators(): IndicatorDef[] {
 /**
  * All indicators grouped under their parent dimension headings.
  */
-export function IndicatorsListSection() {
+export async function IndicatorsListSection() {
   const sortedDimensions = [...DIMENSIONS].sort((a, b) => a.order - b.order);
   const scoreAdjustments = scoreAdjustmentIndicators();
+  // Studio-edited names, keyed by slug; fall back to the taxonomy name per card.
+  const indicatorNames = await getIndicatorNames();
 
   return (
     <section className="w-full bg-background px-4 py-16 md:px-6 md:py-24 lg:py-28">
@@ -49,7 +52,7 @@ export function IndicatorsListSection() {
                     key={indicator.slug}
                     index={index + 1}
                     slug={indicator.slug}
-                    name={indicator.name}
+                    name={indicatorNames[indicator.slug] ?? indicator.name}
                   />
                 ))}
               </div>
@@ -69,7 +72,7 @@ export function IndicatorsListSection() {
                   key={indicator.slug}
                   index={index + 1}
                   slug={indicator.slug}
-                  name={indicator.name}
+                  name={indicatorNames[indicator.slug] ?? indicator.name}
                 />
               ))}
             </div>

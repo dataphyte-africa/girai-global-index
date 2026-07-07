@@ -11,6 +11,7 @@ export const downloadModal = defineType({
     { name: "form", title: "Form labels" },
     { name: "reasons", title: "Reason options" },
     { name: "license", title: "License & footer" },
+    { name: "consent", title: "Consent checkbox" },
     { name: "landing", title: "Download landing pages" },
     { name: "success", title: "Dataset success screen" },
   ],
@@ -61,6 +62,19 @@ export const downloadModal = defineType({
     defineField({ name: "licenseTextBefore", title: "License text (before link)", type: "string", group: "license" }),
     defineField({ name: "licenseLinkLabel", title: "License link label", type: "string", group: "license" }),
     defineField({ name: "licenseLinkHref", title: "License link URL", type: "url", group: "license" }),
+
+    defineField({ name: "consentTextBefore", title: "Consent text (before link)", type: "string", group: "consent" }),
+    defineField({ name: "consentLinkLabel", title: "Consent link label", type: "string", group: "consent" }),
+    defineField({
+      name: "consentLinkHref",
+      title: "Consent link URL",
+      type: "string",
+      description: "Link to the data policy page, e.g. /data-policy.",
+      group: "consent",
+    }),
+    defineField({ name: "consentTextAfter", title: "Consent text (after link)", type: "string", group: "consent" }),
+    defineField({ name: "consentErrorText", title: "Consent error message", type: "string", group: "consent" }),
+
     defineField({ name: "submitLabel", title: "Submit button label", type: "string", group: "license" }),
     defineField({ name: "submittingLabel", title: "Submit button label (while submitting)", type: "string", group: "license" }),
     defineField({ name: "imageAlt", title: "Side image — alt text", type: "string", group: "license" }),

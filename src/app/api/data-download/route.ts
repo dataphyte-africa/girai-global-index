@@ -23,6 +23,11 @@ const submissionSchema = z.object({
     "personal-interest",
     "other",
   ]),
+  consent: z
+    .boolean()
+    .refine((value) => value === true, {
+      message: "Consent to the data policy is required",
+    }),
   source: z.string().trim().optional(),
 });
 

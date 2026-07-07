@@ -1,4 +1,5 @@
 import type { Card, Partner } from "./about.defaults";
+import type { Stat } from "./takeaways.defaults";
 
 export type HomeTakeawayCard = {
   category: string;
@@ -35,6 +36,7 @@ export type HomeContent = {
   evidenceBody: string;
   evidenceCtaLabel: string;
   evidenceNote: string;
+  evidenceStats: Stat[];
 
   performanceHeadingLead: string;
   performanceHeadingAccent: string;
@@ -201,6 +203,12 @@ export const homeDefaults: HomeContent = {
   evidenceCtaLabel: "Explore Evidence Explorer",
   evidenceNote:
     "Every score in GIRAI is grounded in publicly verifiable evidence, reviewed through a structured research and validation process.",
+  evidenceStats: [
+    { value: "2,900+", label: "Documents reviewed" },
+    { value: "135", label: "Countries assessed" },
+    { value: "38", label: "Indicators covered" },
+    { value: "7", label: "Global regions" },
+  ],
 
   performanceHeadingLead: "Responsible ",
   performanceHeadingAccent: "AI Performance",

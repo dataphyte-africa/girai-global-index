@@ -19,6 +19,7 @@ export type DataDownloadFormValues = {
   organization: string;
   role: string;
   reason: DownloadReason | "";
+  consent: boolean;
 };
 
 export type DataDownloadSubmission = DataDownloadFormValues & {

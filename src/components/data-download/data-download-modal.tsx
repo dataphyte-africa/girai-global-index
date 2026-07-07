@@ -29,6 +29,7 @@ const EMPTY_FORM: DataDownloadFormValues = {
   organization: "",
   role: "",
   reason: "",
+  consent: false,
 };
 
 type DataDownloadModalProps = {
@@ -82,6 +83,11 @@ export function DataDownloadModal({
 
     if (!form.reason) {
       setError("Please select a reason for download.");
+      return;
+    }
+
+    if (!form.consent) {
+      setError(content.consentErrorText);
       return;
     }
 
@@ -263,6 +269,36 @@ export function DataDownloadModal({
                   {content.licenseLinkLabel}
                 </a>
               </p>
+
+              <label className="mt-4 flex cursor-pointer items-start gap-3">
+                <span className="relative mt-0.5 flex size-5 shrink-0 items-center justify-center">
+                  <input
+                    type="checkbox"
+                    checked={form.consent}
+                    onChange={(event) =>
+                      setField("consent", event.target.checked)
+                    }
+                    className="peer size-5 cursor-pointer appearance-none rounded-md border border-[#c9c9d6] bg-white transition-colors checked:border-primary checked:bg-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 dark:border-input dark:bg-background dark:checked:bg-primary"
+                  />
+                  <Check
+                    className="pointer-events-none absolute size-3.5 text-primary-foreground opacity-0 peer-checked:opacity-100"
+                    strokeWidth={3}
+                    aria-hidden
+                  />
+                </span>
+                <span className="text-xs leading-relaxed text-[#6b6b80] dark:text-muted-foreground">
+                  {content.consentTextBefore}
+                  <a
+                    href={content.consentLinkHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-medium text-primary underline-offset-2 hover:underline"
+                  >
+                    {content.consentLinkLabel}
+                  </a>
+                  {content.consentTextAfter}
+                </span>
+              </label>
 
               {error ? (
                 <p className="mt-3 text-sm text-destructive" role="alert">

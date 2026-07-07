@@ -26,6 +26,13 @@ export type DownloadModalContent = {
   licenseTextBefore: string;
   licenseLinkLabel: string;
   licenseLinkHref: string;
+
+  /** Required consent checkbox shown above the submit button. */
+  consentTextBefore: string;
+  consentLinkLabel: string;
+  consentLinkHref: string;
+  consentTextAfter: string;
+  consentErrorText: string;
   submitLabel: string;
   submittingLabel: string;
   imageAlt: string;
@@ -75,6 +82,13 @@ export const downloadModalDefaults: DownloadModalContent = {
   licenseTextBefore: "This work is licensed under a ",
   licenseLinkLabel: "Creative Commons Attribution 4.0 International License.",
   licenseLinkHref: "https://creativecommons.org/licenses/by/4.0/",
+
+  consentTextBefore: "I agree to the ",
+  consentLinkLabel: "GIRAI Data Policy",
+  consentLinkHref: "/data-policy",
+  consentTextAfter:
+    " and consent to my information being used as described.",
+  consentErrorText: "Please agree to the Data Policy to continue.",
   submitLabel: "Submit",
   submittingLabel: "Submitting…",
   imageAlt: "Hand holding the GIRAI report",

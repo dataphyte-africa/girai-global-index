@@ -1,3 +1,5 @@
+import { iso3ToIso2, flagEmojiForIso3 } from "@/lib/geo-iso";
+
 /**
  * Country coordinates (lat, lng) for globe markers and arcs.
  * Values are approximate country centers/capitals.
@@ -289,6 +291,14 @@ export const countryFlags: Record<string, string> = {
    ERI: "🇪🇷",
    SSD: "🇸🇸",
  };
+
+// Backfill any ISO3 codes missing a hand-picked emoji above by deriving the
+// flag from the (complete) ISO2 map, so no country ever renders a blank flag.
+for (const iso3 of Object.keys(iso3ToIso2)) {
+  if (!countryFlags[iso3]) {
+    countryFlags[iso3] = flagEmojiForIso3(iso3);
+  }
+}
  
 /**
  * Minimal country shape used by the home-page hero globe. Decoupled

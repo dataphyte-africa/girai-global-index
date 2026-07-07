@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ChevronRight, Download, Menu, Orbit } from "lucide-react";
@@ -51,9 +51,10 @@ const dimensionLinks = DIMENSIONS.map((dimension) => ({
   href: `/dimensions/${dimension.id}`,
 }));
 
-// Curated subset of indicators surfaced in the Explore menu. Labels are always
-// derived from the canonical taxonomy name so each entry matches the title of
-// the dedicated /indicators/[slug] page it links to.
+// Curated subset of indicators surfaced in the Explore menu. Labels prefer the
+// Studio-edited name (`indicatorNames`, keyed by slug) and fall back to the
+// canonical taxonomy name, matching the title of the /indicators/[slug] page
+// each entry links to.
 const featuredNavIndicatorSlugs = [
   "gender-equality",
   "childrens-rights",
@@ -64,20 +65,32 @@ const featuredNavIndicatorSlugs = [
   "human-oversight-determination",
 ];
 
-const indicatorLinks = featuredNavIndicatorSlugs
-  .map((slug) => {
-    const indicator = INDICATORS.find((item) => item.slug === slug);
-    if (!indicator) return null;
-    return {
-      label: indicator.name,
-      href: `/indicators/${indicator.slug}`,
-    };
-  })
-  .filter((link): link is { label: string; href: string } => link !== null);
+function buildIndicatorLinks(indicatorNames: Record<string, string>) {
+  return featuredNavIndicatorSlugs
+    .map((slug) => {
+      const indicator = INDICATORS.find((item) => item.slug === slug);
+      if (!indicator) return null;
+      return {
+        label: indicatorNames[slug] ?? indicator.name,
+        href: `/indicators/${indicator.slug}`,
+      };
+    })
+    .filter((link): link is { label: string; href: string } => link !== null);
+}
 
-export const Header = ({ content = headerDefaults }: { content?: HeaderContent }) => {
+export const Header = ({
+  content = headerDefaults,
+  indicatorNames = {},
+}: {
+  content?: HeaderContent;
+  indicatorNames?: Record<string, string>;
+}) => {
   const { primaryNav, exploreLinks, downloadCta } = content;
   const [sheetOpen, setSheetOpen] = useState(false);
+  const indicatorLinks = useMemo(
+    () => buildIndicatorLinks(indicatorNames),
+    [indicatorNames]
+  );
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl">
