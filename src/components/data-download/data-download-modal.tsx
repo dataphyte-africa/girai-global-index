@@ -125,10 +125,12 @@ export function DataDownloadModal({
         return;
       }
 
+      // Open the PDF in a new tab so the browser renders it inline rather than
+      // forcing a download (no `download` attribute, target="_blank").
       const anchor = document.createElement("a");
       anchor.href = payload.downloadUrl;
-      anchor.download = payload.filename ?? "";
-      anchor.rel = "noopener";
+      anchor.target = "_blank";
+      anchor.rel = "noopener noreferrer";
       document.body.appendChild(anchor);
       anchor.click();
       anchor.remove();
