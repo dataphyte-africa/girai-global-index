@@ -12,12 +12,15 @@ type DimensionDoc = {
   eyebrow?: string;
   heroLead?: string;
   rankingSubtitle?: string;
+  image?: { url?: string | null; alt?: string | null } | null;
 };
 
 /**
  * The dimension UI list with editable copy (subtitle, description, eyebrow,
- * heroLead, rankingSubtitle) overlaid from Sanity. Structural fields — name,
- * indicators, imagery — remain code-owned. Falls back to defaults per field.
+ * heroLead, rankingSubtitle) and the card image overlaid from Sanity. The card
+ * image doubles as the centre of the radial dimensions chart. Structural fields
+ * — name, indicators, hero imagery — remain code-owned. Falls back to defaults
+ * per field.
  */
 export async function getDimensionsUi(): Promise<Dimension[]> {
   let docs: DimensionDoc[] | null = null;
@@ -46,6 +49,10 @@ export async function getDimensionsUi(): Promise<Dimension[]> {
       eyebrow: str(s.eyebrow, d.eyebrow),
       heroLead: str(s.heroLead, d.heroLead),
       rankingSubtitle: str(s.rankingSubtitle, d.rankingSubtitle),
+      image:
+        typeof s.image?.url === "string" && s.image.url.length > 0
+          ? s.image.url
+          : d.image,
     };
   });
 }

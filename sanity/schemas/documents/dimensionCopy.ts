@@ -18,6 +18,13 @@ export const dimensionCopy = defineType({
       type: "string",
       readOnly: true,
     }),
+    defineField({
+      name: "image",
+      title: "Card image",
+      type: "contentImage",
+      description:
+        "Shown as the dimension card background on the homepage and clipped into the centre of the radial dimensions chart. Falls back to the bundled image if empty.",
+    }),
     defineField({ name: "subtitle", title: "Subtitle", type: "string" }),
     defineField({ name: "description", title: "Description", type: "text", rows: 5 }),
     defineField({ name: "eyebrow", title: "Hero eyebrow", type: "string" }),

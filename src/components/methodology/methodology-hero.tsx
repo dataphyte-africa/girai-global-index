@@ -25,13 +25,13 @@ export function MethodologyHero({
             sizes="(max-width: 1280px) 100vw, 1280px"
             className="object-cover object-left md:object-[left_center]"
           />
-          {/* <div
+          <div
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(90deg, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.52) 38%, rgba(0,0,0,0.22) 62%, rgba(0,0,0,0.08) 78%, rgba(0,0,0,0) 92%)",
+                "linear-gradient(90deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.3) 40%, rgba(0,0,0,0.12) 65%, rgba(0,0,0,0) 88%)",
             }}
-          /> */}
+          />
 
           <div className="relative flex min-h-[360px] flex-col justify-center px-8 py-12 md:min-h-[565px] md:max-w-[58%] md:px-14 md:py-16 lg:min-h-[565px]">
             <h1 className="text-[2rem] font-semibold leading-[1.12] tracking-tight md:text-5xl lg:text-[3.25rem]">

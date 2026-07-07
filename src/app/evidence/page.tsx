@@ -48,6 +48,7 @@ async function EvidenceHubContent({ content }: { content: EvidenceContent }) {
       <PathwayPicker totals={totals} content={content} pathwayCopy={pathwayCopy} />
       <PathwayIndicatorTable pathwayCopy={pathwayCopy} />
       <EvidenceExplorer
+        heading={content.searchTitle}
         subheading={`${evidenceItemCount.toLocaleString()} unique evidence items from laws, strategies, policies, and institutional actions in the ${countriesIndexed}-country GIRAI index.`}
         indicatorNames={indicatorNames}
       />

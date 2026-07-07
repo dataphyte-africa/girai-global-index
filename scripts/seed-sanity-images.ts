@@ -25,37 +25,58 @@ function mimeFor(filename: string): string {
   }
 }
 
-/** Upload a /public asset and return a Sanity image field (cached per path). */
+/**
+ * Upload an image and return a Sanity image field (cached per source).
+ * Accepts a `/public` path (read from disk) or an absolute http(s) URL
+ * (fetched over the network) so remote placeholder images can be seeded too.
+ */
 export async function uploadPublicImage(
   client: SanityClient,
   image: SanityImage | null | undefined
 ): Promise<SanityImageField | undefined> {
   if (!image?.url) return undefined;
 
-  const publicPath = image.url;
-  let assetId = uploadCache.get(publicPath);
+  const src = image.url;
+  const isRemote = /^https?:\/\//i.test(src);
+  let assetId = uploadCache.get(src);
 
   if (!assetId) {
-    const filePath = path.join(process.cwd(), "public", publicPath.replace(/^\//, ""));
-    if (!fs.existsSync(filePath)) {
-      console.warn(`  ⚠ image not found: ${publicPath}`);
-      return undefined;
+    let buffer: Buffer;
+    let filename: string;
+
+    if (isRemote) {
+      try {
+        const res = await fetch(src);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        buffer = Buffer.from(await res.arrayBuffer());
+      } catch (err) {
+        console.warn(`  ⚠ could not fetch remote image: ${src} (${String(err)})`);
+        return undefined;
+      }
+      const base = path.basename(new URL(src).pathname) || "remote-image";
+      filename = /\.(png|jpe?g|webp)$/i.test(base) ? base : `${base}.jpg`;
+    } else {
+      const filePath = path.join(process.cwd(), "public", src.replace(/^\//, ""));
+      if (!fs.existsSync(filePath)) {
+        console.warn(`  ⚠ image not found: ${src}`);
+        return undefined;
+      }
+      buffer = fs.readFileSync(filePath);
+      filename = path.basename(filePath);
     }
 
-    const buffer = fs.readFileSync(filePath);
-    const filename = path.basename(filePath);
     const asset = await client.assets.upload("image", buffer, {
       filename,
       contentType: mimeFor(filename),
       source: {
-        id: `girai-seed${publicPath.replace(/\//g, "-")}`,
+        id: `girai-seed${src.replace(/[/:]/g, "-")}`,
         name: filename,
       },
     });
 
     assetId = asset._id;
-    uploadCache.set(publicPath, assetId);
-    console.log(`  ↑ uploaded ${publicPath}`);
+    uploadCache.set(src, assetId);
+    console.log(`  ↑ uploaded ${src}`);
   }
 
   return {

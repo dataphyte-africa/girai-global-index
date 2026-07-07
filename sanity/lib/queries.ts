@@ -194,6 +194,7 @@ export const evidencePageQuery = groq`
   heroTitleLead, heroTitleAccent, heroSubtitle,
   heroStatLabels,
   pathwayHeading, pathwaySubtitle,
+  searchTitle,
   seoTitle, seoDescription
 }`;
 
@@ -222,7 +223,8 @@ export const pillarsQuery = groq`
 
 export const dimensionsCopyQuery = groq`
 *[_type == "dimensionCopy"]{
-  slug, subtitle, description, eyebrow, heroLead, rankingSubtitle
+  slug, subtitle, description, eyebrow, heroLead, rankingSubtitle,
+  "image": image${imageProjection}
 }`;
 
 export const pathwaysCopyQuery = groq`
@@ -258,6 +260,11 @@ export const downloadModalQuery = groq`
   citationHeadingTemplate, citationBody, methodologyHeading, methodologyBody,
   successBadge, successTitle, successBody, successCtaLabel, successCtaNote,
   successDoneLabel, datasetDriveUrl, datasetDriveName
+}`;
+
+export const countdownModalQuery = groq`
+*[_type == "countdownModal"][0]{
+  enabled, heading, headingAccent, description, targetDate
 }`;
 
 export const reportDownloadQuery = groq`

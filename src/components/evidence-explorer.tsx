@@ -339,32 +339,6 @@ function searchRows(rows: EvidenceIndexRow[], q: string, fuse: Fuse<EvidenceInde
   return slice.search(query).map((r) => r.item);
 }
 
-function normalizeEvidenceText(value: string | null | undefined): string {
-  return (value ?? "").trim().toLowerCase().replace(/\s+/g, " ");
-}
-
-function normalizeEvidenceUrl(value: string | null | undefined): string {
-  return normalizeEvidenceText(value)
-    .replace(/^https?:\/\/(www\.)?/, "")
-    .replace(/[#?].*$/, "")
-    .replace(/\/$/, "");
-}
-
-function displayIdentityForRow(row: EvidenceIndexRow): string {
-  if (row.kind === "framework") return normalizeEvidenceText(row.title) || row.id;
-  return normalizeEvidenceUrl(row.link) || normalizeEvidenceText(row.title) || row.id;
-}
-
-function displayCountForRows(rows: EvidenceIndexRow[]): number {
-  const byKind = new Map<EvidenceKind, Set<string>>();
-  for (const row of rows) {
-    const identities = byKind.get(row.kind) ?? new Set<string>();
-    identities.add(displayIdentityForRow(row));
-    byKind.set(row.kind, identities);
-  }
-  return Array.from(byKind.values()).reduce((sum, identities) => sum + identities.size, 0);
-}
-
 const FUSE_OPTIONS: ConstructorParameters<typeof Fuse<EvidenceIndexRow>>[1] = {
   keys: [
     { name: "title", weight: 1.0 },
@@ -730,7 +704,9 @@ export function EvidenceExplorer({
   // --- Stat cards (dynamic noun when one kind ≥90%) -------------------------
   const stats = React.useMemo(() => {
     const rowTotal = filteredRows.length;
-    const total = displayCountForRows(filteredRows);
+    // Match the count shown in the list/pagination (one row = one item)
+    // rather than a de-duplicated identity count, which was confusing users.
+    const total = rowTotal;
     const countries = new Set(filteredRows.map((r) => r.country.iso3)).size;
     if (rowTotal === 0) return { total, countries, noun: "items", capNoun: "Evidence items" };
     const byKind: Record<string, number> = {};
