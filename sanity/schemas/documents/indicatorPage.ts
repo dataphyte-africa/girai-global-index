@@ -5,9 +5,10 @@ import { DocumentIcon } from "@sanity/icons";
  * Editable copy for a GIRAI indicator detail page (/indicators/[slug]).
  *
  * Fixed set keyed by `slug` (see src/data/2026/taxonomy.ts). The indicator's
- * canonical name, dimension, imagery and score data stay code-owned — only the
- * editorial copy on the page lives here. `background` and `relevance` are rich
- * text that support inline links.
+ * canonical name, dimension and score data stay code-owned — only the editorial
+ * copy and hero imagery on the page live here. `heroImage` is seeded per
+ * indicator (defaulting to the shared banner) and can be overridden per page in
+ * the Studio. `background` and `relevance` are rich text that support links.
  */
 export const indicatorPage = defineType({
   name: "indicatorPage",
@@ -32,6 +33,14 @@ export const indicatorPage = defineType({
       type: "string",
       readOnly: true,
       group: "intro",
+    }),
+    defineField({
+      name: "heroImage",
+      title: "Hero image",
+      type: "contentImage",
+      group: "intro",
+      description:
+        "Banner image behind the indicator title. Defaults to the shared indicator banner; upload a distinct image here to override it for this indicator.",
     }),
     defineField({
       name: "heroLead",

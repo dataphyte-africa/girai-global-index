@@ -54,7 +54,7 @@ export function MethodologyPrinciplesSection({
   const principlesImage =
     content.principlesImage.url ?? methodologyDefaults.principlesImage.url!;
   return (
-    <section className="relative w-full bg-card px-4 py-16 md:px-6 md:py-24 lg:py-28">
+    <section className="relative w-full overflow-x-clip bg-card px-4 py-16 md:px-6 md:py-24 lg:py-28">
       <span
         aria-hidden
         className="pointer-events-none absolute -right-16 top-8 h-64 w-64 rounded-full bg-primary/10 blur-3xl md:-right-8 md:top-12 md:h-80 md:w-80"

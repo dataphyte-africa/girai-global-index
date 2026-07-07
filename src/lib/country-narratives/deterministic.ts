@@ -64,14 +64,14 @@ export function deterministicHeroNarrative(hero: HeroFacts): string {
   const percentileLine = (() => {
     if (hero.rankGlobal === null || hero.totalCountriesScored <= 1) return "";
     if (hero.rankGlobal === 1) {
-      return ` It leads all ${hero.totalCountriesScored} economies assessed this edition.`;
+      return ` It leads all ${hero.totalCountriesScored} countries and jurisdictions assessed this edition.`;
     }
     const pct = Math.round(
       ((hero.totalCountriesScored - hero.rankGlobal) /
         (hero.totalCountriesScored - 1)) *
         100
     );
-    return ` It scores ahead of ${pct}% of the ${hero.totalCountriesScored} economies assessed this edition.`;
+    return ` It scores ahead of ${pct}% of the ${hero.totalCountriesScored} countries and jurisdictions assessed this edition.`;
   })();
 
   const evidenceLine =

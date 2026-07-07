@@ -34,10 +34,10 @@ export default async function MethodologyPage() {
         <MethodologyIntroSection content={content} />
         <MethodologyPrinciplesSection content={content} />
         <MethodologyWhatMeasuresSection content={content} />
+        <MethodologyKeyTermsSection content={content} />
         <MethodologyFrameworkEvolutionSection content={content} />
         <MethodologyFrameworkRefinedSection content={content} />
         <MethodologyEditionChangesSection content={content} />
-        <MethodologyKeyTermsSection content={content} />
         <MethodologyEvidenceStandardsSection content={content} />
         <MethodologyAccessDataSection content={content} />
         <MethodologyResearchProcessSection content={content} />

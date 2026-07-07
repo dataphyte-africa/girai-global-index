@@ -803,6 +803,31 @@ function buildIndicatorPageDocs() {
   });
 }
 
+/**
+ * Hero banner for each indicator detail page, seeded onto the existing
+ * `indicatorPage` docs. Written with `setIfMissing` (see main()) so it only adds
+ * an image where none exists — never clobbering copy or an editor's upload.
+ * Each indicator defaults to the shared banner; override via
+ * `IndicatorCopy.heroImage` in src/lib/indicator-copy.ts.
+ */
+async function buildIndicatorHeroImagePatches() {
+  console.log("Uploading Indicator hero images...");
+  return Promise.all(
+    INDICATORS.map(async (ind) => {
+      const { heroImage } = getIndicatorPageCopy(ind.slug);
+      const image = await uploadPublicImage(client, {
+        url: heroImage,
+        alt: ind.name,
+      });
+      return {
+        label: `indicator-image/${ind.slug}`,
+        id: `indicator-${ind.slug}`,
+        heroImage: img(image),
+      };
+    })
+  );
+}
+
 function buildPathwayDocs() {
   return PATHWAYS.map((p) => ({
     _id: `pathway-${p.id}`,
@@ -871,6 +896,19 @@ async function main() {
     if (!matches(label)) continue;
     await client.createOrReplace(doc as Parameters<typeof client.createOrReplace>[0]);
     console.log(`✓ ${label} seeded`);
+    seeded += 1;
+  }
+
+  // Non-destructive pass: add each indicator's hero image only where the
+  // `indicatorPage` doc has none yet. `setIfMissing` leaves existing copy and
+  // any editor-uploaded image untouched. Seed images alone (without touching
+  // copy) with `pnpm seed:sanity indicator-image`.
+  const heroImagePatches = await buildIndicatorHeroImagePatches();
+  for (const { label, id, heroImage } of heroImagePatches) {
+    if (!matches(label)) continue;
+    if (!heroImage) continue;
+    await client.patch(id).setIfMissing({ heroImage }).commit();
+    console.log(`✓ ${label} hero image set (if missing)`);
     seeded += 1;
   }
 

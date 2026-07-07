@@ -34,13 +34,15 @@ env:
     availability:
       - RUNTIME
 
+  # Reports are shipped in the app bundle and served from /public/downloads
+  # (see firebase.json — the report PDFs are NOT excluded from the deploy).
   - variable: DOWNLOAD_FIRST_REPORT_PATH
-    value: https://storage.googleapis.com/girai-global-index-downloads/GIRAI-2024-report.pdf
+    value: /downloads/GIRAI-2024-report.pdf
     availability:
       - RUNTIME
 
   - variable: DOWNLOAD_SECOND_REPORT_PATH
-    value: https://storage.googleapis.com/girai-global-index-downloads/GIRAI-2026-report.pdf
+    value: /downloads/GIRAI-2026-report.pdf
     availability:
       - RUNTIME
 

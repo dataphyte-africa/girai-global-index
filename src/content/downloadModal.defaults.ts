@@ -35,6 +35,17 @@ export type DownloadModalContent = {
   citationBody: string;
   methodologyHeading: string;
   methodologyBody: string;
+
+  /** Dataset success screen (shown after the form is submitted for a dataset). */
+  successBadge: string;
+  successTitle: string;
+  successBody: string;
+  successCtaLabel: string;
+  successCtaNote: string;
+  successDoneLabel: string;
+  /** Google Drive folder holding all downloadable datasets. */
+  datasetDriveUrl: string;
+  datasetDriveName: string;
 };
 
 export const downloadModalDefaults: DownloadModalContent = {
@@ -74,4 +85,15 @@ export const downloadModalDefaults: DownloadModalContent = {
   methodologyHeading: "Download Methodology",
   methodologyBody:
     "Complete the short form to access the GIRAI methodology document.",
+
+  successBadge: "Access granted",
+  successTitle: "Your data is ready to explore",
+  successBody:
+    "Thanks for telling us how you'll use GIRAI. We've opened the full dataset library for you — browse and download every 2026 and 2024 dataset, country scores and supporting files from one Google Drive folder.",
+  successCtaLabel: "Open the dataset library",
+  successCtaNote: "Opens Google Drive in a new tab",
+  successDoneLabel: "Done",
+  datasetDriveUrl:
+    "https://drive.google.com/drive/folders/1MPIpQpJbhAiMeyCQt2PC4lhoVaJfF5nz",
+  datasetDriveName: "GIRAI Datasets",
 };

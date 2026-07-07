@@ -12,6 +12,7 @@ export const downloadModal = defineType({
     { name: "reasons", title: "Reason options" },
     { name: "license", title: "License & footer" },
     { name: "landing", title: "Download landing pages" },
+    { name: "success", title: "Dataset success screen" },
   ],
   fields: [
     defineField({ name: "title", title: "Title", type: "string", group: "intro" }),
@@ -81,6 +82,22 @@ export const downloadModal = defineType({
     }),
     defineField({ name: "methodologyHeading", title: "Methodology page — heading", type: "string", group: "landing" }),
     defineField({ name: "methodologyBody", title: "Methodology page — body", type: "text", rows: 3, group: "landing" }),
+
+    defineField({
+      name: "datasetDriveUrl",
+      title: "Dataset library — Google Drive URL",
+      type: "url",
+      description:
+        "The Google Drive folder shown on the dataset success screen, where users can view and download all datasets.",
+      group: "success",
+    }),
+    defineField({ name: "datasetDriveName", title: "Dataset library — display name", type: "string", group: "success" }),
+    defineField({ name: "successBadge", title: "Success — badge", type: "string", group: "success" }),
+    defineField({ name: "successTitle", title: "Success — title", type: "string", group: "success" }),
+    defineField({ name: "successBody", title: "Success — body", type: "text", rows: 3, group: "success" }),
+    defineField({ name: "successCtaLabel", title: "Success — Drive button label", type: "string", group: "success" }),
+    defineField({ name: "successCtaNote", title: "Success — Drive button note", type: "string", group: "success" }),
+    defineField({ name: "successDoneLabel", title: "Success — dismiss button label", type: "string", group: "success" }),
   ],
   preview: {
     prepare: () => ({ title: "Download Modal" }),

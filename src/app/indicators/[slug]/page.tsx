@@ -72,7 +72,11 @@ export default async function IndicatorPage({ params }: PageProps) {
       <SiteHeader />
 
       <main className="flex-1">
-        <IndicatorDetailHero name={ind.name} lead={pageCopy.heroLead} />
+        <IndicatorDetailHero
+          name={ind.name}
+          lead={pageCopy.heroLead}
+          image={pageCopy.heroImage}
+        />
         <IndicatorIntroSection
           primary={pageCopy.introPrimary}
           secondary={pageCopy.introSecondary}
