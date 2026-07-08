@@ -41,6 +41,8 @@ import {
 } from "@/data/2026/taxonomy";
 import { getOrdinalSuffix } from "@/lib/narratives";
 import { PILLAR_BADGES } from "@/lib/pillar-badges";
+import { track } from "@/lib/analytics/client";
+import { EVENTS } from "@/lib/analytics/events";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -603,6 +605,12 @@ function ScoreBreakdownCard({
 }) {
   const [mode, setMode] = useState<BreakdownMode>("dimensions");
 
+  const changeMode = (next: BreakdownMode) => {
+    if (next === mode) return;
+    setMode(next);
+    track(EVENTS.COMPARISON_BREAKDOWN_TOGGLED, { mode: next });
+  };
+
   const categories =
     mode === "dimensions"
       ? DIMENSIONS.map((d) => ({ slug: d.slug, name: d.name }))
@@ -625,7 +633,7 @@ function ScoreBreakdownCard({
         <div className="inline-flex rounded-full border bg-muted/50 p-1 text-sm">
           <button
             type="button"
-            onClick={() => setMode("dimensions")}
+            onClick={() => changeMode("dimensions")}
             className={cn(
               "rounded-full px-3 py-1 font-medium transition-all",
               mode === "dimensions"
@@ -637,7 +645,7 @@ function ScoreBreakdownCard({
           </button>
           <button
             type="button"
-            onClick={() => setMode("pillars")}
+            onClick={() => changeMode("pillars")}
             className={cn(
               "rounded-full px-3 py-1 font-medium transition-all",
               mode === "pillars"
@@ -896,7 +904,16 @@ function IndicatorTable({
         </div>
         <div className="flex items-center gap-1.5">
           <ComparisonHelpTip content="Show or hide indicator rows by pillar: AI Policy, CSO Engagement, and Enabling Conditions." />
-          <PillarFilter active={activePillars} onChange={setActivePillars} />
+          <PillarFilter
+            active={activePillars}
+            onChange={(next) => {
+              setActivePillars(next);
+              track(EVENTS.COMPARISON_PILLAR_FILTERED, {
+                active_pillars: Array.from(next),
+                count: next.size,
+              });
+            }}
+          />
         </div>
       </div>
       <Table containerClassName="max-h-[640px] overflow-auto">
@@ -1223,15 +1240,26 @@ export function ComparisonSection({
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
-  const updateSlot = (idx: number, next: EntityRef) =>
+  const updateSlot = (idx: number, next: EntityRef) => {
     applySlots(slots.map((r, i) => (i === idx ? next : r)));
+    if (next) {
+      track(EVENTS.COMPARISON_ENTITY_SELECTED, {
+        entity_kind: next.kind,
+        entity_id: next.kind === "country" ? next.iso3 : next.name,
+        slot_index: idx,
+      });
+    }
+  };
 
-  const removeSlot = (idx: number) =>
+  const removeSlot = (idx: number) => {
     applySlots(slots.filter((_, i) => i !== idx));
+    track(EVENTS.COMPARISON_SLOT_REMOVED, { slot_count: slots.length - 1 });
+  };
 
   const addSlot = () => {
     if (slots.length >= MAX_SLOTS) return;
     applySlots([...slots, null]);
+    track(EVENTS.COMPARISON_SLOT_ADDED, { slot_count: slots.length + 1 });
   };
 
   return (

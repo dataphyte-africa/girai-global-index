@@ -21,6 +21,8 @@ import {
   type DownloadModalContent,
 } from "@/content/downloadModal.defaults";
 import { cn } from "@/lib/utils";
+import { track, identifyByEmail } from "@/lib/analytics/client";
+import { EVENTS } from "@/lib/analytics/events";
 
 const EMPTY_FORM: DataDownloadFormValues = {
   edition: "second",
@@ -94,6 +96,20 @@ export function DataDownloadModal({
     setIsSubmitting(true);
     setError(null);
 
+    identifyByEmail(form.email, {
+      name: form.fullName,
+      organization: form.organization || undefined,
+      role: form.role || undefined,
+    });
+    track(EVENTS.DOWNLOAD_FORM_SUBMITTED, {
+      asset_type: options.assetType,
+      edition: form.edition,
+      reason: form.reason,
+      has_organization: Boolean(form.organization),
+      role: form.role || undefined,
+      source: options.source,
+    });
+
     try {
       const response = await fetch("/api/data-download", {
         method: "POST",
@@ -118,6 +134,11 @@ export function DataDownloadModal({
 
       onSubmitSuccess?.();
 
+      track(EVENTS.DOWNLOAD_COMPLETED, {
+        asset_type: options.assetType,
+        edition: form.edition,
+      });
+
       // Datasets live in a shared Google Drive library, so rather than pushing a
       // single file we surface a success screen linking to the full collection.
       if (options.assetType === "data") {
@@ -137,11 +158,16 @@ export function DataDownloadModal({
 
       onOpenChange(false);
     } catch (submitError) {
-      setError(
+      const message =
         submitError instanceof Error
           ? submitError.message
-          : "Something went wrong. Please try again."
-      );
+          : "Something went wrong. Please try again.";
+      track(EVENTS.DOWNLOAD_FAILED, {
+        asset_type: options.assetType,
+        edition: form.edition,
+        error_message: message,
+      });
+      setError(message);
     } finally {
       setIsSubmitting(false);
     }

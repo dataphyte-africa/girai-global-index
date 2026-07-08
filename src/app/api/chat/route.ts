@@ -1,5 +1,6 @@
 import { createAgentUIStreamResponse, type UIMessage } from "ai";
 import { giraiAgent } from "@/lib/ai/agent";
+import { captureServerException } from "@/lib/analytics/server";
 
 export const maxDuration = 60;
 
@@ -58,9 +59,17 @@ export async function POST(req: Request) {
 
   const trimmed = messages.slice(-MAX_MESSAGES);
 
-  return createAgentUIStreamResponse({
-    agent: giraiAgent,
-    uiMessages: trimmed,
-    sendSources: true,
-  });
+  try {
+    return createAgentUIStreamResponse({
+      agent: giraiAgent,
+      uiMessages: trimmed,
+      sendSources: true,
+    });
+  } catch (error) {
+    await captureServerException(error, undefined, { route: "/api/chat" });
+    return new Response(
+      JSON.stringify({ error: "The AI assistant failed to respond." }),
+      { status: 500, headers: { "Content-Type": "application/json" } }
+    );
+  }
 }

@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { track, identifyByEmail } from "@/lib/analytics/client";
+import { EVENTS } from "@/lib/analytics/events";
 
 type Status = "idle" | "loading" | "success" | "error";
 
@@ -34,15 +36,21 @@ export function FooterSubscribeForm({
       const data = (await res.json().catch(() => ({}))) as { error?: string };
 
       if (res.ok) {
+        identifyByEmail(email, { name: name || undefined });
+        track(EVENTS.NEWSLETTER_SUBSCRIBED, { has_name: Boolean(name) });
         setStatus("success");
         setMessage("Almost there — check your inbox to confirm.");
         setName("");
         setEmail("");
       } else {
+        track(EVENTS.NEWSLETTER_SUBSCRIBE_FAILED, {
+          error_message: data.error ?? "unknown",
+        });
         setStatus("error");
         setMessage(data.error ?? "Something went wrong. Please try again.");
       }
     } catch {
+      track(EVENTS.NEWSLETTER_SUBSCRIBE_FAILED, { error_message: "network" });
       setStatus("error");
       setMessage("Something went wrong. Please try again.");
     }

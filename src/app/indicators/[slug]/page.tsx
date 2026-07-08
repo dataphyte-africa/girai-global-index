@@ -29,6 +29,8 @@ import {
   getIndicator,
   type IndicatorDef,
 } from "@/data/2026/taxonomy";
+import { PageViewEvent } from "@/components/analytics/page-view-event";
+import { EVENTS } from "@/lib/analytics/events";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -76,6 +78,14 @@ export default async function IndicatorPage({ params }: PageProps) {
   return (
     <div className="flex min-h-screen flex-col bg-background font-sans dark:bg-black">
       <SiteHeader />
+      <PageViewEvent
+        event={EVENTS.INDICATOR_PAGE_VIEWED}
+        properties={{
+          indicator_slug: ind.slug,
+          indicator_name: pageCopy.name,
+          pillar: ind.pillar,
+        }}
+      />
 
       <main className="flex-1">
         <IndicatorDetailHero

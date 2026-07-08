@@ -20,6 +20,8 @@ import {
 } from "@/lib/girai";
 import { regionToSlug } from "@/lib/regions";
 import { getRegionCopy } from "@/content/regionCopy";
+import { PageViewEvent } from "@/components/analytics/page-view-event";
+import { EVENTS } from "@/lib/analytics/events";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -80,6 +82,14 @@ export default async function RegionPage({ params }: PageProps) {
   return (
     <div className="flex min-h-screen flex-col bg-background font-sans dark:bg-black">
       <SiteHeader />
+      <PageViewEvent
+        event={EVENTS.REGION_PAGE_VIEWED}
+        properties={{
+          region: regionName,
+          country_count: regionCountries.length,
+          region_avg_girai: regionAvg,
+        }}
+      />
       <main className="flex-1">
         <RegionHero regionName={regionName} blurb={copy.blurb} />
 

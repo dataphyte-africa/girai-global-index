@@ -14,6 +14,8 @@ import {
   findIndicator,
 } from "@/data/2026/taxonomy";
 import { dimensionColors } from "@/lib/narratives";
+import { PageViewEvent } from "@/components/analytics/page-view-event";
+import { EVENTS } from "@/lib/analytics/events";
 import type { EvidenceItem, EvidenceKind } from "@/lib/girai";
 
 interface PageProps {
@@ -68,6 +70,16 @@ export default async function EvidenceItemPage({ params }: PageProps) {
   return (
     <div className="flex min-h-screen flex-col bg-background font-sans dark:bg-black">
       <SiteHeader />
+      <PageViewEvent
+        event={EVENTS.EVIDENCE_ITEM_OPENED}
+        properties={{
+          item_id: item.id,
+          country: item.country.iso3,
+          kind: item.kind,
+          indicator_slug: item.indicatorSlug,
+          dimension_slug: item.dimensionSlug,
+        }}
+      />
 
       <section
         className="relative overflow-hidden border-b border-border"
