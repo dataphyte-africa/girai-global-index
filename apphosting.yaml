@@ -23,6 +23,25 @@ env:
       - BUILD
       - RUNTIME
 
+  # PostHog analytics. NEXT_PUBLIC_* vars are inlined into the client bundle at
+  # BUILD time, so BOTH must be available at BUILD (not just RUNTIME) or the
+  # browser SDK never initializes. The project API key is publishable (it ships
+  # in the client bundle regardless); kept as a secret only for tidy management.
+  # Set it before deploying:
+  #   firebase apphosting:secrets:set NEXT_PUBLIC_POSTHOG_KEY
+  - variable: NEXT_PUBLIC_POSTHOG_KEY
+    secret: NEXT_PUBLIC_POSTHOG_KEY
+    availability:
+      - BUILD
+      - RUNTIME
+
+  # Region host — use https://eu.i.posthog.com if the project lives on EU Cloud.
+  - variable: NEXT_PUBLIC_POSTHOG_HOST
+    value: https://us.i.posthog.com
+    availability:
+      - BUILD
+      - RUNTIME
+
   - variable: OPENAI_VECTOR_STORE_ID
     value: vs_6a3a6e41c3548191b72539d24aa60b0b
     availability:
