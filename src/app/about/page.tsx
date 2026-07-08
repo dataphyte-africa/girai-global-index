@@ -37,7 +37,10 @@ export default async function AboutPage() {
         <AboutHero content={content} />
         <AboutIntroSection content={content} />
         <AboutWhyGiraiMattersSection content={content} />
-        <AboutGcgLedSection content={content} />
+        <AboutGcgLedSection
+          content={content}
+          funderLogos={footerContent.funderLogos}
+        />
         <AboutWhatIndexMeasuresSection content={content} />
         <OurImpactSection
           content={{
@@ -49,10 +52,7 @@ export default async function AboutPage() {
             impactCtaHref: content.impactCtaHref,
           }}
         />
-        <AboutContributorsSection
-          content={content}
-          funderLogos={footerContent.funderLogos}
-        />
+        <AboutContributorsSection content={content} />
         <AboutPeopleBehindResearchSection content={content} />
         <AboutAdvisoryCommitteeSection content={content} />
         <AboutWhoGiraiIsForSection content={content} />
