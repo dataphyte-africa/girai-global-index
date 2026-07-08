@@ -61,7 +61,7 @@ env:
       - RUNTIME
 
   - variable: DOWNLOAD_SECOND_REPORT_PATH
-    value: /downloads/GIRAI-2026-report.pdf
+    value: /downloads/Global-Index-on-Responsible-AI-2026.pdf
     availability:
       - RUNTIME
 
