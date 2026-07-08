@@ -23,8 +23,10 @@ const PUBLIC_DOWNLOADS = {
   secondReport: process.env.DOWNLOAD_SECOND_REPORT_PATH ?? "/downloads/Global-Index-on-Responsible-AI-2026.pdf",
   firstData: process.env.DOWNLOAD_FIRST_DATA_PATH ?? "/downloads/GIRAI_2024_dataset.xlsx",
   secondData: process.env.DOWNLOAD_SECOND_DATA_PATH ?? "/downloads/GIRAI_2026_dataset.xlsx",
-  methodology:
-    process.env.DOWNLOAD_METHODOLOGY_PATH ?? "/downloads/GIRAI-methodology.pdf",
+  firstMethodology:
+    process.env.DOWNLOAD_FIRST_METHODOLOGY_PATH ?? "/downloads/GIRAI-2024-methodology.pdf",
+  secondMethodology:
+    process.env.DOWNLOAD_SECOND_METHODOLOGY_PATH ?? "/downloads/GIRAI-2026-methodology.pdf",
 };
 
 /** Maps edition + asset type to downloadable files. Paths can be swapped via env vars. */
@@ -33,11 +35,17 @@ export function getDownloadAsset(
   assetType: DownloadAssetType
 ): DownloadAsset {
   if (assetType === "methodology") {
-    return {
-      path: PUBLIC_DOWNLOADS.methodology,
-      filename: "GIRAI-methodology.pdf",
-      mimeType: "application/pdf",
-    };
+    return edition === "first"
+      ? {
+          path: PUBLIC_DOWNLOADS.firstMethodology,
+          filename: "GIRAI-2024-methodology.pdf",
+          mimeType: "application/pdf",
+        }
+      : {
+          path: PUBLIC_DOWNLOADS.secondMethodology,
+          filename: "GIRAI-2026-methodology.pdf",
+          mimeType: "application/pdf",
+        };
   }
 
   if (assetType === "data") {

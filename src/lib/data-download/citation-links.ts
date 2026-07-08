@@ -37,7 +37,9 @@ export function getCitationDownloadPath(
   edition?: DownloadEdition
 ): string {
   if (assetType === "methodology") {
-    return "/download/methodology";
+    return edition
+      ? `/download/methodology/${editionToYear(edition)}`
+      : "/download/methodology";
   }
 
   if (!edition) {
@@ -80,7 +82,7 @@ export function buildCitationSource(
 ): string {
   const path =
     target.assetType === "methodology"
-      ? "methodology"
+      ? `methodology${target.edition ? `/${editionToYear(target.edition)}` : ""}`
       : `${target.assetType}/${target.edition ? editionToYear(target.edition) : "unknown"}`;
 
   const ref = searchParams.get("ref")?.trim();
@@ -102,8 +104,12 @@ export function parseDownloadRoute(
   assetType: string,
   year?: string
 ): CitationDownloadTarget | null {
-  if (assetType === "methodology" && !year) {
-    return { assetType: "methodology" };
+  if (assetType === "methodology") {
+    // Year-less path keeps working (defaults to the latest edition on download).
+    if (!year) return { assetType: "methodology" };
+    const methodologyEdition = yearToEdition(year);
+    if (!methodologyEdition) return null;
+    return { assetType: "methodology", edition: methodologyEdition };
   }
 
   if (assetType !== "report" && assetType !== "data") {
@@ -127,5 +133,6 @@ export const CITATION_DOWNLOAD_TARGETS: Array<{
   { label: "2024 Report", assetType: "report", edition: "first" },
   { label: "2026 Dataset", assetType: "data", edition: "second" },
   { label: "2024 Dataset", assetType: "data", edition: "first" },
-  { label: "Methodology", assetType: "methodology" },
+  { label: "2026 Methodology", assetType: "methodology", edition: "second" },
+  { label: "2024 Methodology", assetType: "methodology", edition: "first" },
 ];
