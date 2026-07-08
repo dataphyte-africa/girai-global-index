@@ -7,6 +7,8 @@ import {
   downloadModalDefaults,
   type DownloadModalContent,
 } from "@/content/downloadModal.defaults";
+import { track } from "@/lib/analytics/client";
+import { EVENTS } from "@/lib/analytics/events";
 
 type DataDownloadContextValue = {
   openDataDownload: (options: DataDownloadOpenOptions) => void;
@@ -32,6 +34,11 @@ export function DataDownloadProvider({
     (nextOptions: DataDownloadOpenOptions) => {
       setOptions(nextOptions);
       setOpen(true);
+      track(EVENTS.DOWNLOAD_MODAL_OPENED, {
+        asset_type: nextOptions.assetType,
+        edition: nextOptions.edition,
+        source: nextOptions.source,
+      });
     },
     []
   );

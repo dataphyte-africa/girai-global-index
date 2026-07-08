@@ -23,6 +23,8 @@ import {
 } from "./scroll";
 import { evidenceDefaults, type EvidenceContent } from "@/content/evidence.defaults";
 import { PATHWAY_COPY_DEFAULTS, type PathwayCopyMap } from "@/content/pathways.defaults";
+import { track } from "@/lib/analytics/client";
+import { EVENTS } from "@/lib/analytics/events";
 
 const PATHWAY_ICONS: Record<PathwayConfig["id"], LucideIcon> = {
   frameworks: FileText,
@@ -54,6 +56,10 @@ export function PathwayPicker({
     params.delete("page");
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
     scrollToEvidenceHubSection(EVIDENCE_HUB_SECTIONS.indicatorTable);
+    track(EVENTS.EVIDENCE_PATHWAY_SELECTED, {
+      pathway: pathway.id,
+      kind: pathway.kindParam,
+    });
   };
 
   return (

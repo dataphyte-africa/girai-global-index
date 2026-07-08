@@ -1,4 +1,9 @@
 import { type NextRequest, NextResponse } from "next/server";
+import {
+  captureServerEvent,
+  captureServerException,
+} from "@/lib/analytics/server";
+import { EVENTS } from "@/lib/analytics/events";
 
 // Mailchimp audience config. The API key is a secret and must never reach the
 // browser — it is only read here, server-side.
@@ -54,6 +59,11 @@ export async function POST(req: NextRequest) {
     });
 
     if (res.ok) {
+      await captureServerEvent({
+        distinctId: email,
+        event: EVENTS.NEWSLETTER_SUBSCRIBE_REQUESTED,
+        properties: { has_name: Boolean(name) },
+      });
       return NextResponse.json({ ok: true });
     }
 
@@ -77,6 +87,9 @@ export async function POST(req: NextRequest) {
     );
   } catch (err) {
     console.error("Mailchimp subscribe error:", err);
+    await captureServerException(err, email || undefined, {
+      route: "/api/subscribe",
+    });
     return NextResponse.json(
       { error: "Something went wrong. Please try again." },
       { status: 502 }

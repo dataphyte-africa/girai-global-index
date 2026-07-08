@@ -58,6 +58,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
+import { track } from "@/lib/analytics/client";
+import { EVENTS } from "@/lib/analytics/events";
 import { iso3ToIso2 } from "@/data/countries";
 import { DIMENSIONS, PILLARS, type PillarSlug } from "@/data/2026/taxonomy";
 import { PILLAR_BADGES } from "@/lib/pillar-badges";
@@ -694,6 +696,19 @@ export function EvidenceExplorer({
     return sortRows(searched);
   }, [allRows, urlState.facets, urlState.q, fuse]);
 
+  // Fire an analytics event once the search results settle for a given query.
+  // Depends on the resolved `urlState.q` (post-debounce) so we don't emit an
+  // event per keystroke.
+  React.useEffect(() => {
+    const q = urlState.q.trim();
+    if (!q) return;
+    track(EVENTS.EVIDENCE_SEARCHED, {
+      query_length: q.length,
+      result_count: filteredRows.length,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [urlState.q]);
+
   const totalPages = Math.max(1, Math.ceil(filteredRows.length / PAGE_SIZE));
   const currentPage = Math.min(urlState.page, totalPages);
   const pageRows = React.useMemo(
@@ -728,10 +743,16 @@ export function EvidenceExplorer({
   const toggleFacet = React.useCallback(
     (key: FacetKey, value: string) => {
       const current = urlState.facets[key];
-      const next = current.includes(value)
+      const isRemoving = current.includes(value);
+      const next = isRemoving
         ? current.filter((v) => v !== value)
         : [...current, value];
       writeState({ ...urlState, facets: { ...urlState.facets, [key]: next }, page: 1 });
+      track(EVENTS.EVIDENCE_FILTER_APPLIED, {
+        facet_type: key,
+        value,
+        action: isRemoving ? "remove" : "add",
+      });
     },
     [urlState, writeState]
   );

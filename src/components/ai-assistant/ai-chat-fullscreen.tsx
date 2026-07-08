@@ -19,6 +19,8 @@ import {
 import { Button } from "@/components/ui/button";
 import type { GiraiAgentUIMessage } from "@/lib/ai/agent";
 import { cn } from "@/lib/utils";
+import { track } from "@/lib/analytics/client";
+import { EVENTS } from "@/lib/analytics/events";
 import { AiChatMessages } from "./ai-chat-messages";
 import { AiSuggestions } from "./ai-suggestions";
 
@@ -39,6 +41,10 @@ export function AiChatFullscreen({
     (message: PromptInputMessage) => {
       if (!message.text?.trim()) return;
       sendMessage({ text: message.text });
+      track(EVENTS.AI_MESSAGE_SENT, {
+        message_length: message.text.trim().length,
+        source: "input",
+      });
       setInput("");
     },
     [sendMessage]
@@ -47,6 +53,10 @@ export function AiChatFullscreen({
   const handleSuggestion = useCallback(
     (text: string) => {
       sendMessage({ text });
+      track(EVENTS.AI_MESSAGE_SENT, {
+        message_length: text.trim().length,
+        source: "suggestion",
+      });
     },
     [sendMessage]
   );
@@ -59,6 +69,7 @@ export function AiChatFullscreen({
 
   useEffect(() => {
     if (!open) return;
+    track(EVENTS.AI_ASSISTANT_OPENED);
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") onOpenChange(false);
     };

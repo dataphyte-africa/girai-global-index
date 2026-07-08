@@ -5,6 +5,11 @@ import {
   appendDataDownloadSubmission,
   isGoogleSheetsConfigured,
 } from "@/lib/google-sheets";
+import {
+  captureServerEvent,
+  captureServerException,
+} from "@/lib/analytics/server";
+import { EVENTS } from "@/lib/analytics/events";
 
 const submissionSchema = z.object({
   edition: z.enum(["first", "second"]),
@@ -54,6 +59,20 @@ export async function POST(request: Request) {
 
     await appendDataDownloadSubmission(submission);
 
+    // Server-side capture (distinct ID = email to match the client identify)
+    // so downloads are recorded even if a client-side blocker drops events.
+    await captureServerEvent({
+      distinctId: submission.email,
+      event: EVENTS.DOWNLOAD_REQUESTED,
+      properties: {
+        asset_type: submission.assetType,
+        edition: submission.edition,
+        reason: submission.reason,
+        has_organization: Boolean(submission.organization),
+        source: submission.source,
+      },
+    });
+
     const downloadUrl = getPublicDownloadUrl(
       submission.edition,
       submission.assetType
@@ -76,6 +95,9 @@ export async function POST(request: Request) {
     });
   } catch (error) {
     console.error("[data-download] submission failed:", error);
+    await captureServerException(error, undefined, {
+      route: "/api/data-download",
+    });
     return NextResponse.json(
       { error: "Failed to process download request" },
       { status: 500 }

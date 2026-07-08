@@ -25,6 +25,8 @@ import { ComparisonSection } from "@/components/comparison-section";
 import { SiteHeader } from "@/components/site-header";
 import { getPillarCopy } from "@/content/pillars";
 import { getIndicatorNames } from "@/content/indicatorPages";
+import { PageViewEvent } from "@/components/analytics/page-view-event";
+import { EVENTS } from "@/lib/analytics/events";
 
 interface PageProps {
   params: Promise<{ iso3: string }>;
@@ -74,6 +76,16 @@ export default async function CountryStoryPage({ params }: PageProps) {
   return (
     <div className="flex flex-col min-h-screen bg-background font-sans dark:bg-black">
       <SiteHeader />
+      <PageViewEvent
+        event={EVENTS.COUNTRY_PAGE_VIEWED}
+        properties={{
+          country_iso3: country.iso3,
+          country_name: country.name,
+          region: country.region,
+          rank_global: country.rankGlobal,
+          girai_score: country.girai,
+        }}
+      />
       <main className="flex-1">
         <CountryScoreHero country={country} />
        { /* <IndicatorStorySection country={country} /> */}
