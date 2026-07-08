@@ -146,15 +146,29 @@ export function DataDownloadModal({
         return;
       }
 
-      // Open the PDF in a new tab so the browser renders it inline rather than
-      // forcing a download (no `download` attribute, target="_blank").
-      const anchor = document.createElement("a");
-      anchor.href = payload.downloadUrl;
-      anchor.target = "_blank";
-      anchor.rel = "noopener noreferrer";
-      document.body.appendChild(anchor);
-      anchor.click();
-      anchor.remove();
+      // Prefer opening the PDF in a new tab so the browser renders it inline.
+      // The submit is behind an async fetch, so this runs outside the original
+      // user gesture and can be caught by pop-up blockers — when that happens
+      // `window.open` returns null (or a closed window), so we fall back to a
+      // direct download instead of silently failing.
+      const newTab = window.open(
+        payload.downloadUrl,
+        "_blank",
+        "noopener,noreferrer"
+      );
+
+      const popupBlocked =
+        !newTab || newTab.closed || typeof newTab.closed === "undefined";
+
+      if (popupBlocked) {
+        const anchor = document.createElement("a");
+        anchor.href = payload.downloadUrl;
+        anchor.download = payload.filename ?? "";
+        anchor.rel = "noopener noreferrer";
+        document.body.appendChild(anchor);
+        anchor.click();
+        anchor.remove();
+      }
 
       onOpenChange(false);
     } catch (submitError) {
@@ -265,8 +279,8 @@ export function DataDownloadModal({
                         )
                       }
                       className={cn(
-                        "h-11 w-full appearance-none rounded-lg border border-[#e2e2ea] bg-white px-3.5 pr-10 text-sm text-[#1a1a2e] focus:outline-none focus:ring-2 focus:ring-primary/40 dark:border-input dark:bg-background",
-                        !form.reason && "text-[#b8b8c8]"
+                        "h-11 w-full appearance-none rounded-lg border border-[#e2e2ea] bg-white px-3.5 pr-10 text-sm text-[#1a1a2e] focus:outline-none focus:ring-2 focus:ring-primary/40 dark:border-input dark:bg-background dark:text-foreground",
+                        !form.reason && "text-[#b8b8c8] dark:text-muted-foreground"
                       )}
                     >
                       <option value="" disabled>

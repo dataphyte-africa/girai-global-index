@@ -83,7 +83,9 @@ export async function POST(request: Request) {
           ? "GIRAI_2024_dataset.xlsx"
           : "GIRAI_2026_dataset.xlsx"
         : submission.assetType === "methodology"
-          ? "GIRAI-methodology.pdf"
+          ? submission.edition === "first"
+            ? "GIRAI-2024-methodology.pdf"
+            : "GIRAI-2026-methodology.pdf"
           : submission.edition === "first"
             ? "GIRAI-2024-report.pdf"
             : "Global-Index-on-Responsible-AI-2026.pdf";
