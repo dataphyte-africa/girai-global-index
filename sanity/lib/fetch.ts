@@ -8,12 +8,22 @@ import { client } from "./client";
 const token = process.env.SANITY_API_READ_TOKEN;
 
 /**
+ * Fallback revalidation window (seconds) for published reads.
+ *
+ * Freshness is normally driven on-demand by the Sanity webhook
+ * (src/app/api/revalidate/route.ts), which busts the relevant tags/paths the
+ * moment content is published. This time-based window is only a safety net for
+ * hosts where that webhook isn't wired.
+ */
+const PUBLISHED_REVALIDATE_SECONDS = 3600;
+
+/**
  * Draft-Mode-aware Sanity fetch.
  *
- * Published reads skip both Next.js fetch cache and the Sanity CDN so CMS edits
- * appear on the next request once pages are rendered dynamically (root layout
- * `export const dynamic = 'force-dynamic'`). Tags are kept for hosts where on-demand
- * revalidation works (e.g. Vercel).
+ * Draft reads bypass the CDN and all caching so preview always shows the latest
+ * edits. Published reads go through the Sanity CDN (the larger, cheaper request
+ * pool) and are cached in the Next.js Data Cache, keyed by `tags`; the webhook
+ * at src/app/api/revalidate/route.ts invalidates those tags on publish.
  */
 export async function sanityFetch<QueryResponse>({
   query,
@@ -33,16 +43,17 @@ export async function sanityFetch<QueryResponse>({
   }
 
   return client.fetch<QueryResponse>(query, params, {
-    ...(isDraftMode && {
-      token,
-      perspective: "drafts",
-      useCdn: false,
-    }),
-    ...(!isDraftMode && {
-      useCdn: false,
-    }),
+    ...(isDraftMode
+      ? {
+          token,
+          perspective: "drafts",
+          useCdn: false,
+        }
+      : {
+          useCdn: true,
+        }),
     next: {
-      revalidate: 0,
+      revalidate: isDraftMode ? 0 : PUBLISHED_REVALIDATE_SECONDS,
       tags,
     },
   });

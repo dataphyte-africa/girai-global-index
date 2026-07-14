@@ -10,9 +10,6 @@ import { getDownloadModalContent } from "@/content/downloadModal";
 import { getCountdownModalContent } from "@/content/countdownModal";
 import { CountdownModal } from "@/components/countdown/countdown-modal";
 
-/** CMS pages must SSR — see src/lib/cms-rendering.ts */
-export const dynamic = "force-dynamic";
-
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
   subsets: ["latin"],
