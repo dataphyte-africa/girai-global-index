@@ -5,6 +5,28 @@ import { evidenceSource, indicatorSource, mergeSources } from "../sources";
 import type { GiraiToolResult } from "../types";
 import { resolveIndicator, resolveRegion } from "../utils";
 
+/**
+ * Dropped from a free-text query before matching, since the model tends to
+ * phrase `query` as a sentence and every surviving term has to pass the AND
+ * below. Function words only — dropping content words ("documented",
+ * "evidence") would silently narrow the query to something the user never
+ * asked for, which is worse than matching nothing.
+ */
+const QUERY_STOPWORDS = new Set([
+  "the", "and", "for", "with", "that", "which", "have", "has", "had", "are",
+  "was", "were", "any", "all", "from", "into", "about", "there", "their",
+  "been", "does", "did", "this", "these", "those", "its",
+]);
+
+const tokenize = (query: string): string[] => [
+  ...new Set(
+    query
+      .toLowerCase()
+      .split(/[^a-z0-9]+/)
+      .filter((t) => t.length > 2 && !QUERY_STOPWORDS.has(t))
+  ),
+];
+
 const EVIDENCE_KINDS = [
   "framework",
   "initiative",
@@ -17,9 +39,17 @@ const EVIDENCE_KINDS = [
 
 export const searchEvidenceTool = tool({
   description:
-    "Search evidence items by text query and optional filters (country, indicator, kind, region).",
+    "Search evidence items by text query and optional filters (country, indicator, kind, region). " +
+    "`items` is only a sample, capped at `limit`. To answer 'which countries have …' use " +
+    "`countries` — a roll-up of every match, complete regardless of `limit`.",
   inputSchema: z.object({
-    query: z.string().optional().describe("Free-text search in title/justification"),
+    query: z
+      .string()
+      .optional()
+      .describe(
+        "Keyword search in title/justification/country — every keyword must match. " +
+          "Pass distinctive keywords, not a sentence. Omit it when the kind/country/indicator filters already express the question."
+      ),
     countryIso3: z.string().optional().describe("Filter by country ISO3"),
     indicatorSlug: z.string().optional().describe("Filter by indicator slug or name"),
     kind: z.enum(EVIDENCE_KINDS).optional().describe("Evidence kind filter"),
@@ -52,15 +82,54 @@ export const searchEvidenceTool = tool({
         items = items.filter((it) => it.country.region === region);
       }
     }
-    if (input.query?.trim()) {
-      const q = input.query.toLowerCase();
-      items = items.filter(
-        (it) =>
-          it.title.toLowerCase().includes(q) ||
-          it.justification.toLowerCase().includes(q) ||
-          it.country.name.toLowerCase().includes(q)
-      );
+    // Match on tokens, not the raw string: substring-matching the whole query
+    // meant any multi-word phrase matched nothing at all.
+    //
+    // If the keywords still match nothing but the structured filters matched
+    // something, keep those rather than reporting zero — a prose `query` used to
+    // wipe out a valid `kind` search and make the assistant claim no such
+    // evidence existed. `queryIgnored` tells the model that happened. Without a
+    // structured filter there is nothing to fall back to, so zero stands.
+    const hasStructuredFilter = Boolean(
+      input.countryIso3 || input.indicatorSlug || input.kind || input.region
+    );
+    const hasQuery = Boolean(input.query?.trim());
+    const tokens = hasQuery ? tokenize(input.query!) : [];
+    let queryIgnored = false;
+
+    if (tokens.length > 0) {
+      const matched = items.filter((it) => {
+        const haystack =
+          `${it.title} ${it.justification} ${it.country.name}`.toLowerCase();
+        return tokens.every((t) => haystack.includes(t));
+      });
+      if (matched.length > 0 || !hasStructuredFilter) items = matched;
+      else queryIgnored = true;
+    } else if (hasQuery) {
+      // Nothing searchable survived tokenizing (all stopwords / too short), so
+      // no text filter was applied. Flag it rather than passing every item off
+      // as a match for the query.
+      queryIgnored = true;
     }
+
+    // Rolled up over every match, not just the returned page: "which countries
+    // have X evidence" is a common question, and `items` is capped at `limit`
+    // while the data is ordered by country — so a truncated page silently cuts
+    // the answer off partway through the alphabet. Bounded by the country count.
+    const tally = new Map<string, { iso3: string; name: string; count: number }>();
+    for (const it of items) {
+      const seen = tally.get(it.country.iso3);
+      if (seen) seen.count += 1;
+      else
+        tally.set(it.country.iso3, {
+          iso3: it.country.iso3,
+          name: it.country.name,
+          count: 1,
+        });
+    }
+    const countries = [...tally.values()].sort(
+      (a, b) => b.count - a.count || a.name.localeCompare(b.name)
+    );
 
     const limited = items.slice(0, input.limit).map((it) => ({
       id: it.id,
@@ -88,8 +157,19 @@ export const searchEvidenceTool = tool({
       data: {
         count: limited.length,
         totalMatched: items.length,
+        itemsTruncated: items.length > limited.length,
+        countryCount: countries.length,
+        countries,
         items: limited,
         filters: input,
+        ...(tokens.length > 0 ? { queryTokens: tokens } : {}),
+        ...(queryIgnored
+          ? {
+              queryIgnored: true,
+              queryIgnoredNote:
+                "No evidence text matched the keywords in `query`, so it was dropped and these results reflect the other filters only. Say the text search matched nothing — do NOT claim no such evidence exists.",
+            }
+          : {}),
       },
       sources: mergeSources(
         limited
