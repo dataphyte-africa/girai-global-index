@@ -5,6 +5,7 @@ export { IndicatorDetailHero } from "./indicator-detail-hero";
 export { IndicatorIntroSection } from "./indicator-intro-section";
 export { IndicatorCountriesMap } from "./indicator-countries-map";
 export { IndicatorBackgroundRelevanceSection } from "./indicator-background-relevance-section";
+export { IndicatorBrightSpotsSection } from "./indicator-bright-spots-section";
 export { IndicatorEvidenceExplorerSection } from "./indicator-evidence-explorer-section";
 export { IndicatorReportDownloadSection } from "./indicator-report-download-section";
 export { IndicatorPerformanceByRegionSection } from "./indicator-performance-by-region-section";

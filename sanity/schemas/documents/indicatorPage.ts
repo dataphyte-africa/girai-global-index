@@ -1,4 +1,4 @@
-import { defineField, defineType } from "sanity";
+import { defineArrayMember, defineField, defineType } from "sanity";
 import { DocumentIcon } from "@sanity/icons";
 
 /**
@@ -11,6 +11,8 @@ import { DocumentIcon } from "@sanity/icons";
  * `heroImage` is seeded per
  * indicator (defaulting to the shared banner) and can be overridden per page in
  * the Studio. `background` and `relevance` are rich text that support links.
+ * `brightSpots` (max 2) has no code default — it is authored only here, and the
+ * seed carries existing values forward rather than writing them.
  */
 export const indicatorPage = defineType({
   name: "indicatorPage",
@@ -20,6 +22,7 @@ export const indicatorPage = defineType({
   groups: [
     { name: "intro", title: "Hero & Intro", default: true },
     { name: "body", title: "Background & Relevance" },
+    { name: "brightSpots", title: "Bright Spots" },
   ],
   fields: [
     defineField({
@@ -59,7 +62,8 @@ export const indicatorPage = defineType({
       type: "text",
       rows: 3,
       group: "intro",
-      description: "Dark, leading clause of the split-tone intro section.",
+      description:
+        "Dark, leading clause of the split-tone intro section. Clear this to hide the whole intro section on this indicator.",
     }),
     defineField({
       name: "introSecondary",
@@ -67,7 +71,8 @@ export const indicatorPage = defineType({
       type: "text",
       rows: 3,
       group: "intro",
-      description: "Muted, trailing clause of the split-tone intro section.",
+      description:
+        "Muted, trailing clause of the split-tone intro section. Optional — clear this to show the primary clause alone.",
     }),
     defineField({
       name: "background",
@@ -82,6 +87,16 @@ export const indicatorPage = defineType({
       type: "richText",
       group: "body",
       description: "The “Relevance of …” column. Rich text — supports links.",
+    }),
+    defineField({
+      name: "brightSpots",
+      title: "Bright spots",
+      type: "array",
+      group: "brightSpots",
+      of: [defineArrayMember({ type: "brightSpot" })],
+      validation: (rule) => rule.max(2),
+      description:
+        "Up to two country examples, shown below Background & Relevance. Leave empty to hide the section.",
     }),
   ],
   preview: {

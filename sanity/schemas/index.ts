@@ -16,6 +16,7 @@ import { findingChart } from "./objects/findingChart";
 import { findingTable } from "./objects/findingTable";
 import { findingBody } from "./objects/findingBody";
 import { keyFinding } from "./objects/keyFinding";
+import { brightSpot } from "./objects/brightSpot";
 
 import { siteSettings } from "./singletons/siteSettings";
 import { header } from "./singletons/header";
@@ -58,6 +59,7 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   findingTable,
   findingBody,
   keyFinding,
+  brightSpot,
   // Singletons
   siteSettings,
   header,

@@ -1,34 +1,18 @@
 import Image from "next/image";
 import type { EvidenceContent } from "@/content/evidence.defaults";
 import { evidenceDefaults } from "@/content/evidence.defaults";
+import type { Stat } from "@/content/takeaways.defaults";
 
 export interface EvidenceHeroProps {
-  countriesIndexed: number;
-  frameworkCount: number;
-  evidenceItemCount: number;
-  indicatorCount: number;
+  /** Editor-maintained stat tiles, shared with the homepage Evidence Explorer card. */
+  stats: Stat[];
   content?: EvidenceContent;
 }
 
 export function EvidenceHero({
-  countriesIndexed,
-  frameworkCount,
-  evidenceItemCount,
-  indicatorCount,
+  stats,
   content = evidenceDefaults,
 }: EvidenceHeroProps) {
-  const values = [
-    countriesIndexed.toLocaleString(),
-    frameworkCount.toLocaleString(),
-    evidenceItemCount.toLocaleString(),
-    indicatorCount.toLocaleString(),
-  ];
-  const labels = content.heroStatLabels;
-  const stats = values.map((value, index) => ({
-    value,
-    label: labels[index] ?? evidenceDefaults.heroStatLabels[index] ?? "",
-  }));
-
   return (
     <section
       id="evidence-hero"
@@ -58,8 +42,8 @@ export function EvidenceHero({
         </p>
 
         <dl className="mt-10 grid grid-cols-2 gap-6 sm:grid-cols-4">
-          {stats.map((stat) => (
-            <div key={stat.label} className="flex flex-col gap-1">
+          {stats.map((stat, index) => (
+            <div key={stat.label + index} className="flex flex-col gap-1">
               <dt className="text-2xl font-medium tracking-tight text-primary md:text-3xl">
                 {stat.value}
               </dt>
