@@ -11,6 +11,7 @@ import {
   FindingBody,
   FindingBrightSpotBody,
 } from "@/components/takeaways/finding-content";
+import { BrightSpotCallout } from "@/components/bright-spot-callout";
 import type { Takeaway } from "@/components/takeaways/types";
 import type { KeyFinding } from "@/content/keyFindings";
 
@@ -89,24 +90,6 @@ function AccordionCard({
         ) : null}
       </AnimatePresence>
     </motion.div>
-  );
-}
-
-/** Bright Spot callout shared by both content variants. */
-function BrightSpotCallout({
-  country,
-  children,
-}: {
-  country?: string | null;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="mt-5 rounded-xl bg-primary/5 px-4 py-3 dark:bg-primary/10">
-      <p className="text-xs font-semibold uppercase tracking-wide text-primary">
-        Bright Spot{country ? ` · ${country}` : ""}
-      </p>
-      {children}
-    </div>
   );
 }
 

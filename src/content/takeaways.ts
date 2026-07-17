@@ -1,7 +1,7 @@
 import { sanityFetch } from "../../sanity/lib/fetch";
 import { takeawaysPageQuery } from "../../sanity/lib/queries";
 import { takeawaysDefaults, type TakeawaysContent } from "./takeaways.defaults";
-import { cards, img, stats, str, type DeepPartial } from "./_merge";
+import { cards, img, optionalStr, stats, str, type DeepPartial } from "./_merge";
 
 export const TAKEAWAYS_TAG = "takeawaysPage";
 
@@ -26,8 +26,8 @@ export async function getTakeawaysContent(): Promise<TakeawaysContent> {
     heroStats: stats(data.heroStats, d.heroStats),
     heroImage: img(data.heroImage, d.heroImage),
 
-    introHeadingLead: str(data.introHeadingLead, d.introHeadingLead),
-    introHeadingMuted: str(data.introHeadingMuted, d.introHeadingMuted),
+    introHeadingLead: optionalStr(data.introHeadingLead),
+    introHeadingMuted: optionalStr(data.introHeadingMuted),
 
     keyInsightsHeadingAccent: str(data.keyInsightsHeadingAccent, d.keyInsightsHeadingAccent),
     keyInsightsHeadingTail: str(data.keyInsightsHeadingTail, d.keyInsightsHeadingTail),

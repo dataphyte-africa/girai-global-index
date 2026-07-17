@@ -24,8 +24,22 @@ export const takeawaysPage = defineType({
     }),
     defineField({ name: "heroImage", title: "Background image", type: "contentImage", group: "hero" }),
 
-    defineField({ name: "introHeadingLead", title: "Heading (dark)", type: "text", rows: 3, group: "intro" }),
-    defineField({ name: "introHeadingMuted", title: "Heading (muted)", type: "text", rows: 3, group: "intro" }),
+    defineField({
+      name: "introHeadingLead",
+      title: "Heading (dark)",
+      type: "text",
+      rows: 3,
+      group: "intro",
+      description: "Clear this to hide the whole intro section.",
+    }),
+    defineField({
+      name: "introHeadingMuted",
+      title: "Heading (muted)",
+      type: "text",
+      rows: 3,
+      group: "intro",
+      description: "Optional — clear this to show the dark heading alone.",
+    }),
 
     defineField({ name: "keyInsightsHeadingAccent", title: "Heading (accent)", type: "string", group: "keyInsights" }),
     defineField({ name: "keyInsightsHeadingTail", title: "Heading (tail)", type: "string", group: "keyInsights" }),

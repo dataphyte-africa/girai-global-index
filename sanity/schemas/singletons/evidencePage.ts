@@ -1,4 +1,4 @@
-import { defineArrayMember, defineField, defineType } from "sanity";
+import { defineField, defineType } from "sanity";
 import { SearchIcon } from "@sanity/icons";
 
 export const evidencePage = defineType({
@@ -16,15 +16,6 @@ export const evidencePage = defineType({
     defineField({ name: "heroTitleLead", title: "Title (lead)", type: "string", group: "hero" }),
     defineField({ name: "heroTitleAccent", title: "Title (accent)", type: "string", group: "hero" }),
     defineField({ name: "heroSubtitle", title: "Subtitle", type: "text", rows: 3, group: "hero" }),
-    defineField({
-      name: "heroStatLabels",
-      title: "Stat labels",
-      description: "Four labels in order: countries, frameworks, evidence items, indicators.",
-      type: "array",
-      group: "hero",
-      of: [defineArrayMember({ type: "string" })],
-      validation: (Rule) => Rule.max(4),
-    }),
     defineField({ name: "pathwayHeading", title: "Pathway heading", type: "string", group: "pathway" }),
     defineField({ name: "pathwaySubtitle", title: "Pathway subtitle", type: "text", rows: 2, group: "pathway" }),
     defineField({

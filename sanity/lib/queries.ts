@@ -192,7 +192,6 @@ export const indicatorsPageQuery = groq`
 export const evidencePageQuery = groq`
 *[_type == "evidencePage"][0]{
   heroTitleLead, heroTitleAccent, heroSubtitle,
-  heroStatLabels,
   pathwayHeading, pathwaySubtitle,
   searchTitle,
   seoTitle, seoDescription
@@ -234,7 +233,8 @@ export const indicatorPageBySlugQuery = groq`
 *[_type == "indicatorPage" && slug == $slug][0]{
   title,
   "heroImage": heroImage${imageProjection},
-  heroLead, introPrimary, introSecondary, background, relevance
+  heroLead, introPrimary, introSecondary, background, relevance,
+  brightSpots[]{ _key, country, body }
 }`;
 
 export const indicatorNameBySlugQuery = groq`

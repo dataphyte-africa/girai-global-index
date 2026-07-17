@@ -8,6 +8,7 @@ import {
   IndicatorIntroSection,
   IndicatorCountriesMap,
   IndicatorBackgroundRelevanceSection,
+  IndicatorBrightSpotsSection,
   IndicatorEvidenceExplorerSection,
   IndicatorReportDownloadSection,
   IndicatorPerformanceByRegionSection,
@@ -109,6 +110,11 @@ export default async function IndicatorPage({ params }: PageProps) {
           indicatorName={pageCopy.name}
           background={pageCopy.background}
           relevance={pageCopy.relevance}
+        />
+
+        <IndicatorBrightSpotsSection
+          indicatorName={pageCopy.name}
+          brightSpots={pageCopy.brightSpots}
         />
 
         {/* Indicators sourced from external indices (hasEvidence: false) have

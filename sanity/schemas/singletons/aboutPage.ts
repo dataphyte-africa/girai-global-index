@@ -27,8 +27,20 @@ export const aboutPage = defineType({
     defineField({ name: "heroImage", title: "Background image", type: "contentImage", group: "hero" }),
 
     // Intro
-    defineField({ name: "introHeadingLead", title: "Heading (dark)", type: "string", group: "intro" }),
-    defineField({ name: "introHeadingMuted", title: "Heading (muted)", type: "string", group: "intro" }),
+    defineField({
+      name: "introHeadingLead",
+      title: "Heading (dark)",
+      type: "string",
+      group: "intro",
+      description: "Clear this to hide the intro heading, leaving the body copy alone.",
+    }),
+    defineField({
+      name: "introHeadingMuted",
+      title: "Heading (muted)",
+      type: "string",
+      group: "intro",
+      description: "Optional — clear this to show the dark heading alone.",
+    }),
     defineField({ name: "introBody", title: "Body", type: "text", rows: 4, group: "intro" }),
 
     // Why GIRAI Matters
