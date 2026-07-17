@@ -31,8 +31,22 @@ export const methodologyPage = defineType({
     defineField({ name: "heroImage", title: "Background image", type: "contentImage", group: "hero" }),
 
     // Intro
-    defineField({ name: "introHeadingLead", title: "Heading (dark)", type: "text", rows: 2, group: "intro" }),
-    defineField({ name: "introHeadingMuted", title: "Heading (muted)", type: "text", rows: 2, group: "intro" }),
+    defineField({
+      name: "introHeadingLead",
+      title: "Heading (dark)",
+      type: "text",
+      rows: 2,
+      group: "intro",
+      description: "Clear this to hide the whole intro section.",
+    }),
+    defineField({
+      name: "introHeadingMuted",
+      title: "Heading (muted)",
+      type: "text",
+      rows: 2,
+      group: "intro",
+      description: "Optional — clear this to show the dark heading alone.",
+    }),
 
     // Principles
     defineField({ name: "principlesBadge", title: "Badge", type: "string", group: "principles" }),

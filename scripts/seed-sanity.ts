@@ -630,7 +630,6 @@ function buildEvidenceDoc() {
     heroTitleLead: evidenceDefaults.heroTitleLead,
     heroTitleAccent: evidenceDefaults.heroTitleAccent,
     heroSubtitle: evidenceDefaults.heroSubtitle,
-    heroStatLabels: evidenceDefaults.heroStatLabels,
     pathwayHeading: evidenceDefaults.pathwayHeading,
     pathwaySubtitle: evidenceDefaults.pathwaySubtitle,
     searchTitle: evidenceDefaults.searchTitle,
@@ -838,15 +837,38 @@ async function buildUpdateDocs() {
   );
 }
 
-function buildIndicatorPageDocs() {
+/**
+ * Bright spots have no code default — they're authored only in the Studio. Since
+ * indicator docs are written with `createOrReplace` (which drops any field the
+ * replacement doc omits), read the current values first and carry them forward,
+ * or a re-seed would silently delete an editor's work. One query for all
+ * indicators; returns an empty map against a fresh dataset.
+ */
+async function fetchExistingBrightSpots(): Promise<Map<string, unknown[]>> {
+  const rows = await client.fetch<{ _id: string; brightSpots?: unknown[] }[]>(
+    `*[_type == "indicatorPage" && defined(brightSpots)]{ _id, brightSpots }`
+  );
+  const map = new Map<string, unknown[]>();
+  for (const row of rows ?? []) {
+    if (Array.isArray(row.brightSpots) && row.brightSpots.length > 0) {
+      map.set(row._id, row.brightSpots);
+    }
+  }
+  return map;
+}
+
+async function buildIndicatorPageDocs() {
+  const brightSpotsById = await fetchExistingBrightSpots();
   return INDICATORS.map((ind) => {
     const copy = getIndicatorPageCopy(ind.slug);
     const { background, relevance } = getIndicatorBackgroundRelevance(
       ind.slug,
       ind.name
     );
+    const _id = `indicator-${ind.slug}`;
+    const brightSpots = brightSpotsById.get(_id);
     return {
-      _id: `indicator-${ind.slug}`,
+      _id,
       _type: "indicatorPage",
       title: ind.name,
       slug: ind.slug,
@@ -855,6 +877,7 @@ function buildIndicatorPageDocs() {
       introSecondary: copy.introSecondary,
       background: richTextBody(background),
       relevance: richTextBody(relevance),
+      ...(brightSpots ? { brightSpots } : {}),
     };
   });
 }
@@ -987,7 +1010,7 @@ async function main() {
     { label: "keyFindings", doc: await buildKeyFindingsDoc() },
     ...(await buildPillarDocs()).map((doc) => ({ label: `pillar/${doc.slug}`, doc })),
     ...(await buildDimensionDocs()).map((doc) => ({ label: `dimension/${doc.slug}`, doc })),
-    ...buildIndicatorPageDocs().map((doc) => ({ label: `indicator/${doc.slug}`, doc })),
+    ...(await buildIndicatorPageDocs()).map((doc) => ({ label: `indicator/${doc.slug}`, doc })),
     ...buildPathwayDocs().map((doc) => ({ label: `pathway/${doc.pathwayId}`, doc })),
     ...buildRegionPageDocs().map((doc) => ({ label: `region/${doc.slug}`, doc })),
     ...(await buildUpdateDocs()).map((doc) => ({ label: `update/${doc._id}`, doc })),

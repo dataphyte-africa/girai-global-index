@@ -9,6 +9,21 @@ export function str(value: unknown, fallback: string): string {
   return typeof value === "string" && value.trim().length > 0 ? value : fallback;
 }
 
+/**
+ * A Studio field where clearing it means "omit this from the page" rather than
+ * "fall back to the code default" — the caller renders nothing for "".
+ *
+ * Code defaults still seed these fields, so an editor who never touches one sees
+ * the seeded copy; only an explicit deletion in Studio blanks it. The whole
+ * document going missing (Sanity unreachable) still falls back via `str`.
+ *
+ * Returns the raw string, untrimmed: the split-tone intros carry a meaningful
+ * trailing space on the lead clause that separates it from the muted clause.
+ */
+export function optionalStr(value: unknown): string {
+  return typeof value === "string" && value.trim().length > 0 ? value : "";
+}
+
 export function img(
   value: DeepPartial<SanityImage> | null | undefined,
   fallback: SanityImage

@@ -144,7 +144,7 @@ export function EvidenceExplorerSection({
                     isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }
                   }
                   transition={{ duration: 0.6, ease: "easeOut", delay: 0.55 }}
-                  className="mt-6 text-xs md:text-sm leading-relaxed text-white/80 underline decoration-white/30 underline-offset-4 md:mt-8"
+                  className="mt-6 text-xs md:text-sm leading-relaxed text-white/80  decoration-white/30 underline-offset-4 md:mt-8"
                 >
                   {content.evidenceNote}
                 </motion.p>

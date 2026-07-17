@@ -2,7 +2,6 @@ export type EvidenceContent = {
   heroTitleLead: string;
   heroTitleAccent: string;
   heroSubtitle: string;
-  heroStatLabels: string[];
   pathwayHeading: string;
   pathwaySubtitle: string;
   searchTitle: string;
@@ -15,7 +14,6 @@ export const evidenceDefaults: EvidenceContent = {
   heroTitleAccent: "Evidence Hub",
   heroSubtitle:
     "Explore the public evidence, frameworks, and institutional actions that inform GIRAI scores across countries and regions.",
-  heroStatLabels: ["Countries Indexed", "Frameworks", "Evidence Items", "Indicators"],
   pathwayHeading: "What would you like to explore?",
   pathwaySubtitle: "Choose an evidence pathway to begin exploring the data behind GIRAI scores.",
   searchTitle: "Search & Filter Evidence",

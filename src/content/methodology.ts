@@ -6,7 +6,7 @@ import {
   type EditionChange,
   type MethodologyContent,
 } from "./methodology.defaults";
-import { cards, cta, img, stats, str, strings, type DeepPartial } from "./_merge";
+import { cards, cta, img, optionalStr, stats, str, strings, type DeepPartial } from "./_merge";
 
 export const METHODOLOGY_TAG = "methodologyPage";
 
@@ -58,8 +58,8 @@ export async function getMethodologyContent(): Promise<MethodologyContent> {
     heroCtaLabel: str(data.heroCtaLabel, d.heroCtaLabel),
     heroImage: img(data.heroImage, d.heroImage),
 
-    introHeadingLead: str(data.introHeadingLead, d.introHeadingLead),
-    introHeadingMuted: str(data.introHeadingMuted, d.introHeadingMuted),
+    introHeadingLead: optionalStr(data.introHeadingLead),
+    introHeadingMuted: optionalStr(data.introHeadingMuted),
 
     principlesBadge: str(data.principlesBadge, d.principlesBadge),
     principlesHeadingLead: str(data.principlesHeadingLead, d.principlesHeadingLead),

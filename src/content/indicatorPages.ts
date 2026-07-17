@@ -10,21 +10,31 @@ import {
   getIndicatorBackgroundRelevance,
   type IndicatorParagraph,
 } from "@/lib/indicator-copy";
-import { img, str } from "./_merge";
+import { img, optionalStr, str } from "./_merge";
 import type { SanityImage } from "./about.defaults";
 import type { PortableBlock } from "./updates";
 
 export const INDICATOR_PAGE_TAG = "indicatorPage";
+
+/** A country example shown below Background & Relevance. Studio-authored only. */
+export type IndicatorBrightSpot = {
+  _key?: string;
+  country: string | null;
+  body: PortableBlock[] | null;
+};
 
 /** Resolved copy for one indicator detail page. Background/Relevance are Portable Text. */
 export type IndicatorPageContent = {
   name: string;
   heroImage: SanityImage;
   heroLead: string;
+  /** Empty when an editor cleared it in Studio — the intro section is skipped. */
   introPrimary: string;
+  /** Empty when an editor cleared it in Studio — the muted clause is skipped. */
   introSecondary: string;
   background: PortableBlock[];
   relevance: PortableBlock[];
+  brightSpots: IndicatorBrightSpot[];
 };
 
 type IndicatorPageDoc = {
@@ -35,10 +45,33 @@ type IndicatorPageDoc = {
   introSecondary?: string;
   background?: PortableBlock[];
   relevance?: PortableBlock[];
+  brightSpots?: IndicatorBrightSpot[] | null;
 };
 
 const hasBlocks = (value: unknown): value is PortableBlock[] =>
   Array.isArray(value) && value.length > 0;
+
+/**
+ * Keep only bright spots an editor actually filled in — a freshly added array
+ * item is an empty object until it's typed into. Mirrors the render guard on
+ * key findings (a spot needs a country or a body, not both), and caps at the
+ * two the schema allows in case an older doc carries more.
+ */
+const cleanBrightSpots = (value: unknown): IndicatorBrightSpot[] => {
+  if (!Array.isArray(value)) return [];
+  return value
+    .filter((spot): spot is IndicatorBrightSpot => {
+      if (!spot || typeof spot !== "object") return false;
+      const { country, body } = spot as IndicatorBrightSpot;
+      return Boolean(country?.trim()) || hasBlocks(body);
+    })
+    .slice(0, 2)
+    .map((spot) => ({
+      _key: spot._key,
+      country: spot.country?.trim() || null,
+      body: hasBlocks(spot.body) ? spot.body : null,
+    }));
+};
 
 /**
  * Convert the code-default `IndicatorParagraph[]` (inline text/link segments)
@@ -94,6 +127,8 @@ export async function getIndicatorPageContent(
     introSecondary: copy.introSecondary,
     background: segmentsToPortable(background),
     relevance: segmentsToPortable(relevance),
+    // No code default: bright spots exist only if an editor wrote them.
+    brightSpots: [],
   };
 
   let doc: IndicatorPageDoc | null = null;
@@ -112,10 +147,11 @@ export async function getIndicatorPageContent(
     name: str(doc.title, fallback.name),
     heroImage: img(doc.heroImage, fallback.heroImage),
     heroLead: str(doc.heroLead, fallback.heroLead),
-    introPrimary: str(doc.introPrimary, fallback.introPrimary),
-    introSecondary: str(doc.introSecondary, fallback.introSecondary),
+    introPrimary: optionalStr(doc.introPrimary),
+    introSecondary: optionalStr(doc.introSecondary),
     background: hasBlocks(doc.background) ? doc.background : fallback.background,
     relevance: hasBlocks(doc.relevance) ? doc.relevance : fallback.relevance,
+    brightSpots: cleanBrightSpots(doc.brightSpots),
   };
 }
 

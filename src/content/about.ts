@@ -10,6 +10,14 @@ function str(value: unknown, fallback: string): string {
   return typeof value === "string" && value.trim().length > 0 ? value : fallback;
 }
 
+/**
+ * A Studio field where clearing it means "omit this from the page" rather than
+ * "fall back to the code default". Mirrors `optionalStr` in ./_merge.
+ */
+function optionalStr(value: unknown): string {
+  return typeof value === "string" && value.trim().length > 0 ? value : "";
+}
+
 function image(value: DeepPartial<SanityImage> | null | undefined, fallback: SanityImage): SanityImage {
   if (value && typeof value.url === "string" && value.url.length > 0) {
     return { url: value.url, alt: typeof value.alt === "string" ? value.alt : fallback.alt };
@@ -53,8 +61,8 @@ export async function getAboutContent(): Promise<AboutContent> {
     heroLead: str(data.heroLead, d.heroLead),
     heroImage: image(data.heroImage, d.heroImage),
 
-    introHeadingLead: str(data.introHeadingLead, d.introHeadingLead),
-    introHeadingMuted: str(data.introHeadingMuted, d.introHeadingMuted),
+    introHeadingLead: optionalStr(data.introHeadingLead),
+    introHeadingMuted: optionalStr(data.introHeadingMuted),
     introBody: str(data.introBody, d.introBody),
 
     whyHeadingLead: str(data.whyHeadingLead, d.whyHeadingLead),
