@@ -30,8 +30,13 @@ export const lookupIndicatorTool = tool({
     let bottomCountries: Array<{ iso3: string; name: string; score: number }> =
       [];
 
+    // How many countries the indicator ranks in full — topCountries and
+    // bottomCountries are only the ends of that list.
+    let rankedCountryCount = 0;
+
     if (input.includeLeaderboard) {
       const board = getIndicatorLeaderboard(ind.slug);
+      rankedCountryCount = board.length;
       topCountries = board.slice(0, input.leaderboardLimit).map((e) => ({
         iso3: e.country.iso3,
         name: e.country.name,
@@ -58,6 +63,7 @@ export const lookupIndicatorTool = tool({
         pillarSlug: ind.pillar,
         family: ind.family,
         hasEvidence: ind.hasEvidence,
+        rankedCountryCount,
         topCountries,
         bottomCountries,
       },

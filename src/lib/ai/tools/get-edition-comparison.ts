@@ -71,6 +71,7 @@ export const getEditionComparisonTool = tool({
         name: country.name,
         has2024Coverage: status.has2024Coverage,
         changedIndicatorCount: changes.length,
+        changesTruncated: changes.length > 40,
         changes: changes.slice(0, 40),
         note: "This compares evidence coverage between editions, not GIRAI scores. Methodology changed between 2024 and 2026.",
       },
