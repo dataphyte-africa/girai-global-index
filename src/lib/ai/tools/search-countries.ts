@@ -7,7 +7,8 @@ import { resolveDimension, resolveRegion } from "../utils";
 
 export const searchCountriesTool = tool({
   description:
-    "Search and filter countries by region, income group, GIRAI score range, or developing status.",
+    "Search and filter countries by region, income group, GIRAI score range, or developing status. " +
+    "`countries` is capped at `limit` — check `totalMatched` and `truncated` before presenting it as a complete list.",
   inputSchema: z.object({
     region: z.string().optional().describe("GIRAI region name or slug"),
     incomeGroup: z.string().optional().describe("World Bank income group"),
@@ -87,6 +88,7 @@ export const searchCountriesTool = tool({
       data: {
         count: limited.length,
         totalMatched: results.length,
+        truncated: results.length > limited.length,
         countries: limited,
         filters: input,
       },

@@ -1,6 +1,7 @@
 import { tool } from "ai";
 import { z } from "zod";
 import {
+  getAllCountries,
   getDimensionLeaderboard,
   getIndicatorLeaderboard,
   getPillarLeaderboard,
@@ -17,7 +18,8 @@ import { resolveDimension, resolveIndicator, resolvePillar } from "../utils";
 
 export const getLeaderboardTool = tool({
   description:
-    "Get top or bottom countries ranked by GIRAI score, a dimension, pillar, or indicator.",
+    "Get top or bottom countries ranked by GIRAI score, a dimension, pillar, or indicator. " +
+    "`entries` is a slice capped at `limit`; `totalRanked` is how many countries the full ranking holds.",
   inputSchema: z.object({
     metric: z
       .enum(["girai", "dimension", "pillar", "indicator"])
@@ -32,12 +34,16 @@ export const getLeaderboardTool = tool({
   execute: async (input): Promise<GiraiToolResult<unknown>> => {
     let entries: Array<{ iso3: string; name: string; score: number; rank: number }> =
       [];
+    // Size of the full ranking behind `entries`. Without it a caller can't tell
+    // a top-50 slice from the complete list.
+    let totalRanked = 0;
     const sources = [];
 
     if (input.metric === "girai") {
       const { topCountries, bottomCountries } = getTopAndBottomCountries(
         input.limit
       );
+      totalRanked = getAllCountries().filter((c) => c.girai !== null).length;
       const list = input.order === "top" ? topCountries : bottomCountries;
       entries = list.map((c, i) => ({
         iso3: c.iso3,
@@ -52,6 +58,7 @@ export const getLeaderboardTool = tool({
       }
       sources.push(dimensionSource(dim.slug, dim.name));
       const board = getDimensionLeaderboard(dim.slug);
+      totalRanked = board.length;
       const slice =
         input.order === "top"
           ? board.slice(0, input.limit)
@@ -68,6 +75,7 @@ export const getLeaderboardTool = tool({
         return { data: { error: "Unknown pillar" }, sources: [] };
       }
       const board = getPillarLeaderboard(pillar.slug);
+      totalRanked = board.length;
       const slice =
         input.order === "top"
           ? board.slice(0, input.limit)
@@ -85,6 +93,7 @@ export const getLeaderboardTool = tool({
       }
       sources.push(indicatorSource(ind.slug, ind.name));
       const board = getIndicatorLeaderboard(ind.slug);
+      totalRanked = board.length;
       const slice =
         input.order === "top"
           ? board.slice(0, input.limit)
@@ -102,6 +111,8 @@ export const getLeaderboardTool = tool({
         metric: input.metric,
         metricSlug: input.metricSlug,
         order: input.order,
+        totalRanked,
+        truncated: totalRanked > entries.length,
         entries,
       },
       sources: mergeSources(
