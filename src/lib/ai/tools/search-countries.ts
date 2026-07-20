@@ -41,7 +41,10 @@ export const searchCountriesTool = tool({
       );
     }
     if (input.developing) {
-      results = results.filter((c) => c.developing === input.developing);
+      // The dataset stores "Developing"/"Developed", not the Yes/No the model
+      // sends — comparing raw input matched nothing, ever.
+      const want = input.developing === "Yes" ? "Developing" : "Developed";
+      results = results.filter((c) => c.developing === want);
     }
     if (input.minGirai !== undefined) {
       results = results.filter((c) => (c.girai ?? 0) >= input.minGirai!);

@@ -2,6 +2,7 @@ import { createOpenAI } from "@ai-sdk/openai";
 import { InferAgentUIMessage, stepCountIs, ToolLoopAgent } from "ai";
 import { buildGiraiInstructions } from "./instructions";
 import { compareCountriesTool } from "./tools/compare-countries";
+import { getAveragesTool } from "./tools/get-averages";
 import { getEditionComparisonTool } from "./tools/get-edition-comparison";
 import { getLeaderboardTool } from "./tools/get-leaderboard";
 import { getRegionSummaryTool } from "./tools/get-region-summary";
@@ -35,6 +36,7 @@ function createGiraiAgent() {
       lookup_indicator: lookupIndicatorTool,
       search_evidence: searchEvidenceTool,
       compare_countries: compareCountriesTool,
+      get_averages: getAveragesTool,
       get_edition_comparison: getEditionComparisonTool,
       get_region_summary: getRegionSummaryTool,
     },
