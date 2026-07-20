@@ -11,6 +11,31 @@ import { regionSource } from "../sources";
 import type { GiraiToolResult } from "../types";
 import { resolveRegion } from "../utils";
 
+import type { CountryRanking } from "@/lib/girai/types";
+
+/**
+ * The site's fixed 20-point score bands (see TIER_LEGEND in
+ * choropleth-map.tsx). Min-inclusive: a 60 is "Advanced".
+ */
+const TIERS = [
+  { label: "Leading", min: 80, max: 100 },
+  { label: "Advanced", min: 60, max: 80 },
+  { label: "Developing", min: 40, max: 60 },
+  { label: "Emerging", min: 20, max: 40 },
+  { label: "Nascent", min: 0, max: 20 },
+] as const;
+
+const tierCounts = (list: CountryRanking[]) =>
+  TIERS.map((t) => ({
+    ...t,
+    count: list.filter(
+      (c) =>
+        c.girai !== null &&
+        c.girai >= t.min &&
+        (t.max === 100 ? c.girai <= 100 : c.girai < t.max)
+    ).length,
+  }));
+
 /**
  * Precomputed score averages — the assistant is forbidden from averaging
  * country scores manually, so without this tool "what's the global average?"
@@ -19,8 +44,9 @@ import { resolveRegion } from "../utils";
 export const getAveragesTool = tool({
   description:
     "Get precomputed average scores (GIRAI, dimensions, pillars, framework/implementation) " +
+    "and the GIRAI score-tier distribution (Leading/Advanced/Developing/Emerging/Nascent) " +
     "for the whole index, one region, or one World Bank income group. " +
-    "Use for any 'average' or group-comparison question instead of averaging manually.",
+    "Use for any 'average', 'how many countries score X', or group-comparison question instead of computing manually.",
   inputSchema: z.object({
     scope: z
       .enum(["global", "region", "income-group"])
@@ -37,23 +63,25 @@ export const getAveragesTool = tool({
       .describe("Also return the 38 per-indicator averages"),
   }),
   execute: async (input): Promise<GiraiToolResult<unknown>> => {
-    const shape = (label: string, agg: ScoreAggregates, countryCount: number) => ({
+    const shape = (label: string, agg: ScoreAggregates, scoped: CountryRanking[]) => ({
       found: true,
       scope: input.scope,
       label,
-      countryCount,
+      countryCount: scoped.length,
       girai: agg.girai,
       dimensions: agg.dimensions,
       pillars: agg.pillars,
       frameworkScore: agg.frameworkScore,
       implementationScore: agg.implementationScore,
+      // How many of the scoped countries fall in each GIRAI score band.
+      tiers: tierCounts(scoped),
       ...(input.includeIndicators ? { indicators: agg.indicators } : {}),
     });
     const countries = getAllCountries().filter((c) => c.girai !== null);
 
     if (input.scope === "global") {
       return {
-        data: shape("Global", getGlobalAverages(), countries.length),
+        data: shape("Global", getGlobalAverages(), countries),
         sources: [],
         visualization: "analysis",
       };
@@ -72,7 +100,7 @@ export const getAveragesTool = tool({
         data: shape(
           region,
           agg,
-          countries.filter((c) => c.region === region).length
+          countries.filter((c) => c.region === region)
         ),
         sources: [regionSource(region)],
         visualization: "analysis",
@@ -106,7 +134,7 @@ export const getAveragesTool = tool({
       data: shape(
         group,
         byIncome[group],
-        countries.filter((c) => c.incomeGroup === group).length
+        countries.filter((c) => c.incomeGroup === group)
       ),
       sources: [],
       visualization: "analysis",

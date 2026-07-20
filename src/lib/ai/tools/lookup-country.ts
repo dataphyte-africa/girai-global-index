@@ -60,7 +60,10 @@ export const lookupCountryTool = tool({
         iso3: country.iso3,
         name: country.name,
         region: country.region,
+        subregion: country.subregion,
         incomeGroup: country.incomeGroup,
+        developing: country.developing,
+        gdpPerCapitaPpp: country.gdpPerCapitaPpp,
         girai: country.girai,
         giraiRaw: country.giraiRaw,
         uraiPenalty: country.uraiPenalty,
@@ -72,6 +75,9 @@ export const lookupCountryTool = tool({
         implementationScore: country.implementationScore,
         dimensionScores: country.dimensionScores,
         pillarScores: country.pillarScores,
+        // 15-cell dimension × pillar breakdown, e.g. CSO Engagement within
+        // Trust and Safety.
+        dimPillarMatrix: country.dimPillarMatrix,
         strongestDimensions: topDimensions(country),
         weakestDimensions: bottomDimensions(country),
         evidenceCounts: country.evidenceCounts,

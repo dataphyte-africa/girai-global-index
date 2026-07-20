@@ -24,7 +24,7 @@ export const searchCountriesTool = tool({
       .optional()
       .describe("Dimension slug or name for minDimensionScore filter"),
     limit: z.number().min(1).max(50).default(25),
-    sortBy: z.enum(["girai", "name", "rank"]).default("girai"),
+    sortBy: z.enum(["girai", "name", "rank", "gdp"]).default("girai"),
     order: z.enum(["desc", "asc"]).default("desc"),
   }),
   execute: async (input): Promise<GiraiToolResult<unknown>> => {
@@ -73,6 +73,11 @@ export const searchCountriesTool = tool({
           ? (a.rankGlobal ?? 999) - (b.rankGlobal ?? 999)
           : (b.rankGlobal ?? 0) - (a.rankGlobal ?? 0);
       }
+      if (sortKey === "gdp") {
+        return input.order === "asc"
+          ? (a.gdpPerCapitaPpp ?? Infinity) - (b.gdpPerCapitaPpp ?? Infinity)
+          : (b.gdpPerCapitaPpp ?? -Infinity) - (a.gdpPerCapitaPpp ?? -Infinity);
+      }
       return input.order === "asc"
         ? (a.girai ?? 0) - (b.girai ?? 0)
         : (b.girai ?? 0) - (a.girai ?? 0);
@@ -85,6 +90,7 @@ export const searchCountriesTool = tool({
       incomeGroup: c.incomeGroup,
       girai: c.girai,
       rankGlobal: c.rankGlobal,
+      gdpPerCapitaPpp: c.gdpPerCapitaPpp,
     }));
 
     return {

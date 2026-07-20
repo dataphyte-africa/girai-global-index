@@ -7,6 +7,7 @@ import {
   getPillarLeaderboard,
   type ScoreLeaderboardEntry,
 } from "@/lib/girai/data";
+import type { CountryRanking } from "@/lib/girai/types";
 import {
   countrySource,
   dimensionSource,
@@ -23,12 +24,21 @@ import {
 
 export const getLeaderboardTool = tool({
   description:
-    "Get top or bottom countries ranked by GIRAI score, a dimension, pillar, or indicator — " +
+    "Get top or bottom countries ranked by GIRAI score, a dimension, pillar, indicator, " +
+    "framework score, implementation score, or the framework-implementation gap — " +
     "optionally scoped to a region or income group (e.g. top African countries on Trust and Safety). " +
     "`entries` is a slice capped at `limit`; `totalRanked` is how many countries the scoped ranking holds.",
   inputSchema: z.object({
     metric: z
-      .enum(["girai", "dimension", "pillar", "indicator"])
+      .enum([
+        "girai",
+        "dimension",
+        "pillar",
+        "indicator",
+        "framework",
+        "implementation",
+        "framework-implementation-gap",
+      ])
       .default("girai"),
     metricSlug: z
       .string()
@@ -51,10 +61,23 @@ export const getLeaderboardTool = tool({
     // Full sorted board for the metric; scope filters are applied after so
     // ranks are positions within the scoped list.
     let board: ScoreLeaderboardEntry[];
-    if (input.metric === "girai") {
+    // AI Policy sub-scores and their gap. A positive gap means the country's
+    // policy substance outruns its execution depth.
+    const derived: Record<string, (c: CountryRanking) => number | null> = {
+      girai: (c) => c.girai,
+      framework: (c) => c.frameworkScore,
+      implementation: (c) => c.implementationScore,
+      "framework-implementation-gap": (c) =>
+        c.frameworkScore !== null && c.implementationScore !== null
+          ? c.frameworkScore - c.implementationScore
+          : null,
+    };
+
+    if (input.metric in derived) {
+      const resolve = derived[input.metric];
       board = getAllCountries()
-        .filter((c) => c.girai !== null)
-        .map((country) => ({ country, score: country.girai as number }))
+        .map((country) => ({ country, score: resolve(country) }))
+        .filter((e): e is ScoreLeaderboardEntry => e.score !== null)
         .sort((a, b) => b.score - a.score);
     } else if (input.metric === "dimension" && input.metricSlug) {
       const dim = resolveDimension(input.metricSlug);

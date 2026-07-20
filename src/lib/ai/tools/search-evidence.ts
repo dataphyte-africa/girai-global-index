@@ -40,8 +40,9 @@ const EVIDENCE_KINDS = [
 export const searchEvidenceTool = tool({
   description:
     "Search evidence items by text query and optional filters (country, indicator, kind, region). " +
-    "`items` is only a sample, capped at `limit`. To answer 'which countries have …' use " +
-    "`countries` — a roll-up of every match, complete regardless of `limit`.",
+    "`items` is only a sample, capped at `limit`. To answer 'which countries have …' or " +
+    "'which indicator has the most …' use the `countries` / `indicators` roll-ups — " +
+    "computed over every match, complete regardless of `limit`.",
   inputSchema: z.object({
     query: z
       .string()
@@ -131,6 +132,23 @@ export const searchEvidenceTool = tool({
       (a, b) => b.count - a.count || a.name.localeCompare(b.name)
     );
 
+    // Same idea per indicator, so "which indicator has the most X evidence"
+    // is one call instead of 38. Bounded by the indicator count.
+    const indicatorTally = new Map<string, { slug: string; name: string; count: number }>();
+    for (const it of items) {
+      const seen = indicatorTally.get(it.indicatorSlug);
+      if (seen) seen.count += 1;
+      else
+        indicatorTally.set(it.indicatorSlug, {
+          slug: it.indicatorSlug,
+          name: resolveIndicator(it.indicatorSlug)?.name ?? it.indicatorSlug,
+          count: 1,
+        });
+    }
+    const indicators = [...indicatorTally.values()].sort(
+      (a, b) => b.count - a.count || a.name.localeCompare(b.name)
+    );
+
     const limited = items.slice(0, input.limit).map((it) => ({
       id: it.id,
       kind: it.kind,
@@ -160,6 +178,7 @@ export const searchEvidenceTool = tool({
         itemsTruncated: items.length > limited.length,
         countryCount: countries.length,
         countries,
+        indicators,
         items: limited,
         filters: input,
         ...(tokens.length > 0 ? { queryTokens: tokens } : {}),
