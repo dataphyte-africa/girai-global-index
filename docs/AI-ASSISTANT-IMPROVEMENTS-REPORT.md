@@ -8,7 +8,7 @@ We put the GIRAI chatbot through a structured accuracy test and fixed everything
 
 Along the way we found that our **manual test spreadsheet itself contained four factual mistakes**, and we caught a bug that could have made the bot confidently present wrong data to real users. Both are now fixed.
 
-Everything is live on the `development` branch. Nothing touches the production site until the team promotes `development`.
+Everything is live on the `staging` website. Nothing touches the production site until the team promotes to `live website`.
 
 ---
 
@@ -47,7 +47,7 @@ While building an automated version of our manual test sheet, we re-checked ever
 
 | Question | Sheet said | Actually correct | What happened |
 |---|---|---|---|
-| How many African countries score above the global average? | **Six** | **Seven** | The sheet missed Côte d'Ivoire (35.18), which does clear the average. *(You flagged this one — confirmed.)* |
+| How many African countries score above the global average? | **Six** | **Seven** | The sheet missed Côte d'Ivoire (35.18), which does clear the average. |
 | What is the global average score? | 34.99 | **35.02** | The sheet's own notes column already said 35.02 — the two columns contradicted each other. |
 | Nigeria's score and rank | 45.87, rank 39 | **45.93, rank 38** | The sheet even listed "rank 38" as a *warning sign* while its answer said 39. |
 | Africa's average score | 21.81 | **21.79** | Minor rounding difference. |
@@ -68,9 +68,33 @@ We used it to benchmark our current model against two cheaper, faster alternativ
 | Cheaper alt. A | 94% | ~27 sec | Occasional misreads; also much slower |
 | Cheaper alt. B | 90% | ~7 sec | A few confident mistakes |
 
-**Takeaway:** the model we're running is both the most accurate *and* competitively fast. The cheaper options save cost but give up correctness on exactly the kind of nuanced regional questions this index is about — not a good trade for a research tool. The full per-question breakdown is in `results/benchmark-comparison.csv`.
+**Takeaway:** the model we're running is both the most accurate *and* competitively fast. The cheaper options save cost but give up correctness on exactly the kind of nuanced regional questions this index is about — not a good trade for a research tool.
 
-> One footnote: the model informally referred to as "5.1 nano" doesn't actually exist in the provider's catalogue, so we benchmarked the two nano models that do.
+### Full per-question results
+
+Each cell shows how many of **3 runs** the model got fully right. Green = perfect, anything less is where that model slipped.
+
+| # | Question | Current model | Cheaper alt. A | Cheaper alt. B |
+|---|---|:---:|:---:|:---:|
+| 1 | Nigeria's GIRAI score | 3/3 | 3/3 | 3/3 |
+| 2 | Highest-scoring African country | 3/3 | 3/3 | 2/3 |
+| 3 | Country leading LATAM | 3/3 | 3/3 | 3/3 |
+| 4 | Japan's score and Asia rank | 3/3 | 3/3 | 3/3 |
+| 5 | 2nd in the Middle East | 3/3 | 3/3 | 3/3 |
+| 6 | Global average score | 3/3 | 3/3 | 3/3 |
+| 7 | Lowest-scoring region | 3/3 | 3/3 | 2/3 |
+| 8 | Chile's score and rank | 3/3 | 3/3 | 3/3 |
+| 9 | Dominican Republic score, rank, standout | 3/3 | 3/3 | 3/3 |
+| 10 | Lowest performer in Asia | 3/3 | **1/3** | 3/3 |
+| 11 | African countries above global average | 3/3 | 3/3 | **1/3** |
+| 12 | Egypt's score and rank | 3/3 | 3/3 | 3/3 |
+| 13 | Best-performing Asian sub-region | 3/3 | **2/3** | **2/3** |
+| 14 | LATAM sub-region above global average | 3/3 | 3/3 | 3/3 |
+| 15 | Brazil's GIRAI score | 3/3 | 3/3 | 3/3 |
+| 16 | Brazil's overall performance | 3/3 | 3/3 | 3/3 |
+| | **Total (perfect runs)** | **48/48** | **45/48** | **43/48** |
+
+Where the cheaper models slip, it's on the harder reasoning questions — counting which countries clear the average, identifying the true lowest performer, or naming the best sub-region (where one of them keeps mistaking Australia/New Zealand for an "Asian" sub-region). The current model got all sixteen right, every time. The raw run-by-run data is in `results/benchmark-comparison.csv`.
 
 ---
 
@@ -83,4 +107,4 @@ We used it to benchmark our current model against two cheaper, faster alternativ
 - We have a **repeatable accuracy test** to guard against regressions and to vet model changes.
 - One open question for the team: **reconcile the regional-brief figures with the live dataset**, so all our published numbers agree.
 
-*All changes are on the `development` branch and do not affect the live site until promoted.*
+*All changes are on the `staging` environment and do not affect the live site until promoted.*
