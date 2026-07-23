@@ -72,7 +72,7 @@ We used it to benchmark our current model (**GPT-5.1**) against two cheaper, fas
 
 ### Full per-question results
 
-Each cell shows how many of **3 runs** the model got fully right. Green = perfect, anything less is where that model slipped.
+Each cell shows how many of **3 runs** the model got fully right — **bold** marks where a model slipped.
 
 | # | Question | GPT-5.1 | GPT-5-nano | GPT-5.4-nano |
 |---|---|:---:|:---:|:---:|
