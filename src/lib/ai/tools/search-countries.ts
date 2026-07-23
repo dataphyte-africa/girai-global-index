@@ -1,16 +1,35 @@
 import { tool } from "ai";
 import { z } from "zod";
-import { getAllCountries } from "@/lib/girai/data";
+import {
+  getAllCountries,
+  getCountrySubregion,
+  getGlobalAverages,
+} from "@/lib/girai/data";
+import { unknownRegion, unknownSubregion } from "../geo-errors";
 import { countrySource, mergeSources } from "../sources";
 import type { GiraiToolResult } from "../types";
-import { resolveDimension, resolveRegion } from "../utils";
+import { resolveDimension, resolveRegion, resolveSubregion } from "../utils";
 
 export const searchCountriesTool = tool({
   description:
-    "Search and filter countries by region, income group, GIRAI score range, or developing status. " +
+    "Search and filter countries by region, subregion, income group, GIRAI score range, " +
+    "developing status, or position relative to the global average. " +
     "`countries` is capped at `limit` — check `totalMatched` and `truncated` before presenting it as a complete list.",
   inputSchema: z.object({
     region: z.string().optional().describe("GIRAI region name or slug"),
+    subregion: z
+      .string()
+      .optional()
+      .describe(
+        "Subregion name or alias, e.g. 'West Africa', 'East Asia', 'South Asia', 'Central America'"
+      ),
+    compareToGlobalAverage: z
+      .enum(["above", "below"])
+      .optional()
+      .describe(
+        "Keep only countries scoring above (or below) the precomputed global average. " +
+          "Use this for 'which countries score above the global average' instead of passing a remembered number to minGirai."
+      ),
     incomeGroup: z.string().optional().describe("World Bank income group"),
     minGirai: z.number().optional().describe("Minimum GIRAI score (0–100)"),
     maxGirai: z.number().optional().describe("Maximum GIRAI score (0–100)"),
@@ -28,11 +47,29 @@ export const searchCountriesTool = tool({
     order: z.enum(["desc", "asc"]).default("desc"),
   }),
   execute: async (input): Promise<GiraiToolResult<unknown>> => {
+    const globalAverage = getGlobalAverages().girai;
     let results = getAllCountries().filter((c) => c.girai !== null);
 
     if (input.region) {
       const region = resolveRegion(input.region);
-      if (region) results = results.filter((c) => c.region === region);
+      if (!region) {
+        return { data: unknownRegion(input.region), sources: [] };
+      }
+      results = results.filter((c) => c.region === region);
+    }
+    if (input.subregion) {
+      const sub = resolveSubregion(input.subregion);
+      if (!sub) {
+        return { data: unknownSubregion(input.subregion), sources: [] };
+      }
+      results = results.filter((c) => getCountrySubregion(c) === sub.subregion);
+    }
+    if (input.compareToGlobalAverage && globalAverage !== null) {
+      results = results.filter((c) =>
+        input.compareToGlobalAverage === "above"
+          ? (c.girai ?? 0) > globalAverage
+          : (c.girai ?? 0) < globalAverage
+      );
     }
     if (input.incomeGroup) {
       const ig = input.incomeGroup.toLowerCase();
@@ -87,6 +124,7 @@ export const searchCountriesTool = tool({
       iso3: c.iso3,
       name: c.name,
       region: c.region,
+      subregion: getCountrySubregion(c),
       incomeGroup: c.incomeGroup,
       girai: c.girai,
       rankGlobal: c.rankGlobal,
@@ -97,6 +135,7 @@ export const searchCountriesTool = tool({
       data: {
         count: limited.length,
         totalMatched: results.length,
+        globalAverage,
         truncated: results.length > limited.length,
         countries: limited,
         filters: input,

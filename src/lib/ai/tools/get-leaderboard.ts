@@ -2,12 +2,14 @@ import { tool } from "ai";
 import { z } from "zod";
 import {
   getAllCountries,
+  getCountrySubregion,
   getDimensionLeaderboard,
   getIndicatorLeaderboard,
   getPillarLeaderboard,
   type ScoreLeaderboardEntry,
 } from "@/lib/girai/data";
 import type { CountryRanking } from "@/lib/girai/types";
+import { unknownRegion, unknownSubregion } from "../geo-errors";
 import {
   countrySource,
   dimensionSource,
@@ -20,13 +22,15 @@ import {
   resolveIndicator,
   resolvePillar,
   resolveRegion,
+  resolveSubregion,
 } from "../utils";
 
 export const getLeaderboardTool = tool({
   description:
     "Get top or bottom countries ranked by GIRAI score, a dimension, pillar, indicator, " +
     "framework score, implementation score, or the framework-implementation gap — " +
-    "optionally scoped to a region or income group (e.g. top African countries on Trust and Safety). " +
+    "optionally scoped to a region, subregion, or income group " +
+    "(e.g. top African countries on Trust and Safety, or the best performers in East Asia). " +
     "`entries` is a slice capped at `limit`; `totalRanked` is how many countries the scoped ranking holds.",
   inputSchema: z.object({
     metric: z
@@ -48,6 +52,12 @@ export const getLeaderboardTool = tool({
       .string()
       .optional()
       .describe("Rank only countries in this GIRAI region"),
+    subregion: z
+      .string()
+      .optional()
+      .describe(
+        "Rank only countries in this subregion, e.g. 'East Asia', 'West Africa', 'South Asia'"
+      ),
     incomeGroup: z
       .string()
       .optional()
@@ -110,10 +120,20 @@ export const getLeaderboardTool = tool({
     if (input.region) {
       const region = resolveRegion(input.region);
       if (!region) {
-        return { data: { error: "Unknown region" }, sources: [] };
+        return { data: unknownRegion(input.region), sources: [] };
       }
       board = board.filter((e) => e.country.region === region);
       scope = region;
+    }
+    if (input.subregion) {
+      const sub = resolveSubregion(input.subregion);
+      if (!sub) {
+        return { data: unknownSubregion(input.subregion), sources: [] };
+      }
+      board = board.filter(
+        (e) => getCountrySubregion(e.country) === sub.subregion
+      );
+      scope = scope ? `${scope} · ${sub.subregion}` : sub.subregion;
     }
     if (input.incomeGroup) {
       const ig = input.incomeGroup.toLowerCase();

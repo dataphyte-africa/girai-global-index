@@ -38,7 +38,7 @@ Answers are grounded in **live GIRAI dataset JSON** (2026 scores and evidence) a
 ┌─────────────────────────────────────────────────────────────┐
 │  GIRAI Agent (Vercel AI SDK ToolLoopAgent)                   │
 │  · System prompt (domain rules, citations, tool routing)     │
-│  · OpenAI Responses API (gpt-4.1 default)                    │
+│  · OpenAI Responses API (gpt-5.1 default)                    │
 └──────────────┬─────────────────────────────┬──────────────────┘
                │                             │
                ▼                             ▼
@@ -60,7 +60,7 @@ The assistant **does not guess numbers**. Factual queries trigger server tools t
 | **UI** | React 19, Tailwind CSS 4, shadcn/ui | Layout, theming, accessible components |
 | **Chat UI** | [Vercel AI Elements](https://www.npmjs.com/package/ai-elements) | Conversation, messages, prompt input, reasoning display |
 | **AI runtime** | [Vercel AI SDK](https://ai-sdk.dev/) (`ai`, `@ai-sdk/react`, `@ai-sdk/openai`) | Agent loop, streaming, typed tool calls |
-| **Language model** | OpenAI **Responses API** (`gpt-4.1` by default; swappable to `gpt-5.1`) | Reasoning, tool selection, natural-language answers |
+| **Language model** | OpenAI **Responses API** (`gpt-5.1` by default; override with `GIRAI_ASSISTANT_MODEL`) | Reasoning, tool selection, natural-language answers |
 | **Report retrieval** | OpenAI **file search** + vector store | Semantic search over 2024/2026 report uploads |
 | **Live data** | GIRAI JSON (`src/data/2026/generated/`) | Authoritative scores, rankings, evidence |
 | **Charts** | D3.js | Bar, line, and pie visualisations in chat |
@@ -81,15 +81,36 @@ Eight custom **server-side tools** wrap existing data accessors. Examples:
 | Tool | Typical use |
 |------|-------------|
 | `lookup_country` | Profile for one country |
-| `search_countries` | Filter by region, income, score |
-| `get_leaderboard` | Top/bottom performers on GIRAI or an indicator |
+| `search_countries` | Filter by region, subregion, income, score, or position vs the global average |
+| `get_leaderboard` | Top/bottom performers on GIRAI or an indicator, scopable to a region or subregion |
 | `lookup_indicator` | Indicator definition and leaders |
 | `search_evidence` | Find evidence by text, country, kind |
 | `compare_countries` | Side-by-side comparison (2–4 countries) |
 | `get_edition_comparison` | 2024 vs 2026 evidence-status changes |
 | `get_region_summary` | Regional averages and rankings |
+| `get_subregion_summary` | Subregional averages, ranks and member countries |
 
 Tool results include structured **data**, **source links** (e.g. `/countries/NGA`), and a hint for which **visualisation** to render (table, bar chart, comparison, etc.).
+
+**Geography arguments fail loudly.** An unrecognised `region` or `subregion` returns an error naming the valid values — and, when the name is really a subregion, a hint to retry with the right parameter. Silently ignoring the filter used to return the whole index as though it were the requested slice ("which country leads LATAM" once answered with Norway at the top).
+
+#### Subregions
+
+`subregion` ships on every country record, but `scripts/build-data.ts` only pre-aggregates by region and income group. Subregional averages are therefore derived and memoized in `src/lib/girai/data.ts` (`getSubregionSummaries`).
+
+Caribbean, Middle East and Northern America publish no subregional split; each resolves to a subregion of the same name, so every country belongs to exactly one subregion and the axis stays total. Several dataset labels differ from common usage — *South West Asia* is South Asia, *NorthWest Asia* is Central Asia plus the Caucasus, and the *South Africa* subregion means Southern Africa, not the country. `resolveSubregion` in `src/lib/ai/utils.ts` maps the common names onto the dataset ones.
+
+### 2b. Evaluation
+
+`pnpm eval:assistant` runs the cases in `scripts/eval/cases.ts` against the real agent — same instructions, tools and data as `/api/chat` — grades them deterministically, and writes a CSV under `results/`.
+
+```bash
+pnpm eval:assistant                              # default model
+pnpm eval:assistant --model gpt-5-nano --repeat 3 # benchmark another model (lower --concurrency if rate-limited)
+pnpm eval:assistant --only subregion              # one case while iterating
+```
+
+Expected figures come from the committed dataset, not the published regional briefs; where the two disagree the dataset wins, and the case carries a `notes` line saying so. Numeric checks accept 2, 1 or 0 decimal places because the site renders one.
 
 ### 3. File search (reports)
 

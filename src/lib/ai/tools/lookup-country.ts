@@ -1,6 +1,10 @@
 import { tool } from "ai";
 import { z } from "zod";
-import { getIndicatorLeaderboard } from "@/lib/girai/data";
+import {
+  getCountrySubregion,
+  getIndicatorLeaderboard,
+  getSubregionalRank,
+} from "@/lib/girai/data";
 import { countrySource, indicatorSource, mergeSources } from "../sources";
 import type { GiraiToolResult } from "../types";
 import {
@@ -60,7 +64,7 @@ export const lookupCountryTool = tool({
         iso3: country.iso3,
         name: country.name,
         region: country.region,
-        subregion: country.subregion,
+        subregion: getCountrySubregion(country),
         incomeGroup: country.incomeGroup,
         developing: country.developing,
         gdpPerCapitaPpp: country.gdpPerCapitaPpp,
@@ -70,6 +74,7 @@ export const lookupCountryTool = tool({
         uraiCount: country.uraiCount,
         rankGlobal: country.rankGlobal,
         rankRegional: country.rankRegional,
+        rankSubregional: getSubregionalRank(country),
         rankIncomeGroup: country.rankIncomeGroup,
         frameworkScore: country.frameworkScore,
         implementationScore: country.implementationScore,

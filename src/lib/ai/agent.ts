@@ -6,6 +6,7 @@ import { getAveragesTool } from "./tools/get-averages";
 import { getEditionComparisonTool } from "./tools/get-edition-comparison";
 import { getLeaderboardTool } from "./tools/get-leaderboard";
 import { getRegionSummaryTool } from "./tools/get-region-summary";
+import { getSubregionSummaryTool } from "./tools/get-subregion-summary";
 import { lookupCountryTool } from "./tools/lookup-country";
 import { lookupIndicatorTool } from "./tools/lookup-indicator";
 import { searchCountriesTool } from "./tools/search-countries";
@@ -14,14 +15,20 @@ import { searchEvidenceTool } from "./tools/search-evidence";
 const DEFAULT_MODEL = "gpt-5.1";
 const DEFAULT_VECTOR_STORE_ID = "vs_6a3a6e41c3548191b72539d24aa60b0b";
 
-function createGiraiAgent() {
+/**
+ * Builds the agent. The model is a parameter so the eval harness can benchmark
+ * the same tools and instructions across models without touching the runtime
+ * default, which stays driven by env.
+ */
+export function createGiraiAgent(options: { model?: string } = {}) {
   const openai = createOpenAI({
     apiKey: process.env.OPENAI_API_KEY,
   });
 
   const vectorStoreId =
     process.env.OPENAI_VECTOR_STORE_ID ?? DEFAULT_VECTOR_STORE_ID;
-  const modelId = process.env.GIRAI_ASSISTANT_MODEL ?? DEFAULT_MODEL;
+  const modelId =
+    options.model ?? process.env.GIRAI_ASSISTANT_MODEL ?? DEFAULT_MODEL;
 
   return new ToolLoopAgent({
     model: openai.responses(modelId),
@@ -39,6 +46,7 @@ function createGiraiAgent() {
       get_averages: getAveragesTool,
       get_edition_comparison: getEditionComparisonTool,
       get_region_summary: getRegionSummaryTool,
+      get_subregion_summary: getSubregionSummaryTool,
     },
     stopWhen: stepCountIs(12),
   });

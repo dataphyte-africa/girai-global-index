@@ -2,6 +2,7 @@ import { tool } from "ai";
 import { z } from "zod";
 import {
   getAllCountries,
+  getCountrySubregion,
   getGlobalAverages,
   getIncomeGroupAverages,
   getRegionAverages,
@@ -9,7 +10,7 @@ import {
 import type { ScoreAggregates } from "@/lib/girai/types";
 import { regionSource } from "../sources";
 import type { GiraiToolResult } from "../types";
-import { resolveRegion } from "../utils";
+import { resolveRegion, resolveSubregion } from "../utils";
 
 import type { CountryRanking } from "@/lib/girai/types";
 
@@ -45,17 +46,17 @@ export const getAveragesTool = tool({
   description:
     "Get precomputed average scores (GIRAI, dimensions, pillars, framework/implementation) " +
     "and the GIRAI score-tier distribution (Leading/Advanced/Developing/Emerging/Nascent) " +
-    "for the whole index, one region, or one World Bank income group. " +
+    "for the whole index, one region, one subregion, or one World Bank income group. " +
     "Use for any 'average', 'how many countries score X', or group-comparison question instead of computing manually.",
   inputSchema: z.object({
     scope: z
-      .enum(["global", "region", "income-group"])
+      .enum(["global", "region", "subregion", "income-group"])
       .describe("Which slice to average over"),
     name: z
       .string()
       .optional()
       .describe(
-        "Region name (for scope=region) or income group, e.g. 'Low income' (for scope=income-group)"
+        "Region name (scope=region), subregion name (scope=subregion), or income group such as 'Low income' (scope=income-group)"
       ),
     includeIndicators: z
       .boolean()
@@ -83,6 +84,39 @@ export const getAveragesTool = tool({
       return {
         data: shape("Global", getGlobalAverages(), countries),
         sources: [],
+        visualization: "analysis",
+      };
+    }
+
+    if (input.scope === "subregion") {
+      // Subregional averages are derived, not baked into rankings.json, so the
+      // per-indicator breakdown the other scopes carry is unavailable here.
+      const found = input.name ? resolveSubregion(input.name) : undefined;
+      if (!found) {
+        return {
+          data: { found: false, scope: input.scope, query: input.name },
+          sources: [],
+        };
+      }
+      const members = countries.filter(
+        (c) => getCountrySubregion(c) === found.subregion
+      );
+      return {
+        data: {
+          found: true,
+          scope: input.scope,
+          label: found.subregion,
+          region: found.region,
+          countryCount: members.length,
+          girai: found.averageGirai,
+          dimensions: found.dimensions,
+          pillars: found.pillars,
+          frameworkScore: found.frameworkScore,
+          implementationScore: found.implementationScore,
+          rankAmongSubregions: found.globalRank,
+          tiers: tierCounts(members),
+        },
+        sources: [regionSource(found.region)],
         visualization: "analysis",
       };
     }

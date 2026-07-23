@@ -1,0 +1,17 @@
+Prompt,Expected Answer,Difficulty,Test Type,Sheet's Original Grade,gpt-5.1 (current default) (Full/3),gpt-5-nano (Full/3),gpt-5.4-nano (Full/3),Notes
+What is Nigeria's GIRAI score?,Nigeria scores 45.93.,Easy,Factual,Full,3/3,3/3,3/3,"Sheet expected 45.87 from the regional brief; the committed dataset says 45.93 (rank 38, not 39)."
+Which African country has the highest GIRAI score?,"Nigeria, with a score of 45.93 (ranked 38th globally).",Easy,Factual,Full,3/3,3/3,2/3,
+"Which country leads the LATAM region, and what is its score?",Brazil leads LATAM with a score of 63.30 (ranked 11th globally).,Easy,Factual,Null,3/3,3/3,3/3,
+What is Japan's score and where does it rank in Asia?,"Japan scores 55.66, ranking 2nd in Asia and Oceania and 24th globally.",Easy,Factual,Full,3/3,3/3,3/3,
+Which country ranks 2nd in the middle east?,"Jordan, with a score of 40.46 (49th globally).",Medium,Factual,Partial,3/3,3/3,3/3,
+What is the global average GIRAI score?,The global average is 35.02.,Easy,Factual,Partial,3/3,3/3,3/3,Sheet's expected cell said 34.99 but its own pass criteria said 35.02; the dataset gives 35.0154 → 35.02.
+Which region has the lowest average score in the Index?,"Africa, with the lowest average at 21.79, just below the Caribbean (22.42).",Medium,Factual,Full,3/3,3/3,2/3,
+What is Chile's GIRAI score and global ranking?,Chile scores 61.91 and ranks 14th globally.,Easy,Factual,Full,3/3,3/3,3/3,
+"What is the Dominican Republic's score and rank, and what stands out about it?","It scores 47.92, ranks 36th globally, and is the clear Caribbean leader.",Medium,Factual,Full,3/3,3/3,3/3,
+Which country is the lowest performer in Asia?,"Afghanistan, with a score of 6.02 (ranked 134th globally).",Medium,Factual,Null,3/3,1/3,3/3,
+"How many African countries score above the global average, and which ones?","Seven: Nigeria, Egypt, Kenya, Ghana, Benin, Morocco and Cote d'Ivoire.",Medium,Reasoning,Null,3/3,3/3,1/3,"Sheet said six and omitted Cote d'Ivoire (35.18), which clears the 35.02 average. The correct answer is seven."
+What is Egypt's score and rank?,Egypt scores 41.26 and ranks 48th globally (North Africa).,Easy,Factual,Full,3/3,3/3,3/3,
+"Which Asian subregion is the best performing, and what is its average?","East Asia, with an average score of 42.07.",Medium,Factual,Null,3/3,2/3,2/3,
+Which LATAM subregion scores above the global average?,Only South America (42.87). Central America (31.62) and the Caribbean (22.42) fall below it.,Medium,Reasoning,Null,3/3,3/3,3/3,
+What is Brazil's GIRAI score?,"Brazil scores 63.30 (ranked 11th, the highest-placed LATAM country).",Easy,Consistency,Full,3/3,3/3,3/3,
+How did Brazil perform in the index overall?,"Very strong: score 63.30, ranked 11th globally and the top LATAM country.",Easy,Consistency,Full,3/3,3/3,3/3,
