@@ -1,9 +1,10 @@
 import { tool } from "ai";
 import { z } from "zod";
 import { getAllEvidenceItems } from "@/lib/girai/data";
+import { unknownRegion, unknownSubregion } from "../geo-errors";
 import { evidenceSource, indicatorSource, mergeSources } from "../sources";
 import type { GiraiToolResult } from "../types";
-import { resolveIndicator, resolveRegion } from "../utils";
+import { resolveIndicator, resolveRegion, resolveSubregion } from "../utils";
 
 /**
  * Dropped from a free-text query before matching, since the model tends to
@@ -39,9 +40,10 @@ const EVIDENCE_KINDS = [
 
 export const searchEvidenceTool = tool({
   description:
-    "Search evidence items by text query and optional filters (country, indicator, kind, region). " +
-    "`items` is only a sample, capped at `limit`. To answer 'which countries have …' use " +
-    "`countries` — a roll-up of every match, complete regardless of `limit`.",
+    "Search evidence items by text query and optional filters (country, indicator, kind, region, subregion). " +
+    "`items` is only a sample, capped at `limit`. To answer 'which countries have …' or " +
+    "'which indicator has the most …' use the `countries` / `indicators` roll-ups — " +
+    "computed over every match, complete regardless of `limit`.",
   inputSchema: z.object({
     query: z
       .string()
@@ -54,6 +56,10 @@ export const searchEvidenceTool = tool({
     indicatorSlug: z.string().optional().describe("Filter by indicator slug or name"),
     kind: z.enum(EVIDENCE_KINDS).optional().describe("Evidence kind filter"),
     region: z.string().optional().describe("Filter by GIRAI region"),
+    subregion: z
+      .string()
+      .optional()
+      .describe("Filter by subregion, e.g. 'West Africa', 'South East Asia'"),
     limit: z.number().min(1).max(30).default(15),
   }),
   execute: async (input): Promise<GiraiToolResult<unknown>> => {
@@ -78,9 +84,22 @@ export const searchEvidenceTool = tool({
     }
     if (input.region) {
       const region = resolveRegion(input.region);
-      if (region) {
-        items = items.filter((it) => it.country.region === region);
+      if (!region) {
+        return { data: unknownRegion(input.region), sources: [] };
       }
+      items = items.filter((it) => it.country.region === region);
+    }
+    if (input.subregion) {
+      const sub = resolveSubregion(input.subregion);
+      if (!sub) {
+        return { data: unknownSubregion(input.subregion), sources: [] };
+      }
+      // Evidence country refs carry the raw subregion, blank for the three
+      // regions that publish no split — fall back to the region there too.
+      items = items.filter(
+        (it) =>
+          (it.country.subregion?.trim() || it.country.region) === sub.subregion
+      );
     }
     // Match on tokens, not the raw string: substring-matching the whole query
     // meant any multi-word phrase matched nothing at all.
@@ -91,7 +110,11 @@ export const searchEvidenceTool = tool({
     // evidence existed. `queryIgnored` tells the model that happened. Without a
     // structured filter there is nothing to fall back to, so zero stands.
     const hasStructuredFilter = Boolean(
-      input.countryIso3 || input.indicatorSlug || input.kind || input.region
+      input.countryIso3 ||
+        input.indicatorSlug ||
+        input.kind ||
+        input.region ||
+        input.subregion
     );
     const hasQuery = Boolean(input.query?.trim());
     const tokens = hasQuery ? tokenize(input.query!) : [];
@@ -131,6 +154,23 @@ export const searchEvidenceTool = tool({
       (a, b) => b.count - a.count || a.name.localeCompare(b.name)
     );
 
+    // Same idea per indicator, so "which indicator has the most X evidence"
+    // is one call instead of 38. Bounded by the indicator count.
+    const indicatorTally = new Map<string, { slug: string; name: string; count: number }>();
+    for (const it of items) {
+      const seen = indicatorTally.get(it.indicatorSlug);
+      if (seen) seen.count += 1;
+      else
+        indicatorTally.set(it.indicatorSlug, {
+          slug: it.indicatorSlug,
+          name: resolveIndicator(it.indicatorSlug)?.name ?? it.indicatorSlug,
+          count: 1,
+        });
+    }
+    const indicators = [...indicatorTally.values()].sort(
+      (a, b) => b.count - a.count || a.name.localeCompare(b.name)
+    );
+
     const limited = items.slice(0, input.limit).map((it) => ({
       id: it.id,
       kind: it.kind,
@@ -160,6 +200,7 @@ export const searchEvidenceTool = tool({
         itemsTruncated: items.length > limited.length,
         countryCount: countries.length,
         countries,
+        indicators,
         items: limited,
         filters: input,
         ...(tokens.length > 0 ? { queryTokens: tokens } : {}),

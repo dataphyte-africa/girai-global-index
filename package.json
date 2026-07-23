@@ -13,7 +13,8 @@
     "build:narratives:deterministic": "tsx scripts/build-narratives.ts --deterministic",
     "start": "next start",
     "seed:sanity": "tsx --env-file=.env.local scripts/seed-sanity.ts",
-    "lint": "eslint"
+    "lint": "eslint",
+    "eval:assistant": "tsx --env-file=.env.local scripts/eval-assistant.ts"
   },
   "dependencies": {
     "@ai-sdk/openai": "^3.0.74",

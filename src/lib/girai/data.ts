@@ -18,6 +18,8 @@ import pillarHighlightsData from "@/data/2026/generated/country-pillar-highlight
 import editionEvidenceStatusData from "@/data/2026/generated/country-edition-evidence-status.json";
 import { DIMENSIONS, PILLARS, INDICATORS } from "@/data/2026/taxonomy";
 import type {
+  DimensionScores,
+  PillarScores,
   CountryRanking,
   RankingsArtifact,
   TaxonomyArtifact,
@@ -146,6 +148,136 @@ export function getRegionSummaries(): RegionSummary[] {
   rows.sort((a, b) => b.averageGirai - a.averageGirai);
   rows.forEach((r, i) => (r.globalRank = i + 1));
   return rows;
+}
+
+// ---------------------------------------------------------------------------
+// Subregions
+//
+// `subregion` ships on every country record but the build step only
+// pre-aggregates by region and income group, so these averages are derived
+// here and memoized. It is a single pass over 135 rows, done once per process.
+//
+// Three regions — Caribbean, Middle East and Northern America — carry an
+// empty `subregion` because the region already *is* the finest geographic
+// unit GIRAI publishes for them. Treating them as a subregion named after
+// their region keeps the subregion axis total: every country belongs to
+// exactly one, so subregion averages roll back up to the global average.
+
+/** The subregion a country belongs to, falling back to its region. */
+export function getCountrySubregion(country: CountryRanking): string {
+  return country.subregion?.trim() || country.region;
+}
+
+export interface SubregionSummary {
+  subregion: string;
+  /** Parent GIRAI region — subregion names are only unique within one. */
+  region: string;
+  /** True when the region has no published subregion split and stands in for one. */
+  isWholeRegion: boolean;
+  averageGirai: number;
+  countryCount: number;
+  /** Rank of this subregion's average among all subregions, 1 = highest. */
+  globalRank: number;
+  /** Rank among the subregions of the same parent region, 1 = highest. */
+  rankWithinRegion: number;
+  dimensions: DimensionScores;
+  pillars: PillarScores;
+  frameworkScore: number | null;
+  implementationScore: number | null;
+}
+
+function mean(values: (number | null)[]): number | null {
+  const scored = values.filter((v): v is number => v !== null);
+  return scored.length
+    ? scored.reduce((sum, v) => sum + v, 0) / scored.length
+    : null;
+}
+
+let subregionSummaryCache: SubregionSummary[] | null = null;
+
+/**
+ * Every subregion with its average scores, ranked by average GIRAI score.
+ * Memoized — the country list is static for the lifetime of the process.
+ */
+export function getSubregionSummaries(): SubregionSummary[] {
+  if (subregionSummaryCache) return subregionSummaryCache;
+
+  // Keyed on region + subregion because subregion names are only unique
+  // within a region; the value carries both so the key is never parsed back.
+  const groups = new Map<
+    string,
+    { region: string; subregion: string; members: CountryRanking[] }
+  >();
+  for (const c of rankings.countries) {
+    const sub = getCountrySubregion(c);
+    const key = c.region + "|" + sub;
+    const bucket = groups.get(key);
+    if (bucket) bucket.members.push(c);
+    else groups.set(key, { region: c.region, subregion: sub, members: [c] });
+  }
+
+  const rows: SubregionSummary[] = [];
+  for (const { region, subregion, members } of groups.values()) {
+    const averageGirai = mean(members.map((c) => c.girai));
+    if (averageGirai === null) continue;
+    rows.push({
+      subregion,
+      region,
+      isWholeRegion: subregion === region,
+      averageGirai,
+      countryCount: members.length,
+      globalRank: 0,
+      rankWithinRegion: 0,
+      dimensions: Object.fromEntries(
+        DIMENSIONS.map((d) => [d.slug, mean(members.map((c) => c.dimensionScores[d.slug]))])
+      ) as DimensionScores,
+      pillars: Object.fromEntries(
+        PILLARS.map((p) => [p.slug, mean(members.map((c) => c.pillarScores[p.slug]))])
+      ) as PillarScores,
+      frameworkScore: mean(members.map((c) => c.frameworkScore)),
+      implementationScore: mean(members.map((c) => c.implementationScore)),
+    });
+  }
+
+  rows.sort((a, b) => b.averageGirai - a.averageGirai);
+  rows.forEach((r, i) => (r.globalRank = i + 1));
+  const seenPerRegion = new Map<string, number>();
+  for (const r of rows) {
+    const next = (seenPerRegion.get(r.region) ?? 0) + 1;
+    seenPerRegion.set(r.region, next);
+    r.rankWithinRegion = next;
+  }
+
+  subregionSummaryCache = rows;
+  return rows;
+}
+
+/** Distinct subregion names paired with their parent region, best-average first. */
+export function getSubregions(): { subregion: string; region: string }[] {
+  return getSubregionSummaries().map((r) => ({
+    subregion: r.subregion,
+    region: r.region,
+  }));
+}
+
+/** Countries belonging to a subregion, best score first. */
+export function getCountriesBySubregion(subregion: string): CountryRanking[] {
+  return rankings.countries
+    .filter((c) => getCountrySubregion(c) === subregion)
+    .sort((a, b) => (b.girai ?? -1) - (a.girai ?? -1));
+}
+
+/**
+ * A country's rank among the scored countries of its own subregion.
+ * Ties share a rank, matching the build step's ranking convention.
+ */
+export function getSubregionalRank(country: CountryRanking): number | null {
+  if (country.girai === null) return null;
+  const peers = getCountriesBySubregion(getCountrySubregion(country)).filter(
+    (c) => c.girai !== null
+  );
+  const better = peers.filter((c) => (c.girai ?? 0) > country.girai!).length;
+  return better + 1;
 }
 
 // ---------------------------------------------------------------------------
