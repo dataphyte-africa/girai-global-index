@@ -60,13 +60,13 @@ While building an automated version of our manual test sheet, we re-checked ever
 
 We built an automated test that runs all 16 questions against the real assistant, three times each, and grades the answers automatically. This replaces the slow manual spreadsheet process and can be re-run any time — before a release, or when we consider changing the underlying AI model.
 
-We used it to benchmark our current model against two cheaper, faster alternatives:
+We used it to benchmark our current model (**GPT-5.1**) against two cheaper, faster alternatives:
 
 | Model | Accuracy (3 runs) | Speed | Notes |
 |---|---|---|---|
-| **Current model** (in production) | **100%** | ~6 sec | No wrong answers |
-| Cheaper alt. A | 94% | ~27 sec | Occasional misreads; also much slower |
-| Cheaper alt. B | 90% | ~7 sec | A few confident mistakes |
+| **GPT-5.1** (in production) | **100%** | ~6 sec | No wrong answers |
+| GPT-5-nano | 94% | ~27 sec | Occasional misreads; also much slower |
+| GPT-5.4-nano | 90% | ~7 sec | A few confident mistakes |
 
 **Takeaway:** the model we're running is both the most accurate *and* competitively fast. The cheaper options save cost but give up correctness on exactly the kind of nuanced regional questions this index is about — not a good trade for a research tool.
 
@@ -74,7 +74,7 @@ We used it to benchmark our current model against two cheaper, faster alternativ
 
 Each cell shows how many of **3 runs** the model got fully right. Green = perfect, anything less is where that model slipped.
 
-| # | Question | Current model | Cheaper alt. A | Cheaper alt. B |
+| # | Question | GPT-5.1 | GPT-5-nano | GPT-5.4-nano |
 |---|---|:---:|:---:|:---:|
 | 1 | Nigeria's GIRAI score | 3/3 | 3/3 | 3/3 |
 | 2 | Highest-scoring African country | 3/3 | 3/3 | 2/3 |

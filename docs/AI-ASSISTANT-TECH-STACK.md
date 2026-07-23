@@ -76,7 +76,7 @@ A curated instruction set defines the assistant’s role, GIRAI framework vocabu
 
 ### 2. Agent tools (live data)
 
-Eight custom **server-side tools** wrap existing data accessors. Examples:
+Ten custom **server-side tools** wrap existing data accessors:
 
 | Tool | Typical use |
 |------|-------------|
@@ -84,8 +84,9 @@ Eight custom **server-side tools** wrap existing data accessors. Examples:
 | `search_countries` | Filter by region, subregion, income, score, or position vs the global average |
 | `get_leaderboard` | Top/bottom performers on GIRAI or an indicator, scopable to a region or subregion |
 | `lookup_indicator` | Indicator definition and leaders |
-| `search_evidence` | Find evidence by text, country, kind |
+| `search_evidence` | Find evidence by text, country, kind, region, or subregion |
 | `compare_countries` | Side-by-side comparison (2–4 countries) |
+| `get_averages` | Global, regional, subregional, or income-group averages and score-tier distribution |
 | `get_edition_comparison` | 2024 vs 2026 evidence-status changes |
 | `get_region_summary` | Regional averages and rankings |
 | `get_subregion_summary` | Subregional averages, ranks and member countries |
@@ -111,6 +112,8 @@ pnpm eval:assistant --only subregion              # one case while iterating
 ```
 
 Expected figures come from the committed dataset, not the published regional briefs; where the two disagree the dataset wins, and the case carries a `notes` line saying so. Numeric checks accept 2, 1 or 0 decimal places because the site renders one.
+
+On the current 16-case "Rankings and scores" suite, the default model (`gpt-5.1`) scores **48/48** across three runs. `gpt-5-nano` (45/48) and `gpt-5.4-nano` (43/48) were benchmarked as cheaper alternatives; results are in `results/`.
 
 ### 3. File search (reports)
 
@@ -160,16 +163,16 @@ The assistant runs on OpenAI's pay-as-you-go API: **you are billed per use, not 
 
 There is **no per-page or idle cost** — the model only runs when a visitor actually asks a question. Loading a country page, browsing rankings, or leaving the chat open costs nothing.
 
-### The two models
+### The model
 
-We currently use **GPT-4.1**. **GPT-5.1** is OpenAI's newer, more capable model and can be switched on by changing a single setting (`GIRAI_ASSISTANT_MODEL`) — no code changes. Here's how they compare on price:
+We currently run **GPT-5.1**, OpenAI's newer, more capable model. It scored **100% on our accuracy test** (see the sibling *Accuracy Improvements & Benchmark* report). The model is set in one place (`GIRAI_ASSISTANT_MODEL`) and can be swapped without code changes. For context, here's how it compares on price with the older GPT-4.1 we ran previously:
 
 | | Price per 1 million input tokens | Price per 1 million output tokens |
 |---|---|---|
-| **GPT-4.1** (current) | $2.00 | $8.00 |
-| **GPT-5.1** (newer option) | $1.25 | $10.00 |
+| **GPT-5.1** (current) | $1.25 | $10.00 |
+| **GPT-4.1** (previous) | $2.00 | $8.00 |
 
-Two things to notice: GPT-5.1 is **cheaper to send data into** (input) but **a little pricier for the answers it writes** (output). Because a typical GIRAI question sends in far more than it writes back (all that data lookup), **GPT-5.1 usually works out slightly cheaper per question** — while also being a smarter model. Prices are OpenAI's public rates as of this writing and can change; check [OpenAI's pricing page](https://openai.com/api/pricing/) for the latest.
+GPT-5.1 is **cheaper to send data into** (input) but **a little pricier for the answers it writes** (output). Because a typical GIRAI question sends in far more than it writes back (all that data lookup), **GPT-5.1 works out slightly cheaper per question** — while also being the smarter, more accurate model. Prices are OpenAI's public rates as of this writing and can change; check [OpenAI's pricing page](https://openai.com/api/pricing/) for the latest.
 
 > **A note on "caching":** the assistant's fixed instructions are the same on every request. OpenAI charges a large discount (roughly 75–90% off) for that repeated portion, so real-world costs tend to land at the low end of the estimates below.
 
@@ -177,11 +180,11 @@ Two things to notice: GPT-5.1 is **cheaper to send data into** (input) but **a l
 
 A single question isn't one model call — the assistant may look data up, read the result, and then write its answer (up to a dozen internal steps). Bundling that together, a typical question uses very roughly **8,000–15,000 input tokens and 400–900 output tokens**. That works out to:
 
-| Question type | GPT-4.1 | GPT-5.1 |
+| Question type | GPT-5.1 (current) | GPT-4.1 (previous) |
 |---|---|---|
 | **Simple** (one lookup, e.g. "What's Kenya's score?") | ~$0.01 | ~$0.01 |
-| **Typical** (a comparison or ranked list) | ~$0.03 | ~$0.02 |
-| **Heavy** (multi-country + report search) | ~$0.06 | ~$0.04 |
+| **Typical** (a comparison or ranked list) | ~$0.02 | ~$0.03 |
+| **Heavy** (multi-country + report search) | ~$0.04 | ~$0.06 |
 
 **Rule of thumb: a few cents per question.** Even a busy day of a few hundred questions is single-digit dollars.
 
@@ -189,11 +192,11 @@ A single question isn't one model call — the assistant may look data up, read 
 
 Assuming an average "typical" question:
 
-| Questions per month | GPT-4.1 | GPT-5.1 |
+| Questions per month | GPT-5.1 (current) | GPT-4.1 (previous) |
 |---|---|---|
-| 1,000 | ~$30 | ~$20 |
-| 5,000 | ~$150 | ~$110 |
-| 10,000 | ~$300 | ~$220 |
+| 1,000 | ~$20 | ~$30 |
+| 5,000 | ~$110 | ~$150 |
+| 10,000 | ~$220 | ~$300 |
 
 These are estimates to plan around, not a bill — actual spend depends on question complexity and length. OpenAI provides a live usage dashboard, and you can set a **hard monthly spending cap** so costs can never run away.
 
@@ -217,7 +220,7 @@ Separately, the written summaries on country pages are generated **once, during 
 - **API keys** (`OPENAI_API_KEY`, `OPENAI_VECTOR_STORE_ID`) live in server environment variables only—never exposed to the browser.  
 - **`/api/chat`** applies basic **rate limiting** (per IP) and caps conversation history length.  
 - Tools read **static JSON only**; there is no arbitrary database or file access from the model.  
-- Default model and vector store ID can be overridden via `GIRAI_ASSISTANT_MODEL` (e.g. set to `gpt-5.1`) and `OPENAI_VECTOR_STORE_ID`.
+- The default model (`gpt-5.1`) and vector store ID can be overridden via `GIRAI_ASSISTANT_MODEL` and `OPENAI_VECTOR_STORE_ID`.
 
 See `.env.local.example` for required configuration.
 
