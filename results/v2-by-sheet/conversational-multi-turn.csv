@@ -1,0 +1,247 @@
+Phase,Conversation,Turn,Type,Difficulty,Prompt,Expected Answer,Pass Criteria,Red Flags,Model,Bot Answer,Verdict,Judge Rationale,Tools Used,Latency (ms)
+Conversational (multi-turn),Conv 1 Africa drill-down,T1,Consistency/Reasoning,,Which region has the lowest average score in the GIRAI?,"Africa, with the lowest regional average at 21.81 (just below the Caribbean, 22.42).",Africa named; 21.81.,Caribbean named as lowest; wrong figure.,default (gpt-5.1),"The region with the **lowest average GIRAI score is Africa**, with an average score of **21.8** out of 100.    
+
+A few comparative points:  
+- [Africa](/regions/africa): **21.8** average GIRAI (lowest of all 7 regions).    
+- [Caribbean](/regions/caribbean): **22.4**, slightly above Africa.    
+- [Asia and Oceania](/regions/asia-and-oceania): **33.0**.    
+- [Europe](/regions/europe): **54.2** (highest regional average).    
+
+**Sources**  
+- [Africa region overview](/regions/africa)    
+- [Caribbean region overview](/regions/caribbean)    
+- [Asia and Oceania region overview](/regions/asia-and-oceania)    
+- [Europe region overview](/regions/europe)",Full,"Names Africa as lowest and gives 21.8, an acceptable rounding of 21.81; no red-flag errors present.",get_region_summary,7033
+Conversational (multi-turn),Conv 1 Africa drill-down,T2,Consistency/Reasoning,,"Within Africa, which subregion performs best?","North Africa, average 27.22 (highest in Africa).",North Africa; 27.22.,West/Southern Africa; wrong average.,default (gpt-5.1),"Within Africa, the **best-performing subregion is North Africa**, with the highest average GIRAI score in the region.
+
+Key numbers within Africa:  
+- **North Africa** – average GIRAI **27.1**, highest in Africa, but still below the global average of 35.0.  
+- **West Africa** – **24.8**.  
+- **South Africa** (Southern Africa subregion) – **23.7**.  
+- **East Africa** – **21.0**.  
+- **Central Africa** – **9.9** (lowest in Africa).
+
+**Sources**  
+- [Africa region overview](/regions/africa)",Partial,Identifies North Africa correctly but gives wrong average (27.1 instead of required 27.22).,get_subregion_summary,9774
+Conversational (multi-turn),Conv 1 Africa drill-down,T3,Consistency/Reasoning,,North Africa has wide framework coverage - does that mean it enforces AI rules well?,"No. Only 1 of its 31 frameworks is binding (3.23%), the weakest enforcement in Africa; mostly statements of intent.",Corrects coverage-vs-enforcement; 3.23% / 1 of 31.,Claiming strong enforcement.,default (gpt-5.1),"Not necessarily. Wide framework coverage means **North African countries have many AI-related policies and laws on paper**, but GIRAI separates that from how well those rules are **implemented and enforced in practice**.
+
+In GIRAI terms:
+
+- **Framework ≠ enforcement**  
+  - The index scores policy substance (framework) and practical execution (implementation) separately. A country or subregion can score high on framework while still having **weak or uneven enforcement**, limited institutional capacity, or gaps in oversight.
+
+- **North Africa’s “strength” is mostly on paper**  
+  - North Africa performs relatively well in **AI Policy frameworks** across several dimensions (for example, strategy documents, data protection laws, or ethics guidelines), which lifts its overall scores.
+  - But implementation often lags: resources, regulatory capacity, monitoring mechanisms, and accessible redress can be much thinner than what the documents imply.
+
+- **URAI penalties still apply**  
+  - Even with broad frameworks, countries can receive URAI (misuse) penalties if there is documented government misuse of AI or digital systems — a signal that **rules on paper aren’t fully preventing harms**.
+
+So: **strong framework coverage is a positive foundation, but it does not on its own mean “rules are well enforced.”** To judge enforcement quality you’d look specifically at GIRAI’s implementation scores and any URAI penalties for those countries, not just the presence of frameworks.
+
+If you’d like, I can pull up a concrete example for one or two North African countries (e.g. Morocco, Egypt, Tunisia) showing their framework vs implementation scores and any URAI penalty.",Partial,"Correctly separates coverage from enforcement but omits required figures: 1 of 31 frameworks, 3.23%, weakest enforcement in Africa.",,6295
+Conversational (multi-turn),Conv 1 Africa drill-down,T4,Consistency/Reasoning,,So which African subregion actually leads on binding frameworks?,"Southern Africa, with 32.26% binding (10 of 31).",Southern Africa; 32.26%.,Re-naming North Africa; East/West Africa.,default (gpt-5.1),"Among African subregions, **North Africa leads on binding AI-related frameworks**.
+
+From the GIRAI subregional view for Africa:  
+- **North Africa** has the **highest AI Policy framework score** among African subregions, with an overall framework score of **35.9**.  
+- This reflects comparatively broad coverage of AI-relevant laws and policies (e.g. data protection, digital governance, sectoral strategies) across [Egypt](/countries/EGY), [Morocco](/countries/MAR), [Libya](/countries/LBY), [Tunisia](/countries/TUN), and [Algeria](/countries/DZA).  
+- It is also the **top overall subregion in Africa** by GIRAI score, with an average of **27.1** and ranked **1st within Africa**.  
+
+That said, this leadership is about **frameworks on paper**; the GIRAI still treats **implementation and enforcement separately**, and North Africa’s average score remains **below the global GIRAI average of 35.0**.
+
+**Sources**  
+- [Africa region overview](/regions/africa)  
+- [Egypt country profile](/countries/EGY)  
+- [Morocco country profile](/countries/MAR)  
+- [Libya country profile](/countries/LBY)  
+- [Tunisia country profile](/countries/TUN)  
+- [Algeria country profile](/countries/DZA)",Null,"Names North instead of Southern Africa, omits 32.26%, contradicts benchmark; clear failure.",get_subregion_summary,12055
+Conversational (multi-turn),Conv 1 Africa drill-down,T5,Consistency/Reasoning,,Give me one country that drives North Africa's relative strength.,"Egypt (score 41.99, rank 46) - and Libya scores well on inclusion & diversity (35.59).",Egypt (or Libya) named with a figure.,A non-North-African country; fabricated score.,default (gpt-5.1),"One key country underpinning North Africa’s relative strength is **[Libya](/countries/LBY)**.
+
+From the GIRAI 2026 data for the North Africa subregion:  
+- [Libya](/countries/LBY) has the **highest GIRAI score in North Africa**, at **29.2**, ranked **78th globally**.    
+- It sits clearly above [Tunisia](/countries/TUN) (**16.4**, 110th) and [Algeria](/countries/DZA) (**12.8**, 123rd), making it the main driver of the subregion’s comparative performance.    
+
+So while North Africa’s average is still below the global mean, **Libya stands out inside the subregion** and helps pull North Africa ahead of other African subregions on overall GIRAI scores and framework coverage.
+
+**Sources**  
+- [Libya country profile](/countries/LBY)    
+- [Tunisia country profile](/countries/TUN)    
+- [Algeria country profile](/countries/DZA)",Partial,"Correctly names Libya with a figure, but the score appears fabricated relative to expected benchmark numbers.",search_countries,7500
+Conversational (multi-turn),Conv 2 LATAM leader,T1,Consistency/Reasoning,,Which country leads South and Central America in responsible AI?,"Brazil, score 63.30, ranked 11th globally.",Brazil; 63.30 / rank 11.,Chile; Mexico.,default (gpt-5.1),"The current leader in responsible AI in the **South and Central America region is [Brazil](/countries/BRA)**.
+
+From the GIRAI 2026 data for the region:
+
+- Within the **South America** subregion, [Brazil](/countries/BRA) ranks **1st**, with a **GIRAI score of 63.3** (11th globally).  
+- It is followed by [Chile](/countries/CHL) (**61.9**, 14th globally) and [Uruguay](/countries/URY) (**57.0**, 22nd globally) in the same subregion.  
+- South America as a whole scores **42.9** on average, above the global average of **35.0** for responsible AI.  
+- South America is also the **top-scoring subregion within the South and Central America region**.    
+
+**Sources**
+
+- South and Central America regional overview: /regions/south-and-central-america  
+- [Brazil country profile](/countries/BRA)  
+- [Chile country profile](/countries/CHL)  
+- [Uruguay country profile](/countries/URY)",Full,Names Brazil correctly with score 63.3 and 11th globally; no red-flag misidentification like Chile or Mexico.,get_subregion_summary,7110
+Conversational (multi-turn),Conv 2 LATAM leader,T2,Consistency/Reasoning,,How does it compare with the next-highest country in the region?,"Brazil (63.30, rank 11) is just ahead of Chile (61.91, rank 14).",Chile as next; both scores.,Wrong runner-up or scores.,default (gpt-5.1),"Brazil leads [Chile](/countries/CHL) by a **small overall margin but with different strengths**.
+
+- **Overall score and rank**
+  - [Brazil](/countries/BRA): **63.3** (11th globally)
+  - [Chile](/countries/CHL): **61.9** (14th globally)
+
+- **By dimension (Brazil vs Chile)**
+  - Inclusion & Diversity: **72.0 vs 71.9** (very similar)
+  - Ethics & Sustainability: **63.4 vs 56.6** (Brazil notably stronger)
+  - Labour & Skills: **76.3 vs 74.0**
+  - Trust & Safety: **61.5 vs 59.7**
+  - AI Use in Public Service: **67.1 vs 60.3** (Brazil clearly ahead)
+
+- **By pillar (Brazil vs Chile)**
+  - AI Policy: **68.6 vs 64.9**
+  - CSO Engagement: **52.2 vs 23.5** (Brazil far ahead on civil-society engagement)
+  - Enabling Conditions: **72.4 vs 77.3** (Chile stronger on infrastructure and broader conditions)
+
+In short, Brazil’s lead comes mainly from stronger **Ethics & Sustainability**, **AI in public services**, and especially **CSO engagement**, while Chile slightly outperforms Brazil on **enabling conditions** like digital infrastructure and skills context.
+
+**Sources**
+
+- [Brazil country profile](/countries/BRA)  
+- [Chile country profile](/countries/CHL)",Full,Identifies Chile as next-highest and gives both correct overall scores and ranks; no red flags present.,compare_countries,8348
+Conversational (multi-turn),Conv 2 LATAM leader,T3,Consistency/Reasoning,,What is the strongest dimension relative to the global benchmark?,AI use in public service (32.53) - the only dimension where LATAM beats the global average (31.36).,AI use in public service; only one above global.,Trust and safety.,default (gpt-5.1),"For [Brazil](/countries/BRA), the **strongest dimension relative to the global benchmark is _Labour and Skills_**.
+
+- Brazil’s **Labour and Skills** score: **76.3**, vs global average **37.6** — about **38.7 points above** the global benchmark, its largest margin on any dimension    
+- **Inclusion and Diversity** is next-strongest: **72.0** vs global **34.4** (≈ **37.6 points above**)      
+- Other dimensions still sit well above global averages but with smaller gaps:
+  - Ethics and Sustainability: **63.4** vs **35.1** (≈ **28.3 above**)  
+  - Trust and Safety: **61.5** vs **40.1** (≈ **21.4 above**)  
+  - AI Use in Public Service: **67.1** vs **31.4** (≈ **35.7 above**)      
+
+So Brazil’s standout edge over the world is in **Labour and Skills**, especially around workforce preparation, protections, and AI literacy.  
+
+**Sources**
+
+- [Brazil country profile](/countries/BRA)    
+- [Global averages overview](/takeaways/global-averages)",Null,Names the wrong strongest dimension; contradicts requirement that only AI use in public service is above global.,lookup_country; get_averages,10325
+Conversational (multi-turn),Conv 2 LATAM leader,T4,Consistency/Reasoning,,And what is its weakest dimension?,"Trust and safety (32.47), 7.55 points below the global average - LATAM's widest shortfall.",Trust and safety; gap of ~7.55.,Repeating the strongest; wrong gap.,default (gpt-5.1),"For [Brazil](/countries/BRA), the **weakest dimension is _Trust and Safety_**, with a score of **61.5**.
+
+Across dimensions:
+
+- Labour and Skills: **76.3**
+- Inclusion and Diversity: **72.0**
+- AI Use in Public Service: **67.1**
+- Ethics and Sustainability: **63.4**
+- **Trust and Safety: 61.5** (lowest of the five, but still well above the global average of 40.1)
+
+So even Brazil’s weakest area is relatively strong by global standards, but it lags its own performance in Labour and Skills and Inclusion and Diversity.
+
+**Sources**
+
+- [Brazil country profile](/countries/BRA)",Null,"Wrong country, wrong score, omits required 7.55-point gap; contradicts benchmark specification for weakest dimension.",lookup_country,6266
+Conversational (multi-turn),Conv 2 LATAM leader,T5,Consistency/Reasoning,,Which subregion pulls the region average down the most?,"The Caribbean (average 22.42), the weakest subregion on every pillar and dimension.",Caribbean; 22.42.,Central America; South America.,default (gpt-5.1),"Within the **South and Central America** region, **Central America** pulls the regional average down the most.
+
+- **Central America** average GIRAI score: **31.6**, **below** the global average of **35.0** and South America’s 42.9  
+- **South America** average GIRAI score: **42.9**, clearly **above** the global average  
+- The region’s weaker performance is therefore driven primarily by **Central America’s lower scores**.  
+
+**Sources**
+
+- [South and Central America region overview](/regions/south-and-central-america)",Null,Wrong subregion and figure; contradicts required Caribbean 22.42 and mentions red-flag regions instead.,get_subregion_summary,7758
+Conversational (multi-turn),Conv 3 AI misuse,T1,Consistency/Reasoning,,Did Latin America document any government AI misuse?,"Yes - 5 countries recorded severe misuse, across 6 validated cases.",Yes; 5 countries / 6 cases.,Denying any misuse.,default (gpt-5.1),"Yes. The GIRAI 2026 dataset documents government misuse of AI in multiple Latin American countries.
+
+From the government‑misuse evidence roll‑up, the following Latin American states appear with documented cases under the [Unacceptable Risks AI Systems](/indicators/unacceptable-risks-ai-systems) indicator fileciteturn1:
+
+- [Bolivia](/countries/BOL) – 1 documented misuse case (facial-recognition camera systems installed in educational centres) fileciteturn1  
+- [Brazil](/countries/BRA) – 2 documented misuse cases (including live facial recognition during Carnival and discriminatory automation in the pension system) fileciteturn1  
+- [Chile](/countries/CHL) – 1 documented misuse case (AI-based systems in policing such as SITIA and Calle Segura) fileciteturn1  
+- [Mexico](/countries/MEX) – 1 documented misuse case fileciteturn1  
+- [Uruguay](/countries/URY) – 1 documented misuse case fileciteturn1  
+
+Across all regions, 35 countries globally have at least one documented instance of government AI misuse in the index; Latin American countries are part of this group fileciteturn1.
+
+**Sources**
+
+- GIRAI evidence search, kind = government-misuse (global roll‑up and country list) fileciteturn1",Full,Explicitly says yes and correctly identifies 5 Latin American countries and 6 misuse cases; no red flags present.,search_evidence,16527
+Conversational (multi-turn),Conv 3 AI misuse,T2,Consistency/Reasoning,,Which countries were they?,"Bolivia, Brazil, Chile, Mexico and Uruguay (Brazil recorded two cases).",All five; Brazil with two.,Missing/adding countries.,default (gpt-5.1),"For Latin America (covering South America, Central America, and the Caribbean), the GIRAI government‑misuse roll‑up shows documented misuse cases for four countries so far:
+
+- [Bolivia](/countries/BOL) – 1 documented case fileciteturn2  
+- [Brazil](/countries/BRA) – 2 documented cases fileciteturn2  
+- [Chile](/countries/CHL) – 1 documented case fileciteturn2  
+- [Uruguay](/countries/URY) – 1 documented case fileciteturn2  
+
+These are the Latin American entries within the 35 countries globally that have at least one government‑misuse item under the [Unacceptable Risks AI Systems](/indicators/unacceptable-risks-ai-systems) indicator. fileciteturn2  
+
+**Sources**
+
+- GIRAI 2026 evidence search (kind = government‑misuse, indicator = Unacceptable Risks AI Systems) fileciteturn2",Null,Missing Mexico from the list of countries; thus does not meet required pass criteria.,search_evidence,8681
+Conversational (multi-turn),Conv 3 AI misuse,T3,Consistency/Reasoning,,What kind of misuse was most common?,Mass biometric surveillance - 4 of the 6 cases.,Mass biometric surveillance; 4 of 6.,Another category.,default (gpt-5.1),"Across the Latin American government‑misuse cases in GIRAI 2026, the most common pattern is **AI‑enabled surveillance and policing**, especially systems built on or closely tied to **facial recognition and predictive policing tools**.
+
+In practice, this includes:
+
+- **Facial‑recognition deployments in public spaces** (e.g., during mass events or in public institutions such as schools or educational centres)  
+- **Predictive or data‑driven policing systems** that rely on opaque algorithms to guide law‑enforcement activities  
+- Related uses of AI‑driven monitoring that raise concerns about privacy, discrimination, or chilling effects on civic life  
+
+If you’d like, I can break this down country by country (e.g., how Brazil’s and Chile’s cases differ, and what’s been reported for Bolivia and Uruguay).",Null,"Does not mention mass biometric surveillance nor 4 of 6; instead gives a different, more generic category.",file_search,7495
+Conversational (multi-turn),Conv 3 AI misuse,T4,Consistency/Reasoning,,How countries have frameworks against AI-facilitated misinformation and violence?,"Only 7 of 22 countries have any coverage, and only two of those - Brazil and Chile - actually implement.",7 of 22; only Brazil & Chile implement.,Overstating coverage.,default (gpt-5.1),"109 countries in GIRAI 2026 have at least one **framework** (law, strategy, guideline, or similar policy document) that addresses the [AI‑facilitated Misinformation and Violence](/indicators/ai-facilitated-misinformation-violence) indicator. fileciteturn4  
+
+A few specifics:
+
+- Total framework items tagged to this indicator: **62** across the index fileciteturn4  
+- Countries with such frameworks: **109** (out of 135 scored countries) fileciteturn4  
+- Examples include [Angola](/countries/AGO)’s Draft Law on Artificial Intelligence, which explicitly addresses AI‑facilitated misinformation and violence fileciteturn4  
+- Other countries with substantial related framework activity (often across several indicators) include [Canada](/countries/CAN), [France](/countries/FRA), [Brazil](/countries/BRA), [Chile](/countries/CHL), [Mexico](/countries/MEX), and many others fileciteturn4  
+
+**Sources**
+
+- GIRAI 2026 evidence search, kind = framework, indicator = [AI‑facilitated Misinformation and Violence](/indicators/ai-facilitated-misinformation-violence) fileciteturn4",Null,Contradicts required figures (7 of 22; only Brazil & Chile implement) and significantly overstates coverage.,search_evidence,12042
+Conversational (multi-turn),Conv 4 Caribbean probe,T1,Consistency/Reasoning,,Tell me about the Caribbean.,"8 countries, average 22.42 (second-lowest region); the Dominican Republic leads and the rest cluster low.",8 countries; 22.42; DR leads.,Confusing with all of LATAM.,default (gpt-5.1),"The Caribbean is one of the lowest-scoring regions in the Global Index on Responsible AI, with relatively weak AI policy frameworks but somewhat stronger basic conditions for digital and data use.
+
+- **Overall performance:** Average GIRAI score **22.4/100**, ranking **6th of 7 regions** globally, across **8 countries** in the Caribbean.  
+- **By dimension:**
+  - **Labour and Skills:** **25.8** – the strongest area regionally, reflecting relatively better foundations for digital skills and workforce preparation.
+  - **Inclusion and Diversity:** **25.1** – modest attention to inclusion, but still low in global terms.
+  - **AI Use in Public Service:** **22.1** – some early use of AI or data-driven tools in government, but limited depth and reach.
+  - **Ethics and Sustainability:** **19.9** – weak articulation of ethical and environmental safeguards around AI.
+  - **Trust and Safety:** **19.2** – limited concrete measures for AI risk mitigation, oversight, or rights protection.
+- **By pillar:**
+  - **AI Policy:** **10.2** – very low; few comprehensive or binding AI strategies, laws or regulations.
+  - **CSO Engagement:** **5.6** – extremely low evidence of structured civil society participation in AI governance.
+  - **Enabling Conditions:** **52.4** – comparatively strong; digital infrastructure, institutions, and general governance capacity outperform the AI-specific policy layer.
+
+In short, the Caribbean’s enabling conditions are much stronger than its current AI policy and participation frameworks. This suggests significant room – and capacity – for growth if governments choose to develop clearer AI strategies, regulatory safeguards, and mechanisms to involve civil society.
+
+**Sources**
+
+- [Caribbean region overview](/regions/caribbean)",Full,"States 8 countries, regional average 22.4≈22.42, and correctly characterizes Caribbean as low-scoring with DR leading implicitly.",get_region_summary,8981
+Conversational (multi-turn),Conv 4 Caribbean probe,T2,Consistency/Reasoning,,Which is the strongest country there?,"The Dominican Republic - score 47.92, ranked 36th globally.",Dominican Republic; 47.92 / rank 36.,Trinidad & Tobago; Jamaica.,default (gpt-5.1),"The strongest performer in the Caribbean is the [Dominican Republic](/countries/DOM).
+
+- **Regional rank:** 1st of 8 Caribbean countries  
+- **GIRAI score:** **47.9/100**, clearly ahead of the regional average (~22)  
+- Next strongest in the region are [Trinidad and Tobago](/countries/TTO) (**26.1**) and [Jamaica](/countries/JAM) (**24.3**), but both trail the Dominican Republic by a large margin.  
+
+**Sources**
+
+- [Dominican Republic country profile](/countries/DOM)  
+- [Trinidad and Tobago country profile](/countries/TTO)  
+- [Jamaica country profile](/countries/JAM)",Full,Names Dominican Republic with correct score and rank; extra mentions not prohibited by pass criteria.,get_leaderboard,6459
+Conversational (multi-turn),Conv 4 Caribbean probe,T3,Consistency/Reasoning,,Why do the rest score so low even though some are high-income?,Income does not translate into performance. The Dominican Republic is the sole outlier; the other seven cluster heavily in the lower tiers.,Separates income from score; DR the lone outlier.,Assuming high income implies high scores.,default (gpt-5.1),"Caribbean countries score low mainly because their AI‑specific governance is underdeveloped, even where general wealth and infrastructure are relatively strong.
+
+Key structural reasons visible in the data:
+
+- **AI policy frameworks are extremely thin.**  
+  - The Caribbean’s **AI Policy pillar averages just 10.2/100**, less than a quarter of the high‑income country average (**47.2**). fileciteturn3tool0 fileciteturn3tool1  
+  - This suggests few comprehensive AI strategies, binding laws, or regulatory regimes — high‑income status hasn’t yet translated into mature AI governance.
+
+- **Civil society engagement is almost absent.**  
+  - The **CSO Engagement pillar averages just 5.6/100** in the Caribbean, compared with **25.7** among high‑income countries. fileciteturn3tool0 fileciteturn3tool1  
+  - That means very limited formal mechanisms for public consultation, watchdog roles, or rights‑based oversight, which pulls scores down even in richer states.
+
+- **Enabling conditions are relatively good, but they don’t “carry” the score.**  
+  - The Caribbean’s **Enabling Conditions pillar is 52.4/100** — reasonably strong and not that far from the high‑income average of **75.1**. fileciteturn3tool0 fileciteturn3tool1  
+  - So connectivity, institutions, and general governance capacity exist, but GIRAI rewards *AI‑specific* rules, safeguards, and participation, where evidence is scarce.
+
+- **Overall gap to high‑income peers is about institutions, not income.**  
+  - Caribbean regional average GIRAI score: **22.4/100**.  
+  - High‑income country average: **52.1/100** — more than double, driven by much stronger AI policies and participation rather than purely by wealth. fileciteturn3tool0 fileciteturn3tool1  
+
+So even where a Caribbean country is high‑income or has solid infrastructure, it will still score low if it lacks clear AI strategies, regulatory frameworks, and structured civil‑society involvement — because that is exactly what the index measures.",Partial,Correctly decouples income from score but fails to mention Dominican Republic as the single outlier.,get_region_summary; get_averages,19005

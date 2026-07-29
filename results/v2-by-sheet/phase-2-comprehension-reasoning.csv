@@ -1,0 +1,102 @@
+Phase,Conversation,Turn,Type,Difficulty,Prompt,Expected Answer,Pass Criteria,Red Flags,Model,Bot Answer,Verdict,Judge Rationale,Tools Used,Latency (ms)
+Phase 2 — Comprehension & Reasoning,,,Reasoning,Hard,North Africa has the widest framework coverage in Africa. Does that mean it enforces AI rules well?,"No. North Africa has the widest coverage (35.29%) but only 1 of its 31 frameworks is binding (3.23%) - the weakest enforcement in Africa. Its frameworks are mostly statements of intent, not law.",Recognises the coverage-vs-enforcement gap; cites the low binding rate (3.23% / 1 of 31).,Claiming wide coverage means strong enforcement.,default (gpt-5.1),"Not necessarily. In GIRAI, “framework coverage” and “enforcement” are related but distinct ideas.
+
+- **Wide framework coverage** (like North Africa’s) means: countries in the subregion have adopted relatively comprehensive AI-related policies, strategies, or guidelines across many indicators.
+- **Enforcement / implementation quality** is captured separately in the **implementation** side of the AI Policy pillar (e.g. whether there are functioning regulators, monitoring, sanctions, budgets, actual programmes, etc.).
+
+So:
+
+1. A subregion can have **strong frameworks but weak implementation** – lots of policies on paper, limited real-world enforcement.
+2. It can also have **modest frameworks but strong implementation** – fewer documents, but the existing rules are applied seriously.
+3. GIRAI explicitly **separates framework scores from implementation scores and the “framework–implementation gap”**, precisely so that “good laws on paper” are not assumed to mean “good enforcement.”
+
+For North Africa specifically, “widest framework coverage in Africa” tells you it has comparatively **broad AI policy adoption**, but you’d need to look at its **implementation scores and framework–implementation gap** (and country-by-country details) before concluding anything about how well AI rules are enforced.
+
+If you’d like, tell me whether you’re interested in a specific country (e.g. Morocco, Egypt, Tunisia), and I can pull its framework vs implementation scores and explain what they say about actual enforcement.",Partial,"Explains coverage vs enforcement gap but omits required figures: 1 of 31 frameworks binding, 3.23% rate.",,7440
+Phase 2 — Comprehension & Reasoning,,,Reasoning,Hard,Compare framework coverage and follow-through for Ethics & Sustainability versus Labour & Skills in Africa.,Ethics & Sustainability has the widest coverage (28.21%) but the weakest implementation (20.45%). Labour & Skills has slightly less coverage (24.79%) but by far the strongest implementation (65.52%) - the only dimension above the global mark of 55.45%.,"Both coverage and implementation figures, in the right direction.",Reversing which dimension implements better.,default (gpt-5.1),"Africa’s AI governance frameworks are somewhat stronger on paper than in practice for both **Ethics & Sustainability** and **Labour & Skills**—and the gap between policy design and follow‑through is large and very similar across the two dimensions.
+
+From the regional data for Africa:      
+
+- **Overall framework vs implementation (all dimensions)**  
+  - Average **framework score**: **37.1**  
+  - Average **implementation score**: **27.7**  
+  - This ~9.4‑point gap indicates that, across Africa, countries are notably better at publishing strategies than at executing them.
+
+- **Ethics & Sustainability vs Labour & Skills (dimension strength)**  
+  - Average **Ethics & Sustainability** score: **23.4**  
+  - Average **Labour & Skills** score: **23.3**  
+  - These dimension averages are almost identical, suggesting that African countries give **similar overall attention** to ethical/sustainability issues and to labour/skills issues in their responsible‑AI governance.
+
+- **Implications for framework coverage**  
+  - Because Africa’s **framework score (37.1)** is well above its overall GIRAI score (21.8), it indicates **relatively broad policy coverage on paper**, including in Ethics & Sustainability and Labour & Skills.
+  - Ethics & Sustainability is **not a clear priority over** Labour & Skills (or vice versa); both sit in the **mid‑20s** and close to the regional mean.
+
+- **Implications for follow‑through**  
+  - The continent‑wide **implementation score (27.7)** lags behind framework design, signalling **limited depth of programmes, institutions, and enforcement** for both Ethics & Sustainability and Labour & Skills.
+  - Given that the two dimensions have nearly identical averages, their **implementation gaps are likely of a similar order of magnitude**: good recognition in policy text, but weaker resourcing, monitoring, and sustained delivery.
+
+In short: in Africa, Ethics & Sustainability and Labour & Skills are **equally mid‑range** priorities in responsible‑AI governance, with **comparable, sizeable gaps** between what is promised in national frameworks and what is implemented on the ground.
+
+**Sources**  
+- Africa regional scores and framework/implementation averages: /regions/africa",Null,Misses required coverage and implementation percentages and wrongly claims similar gaps instead of strong Labour & Skills implementation,get_region_summary; get_averages,9685
+Phase 2 — Comprehension & Reasoning,,,Reasoning,Hard,Why is the Caribbean the second-lowest performer even though several of its countries are high-income?,"Income does not translate into responsible-AI performance. The Caribbean averages 22.42, closer to Africa than to South and Central America. Only the Dominican Republic (rank 36) performs well; the other seven cluster in the lower tiers.",Separates income from performance; notes DR as the lone outlier.,Assuming high income implies high scores.,default (gpt-5.1),"The Caribbean’s low regional performance mostly reflects weak AI governance frameworks and limited implementation across *most* of its countries, despite some being high‑income. Being rich is not enough to score well in GIRAI; scores track concrete AI policies, institutions, and safeguards.
+
+Key points:
+
+- **Regional position:** The [Caribbean](/regions/caribbean) averages **22.4** on the GIRAI scale, ranking **6th of 7 regions**, ahead only of [Africa](/regions/africa) at 21.8citeturn3file0.
+- **High income ≠ high GIRAI:** High‑income countries globally average **52.1**, more than double the Caribbean regional average, with strong enabling conditions and much stronger AI policy frameworks (AI Policy pillar **47.2** vs just **10.2** in the Caribbean)citeturn3file1turn3file0.
+- **Most Caribbean countries are below the global average:** All seven scored Caribbean countries with “developing” status sit **below the global GIRAI average of 35.0**, with scores from **9.0 to 26.1** — including high‑income [Antigua and Barbuda](/countries/ATG) at 17.7, [Barbados](/countries/BRB) at 20.2, and [Trinidad and Tobago](/countries/TTO) at 26.1citeturn3file2.
+- **Specific weaknesses:** The Caribbean’s Enabling Conditions pillar is relatively stronger at **52.4**, but **AI Policy (10.2)** and **CSO Engagement (5.6)** are very low, and its **Trust and Safety dimension is the lowest of any region at 19.2**, indicating sparse safeguards and oversightciteturn3file0.
+
+Put simply: several Caribbean states are high‑income, but they are still early‑stage on dedicated AI strategies, regulatory frameworks, and civil‑society engagement around AI. GIRAI measures those governance structures and practices, not economic development alone, which is why the Caribbean as a region sits near the bottom of the index despite its income profile.",Partial,Correctly separates income from performance but omits mention of the Dominican Republic as the single stronger-performing outlier.,get_region_summary; get_averages; search_countries,12269
+Phase 2 — Comprehension & Reasoning,,,Reasoning,Medium,Why is Asia's performance described as deeply divided rather than uniform?,"A few standouts (Japan, South Korea, Singapore, Israel and the outlier Kyrgyz Republic) pull the average up, while a long tail (e.g. Afghanistan, Myanmar) pulls it down. 18 of 38 countries sit above the global average and 20 below.",Explains the split with high and low examples; 18 above / 20 below.,Describing Asia as uniformly high or low.,default (gpt-5.1),"Asia’s performance in the GIRAI is described as “deeply divided” because countries and subregions in **Asia and Oceania** sit at *very* different points on the responsible‑AI spectrum, rather than clustering around a common level. In practice, that means:
+
+- **Very high performers sit next to mid‑tier and much weaker systems.** In the Asia and Oceania region you have some of the world’s more advanced AI governance frameworks (strong national AI strategies, data protection, safety standards, and institutional capacity), but also countries where:
+  - No comprehensive AI strategy exists,
+  - Core safeguards (e.g. data protection, biometric oversight, impact assessments) are missing or only in draft,
+  - Implementation capacity and civil‑society participation are limited.
+
+- **Subregions differ sharply.** Within “Asia and Oceania”:
+  - Some subregions (for example, parts of East Asia or Oceania/Pacific) tend to have higher GIRAI scores, denser evidence of AI policies, and more implementation activity.
+  - Others (for example, parts of South West Asia—South Asia in common usage—or NorthWest Asia—Central Asia + the Caucasus) include more countries with sparse frameworks, weaker enabling conditions, or limited CSO engagement.
+  This creates large **gaps between subregions** within the same overall region, instead of a consistent “Asian” pattern.
+
+- **Policy–implementation gaps are uneven.** In several Asian countries, relatively sophisticated strategy documents coexist with weaker implementation (limited regulatory enforcement, few concrete programmes, or under‑resourced institutions). In others, there are fewer formal frameworks but a growing number of initiatives. So even where “policy on paper” looks similar, **execution diverges**.
+
+- **Different political and economic contexts pull in opposite directions.** Asia includes high‑income and lower‑income states; democracies, hybrid regimes and authoritarian systems; and very different approaches to openness, rights, and security. Those structural differences show up directly in:
+  - How strongly labour, inclusion, and rights are protected,
+  - How much space CSOs have to participate and scrutinise AI use,
+  - Whether AI is used in ways that trigger URAI penalties (documented government misuse).
+
+Put together, this means there is **no single “Asian model” of responsible AI governance** in the GIRAI data. Instead, the region contains some of the **most advanced** and some of the **most nascent** approaches globally, which is why the report characterises Asia’s performance as deeply divided rather than uniform. If you’d like, I can pull specific subregional averages (e.g. East Asia vs South West Asia vs Oceania) to illustrate the size of those gaps numerically.",Null,"Misses required numeric split (18 above, 20 below) and specific country examples; stays general and thus incomplete.",file_search,9782
+Phase 2 — Comprehension & Reasoning,,,Reasoning,Hard,Why is labour protection called a bright spot for LATAM?,"It breaks from the global trend. Of the 6 LATAM countries with labour-protection frameworks, 5 have active implementation and 5 of 6 are legally binding - making it the region's single best-performing indicator for enforceability.",Notes it bucks the global trend; cites 5 of 6 binding / 5 implementing.,Treating reskilling (weak) as the bright spot instead.,default (gpt-5.1),"Labour protection is described as a “bright spot” for Latin America (LATAM) in the GIRAI narrative because, within the broader Labour and Skills dimension, countries in South and Central America and the Caribbean tend to have comparatively stronger **frameworks and institutions around worker protections** than in several other regions, even if many other aspects of AI-related labour policy lag behind.
+
+In practice, this usually reflects that:
+
+- Many LATAM countries have **relatively robust labour codes and social protection systems** (e.g. around unionisation, workplace rights, and social security) that can, at least in principle, extend to AI‑mediated work.
+- There is often **established legal language on non‑discrimination and decent work**, which can be applied to algorithmic management, platform work, and surveillance, even when AI‑specific rules are not yet in place.
+- **Collective bargaining and civil society organising around labour** tend to be more active than in some other regions, giving workers a somewhat stronger base from which to contest harmful AI uses at work.
+- Compared to other pieces of the Labour and Skills puzzle (like cutting‑edge reskilling for AI, or detailed guidance on algorithmic management), **labour protection looks relatively stronger**, so it stands out as a “bright spot” in an otherwise mixed picture.
+
+Because my document search did not return the exact passage where this phrase is used, I am inferring from GIRAI’s structure and typical regional patterns rather than quoting a specific line. If you’d like, I can:
+
+- Look up specific countries in South America, Central America, and the Caribbean and show how their Labour and Skills scores compare to their overall GIRAI scores.
+- Pull narrative text on Labour and Skills or worker protection from any particular chapter or section if you point me to a page or file name.",Null,Misses key stats (5 of 6 legally binding and implementing) and doesn’t note explicit break from global trend.,file_search,8826
+Phase 2 — Comprehension & Reasoning,,,Reasoning,Medium,Compare Africa and Asia on civil-society (CSO) activity per country.,Africa recorded 95 CSO activities across 39 countries (~2.4 per country). Asia produced 156 across just 30 countries - well over twice the per-country rate.,Both totals and the per-country contrast.,Comparing only totals without the per-country rate.,default (gpt-5.1),"Africa has less civil-society (CSO) activity on AI per country than Asia and Oceania, both in absolute terms and relative to their overall governance levels.
+
+- Average CSO Engagement pillar score  
+  - **Africa:** 9.3 (out of 100) across 39 countries    
+  - **Asia and Oceania:** 17.7 across 30 countries    
+
+- Share of overall governance  
+  - In **Africa**, CSO Engagement (9.3) is far below both AI Policy (13.7) and Enabling Conditions (42.5), indicating relatively weak organised civil-society activity and influence in AI governance.    
+  - In **Asia and Oceania**, CSO Engagement (17.7) still trails AI Policy (25.7) and Enabling Conditions (55.3) but is **almost double** the African regional average, suggesting a denser or more active CSO ecosystem engaged on AI.    
+
+- Per-country context  
+  - Because these are **regional averages across all scored countries in each region**, the figures directly represent “typical” CSO engagement per country: an average country in Asia and Oceania has **around 8.4 points higher** CSO Engagement than an average country in Africa.
+
+In practical terms, an AI-focused civil-society organisation is more likely to find peers, coalitions, and established channels into AI policymaking in Asia and Oceania than in Africa, where CSO-based oversight and participation are systematically thinner and lag other pillars of responsible AI governance.
+
+**Sources**  
+- [Africa region overview](/regions/africa)    
+- [Asia and Oceania region overview](/regions/asia-and-oceania)",Null,Does not mention CSO activity counts (95 vs 156) or per-country rates; uses unrelated pillar scores instead.,get_region_summary,14769

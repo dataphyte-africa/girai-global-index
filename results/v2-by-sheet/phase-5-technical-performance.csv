@@ -1,0 +1,90 @@
+Phase,Conversation,Turn,Type,Difficulty,Prompt,Expected Answer,Pass Criteria,Red Flags,Model,Bot Answer,Verdict,Judge Rationale,Tools Used,Latency (ms)
+Phase 5 — Technical Performance,,,Consistency,Easy,Direct: What is Brazil's GIRAI score?,63.30.,63.30.,Any figure that differs from the other Brazil phrasings below.,default (gpt-5.1),"Brazil’s GIRAI score in the 2026 edition is **63.3**.
+
+- This places [Brazil](/countries/BRA) **11th globally**.
+- It is **1st in its region** (South and Central America) and **1st in South America**.
+- It is also **1st among upper middle income countries**.
+- A URAI penalty of **0.9 points** was applied due to **2 documented government misuse** cases of AI.
+
+**Sources**
+
+- [Brazil country profile](/countries/BRA)",Full,Matches required score 63.30 (63.3). Extra details consistent and not disqualifying.,lookup_country,6014
+Phase 5 — Technical Performance,,,Consistency,Easy,Indirect: How well does Brazil perform in responsible AI?,"Very well - score 63.30, ranked 11th globally and the top LATAM country.","63.30 / rank 11, consistent with the direct question.",Different score/rank; vague non-answer.,default (gpt-5.1),"Brazil performs strongly on responsible AI, ranking among the global leaders and clearly leading its region.
+
+- Overall GIRAI score: **63.3/100**, placing [Brazil](/countries/BRA) **11th globally** out of 135 countries and **1st** in South and Central America, **1st** in South America, and **1st** among upper‑middle‑income countries.
+- Brazil’s strengths are **Labour and Skills** (**76.3**) and **Inclusion and Diversity** (**72.0**), reflecting robust policies and initiatives on AI skills, labour protections, and inclusion.
+- Its relatively weaker but still above‑average areas are **Trust and Safety** (**61.5**) and **Ethics and Sustainability** (**63.4**), where there is room to deepen safeguards and ethical governance.
+- Policy design vs practice: framework score **49.1** vs implementation score **74.4**, meaning Brazil does comparatively better on **putting AI policies into practice** than on having comprehensive, consolidated frameworks on paper.
+- Brazil has a **URAI penalty of 0.93** based on **2 documented government-misuse cases**, indicating that some misuse of AI by public authorities has been recorded and factored into its score.
+
+In summary, Brazil is a regional frontrunner and a high global performer on responsible AI, with particularly strong implementation and labour/skills and inclusion work, but it still faces challenges around trust, safety, and documented misuse.
+
+**Sources**
+
+- [Brazil country profile](/countries/BRA)",Full,Matches required score and rank; adds details but remains consistent and precise. No red flags present.,lookup_country,9563
+Phase 5 — Technical Performance,,,Consistency,Medium,Conversational: I'm curious how Brazil is doing with AI governance according to this study.,"Brazil is the leading LATAM country, scoring 63.30 and ranked 11th globally.",Same 63.30 / rank 11.,Refusing to give a score it gave when asked directly.,default (gpt-5.1),"Brazil is one of the strongest performers globally in this index – and the clear regional leader in Latin America.
+
+- Overall [GIRAI](/countries/BRA) score: **63.3/100**, ranked **11th of 135** countries worldwide.
+- Regional position: **1st in South and Central America** and **1st in South America**, and also **1st among upper‑middle‑income countries**.
+- Strengths by dimension:
+  - **Labour and Skills** (**76.3**) – strongest area, with high scores on things like worker protections, reskilling, and AI literacy.
+  - **Inclusion and Diversity** (**72.0**) – also comparatively strong, with frameworks and initiatives on gender equality, children’s rights, and cultural/linguistic diversity.
+- Weaker relative areas:
+  - **Trust and Safety** (**61.5**) and **Ethics and Sustainability** (**63.4**) lag a bit behind Brazil’s own best dimensions, especially around civil society engagement in these areas.
+- Policy vs practice:
+  - **Implementation score is high** (**74.4**), while **framework/policy score is lower** (**49.1**), suggesting Brazil often does more in practice and via initiatives than is reflected in formal AI policy documents.
+- Misuse penalty:
+  - The country has a **URAI penalty of 0.9 points**, based on **2 documented government misuse cases of AI**, which slightly lowers its composite score.
+
+If you’d like, I can zoom in on a specific topic for Brazil — for example, how it’s doing on AI and labour rights, or on misinformation and election integrity.
+
+**Sources**
+
+- [Brazil country profile](/countries/BRA)",Full,Matches required score and rank; adds extra detail but no errors or safety issues.,lookup_country,7513
+Phase 5 — Technical Performance,,,Consistency,Medium,Comparative: Is Brazil doing better or worse than Chile?,Better. Brazil 63.30 (rank 11) versus Chile 61.91 (rank 14).,Brazil better; both scores.,Wrong direction; omitting the scores.,default (gpt-5.1),"Brazil is doing slightly better than Chile overall.
+
+- [Brazil](/countries/BRA) GIRAI score: **63.3**, ranked **11th** globally  
+- [Chile](/countries/CHL) GIRAI score: **61.9**, ranked **14th** globally  
+- Brazil leads on overall AI Policy (**68.6** vs Chile’s **64.9**) and CSO engagement (**52.2** vs **23.5**)  
+- Chile is a bit stronger on Enabling Conditions (**77.3** vs Brazil’s **72.4**)
+
+In short: both are high performers in South and Central America, but Brazil edges ahead in total score and global rank, while Chile has a stronger underlying enabling environment for AI.  
+
+**Sources**
+
+- Brazil country profile (/countries/BRA)  
+- Chile country profile (/countries/CHL)",Full,States Brazil is better and provides both countries’ scores and ranks accurately.,compare_countries,6662
+Phase 5 — Technical Performance,,,Consistency,Easy,Direct: What is Africa's average GIRAI score?,21.81.,21.81.,19.78; a different figure.,default (gpt-5.1),"Africa’s average GIRAI score is **21.8** (out of 100), across **39 countries**, ranking **7th of 7 regions globally**.
+
+- **Average GIRAI (Africa):** 21.8  
+- **Countries covered:** 39  
+- **Global regional rank:** 7th of 7  
+- **Strongest dimension:** Trust and Safety – 26.4  
+- **Weakest dimension:** Inclusion and Diversity – 16.7  
+
+**Sources**
+
+- [Africa region overview](/regions/africa)",Full,Gives 21.8 which is an acceptable rounding of 21.81; no conflicting figures or red flags present.,get_region_summary,5326
+Phase 5 — Technical Performance,,,Consistency,Easy,"Rephrase: On average, how does Africa score compared with other regions?","Africa averages 21.81 - the lowest of any region, just below the Caribbean (22.42).","21.81 and 'lowest region', consistent with the direct question.",A different average; calling Africa mid-tier.,default (gpt-5.1),How does Africa’s average score compare with the averages of other regions?,Null,Did not provide the required figures or comparison; just re-asked the question without answering.,,3271
+Phase 5 — Technical Performance,,,Consistency,Medium,Synonym: What does Africa score on the 'enabling conditions' pillar?,42.48 (against a global average of 57.50).,42.48.,Confusing pillars; using the AI-policy score (13.76).,default (gpt-5.1),"Africa’s average score on the **Enabling Conditions** pillar is **42.5** out of 100.
+
+- Region: **Africa**
+- Pillar: **Enabling Conditions**
+- Average pillar score: **42.5**
+- Based on: **39** African countries in the GIRAI 2026 dataset
+
+**Sources**
+
+- [Africa region overview](/regions/africa)",Full,Correct enabling conditions pillar score (42.5≈42.48) with no confusion or red-flag misuse of other pillars.,get_averages,6127
+Phase 5 — Technical Performance,,,Consistency,Easy,Direct: How many countries did the Asia survey cover?,38 countries.,38.,A different count.,default (gpt-5.1),"I can’t find any reference to an “Asia survey” or its country coverage in the GIRAI 2026 materials I have access to, so I’m not able to state how many countries it covered.
+
+This could be because:
+- The survey you’re referring to is part of another project (outside GIRAI), or  
+- It’s in a document that hasn’t been provided/ingested here, or uses a different title.
+
+If you can:
+- Paste the relevant excerpt or table mentioning the “Asia survey”, or  
+- Give its full title (e.g., “Asia and Oceania stakeholder survey 2025”, “Asia regional perception survey”, etc.),
+
+I can try again with that more specific reference.",Null,Did not provide the required figure 38; instead claimed inability to answer.,file_search,11689
+Phase 5 — Technical Performance,,,Consistency,Easy,Rephrase: What's the number of nations included in the Asia analysis?,38 countries.,38 - identical to the direct question.,Any number other than 38; inconsistency.,default (gpt-5.1),How many countries are covered in the Asia analysis?,Null,Did not provide the required numeric answer 38; just rephrased as a question instead.,,3110
