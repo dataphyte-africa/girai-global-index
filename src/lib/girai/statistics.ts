@@ -18,7 +18,11 @@
  */
 
 import evidenceData from "@/data/2026/generated/evidence.json";
-import { getAllCountries, getCountrySubregion } from "./data";
+import {
+  getAllCountries,
+  getCountrySubregion,
+  getSubregionDisplayName,
+} from "./data";
 import { findIndicator } from "@/data/2026/taxonomy";
 import type { CountryRanking, EvidenceArtifact, EvidenceItem } from "./types";
 
@@ -137,7 +141,7 @@ export function resolveStatScope(query?: string): StatScope | undefined {
     .find((s) => geoKey(s) === key);
   if (subregion) {
     return {
-      label: subregion,
+      label: getSubregionDisplayName(subregion),
       countries: all.filter((c) => getCountrySubregion(c) === subregion),
     };
   }
@@ -355,7 +359,7 @@ export function bindingBySubregion(scope: StatScope) {
   }
   return [...byName.entries()]
     .map(([subregion, countries]) => ({
-      subregion,
+      subregion: getSubregionDisplayName(subregion),
       ...bindingShare({ label: subregion, countries }),
     }))
     .sort((a, b) => (b.bindingPct ?? -1) - (a.bindingPct ?? -1));
