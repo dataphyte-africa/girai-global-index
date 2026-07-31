@@ -4,6 +4,7 @@ import { buildGiraiInstructions } from "./instructions";
 import { compareCountriesTool } from "./tools/compare-countries";
 import { getAveragesTool } from "./tools/get-averages";
 import { getEditionComparisonTool } from "./tools/get-edition-comparison";
+import { getEvidenceStatisticsTool } from "./tools/get-evidence-statistics";
 import { getLeaderboardTool } from "./tools/get-leaderboard";
 import { getRegionSummaryTool } from "./tools/get-region-summary";
 import { getSubregionSummaryTool } from "./tools/get-subregion-summary";
@@ -13,7 +14,11 @@ import { searchCountriesTool } from "./tools/search-countries";
 import { searchEvidenceTool } from "./tools/search-evidence";
 
 const DEFAULT_MODEL = "gpt-5.1";
-const DEFAULT_VECTOR_STORE_ID = "vs_6a3a6e41c3548191b72539d24aa60b0b";
+// The vector store holding the published 2026 report and methodology.
+// Override per-environment with OPENAI_VECTOR_STORE_ID. Keep this in sync with
+// the live store: a stale id makes file_search fail silently, which reads as
+// "the reports say nothing" rather than as a configuration error.
+const DEFAULT_VECTOR_STORE_ID = "vs_6a4901cf126c81919229546dcb2d9b69";
 
 /**
  * Builds the agent. The model is a parameter so the eval harness can benchmark
@@ -47,6 +52,7 @@ export function createGiraiAgent(options: { model?: string } = {}) {
       get_edition_comparison: getEditionComparisonTool,
       get_region_summary: getRegionSummaryTool,
       get_subregion_summary: getSubregionSummaryTool,
+      get_evidence_statistics: getEvidenceStatisticsTool,
     },
     stopWhen: stepCountIs(12),
   });

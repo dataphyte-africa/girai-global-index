@@ -63,8 +63,19 @@ export const getSubregionSummaryTool = tool({
 
     const detail = (r: SubregionSummary) => {
       const members = getCountriesBySubregion(r.subregion);
+      // Name the parent region's top subregion alongside this one. A lone
+      // lookup reports rankWithinRegion but nothing to compare it against,
+      // and a 2nd-place subregion has been read back to users as "the best".
+      const leader = getSubregionSummaries()
+        .filter((s) => s.region === r.region)
+        .sort((a, b) => b.averageGirai - a.averageGirai)[0];
       return {
         ...row(r),
+        isTopOfRegion: leader.subregion === r.subregion,
+        topSubregionInRegion: {
+          subregion: leader.subregion,
+          averageGirai: leader.averageGirai,
+        },
         dimensions: r.dimensions,
         pillars: r.pillars,
         frameworkScore: r.frameworkScore,
