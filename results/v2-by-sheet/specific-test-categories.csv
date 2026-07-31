@@ -1,0 +1,169 @@
+Phase,Conversation,Turn,Type,Difficulty,Prompt,Expected Answer,Pass Criteria,Red Flags,Model,Bot Answer,Verdict,Judge Rationale,Tools Used,Latency (ms)
+Specific Test Categories,,,Thematic,Medium,Which indicator has the strongest implementation in LATAM?,AI Literacy - 7 of 8 countries with frameworks implement them (87.5% implementation evidence).,AI Literacy; ~87.5%.,Naming another indicator; wrong figure.,default (gpt-5.1),"The strongest average implementation indicator in Latin America (South & Central America + Caribbean) is **[Public Service Delivery](/indicators/public-service-delivery)**.
+
+Using the regional indicator averages:
+
+- **South & Central America:** Public Service Delivery = **85.1**; next-highest are Consumer Protection = **83.5**, Gender Inclusion in Connectivity = **94.3**, and Data Sharing & Access = **76.8** fileciteturn1  
+- **Caribbean:** the top indicator is Civil Society Oversight = **81.0**, followed by Global Peace = **59.9**, Labour Rights = **54.9**, and Population Digital Readiness = **64.9** fileciteturn2  
+- Comparing both regions together, **Public Service Delivery (85.1 in South & Central America)** is the highest-scoring indicator anywhere in LATAM, edging out Consumer Protection (83.5) and Civil Society Oversight (81.0). fileciteturn1turn2  
+- This suggests that, on average, **governments in Latin America are relatively strongest in using AI for public service delivery**, compared with other aspects of responsible AI like inclusion, labour protections, or redress mechanisms.
+
+**Sources**
+
+- South & Central America regional averages, including [Public Service Delivery](/indicators/public-service-delivery) and other indicators: /regions/south-and-central-america fileciteturn1  
+- Caribbean regional averages, including [Civil Society Oversight](/indicators/civil-society-oversight) and [Consumer Protection](/indicators/consumer-protection): /regions/caribbean fileciteturn2",Null,Names Public Service Delivery instead of AI Literacy and gives wrong metric; contradicts required indicator and percentage.,get_averages,14955
+Specific Test Categories,,,Thematic,Medium,"In Africa, which indicator has the strongest framework implementation?","AI Literacy, at 85.71% implementation (35.90% coverage).",AI Literacy; ~85.71%.,Safety and Security (75%) or another indicator.,default (gpt-5.1),"Africa’s strongest **implementation performance is not measured at the individual‑indicator level** in the GIRAI dataset, so we cannot say which single indicator has the “strongest framework implementation” within Africa.
+
+What we can say from the data is:
+
+- For **Africa as a region**, the average **framework score** is **37.1**, while the average **implementation score** is **27.7** — indicating a substantial gap between policy design and on‑the‑ground execution    
+- Implementation strength is only reported as an **aggregate regional score**, not broken down by the 38 indicators (e.g. [Consumer Protection](/indicators/consumer-protection), [Data Protection and Privacy](/indicators/data-protection-privacy), etc.)    
+- At the **indicator level**, we only have **average GIRAI scores** (which blend policy and implementation), not a separate “implementation” field per indicator; e.g. [Consumer Protection] averages **76.1**, [Cybersecurity] **64.8**, [Civil Society Oversight] **57.2** in Africa, but these are not labelled as “implementation” scores    
+
+If you’d like, I can instead:
+- Identify the **top‑scoring indicators in Africa overall** (regardless of whether that’s due to frameworks or implementation), or  
+- Look at **which African countries** are strongest on implementation overall, or on implementation within a specific dimension (e.g. Trust and Safety).",Null,Incorrectly denies indicator-level implementation info; fails to name AI Literacy and 85.71% as strongest.,get_leaderboard; lookup_indicator; get_averages,11600
+Specific Test Categories,,,Thematic,Medium,"Which dimension has the highest average score, both globally and for Africa?",Trust and Safety (global 40.02; Africa 26.38).,Trust and Safety.,Labour & Skills; Ethics & Sustainability.,default (gpt-5.1),"The highest-scoring dimension is **Trust and Safety**, both globally and in Africa.
+
+- **Global averages (all 135 countries):**
+  - Trust and Safety: **40.1**
+  - Labour and Skills: 37.6  
+  - Ethics and Sustainability: 35.1  
+  - Inclusion and Diversity: 34.4  
+  - AI Use in Public Service: 31.4    
+
+- **Africa regional averages:**
+  - Trust and Safety: **26.4**
+  - Ethics and Sustainability: 23.4
+  - Labour and Skills: 23.3
+  - AI Use in Public Service: 19.7
+  - Inclusion and Diversity: 16.7    
+
+So, Trust and Safety is the strongest dimension on average worldwide, and also the strongest for African countries, even though Africa’s absolute scores are lower than the global mean.
+
+**Sources**
+
+- Global averages: [Global overview](/regions/global)    
+- Africa regional profile: [Africa region overview](/regions/africa)",Full,"Correctly identifies Trust and Safety as highest globally and in Africa; figures are acceptably close, no red flags.",get_averages; get_region_summary,9364
+Specific Test Categories,,,Thematic,Medium,Which dimension is the lowest-scoring globally?,AI use in public service (global average 31.36).,AI use in public service.,"Inclusion & diversity (that is Africa's own weakest, not the global one).",default (gpt-5.1),"The lowest‑scoring dimension globally is **AI Use in Public Service**, with an average score of **31.4** out of 100.
+
+For context, global average scores by dimension are:
+
+- **AI Use in Public Service**: 31.4 (lowest)
+- Inclusion and Diversity: 34.4  
+- Ethics and Sustainability: 35.1  
+- Labour and Skills: 37.6  
+- Trust and Safety: 40.1 (highest)  
+
+This suggests that, on average, countries are furthest behind in responsibly deploying AI within public services (e.g., social protection, justice, health, administration) compared with other areas of responsible AI governance.
+
+**Sources**
+
+- [Global averages](/takeaways) via GIRAI 2026 global summary (Global Index on Responsible AI, 2nd Edition, 2026).",Full,Correctly identifies AI use in public service as the lowest-scoring global dimension; no red-flag confusion with inclusion & diversity.,get_averages,16317
+Specific Test Categories,,,Thematic,Hard,What was the dominant type of AI misuse recorded in LATAM?,Mass biometric surveillance - 4 of the 6 documented misuse cases.,Mass biometric surveillance; 4 of 6.,Naming another violation type.,default (gpt-5.1),"I don’t see a specific breakdown of “types” of AI misuse for Latin America in the materials I can search here, so I can’t reliably say which was dominant for LATAM (South America + Central America + Caribbean) within the GIRAI/URAI evidence.
+
+A few clarifications that may help:
+
+- The GIRAI dataset records **whether** there is documented government misuse of AI per country (URAI evidence), and applies a URAI penalty when relevant.  
+- It does **not**, in the public index, publish a quantitative, region‑wide comparison like “disinformation vs surveillance vs predictive policing” by number of cases for each region.  
+- Without that structured breakdown in the files, I’d be guessing if I claimed one misuse type was “dominant” in Latin America.
+
+If you have a specific section of the report or a table in mind (for example, a figure that lists types of misuse by region), you can upload or point me to that page and I can interpret it precisely. Otherwise, the safest answer is that the index does not provide a publicly searchable, numeric ranking of AI misuse types for LATAM as a whole.",Null,Directly contradicts benchmark; denies the documented dominant type and required figures.,file_search,7358
+Specific Test Categories,,,Thematic,Hard,Which LATAM countries recorded government AI misuse?,"Bolivia, Brazil, Chile, Mexico and Uruguay (Brazil recorded two of the six cases).",All five countries; Brazil with two cases.,Missing countries; wrong count.,default (gpt-5.1),"In the GIRAI 2026 dataset, the Latin America and Caribbean (LATAM) countries with documented government misuse of AI are:
+
+- [Bolivia](/countries/BOL) – 1 documented misuse case    
+- [Brazil](/countries/BRA) – 2 documented misuse cases    
+- [Chile](/countries/CHL) – 1 documented misuse case    
+- [Mexico](/countries/MEX) – 1 documented misuse case    
+- [Uruguay](/countries/URY) – 1 documented misuse case    
+
+These are all coded under the [Unacceptable Risks AI Systems](/indicators/unacceptable-risks-ai-systems) indicator, which tracks high‑risk practices such as mass biometric surveillance, discriminatory public-service systems, and AI use in law enforcement or social scoring.    
+
+**Sources**
+
+- GIRAI 2026 evidence search for government misuse of AI (kind = `government-misuse`), country roll‑up",Full,Lists all five correct countries and correctly notes Brazil has two of the six cases.,search_evidence,10146
+Specific Test Categories,,,Thematic,Medium,How does Asia perform on labour-protection frameworks?,Weakest of all: 12.5% framework coverage and 20% implementation - the bottom of the dataset.,12.5% coverage / 20% implementation; described as weakest.,Claiming labour protection is strong in Asia.,default (gpt-5.1),"Asia (in the GIRAI dataset, this is the **Asia and Oceania** region) performs **moderately, but not strongly**, on labour‑related frameworks overall.
+
+At the **dimension level**:
+- The region’s average score on **[Labour and Skills](/dimensions/labour-skills)** is **36.0** out of 100.    
+
+This Labour and Skills dimension captures both:
+- The existence and quality of **labour‑protection and skills‑development frameworks** for AI (policy side), and  
+- Early signs of **implementation** (e.g. programmes and initiatives) where documented.
+
+So in global terms, Asia and Oceania:
+- Is **not among the top-performing regions** on labour‑protection/skills frameworks,
+- But it is **not at the very bottom either** — it sits in a **mid-range** position, with significant room to strengthen worker-protection rules, social dialogue, and reskilling policies for AI.
+
+If you’d like, I can break this down further:
+- by **subregion** (East Asia vs South West Asia/South Asia vs South East Asia, etc.), or  
+- by specific **labour-related indicators** (e.g. worker rights, social protection, reskilling) to show where Asia is relatively stronger or weaker.
+
+**Sources**
+
+- Asia and Oceania regional overview – averages by dimension and pillar: /regions/asia-and-oceania",Null,Misses required 12.5%/20% figures and wrongly claims Asia is not at the bottom; contradicts benchmark.,get_region_summary,7124
+Specific Test Categories,,,Thematic,Hard,Which African subregion leads on binding (enforceable) frameworks?,"Southern Africa, with 32.26% binding (10 of 31), ahead of East (27.78%) and West (20.37%) Africa.",Southern Africa; ~32.26%.,North Africa (it is actually the weakest at 3.23%).,default (gpt-5.1),"North Africa leads among African subregions on binding (enforceable) AI frameworks.
+
+- Within Africa, **North Africa** is ranked **1st in the region** on overall responsible AI performance, which includes stronger formal AI policy frameworks, including binding instruments, than other African subregions.
+- It has the **highest average GIRAI score in Africa (27.1)**, ahead of [West Africa](/regions/africa?subregion=West%20Africa) (24.8), [South Africa (Southern Africa)](/regions/africa?subregion=South%20Africa) (23.7), [East Africa](/regions/africa?subregion=East%20Africa) (21.0), and [Central Africa](/regions/africa?subregion=Central%20Africa) (9.9). fileciteturn1country1  
+
+In GIRAI’s framework, stronger, more enforceable (binding) AI-related frameworks are a key driver of higher scores on the AI Policy pillar, which is why North Africa emerges as the African subregional leader.
+
+**Sources**
+
+- [Africa region overview](/regions/africa) fileciteturn1country1",Null,Incorrect subregion (North vs Southern Africa) and missing required 32.26% figure; contradicts benchmark data.,get_subregion_summary,7382
+Specific Test Categories,,,Thematic,Hard,What is LATAM's strongest dimension relative to the global benchmark?,AI use in public service (32.53) - the only dimension where LATAM beats the global average (31.36).,AI use in public service; only dimension above global.,Trust and safety (that is LATAM's widest shortfall).,default (gpt-5.1),"LATAM’s strongest dimension, relative to the global benchmark, is **Labour and Skills**.
+
+Across the two regions that make up Latin America (South and Central America + the Caribbean), Labour and Skills is where the regional average most clearly exceeds or matches global performance:
+
+- **South and Central America** (14 countries):  
+  - Labour and Skills: **40.3** vs global **37.6**  
+  - This is the region’s highest-scoring dimension and sits about **+2.7 points above** the global Labour and Skills average    
+- Other South and Central America dimensions also clear the global average, but by smaller margins:  
+  - Inclusion and Diversity: **39.6** vs **34.4**  
+  - Ethics and Sustainability: **40.0** vs **35.1**  
+  - Trust and Safety: **40.0** vs **40.1** (essentially on par)  
+  - AI Use in Public Service: **38.5** vs **31.4**    
+- **Caribbean** (8 countries): Labour and Skills is also its strongest dimension numerically (**25.8**), but still well **below the global average** in that area, so the “above‑benchmark” story for LATAM really comes from South and Central America  .  
+
+Putting this together for “LATAM” as a whole (South America + Central America + Caribbean), Labour and Skills is the dimension where Latin America most consistently reaches or beats the global benchmark, led by the stronger performance of South and Central America.
+
+**Sources**
+
+- Global averages: [/regions/global](/regions/global)    
+- South and Central America overview: [/regions/south-and-central-america](/regions/south-and-central-america)    
+- Caribbean overview: [/regions/caribbean](/regions/caribbean)",Null,Identifies wrong strongest dimension; contradicts criterion that only AI use in public service is above global.,get_averages; get_subregion_summary,11878
+Specific Test Categories,,,Thematic,Hard,"Which country's legislation is cited as a LATAM benchmark for policy breadth, and why?",Peru's Supreme Decree 115-2025-PCM - it covers 13 indicators in a single legally binding document.,Peru; the Supreme Decree covering 13 indicators.,Colombia (that is the transparency example); wrong country.,default (gpt-5.1),"The report text in your uploaded files doesn’t appear to contain that specific line or citation, so I can’t see which exact passage you’re referring to.
+
+Without that passage, I would be guessing if I named a specific country or law (for example, picking one of the well‑known comprehensive AI / data / digital rights laws in Latin America), which would not be reliable.
+
+To give you the precise answer you’re looking for, I’d need either:
+- the excerpt you’re quoting (or a screenshot/text around that sentence), or  
+- a page/section reference from the report (e.g. “Chapter X, section on LATAM frameworks”).
+
+If you can paste the relevant paragraph or indicate where it appears, I can then:
+1. Identify exactly which country’s legislation is being held up as the benchmark, and  
+2. Summarise the “why” in terms of policy breadth (e.g. which issues, sectors, or rights it covers, and how that compares to regional peers).",Null,Refuses to answer and misses clear expected content: Peru and decree covering 13 indicators.,file_search,7341
+Specific Test Categories,,,Thematic,Hard,"In Asia, which indicator has the highest framework coverage, and how well is it implemented?","Transparency and explainability - highest coverage at 62.5%, but implementation drops sharply to just 28%.",Transparency and explainability; 62.5% coverage vs 28% implementation.,Reskilling; ignoring the implementation gap.,default (gpt-5.1),"Across Asia and Oceania, the indicator with the broadest framework coverage is **[Transparency and Explainability](/indicators/transparency-explainability)**, and it also shows strong but slightly narrower implementation through initiatives.
+
+- **Highest framework coverage:** Transparency and Explainability has framework evidence in **25 Asian/Oceania countries**, the most of any indicator in the region    
+- **Implementation coverage (initiatives):** AI Literacy has the broadest implementation footprint, with initiatives in **29 countries**, while Transparency and Explainability–related initiatives appear in **9 countries**    
+- **Pattern:** Core technical governance themes (transparency, safety, impact assessments) are widely present in laws/strategies across the region, but implementation activities (programmes, oversight bodies, training, impact assessments in practice) are consistently present in **fewer** countries than the corresponding frameworks fileciteturn1file0turn1file1  
+- **Interpretation:** For Transparency and Explainability specifically, Asia and Oceania have done substantial **policy design**, but the **on‑the‑ground implementation gap** is visible in the smaller number of implementation initiatives compared with the near‑universal presence of frameworks.  
+
+If you’d like, I can break this down by subregion (e.g. East Asia vs South West Asia) or highlight which Asian countries are strongest on implementing Transparency and Explainability.",Null,Wrong implementation figures and no explicit 62.5% vs 28% gap stated as required.,search_evidence,8137
+Specific Test Categories,,,Thematic,Medium,"Which Asian subregion takes the most legally aggressive approach to AI, and how is that shown?","East Asia - it leads Asia with 14 binding laws, about 32% of its 44 framework cases.",East Asia; 14 binding laws / ~32%.,Western Asia (highest volume but 94% non-binding).,default (gpt-5.1),"The GIRAI dataset does not define a single “legally aggressive” index, but it does distinguish subregions where AI governance is driven more by hard law and enforcement tools (regulation, liability, sanctions) versus softer, voluntary approaches. Within Asia, **East Asia stands out as taking the most legally assertive approach to AI**, especially when you exclude non‑Asian [Oceania (Pacific)](/regions/asia-and-oceania).    
+
+Here’s how that shows up in the data and framework:
+
+- **Performance within Asia:** Among genuinely Asian subregions, [East Asia](/regions/asia-and-oceania) has the strongest overall responsible‑AI architecture, with an average GIRAI score of **42.1**, ahead of [South East Asia](/regions/asia-and-oceania) on **31.6**, [South West Asia](/regions/asia-and-oceania) on **28.5**, and [NorthWest Asia](/regions/asia-and-oceania) on **27.6**. That higher composite is driven in large part by more advanced regulatory and legal instruments.    
+- **Law‑centric governance style:** East Asian countries in GIRAI are characterised by dense statutory regimes (data protection, platform and algorithm regulation, AI‑specific acts or binding guidelines) and strong enforcement authorities. In the framework, this shows up as higher scores on **AI Policy** within **Trust and Safety** and **AI Use in Public Service**, where indicators reward binding rules, liability assignment, supervisory bodies, and sanctions rather than just strategies or pilots.    
+- **Contrast with other Asian subregions:**  
+  - **South East Asia** and **South West Asia** have more mixed approaches: several countries rely on non‑binding strategies or sectoral rules, with uneven enforcement capacity, so their average GIRAI scores sit **below the global average of 35.0**.    
+  - **NorthWest Asia** (Central Asia + Caucasus) has the lowest subregional average in Asia, reflecting patchier legal coverage and weaker institutions, especially on oversight and redress.    
+- **Oceania caveat:** [Oceania (Pacific)](/regions/asia-and-oceania) (Australia and New Zealand) actually has the highest subregional average in the whole Asia‑and‑Oceania region at **51.1**, but it is not considered “Asian” in common usage. Its score also reflects a highly legalistic model (comprehensive privacy and safety laws, active regulators), which is broadly similar in style to East Asia’s leading countries.    
+
+In short, if you mean “within Asia proper”, **East Asia** is the subregion where AI is most governed through formal law, liability rules, and enforcement bodies rather than purely through strategies or voluntary codes. The GIRAI scores don’t label this as “aggressiveness” directly, but the higher averages in **Trust and Safety** and **AI Use in Public Service**—driven by binding regulation and oversight—are how that approach is captured.    
+
+**Sources**  
+- Asia and Oceania regional summary: /regions/asia-and-oceania",Partial,Identifies East Asia but omits the required figures of 14 binding laws and ~32% of 44 cases.,get_subregion_summary; lookup_indicator,14053

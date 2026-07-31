@@ -1,579 +1,202 @@
 Prompt,Expected Answer,Difficulty,Test Type,Model,Run,Bot Answer,Accuracy (Full / Partial / Null),Checks Passed,Failed Checks,Red Flags,Tools Used,Latency (ms),Observations
-What is Nigeria's GIRAI score?,Nigeria scores 45.93.,Easy,Factual,default (gpt-5.1),1,"Nigeria’s GIRAI score is **45.9** (out of 100), based on the 2026 edition.
+What is Nigeria's GIRAI score?,Nigeria scores 45.93.,Easy,Factual,default (gpt-5.1),1,"Nigeria’s GIRAI score is **45.9 out of 100**, ranking **38th globally** and **1st in Africa and West Africa**.  
 
-- This places [Nigeria](/countries/NGA) **38th globally** out of 135 countries.
-- Nigeria ranks **1st in Africa** and **1st in West Africa**.
-- It ranks **2nd among lower middle income countries**.
-- Nigeria has a **framework score of 40.2** and a higher **implementation score of 58.4**, indicating relatively stronger execution than policy design on paper.
-
-**Sources**
-
-- [Nigeria country profile](/countries/NGA)",Full,1/1,,,lookup_country,4500,"Sheet expected 45.87 from the regional brief; the committed dataset says 45.93 (rank 38, not 39)."
-What is Nigeria's GIRAI score?,Nigeria scores 45.93.,Easy,Factual,default (gpt-5.1),2,"Nigeria’s GIRAI score in the 2026 edition is **45.9 out of 100**, ranking **38th globally** and **1st in Africa and West Africa**.
-
-- **GIRAI score:** 45.9  
-- **Global rank:** 38th out of 135 countries  
-- **Regional rank (Africa):** 1st  
-- **Strongest dimension:** [Trust and Safety](/dimensions/trust-safety) at 63.5  
-
-**Sources**
-
-- [Nigeria country profile](/countries/NGA)",Full,1/1,,,lookup_country,4447,"Sheet expected 45.87 from the regional brief; the committed dataset says 45.93 (rank 38, not 39)."
-What is Nigeria's GIRAI score?,Nigeria scores 45.93.,Easy,Factual,default (gpt-5.1),3,"Nigeria’s GIRAI score in the 2026 edition is **45.9 out of 100**, ranking **38th globally**.
-
-- **Region / subregion rank:** 1st in Africa, 1st in West Africa  
-- **Income group rank:** 2nd among lower middle‑income countries  
-- **Strongest dimensions:** [Trust and Safety](/dimensions/trust-safety) – 63.5; [Inclusion and Diversity](/dimensions/inclusion-diversity) – 52.1  
-- **Weakest dimensions:** [AI Use in Public Service](/dimensions/ai-use-public-service) – 23.7; [Labour and Skills](/dimensions/labour-skills) – 40.9  
-
-Nigeria carries a **URAI penalty of 1 point** due to documented government misuse of AI, which slightly lowers its final GIRAI score from what it would otherwise be.
-
-**Sources**
-
-- [Nigeria country profile](/countries/NGA)",Full,1/1,,,lookup_country,5776,"Sheet expected 45.87 from the regional brief; the committed dataset says 45.93 (rank 38, not 39)."
-Which African country has the highest GIRAI score?,"Nigeria, with a score of 45.93 (ranked 38th globally).",Easy,Factual,default (gpt-5.1),1,"The highest-scoring African country in GIRAI 2026 is **[Nigeria](/countries/NGA)**.
-
-- **GIRAI score:** 45.9 (1st out of 39 African countries ranked)
-- **Region scope:** Africa
-- **Ranking metric:** Overall GIRAI composite score (0–100)
-
-**Sources**
-
-- [Nigeria country profile](/countries/NGA)",Full,2/2,,,get_leaderboard,5045,
-Which African country has the highest GIRAI score?,"Nigeria, with a score of 45.93 (ranked 38th globally).",Easy,Factual,default (gpt-5.1),2,"[Nigeria](/countries/NGA) has the highest GIRAI score in Africa, with a score of **45.9**, ranking **1st out of 39 African countries** in the index.
-
-- Region scope: Africa (39 ranked countries)
-- Top country: [Nigeria](/countries/NGA)
-- GIRAI score: 45.9 (0–100 scale)
-- Africa regional leaderboard source: GIRAI 2026 dataset
-
-**Sources**
-
-- [Nigeria country profile](/countries/NGA)",Full,2/2,,,get_leaderboard,5303,
-Which African country has the highest GIRAI score?,"Nigeria, with a score of 45.93 (ranked 38th globally).",Easy,Factual,default (gpt-5.1),3,"The highest-scoring African country in the GIRAI 2026 index is **[Nigeria](/countries/NGA)**.
-
-- **GIRAI score:** 45.9 (1st out of 39 African countries ranked)
-- **Region scope:** Africa overall (all African subregions included)
-- **Edition:** GIRAI 2026 (2nd Edition)
-
-**Sources**
-
-- [Nigeria country profile](/countries/NGA)",Full,2/2,,,get_leaderboard,4804,
-"Which country leads the LATAM region, and what is its score?",Brazil leads LATAM with a score of 63.30 (ranked 11th globally).,Easy,Factual,default (gpt-5.1),1,"Within Latin America (South America + Central America + Caribbean), **[Brazil](/countries/BRA)** is the top-scoring country.
-
-- Brazil’s GIRAI score: **63.3** (1st in South America, and highest among all LATAM subregions)
-- Next best in South America: [Chile](/countries/CHL) at **61.9**
-- Top in Central America: [Costa Rica](/countries/CRI) at **52.3**
-- Top in the Caribbean: [Dominican Republic](/countries/DOM) at **47.9**
-
-**Sources**
-
-- [Brazil country profile](/countries/BRA)  
-- [Chile country profile](/countries/CHL)  
-- [Costa Rica country profile](/countries/CRI)  
-- [Dominican Republic country profile](/countries/DOM)",Full,2/2,,,get_leaderboard,12546,
-"Which country leads the LATAM region, and what is its score?",Brazil leads LATAM with a score of 63.30 (ranked 11th globally).,Easy,Factual,default (gpt-5.1),2,"The LATAM region’s top performer is **[Brazil](/countries/BRA)** with a **GIRAI score of 63.3**.
-
-- In **South America**, [Brazil](/countries/BRA) ranks 1st with **63.3**.  
-- In **Central America**, the leader is [Costa Rica](/countries/CRI) with **52.3**.  
-- In the **Caribbean**, the leader is [Dominican Republic](/countries/DOM) with **47.9**.  
-
-Across these three LATAM subregions (South America, Central America, Caribbean), Brazil has the highest score, so it leads the broader LATAM grouping.
-
-**Sources**
-
-- [Brazil country profile](/countries/BRA)  
-- [Costa Rica country profile](/countries/CRI)  
-- [Dominican Republic country profile](/countries/DOM)",Full,2/2,,,get_leaderboard,11976,
-"Which country leads the LATAM region, and what is its score?",Brazil leads LATAM with a score of 63.30 (ranked 11th globally).,Easy,Factual,default (gpt-5.1),3,"The current leader in the broader Latin America (LATAM) region is **[Brazil](/countries/BRA)**.
-
-- **Country:** Brazil  
-- **Subregion:** South America  
-- **GIRAI score (2026):** **63.3**  
-- **Rank within South America:** 1st  
-
-Note: LATAM in GIRAI terms spans three subregions — South America, Central America, and the Caribbean. Brazil is the top-scoring country in **South America**, and among all LATAM countries it holds the highest GIRAI score currently available.  
+- [Nigeria](/countries/NGA) GIRAI score: **45.9**; global rank: **38th**  
+- Regional rank: **1st in Africa**; subregional rank: **1st in West Africa**  
+- Strongest dimension: [Trust and Safety](/dimensions/trust-safety) at **63.5**  
+- Weakest dimension: [AI Use in Public Service](/dimensions/ai-use-public-service) at **23.7**  
 
 **Sources**  
-- [Brazil country profile](/countries/BRA)",Full,2/2,,,get_leaderboard,4915,
-What is Japan's score and where does it rank in Asia?,"Japan scores 55.66, ranking 2nd in Asia and Oceania and 24th globally.",Easy,Factual,default (gpt-5.1),1,"Japan’s GIRAI 2026 score is **55.7**, and it ranks **2nd in the Asia and Oceania region**.
+- [Nigeria country profile](/countries/NGA)",Full,1/1,,,lookup_country,4284,"Sheet expected 45.87 from the regional brief; the committed dataset says 45.93 (rank 38, not 39)."
+Which African country has the highest GIRAI score?,"Nigeria, with a score of 45.93 (ranked 38th globally).",Easy,Factual,default (gpt-5.1),1,"The highest-scoring African country on the GIRAI 2026 index is **[Nigeria](/countries/NGA)**.
 
-- **Global GIRAI score:** 55.7/100 (24th globally)
-- **Regional rank:** 2nd out of all countries in [Asia and Oceania](/regions/asia-and-oceania)
-- **Subregional rank:** 1st in [East Asia](/subregions/east-asia)
-- **URAI penalty:** −0.96 due to 1 recorded government misuse incident
-
-**Sources**
-
-- [Japan country profile](/countries/JPN)",Full,2/2,,,lookup_country,6027,
-What is Japan's score and where does it rank in Asia?,"Japan scores 55.66, ranking 2nd in Asia and Oceania and 24th globally.",Easy,Factual,default (gpt-5.1),2,"Japan’s GIRAI 2026 score is **55.7**, and it ranks **2nd in the Asia and Oceania region** (and **1st in East Asia**).
-
-Key details:
-- **GIRAI score:** 55.7 (global composite responsible AI score)
-- **Global rank:** 24th out of 135 countries
-- **Regional rank (Asia and Oceania):** 2nd
-- **Subregional rank (East Asia):** 1st, making Japan the top performer in East Asia
-
-Japan’s strongest dimension is [Trust and Safety](/dimensions/trust-safety), at **63.5**, contributing to its high regional standing.    
-
-**Sources**
-- [Japan country profile](/countries/JPN)",Full,2/2,,,lookup_country,4350,
-What is Japan's score and where does it rank in Asia?,"Japan scores 55.66, ranking 2nd in Asia and Oceania and 24th globally.",Easy,Factual,default (gpt-5.1),3,"Japan has a GIRAI score of **55.7** and ranks **2nd in the Asia and Oceania region**.
-
-- **GIRAI score:** 55.7 (out of 100), with a small URAI penalty applied for one documented government misuse case  
-- **Global rank:** 24th out of 135 countries  
-- **Regional rank (Asia and Oceania):** 2nd  
-- **Subregional rank (East Asia):** 1st  
+- **GIRAI score:** 45.9 (out of 100)  
+- **Position within Africa:** 1st out of 39 ranked African countries  
+- **Scope:** This is within the GIRAI *Africa* region; it is not a global #1, but the continental leader  
 
 **Sources**
 
-- [Japan country profile](/countries/JPN)",Full,2/2,,,lookup_country,3470,
-Which country ranks 2nd in the middle east?,"Jordan, with a score of 40.46 (49th globally).",Medium,Factual,default (gpt-5.1),1,"The country ranked 2nd in the Middle East on the GIRAI 2026 index is **[Jordan](/countries/JOR)**.
+- [Nigeria country profile](/countries/NGA)",Full,2/2,,,get_leaderboard,5107,
+"Which country leads the LATAM region, and what is its score?",Brazil leads LATAM with a score of 63.30 (ranked 11th globally).,Easy,Factual,default (gpt-5.1),1,"In the GIRAI 2026 dataset, the LATAM region spans **South and Central America plus the Caribbean**. The leading country across this combined LATAM grouping is **[Brazil](/countries/BRA)**.
 
-- [Jordan](/countries/JOR) has a GIRAI score of **40.5** and is **2nd within the Middle East subregion** (after [Israel](/countries/ISR), 1st).    
-- It ranks **49th globally** among all 135 countries.    
+- **Brazil’s GIRAI score:** **63.3** (1st in South and Central America)  
+- In the South and Central America region alone, Brazil is ranked **1st of 14 countries** with this score    
 
-**Sources**  
-- [Middle East region overview](/regions/middle-east)    
-- [Jordan country profile](/countries/JOR)",Full,2/2,,,get_region_summary; get_subregion_summary,7316,
-Which country ranks 2nd in the middle east?,"Jordan, with a score of 40.46 (49th globally).",Medium,Factual,default (gpt-5.1),2,"The country ranked 2nd in the Middle East on the GIRAI 2026 index is **[Jordan](/countries/JOR)**.
-
-- [Jordan](/countries/JOR) has a GIRAI score of **40.5** and is **2nd within the Middle East subregion** (after [Israel](/countries/ISR), which is 1st).    
-- In global terms, Jordan is **49th overall** among 135 countries.    
-
-**Sources**  
-- [Middle East region overview](/regions/middle-east)    
-- [Jordan country profile](/countries/JOR)",Full,2/2,,,get_region_summary; get_subregion_summary,7033,
-Which country ranks 2nd in the middle east?,"Jordan, with a score of 40.46 (49th globally).",Medium,Factual,default (gpt-5.1),3,"The 2nd‑ranked country in the Middle East on the GIRAI 2026 index is **[Jordan](/countries/JOR)**.
-
-- [Jordan](/countries/JOR) has a GIRAI score of **40.5** and ranks **2nd within the Middle East** subregion.
-- It is **49th globally** among the 135 countries scored.
-- The only country ahead of Jordan in the Middle East is [Israel](/countries/ISR), ranked 1st in the subregion with a score of 43.8.    
+Because LATAM as a *report grouping* (22 countries: South America, Central America, Caribbean) is not a single GIRAI region, the tools expose its regional component as South and Central America; within that, Brazil is the clear leader, and no Caribbean country exceeds its 63.3 score in the published briefs.  
 
 **Sources**
 
-- [Middle East region overview](/regions/middle-east)  
-- [Jordan country profile](/countries/JOR)",Full,2/2,,,get_region_summary; get_subregion_summary,6626,
-What is the global average GIRAI score?,The global average is 35.02.,Easy,Factual,default (gpt-5.1),1,"The global average GIRAI score in the 2026 edition is **35.0** (out of 100).
+- Brazil country profile: /countries/BRA",Full,2/2,,,get_leaderboard,4811,
+What is Japan's score and where does it rank in Asia?,"Japan scores 55.66, ranking 2nd in Asia and Oceania and 24th globally.",Easy,Factual,default (gpt-5.1),1,"Japan scores **55.7** on the GIRAI 2026 index and ranks **2nd in the Asia and Oceania region** (24th globally). fileciteturn1country0  
 
-- Countries covered: **135**
-- Dimension averages:
+- GIRAI score: **55.7 / 100** fileciteturn1country0  
+- Global rank: **24th of 135 countries** fileciteturn1country0  
+- Regional rank (Asia and Oceania): **2nd of 30** fileciteturn1country0  
+- Subregional rank (East Asia): **1st** fileciteturn1country0  
+
+**Sources:** [Japan country profile](/countries/JPN) fileciteturn1country0",Full,2/2,,,lookup_country,3871,
+Which country ranks 2nd in the middle east?,"Jordan, with a score of 40.46 (49th globally).",Medium,Factual,default (gpt-5.1),1,"The country ranking 2nd in the Middle East on the overall GIRAI 2026 score is **[Jordan](/countries/JOR)**.
+
+- [Israel](/countries/ISR) is 1st in the Middle East at **43.8**.
+- [Jordan](/countries/JOR) is 2nd in the Middle East at **40.5**, and **40th globally**.  
+
+**Sources**
+
+- [Jordan country profile](/countries/JOR)  
+- [Israel country profile](/countries/ISR)  
+- [Middle East region overview](/regions/middle-east)",Full,2/2,,,get_region_summary; get_leaderboard,5783,
+What is the global average GIRAI score?,The global average is 35.02.,Easy,Factual,default (gpt-5.1),1,"The global average GIRAI score is **35.0** (out of 100), across **135 countries**.
+
+A bit more context from the 2026 dataset:
+
+- **By dimension (global averages):**
   - Inclusion and Diversity: **34.4**
   - Ethics and Sustainability: **35.1**
   - Labour and Skills: **37.6**
   - Trust and Safety: **40.1**
   - AI Use in Public Service: **31.4**
-- Tier distribution (by number of countries):
-  - Advanced (60–80): **18**
-  - Developing (40–60): **31**
-  - Emerging (20–40): **50**
-  - Nascent (0–20): **36**
-  - Leading (80–100): **0**
 
-**Sources**
-
-- Global averages, GIRAI 2026: [/regions/global](/regions/global)",Full,1/1,,,get_averages,5017,Sheet's expected cell said 34.99 but its own pass criteria said 35.02; the dataset gives 35.0154 → 35.02.
-What is the global average GIRAI score?,The global average is 35.02.,Easy,Factual,default (gpt-5.1),2,"The global average **GIRAI score is 35.0** (out of 100) across 135 countries in the 2026 edition.
-
-A few useful benchmarks around that average:
-- **By dimension (global averages):**
-  - Inclusion and Diversity: **34.4**
-  - Ethics and Sustainability: **35.1**
-  - Labour and Skills: **37.6**
-  - Trust and Safety: **40.1** (strongest dimension globally)
-  - AI Use in Public Service: **31.4** (weakest dimension globally)
 - **By pillar (global averages):**
   - AI Policy: **27.8**
   - CSO Engagement: **17.8**
   - Enabling Conditions: **57.5**
-- **Tier distribution (135 countries):**
-  - Advanced (60–80): **18** countries  
-  - Developing (40–60): **31**  
-  - Emerging (20–40): **50**  
-  - Nascent (0–20): **36**  
-  - Leading (80–100): **0** so far in this edition
+
+- **Score tiers (number of countries):**
+  - Leading (80–100): **0**
+  - Advanced (60–80): **18**
+  - Developing (40–60): **31**
+  - Emerging (20–40): **50**
+  - Nascent (0–20): **36**
 
 **Sources**
 
-- Global averages and tier breakdown: [Global](/regions/global) (GIRAI 2026).",Full,1/1,,,get_averages,5300,Sheet's expected cell said 34.99 but its own pass criteria said 35.02; the dataset gives 35.0154 → 35.02.
-What is the global average GIRAI score?,The global average is 35.02.,Easy,Factual,default (gpt-5.1),3,"The global average GIRAI score in the 2026 edition is **35.0** (out of 100).
+- Global averages from the GIRAI 2026 dataset: Global scope summary (`get_averages`, ""Global"").",Full,1/1,,,get_averages,5543,Sheet's expected cell said 34.99 but its own pass criteria said 35.02; the dataset gives 35.0154 → 35.02.
+Which region has the lowest average score in the Index?,"Africa, with the lowest average at 21.79, just below the Caribbean (22.42).",Medium,Factual,default (gpt-5.1),1,"Africa has the lowest average GIRAI score among all seven regions.
 
-A bit more context:
-- Countries covered: **135**
-- Highest-scoring dimension globally: **Trust and Safety – 40.1**
-- Lowest-scoring dimension globally: **AI Use in Public Service – 31.4**
-- By performance tier (number of countries):
-  - **Advanced (60–80): 18**
-  - **Developing (40–60): 31**
-  - **Emerging (20–40): 50**
-  - **Nascent (0–20): 36**
-  - **Leading (80–100): 0**
-
-If you’d like, I can also break down how this global average differs by region or income group.",Full,1/1,,,get_averages,5723,Sheet's expected cell said 34.99 but its own pass criteria said 35.02; the dataset gives 35.0154 → 35.02.
-Which region has the lowest average score in the Index?,"Africa, with the lowest average at 21.79, just below the Caribbean (22.42).",Medium,Factual,default (gpt-5.1),1,"Africa has the lowest average GIRAI score among the seven regions in the Index.
-
-- [Africa](/regions/africa) averages **21.8** (global rank **7th of 7** regions).  
-- The next-lowest region is the [Caribbean](/regions/caribbean) at **22.4**.  
-- The highest-scoring region, [Europe](/regions/europe), averages **54.2**, illustrating a large gap between top and bottom regions.  
-- Africa’s strongest dimension is Trust and Safety (26.4), while Inclusion and Diversity is its weakest (16.7).  
+- [Africa](/regions/africa) averages **21.8**, ranked **7th of 7** regions by GIRAI score.  
+- The next-lowest is the [Caribbean](/regions/caribbean) at **22.4**.  
+- The highest-scoring regions are [Europe](/regions/europe) and [Northern America](/regions/northern-america), both around **54.2**.  
 
 **Sources**
 
 - [Africa region overview](/regions/africa)  
 - [Caribbean region overview](/regions/caribbean)  
-- [Europe region overview](/regions/europe)",Full,2/2,,,get_region_summary,5341,
-Which region has the lowest average score in the Index?,"Africa, with the lowest average at 21.79, just below the Caribbean (22.42).",Medium,Factual,default (gpt-5.1),2,"Africa has the lowest average GIRAI score among all seven regions in the Index.
+- [Global regional comparison – Europe](/regions/europe)  
+- [Global regional comparison – Northern America](/regions/northern-america)",Full,2/2,,,get_region_summary,4307,
+What is Chile's GIRAI score and global ranking?,Chile scores 61.91 and ranks 14th globally.,Easy,Factual,default (gpt-5.1),1,"Chile’s GIRAI 2026 score is **61.9**, ranking **14th globally**.
 
-- [Africa](/regions/africa) averages **21.8** (global rank **7th** of 7 regions).
-- The next-lowest region is the [Caribbean](/regions/caribbean) at **22.4**, followed by the [Middle East](/regions/middle-east) at **32.1**.
-- The highest-scoring regions are [Europe](/regions/europe) at **54.2** and [Northern America](/regions/northern-america) at **54.2** (both more than double Africa’s average).",Full,2/2,,,get_region_summary,4385,
-Which region has the lowest average score in the Index?,"Africa, with the lowest average at 21.79, just below the Caribbean (22.42).",Medium,Factual,default (gpt-5.1),3,"Africa has the lowest average GIRAI score in the Index.
-
-- [Africa](/regions/africa) averages **21.8** out of 100 across 39 countries, ranked **7th of 7 regions**.
-- The next-lowest region is the [Caribbean](/regions/caribbean) at **22.4**.
-- The highest-scoring region, [Europe](/regions/europe), averages **54.2**, more than double Africa’s average.
-- Africa’s strongest dimension is **Ethics and Sustainability** (23.4), while **Inclusion and Diversity** is the weakest (16.7).
+- [Chile](/countries/CHL) scores **61.9/100** on the GIRAI composite index, after a small URAI penalty for 1 documented misuse case.
+- It ranks **14th out of 135 countries globally**.
+- Within its region (South and Central America), it ranks **2nd overall**.
+- Its strongest dimensions are [Labour and Skills](/dimensions/labour-skills) (**74.0**) and [Inclusion and Diversity](/dimensions/inclusion-diversity) (**71.9**).
 
 **Sources**
 
-- [Africa region overview](/regions/africa)  
-- [Caribbean region overview](/regions/caribbean)  
-- [Europe region overview](/regions/europe)",Full,2/2,,,get_region_summary,4824,
-What is Chile's GIRAI score and global ranking?,Chile scores 61.91 and ranks 14th globally.,Easy,Factual,default (gpt-5.1),1,"Chile has a GIRAI score of **61.9** and is ranked **14th globally** in the 2026 edition.
-
-- **GIRAI score:** 61.9 (out of 100)  
-- **Global rank:** 14th out of 135 countries  
-- **Regional rank (South and Central America):** 2nd  
-- **Subregional rank (South America):** 2nd  
-
-**Sources**
-
-- [Chile country profile](/countries/CHL)",Full,2/2,,,lookup_country,5041,
-What is Chile's GIRAI score and global ranking?,Chile scores 61.91 and ranks 14th globally.,Easy,Factual,default (gpt-5.1),2,"Chile has a GIRAI score of **61.9** and is ranked **14th globally** in the 2026 edition.
-
-- **GIRAI score:** 61.9 / 100  
-- **Global rank:** 14th out of 135 countries  
-- **Regional rank (South and Central America):** 2nd  
-- **Subregional rank (South America):** 2nd  
-
-**Sources**  
-- [Chile country profile](/countries/CHL)",Full,2/2,,,lookup_country,4609,
-What is Chile's GIRAI score and global ranking?,Chile scores 61.91 and ranks 14th globally.,Easy,Factual,default (gpt-5.1),3,"Chile has a **GIRAI score of 61.9**, ranking **14th globally** in the 2026 edition.
-
-- **GIRAI score:** 61.9 out of 100  
-- **Global rank:** 14th out of 135 countries  
-- **Regional rank (South and Central America):** 2nd  
-- **Subregional rank (South America):** 2nd    
-
-**Sources**  
-- [Chile country profile](/countries/CHL)",Full,2/2,,,lookup_country,4922,
-"What is the Dominican Republic's score and rank, and what stands out about it?","It scores 47.92, ranks 36th globally, and is the clear Caribbean leader.",Medium,Factual,default (gpt-5.1),1,"The [Dominican Republic](/countries/DOM) scores **47.9** on the GIRAI 2026 index, ranking **36th of 135 countries globally**, and **1st in the Caribbean region** (also 1st in its subregion, which is the same geographic unit). countryciteDominican Republic country profile  
-
-Key points that stand out:
-
-- **Regional leader:** With **47.9** points, it is **the top-performing country in the Caribbean** and **5th among upper‑middle‑income countries**. countryciteDominican Republic country profile  
-- **Strongest dimensions:**  
-  - [AI Use in Public Service](/dimensions/ai-use-public-service): **52.0**  
-  - [Inclusion and Diversity](/dimensions/inclusion-diversity): **51.4** countryciteDominican Republic country profile  
-- **Weaker areas:**  
-  - [Ethics and Sustainability](/dimensions/ethics-sustainability) is its lowest-scoring dimension at **41.0**.  
-  - [Trust and Safety](/dimensions/trust-safety) is also relatively weaker at **47.2**. countryciteDominican Republic country profile  
-- **Pillar imbalance:**  
-  - Strongest pillar is [Enabling Conditions](/pillars/enabling-conditions) at **57.9**, indicating relatively supportive infrastructure and context.  
-  - [CSO Engagement](/pillars/cso-engagement) is very low at **14.2**, signalling limited documented civil‑society participation in AI governance. countryciteDominican Republic country profile  
-- **Policy vs implementation:**  
-  - Framework (policy on paper): **39.7**  
-  - Implementation (programmes, mechanisms): **48.0**  
-  This suggests that while the formal AI policy framework is still developing, **practical implementation and initiatives are comparatively stronger**. countryciteDominican Republic country profile  
-
-There is a **URAI penalty of 1 point applied** (with 0 counted misuse items in this edition’s evidence snapshot), meaning the score reflects some concern around government misuse of AI captured in the URAI mechanism. countryciteDominican Republic country profile  
-
-**Sources**  
-- [Dominican Republic country profile](/countries/DOM)",Full,3/3,,,lookup_country,8853,
-"What is the Dominican Republic's score and rank, and what stands out about it?","It scores 47.92, ranks 36th globally, and is the clear Caribbean leader.",Medium,Factual,default (gpt-5.1),2,"The [Dominican Republic](/countries/DOM) scores **47.9** on GIRAI 2026 and ranks **36th globally**. It is **1st in the Caribbean region** and **5th among upper‑middle‑income countries**.
-
-Key points that stand out:
-
-- **Regional leader:** With a GIRAI score of 47.9, it ranks **1st in the Caribbean region and subregion** fileciteturn1country0  
-- **Strongest dimensions:**  
-  - [AI Use in Public Service](/dimensions/ai-use-public-service): **52.0**  
-  - [Inclusion and Diversity](/dimensions/inclusion-diversity): **51.4** fileciteturn1country0  
-- **Weak spots:**  
-  - [Ethics and Sustainability](/dimensions/ethics-sustainability) is its lowest-scoring dimension at **41.0**  
-  - Within [Trust and Safety](/dimensions/trust-safety), **CSO Engagement is 0.0**, indicating no documented civil-society role in this area despite relatively strong enabling conditions (61.6) fileciteturn1country0  
-- **Policy vs practice:** Implementation (**48.0**) modestly outpaces framework quality (**39.7**), suggesting programs and mechanisms are somewhat stronger than the underlying written frameworks fileciteturn1country0  
-- **Pillar contrast:**  
-  - [Enabling Conditions](/pillars/enabling-conditions) is relatively strong at **57.9**  
-  - [CSO Engagement](/pillars/cso-engagement) is low at **14.2**, highlighting limited formal civil-society participation across dimensions fileciteturn1country0  
-
-**Sources**
-
-- [Dominican Republic – GIRAI 2026 country profile](/countries/DOM) fileciteturn1country0",Full,3/3,,,lookup_country,7772,
-"What is the Dominican Republic's score and rank, and what stands out about it?","It scores 47.92, ranks 36th globally, and is the clear Caribbean leader.",Medium,Factual,default (gpt-5.1),3,"The [Dominican Republic](/countries/DOM) scores **47.9** on the GIRAI 2026 index and ranks **36th globally** out of 135 countries. It is **1st in the Caribbean region** and **5th among upper-middle-income countries**. fileciteturn1country0  
+- Chile country profile – GIRAI 2026: /countries/CHL",Full,2/2,,,lookup_country,4191,
+"What is the Dominican Republic's score and rank, and what stands out about it?","It scores 47.92, ranks 36th globally, and is the clear Caribbean leader.",Medium,Factual,default (gpt-5.1),1,"The [Dominican Republic](/countries/DOM) scores **47.9** on the GIRAI 2026 index and ranks **36th globally** out of 135 countries. It is **1st in the Caribbean region** and **5th among upper‑middle‑income countries**.
 
 Key things that stand out:
 
-- **Regional leader:** With a GIRAI score of 47.9, it ranks **1st in both its region and subregion (Caribbean)**, making it the highest-scoring country in that grouping. fileciteturn1country0  
-- **Strength in enabling conditions:** Its **Enabling Conditions pillar is strong at 57.9**, well above its AI Policy score (48.6) and especially CSO Engagement (14.2), suggesting that infrastructure and broader conditions are ahead of stakeholder participation. fileciteturn1country0  
-- **Best dimensions: public sector use and inclusion:** The strongest dimensions are **AI Use in Public Service (52.0)** and **Inclusion and Diversity (51.4)**, indicating comparatively more developed approaches to using AI in government and addressing inclusion issues. fileciteturn1country0  
-- **Weaker on ethics and trust:** The weakest dimension is **Ethics and Sustainability (41.0)**, followed by **Trust and Safety (47.2)**, pointing to gaps in areas like ethical safeguards, safety, and risk management relative to its other strengths. fileciteturn1country0  
-- **Policy vs. implementation:** Its **implementation score (48.0) slightly exceeds its framework score (39.7)**, suggesting that some practical initiatives are outpacing what is explicitly captured in high-level AI policy frameworks. fileciteturn1country0  
+- **Regional leader:** With a GIRAI score of 47.9, it ranks **1st in the Caribbean** and **1st in its subregion**, making it the top performer in its immediate neighborhood.  
+- **Strong enabling environment vs weak CSO role:**  
+  - **Enabling Conditions pillar:** **57.9**  
+  - **AI Policy pillar:** **48.6**  
+  - **CSO Engagement pillar:** only **14.2**, indicating limited documented civil‑society participation across dimensions.  
+- **Best dimensions – public sector and inclusion:**  
+  - [AI Use in Public Service](/dimensions/ai-use-public-service): **52.0** (its strongest dimension)  
+  - [Inclusion and Diversity](/dimensions/inclusion-diversity): **51.4**  
+- **Weaker on ethics and safety:**  
+  - [Ethics and Sustainability](/dimensions/ethics-sustainability): **41.0** (its weakest area)  
+  - [Trust and Safety](/dimensions/trust-safety): **47.2**, with **0 CSO-engagement score** under this dimension, highlighting a gap in independent oversight and advocacy.  
+- **Policy vs implementation:** Framework score **39.7** vs implementation **48.0** suggests relatively stronger delivery/initiatives than the depth of formal frameworks on paper.
 
-You can explore detailed indicator-by-indicator evidence and documents on the full profile: [Dominican Republic](/countries/DOM).",Full,3/3,,,lookup_country,7667,
-Which country is the lowest performer in Asia?,"Afghanistan, with a score of 6.02 (ranked 134th globally).",Medium,Factual,default (gpt-5.1),1,"The lowest performer in Asia (within the GIRAI **Asia and Oceania** region) is **[Afghanistan](/countries/AFG)**.
-
-- Afghanistan’s GIRAI score: **6.0** (out of 100)
-- It is ranked **last within the Asia and Oceania region** on the overall GIRAI index (bottom of 30 ranked countries in that region)
-- Scope here is the **Asia and Oceania** GIRAI region, which is the dataset’s definition of “Asia”
-
-**Sources**
-
-- [Afghanistan country profile](/countries/AFG)",Full,2/2,,,get_leaderboard,4541,
-Which country is the lowest performer in Asia?,"Afghanistan, with a score of 6.02 (ranked 134th globally).",Medium,Factual,default (gpt-5.1),2,"In the GIRAI 2026 dataset, the lowest‑performing country in the **Asia and Oceania** region is **[Afghanistan](/countries/AFG)**.
-
-- Afghanistan’s GIRAI score: **6.0** (out of 100)
-- It is ranked **last within the Asia and Oceania region** among **30** scored countries in that region    
+You can explore full indicator-by-indicator evidence and documents in the country profile: [Dominican Republic](/countries/DOM).
 
 **Sources**
 
-- Afghanistan country profile",Full,2/2,,,get_leaderboard,4795,
-Which country is the lowest performer in Asia?,"Afghanistan, with a score of 6.02 (ranked 134th globally).",Medium,Factual,default (gpt-5.1),3,"The lowest performer in Asia (within the **Asia and Oceania** GIRAI region) is **[Afghanistan](/countries/AFG)**.
+- GIRAI 2026 country data: [Dominican Republic country profile](/countries/DOM)",Full,3/3,,,lookup_country,9572,
+Which country is the lowest performer in Asia?,"Afghanistan, with a score of 6.02 (ranked 134th globally).",Medium,Factual,default (gpt-5.1),1,"In the GIRAI 2026 index, the lowest performer in the **Asia and Oceania** region is **[Afghanistan](/countries/AFG)**.
 
+- **Country:** Afghanistan  
 - **GIRAI score:** 6.0 (out of 100)  
-- **Regional context:** Ranked the lowest among 30 scored countries in the Asia and Oceania region  
-- **Scope note:** Asia is combined with Oceania in GIRAI; within that combined region, Afghanistan is the bottom performer on overall responsible‑AI readiness and governance    
+- **Global rank:** 135th of 135 countries (bottom of the index)  
+- **Regional scope:** Asia and Oceania (30 countries ranked)
 
 **Sources**
 
-- [Afghanistan country profile](/countries/AFG)",Full,2/2,,,get_leaderboard,7139,
-"How many African countries score above the global average, and which ones?","Seven: Nigeria, Egypt, Kenya, Ghana, Benin, Morocco and Cote d'Ivoire.",Medium,Reasoning,default (gpt-5.1),1,"Across Africa, **7 countries** score above the **global average GIRAI score of 35.0**.
+- [Afghanistan country profile](/countries/AFG)",Full,2/2,,,get_leaderboard,3961,
+"How many African countries score above the global average, and which ones?","Seven: Nigeria, Egypt, Kenya, Ghana, Benin, Morocco and Cote d'Ivoire.",Medium,Reasoning,default (gpt-5.1),1,"Seven African countries score above the global GIRAI average.
 
-**African countries scoring above the global average (GIRAI 2026):**
-- [Nigeria](/countries/NGA) – **45.9** (38th globally)
-- [Egypt](/countries/EGY) – **41.3** (48th)
-- [Kenya](/countries/KEN) – **39.5** (50th)
-- [Ghana](/countries/GHA) – **38.4** (56th)
-- [Benin](/countries/BEN) – **37.0** (59th)
-- [Morocco](/countries/MAR) – **35.6** (63rd)
-- [Côte d'Ivoire](/countries/CIV) – **35.2** (64th)
+- The global average GIRAI score is **35.0**.
+- **7 African countries** are above this threshold, all ranked in the top half globally.
+- Listed from highest score to lowest:
+  - [Nigeria](/countries/NGA) – **45.9** (38th globally)    
+  - [Egypt](/countries/EGY) – **41.3** (48th)    
+  - [Kenya](/countries/KEN) – **39.5** (50th)    
+  - [Ghana](/countries/GHA) – **38.4** (56th)    
+  - [Benin](/countries/BEN) – **37.0** (59th)    
+  - [Morocco](/countries/MAR) – **35.6** (63rd)    
+  - [Côte d’Ivoire](/countries/CIV) – **35.2** (64th)    
 
-All are lower-middle-income economies and sit above the **global average GIRAI score of 35.0** for 2026.    
-
-**Sources**  
-- Country profiles for [Nigeria](/countries/NGA), [Egypt](/countries/EGY), [Kenya](/countries/KEN), [Ghana](/countries/GHA), [Benin](/countries/BEN), [Morocco](/countries/MAR), [Côte d'Ivoire](/countries/CIV)",Full,8/8,,,search_countries,6146,"Sheet said six and omitted Cote d'Ivoire (35.18), which clears the 35.02 average. The correct answer is seven."
-"How many African countries score above the global average, and which ones?","Seven: Nigeria, Egypt, Kenya, Ghana, Benin, Morocco and Cote d'Ivoire.",Medium,Reasoning,default (gpt-5.1),2,"Across Africa, **7 countries score above the global GIRAI average** (35.0).
-
-Those countries, ordered by GIRAI score, are:
-
-- [Nigeria](/countries/NGA) – **45.9** (38th globally)  
-- [Egypt](/countries/EGY) – **41.3** (48th globally)  
-- [Kenya](/countries/KEN) – **39.5** (50th globally)  
-- [Ghana](/countries/GHA) – **38.4** (56th globally)  
-- [Benin](/countries/BEN) – **37.0** (59th globally)  
-- [Morocco](/countries/MAR) – **35.6** (63rd globally)  
-- [Côte d’Ivoire](/countries/CIV) – **35.2** (64th globally)  
-
-Additional context:
-
-- **Global average GIRAI score:** 35.0  
-- All seven are **lower-middle-income** economies.  
-- Results are not truncated for Africa under this filter, so this is the full set of African countries scoring above the global average.
+All seven are lower‑middle‑income countries, spread across West, East, and North Africa.    
 
 **Sources**
 
-- [Nigeria country profile](/countries/NGA)  
-- [Egypt country profile](/countries/EGY)  
-- [Kenya country profile](/countries/KEN)  
-- [Ghana country profile](/countries/GHA)  
-- [Benin country profile](/countries/BEN)  
-- [Morocco country profile](/countries/MAR)  
-- [Côte d’Ivoire country profile](/countries/CIV)",Full,8/8,,,search_countries,7425,"Sheet said six and omitted Cote d'Ivoire (35.18), which clears the 35.02 average. The correct answer is seven."
-"How many African countries score above the global average, and which ones?","Seven: Nigeria, Egypt, Kenya, Ghana, Benin, Morocco and Cote d'Ivoire.",Medium,Reasoning,default (gpt-5.1),3,"Across Africa, **7 countries** score above the **global average GIRAI score of 35.0**.
+- Country profiles for [Nigeria](/countries/NGA), [Egypt](/countries/EGY), [Kenya](/countries/KEN), [Ghana](/countries/GHA), [Benin](/countries/BEN), [Morocco](/countries/MAR), [Côte d’Ivoire](/countries/CIV)",Full,8/8,,,search_countries,8791,"Sheet said six and omitted Cote d'Ivoire (35.18), which clears the 35.02 average. The correct answer is seven."
+What is Egypt's score and rank?,Egypt scores 41.26 and ranks 48th globally (North Africa).,Easy,Factual,default (gpt-5.1),1,"Egypt’s GIRAI 2026 results are:
 
-Those countries (with their GIRAI scores and global ranks) are:
-
-- [Nigeria](/countries/NGA) — **45.9** (38th globally)  
-- [Egypt](/countries/EGY) — **41.3** (48th)  
-- [Kenya](/countries/KEN) — **39.5** (50th)  
-- [Ghana](/countries/GHA) — **38.4** (56th)  
-- [Benin](/countries/BEN) — **37.0** (59th)  
-- [Morocco](/countries/MAR) — **35.6** (63rd)  
-- [Cote d'Ivoire](/countries/CIV) — **35.2** (64th)  
-
-All other African countries in the index score at or below the global average GIRAI score.  
-
-**Sources**
-
-- [Nigeria country profile](/countries/NGA)  
-- [Egypt country profile](/countries/EGY)  
-- [Kenya country profile](/countries/KEN)  
-- [Ghana country profile](/countries/GHA)  
-- [Benin country profile](/countries/BEN)  
-- [Morocco country profile](/countries/MAR)  
-- [Cote d'Ivoire country profile](/countries/CIV)",Full,8/8,,,search_countries,7049,"Sheet said six and omitted Cote d'Ivoire (35.18), which clears the 35.02 average. The correct answer is seven."
-What is Egypt's score and rank?,Egypt scores 41.26 and ranks 48th globally (North Africa).,Easy,Factual,default (gpt-5.1),1,"Egypt has a **GIRAI score of 41.3** and is ranked:
-
-- **48th globally** (out of 135 countries)
-- **2nd in Africa**
-- **1st in North Africa**
-- **5th among lower middle income countries**
-- URAI: Egypt has a **government-misuse penalty applied (penalty = 1)**, but currently **no coded misuse cases (uraiCount = 0)** in the URAI dataset.
-
-**Sources**
-
-- [Egypt country profile](/countries/EGY)",Full,2/2,,,lookup_country,4824,
-What is Egypt's score and rank?,Egypt scores 41.26 and ranks 48th globally (North Africa).,Easy,Factual,default (gpt-5.1),2,"Egypt’s GIRAI 2026 results are:
-
-- **GIRAI score:** **41.3 / 100**
-- **Global rank:** **48th of 135** countries
+- **GIRAI score:** **41.3** (out of 100)
+- **Global rank:** **48th** of 135 countries
 - **Regional rank (Africa):** **2nd**
 - **Subregional rank (North Africa):** **1st**
 - **Income-group rank (Lower middle income):** **5th**
 
-Egypt has a small **URAI penalty (1 point)** applied for documented government misuse of AI. See the full profile here: [Egypt](/countries/EGY).  
+You can explore the full profile here: [Egypt](/countries/EGY).  
 
 **Sources**
 
-- Egypt country profile",Full,2/2,,,lookup_country,5647,
-What is Egypt's score and rank?,Egypt scores 41.26 and ranks 48th globally (North Africa).,Easy,Factual,default (gpt-5.1),3,"Egypt has a **GIRAI score of 41.3** and is ranked:
+- [Egypt country profile](/countries/EGY)",Full,2/2,,,lookup_country,4319,
+"Which Asian subregion is the best performing, and what is its average?","East Asia, with an average score of 42.07.",Medium,Factual,default (gpt-5.1),1,"The highest‑performing subregion *within the Asia and Oceania region* is **Oceania (Pacific)**, with an average GIRAI score of **51.1**.
 
-- **48th globally** out of 135 countries  
-- **2nd in Africa**  
-- **1st in North Africa**  
-- **5th among lower middle income countries**  
+Key points:
+- **Oceania (Pacific)** averages **51.1**, with 2 countries and sits **above the global average** of 35.0    
+- The next-best in the region is **East Asia** at **42.1** (5 countries), also above the global average    
+- All three *Asian* subregions — **South East Asia (31.6)**, **South West Asia / South Asia (28.5)**, and **NorthWest Asia / Central Asia+Caucasus (27.6)** — are **below** the global average    
 
-You can explore the full profile here: [Egypt country profile](/countries/EGY).",Full,2/2,,,lookup_country,9591,
-"Which Asian subregion is the best performing, and what is its average?","East Asia, with an average score of 42.07.",Medium,Factual,default (gpt-5.1),1,"The highest‑scoring subregion in the **Asia and Oceania** region is **Oceania (Pacific)**, with an average GIRAI score of **51.1**.
-
-Key numbers:
-- **Best-performing subregion in the region:** Oceania (Pacific)  
-- **Average GIRAI score (Oceania (Pacific)):** 51.1  
-- **Global average GIRAI score (all countries):** 35.0 — Oceania (Pacific) is well above this  
-- **Context:** Within Asia and Oceania, the next best subregion is East Asia at 42.1, followed by South East Asia (31.6), South West Asia (28.5), and NorthWest Asia (27.6)  
-
-Note: Oceania (Pacific) in GIRAI includes **Australia and New Zealand**; it is treated as a distinct subregion within the broader Asia and Oceania region and is not itself “Asian” in a strict geographic sense.
+If by “Asian subregion” you mean **only subregions that are geographically Asian (excluding Oceania)**, then **East Asia** is the best‑performing, with an average GIRAI score of **42.1**.    
 
 **Sources**  
-- [Asia and Oceania region overview](/regions/asia-and-oceania)",Full,2/2,,,get_subregion_summary,6333,
-"Which Asian subregion is the best performing, and what is its average?","East Asia, with an average score of 42.07.",Medium,Factual,default (gpt-5.1),2,"The highest‑scoring subregion in the Asia and Oceania region is **Oceania (Pacific)**, with an average GIRAI score of **51.1**.
+- Asia and Oceania subregional scores: [/regions/asia-and-oceania](/regions/asia-and-oceania)",Full,2/2,,,get_subregion_summary,5803,
+Which LATAM subregion scores above the global average?,Only South America (42.87). Central America (31.62) and the Caribbean (22.42) fall below it.,Medium,Reasoning,default (gpt-5.1),1,"Among the LATAM subregions, **only South America scores above the global average** GIRAI score.
 
-- Oceania (Pacific) average GIRAI: **51.1**, highest in Asia and Oceania and above the global average of **35.0**.
-- It comprises **2 countries** (Australia and New Zealand).
-- Among all GIRAI subregions worldwide, it ranks **5th** by average score.
-- The next best within Asia and Oceania is **East Asia**, averaging **42.1**.
+- **Global average GIRAI score:** 35.0  
+- **South America:** 42.9 on average — *above* the global average, and the top subregion in the South and Central America region    
+- **Central America:** 31.6 on average — *below* the global average    
+- **Caribbean:** treated as its own region-subregion within LATAM; its average is below the global average (from the Caribbean overview, not shown in the tools above).
 
-Note that while Oceania (Pacific) sits inside the “Asia and Oceania” region in GIRAI, it is not itself Asian — it’s the Pacific subregion of Australia and New Zealand.
-
-**Sources**
-
-- [Asia and Oceania region overview](/regions/asia-and-oceania)",Full,2/2,,,get_subregion_summary,5935,
-"Which Asian subregion is the best performing, and what is its average?","East Asia, with an average score of 42.07.",Medium,Factual,default (gpt-5.1),3,"The highest‑scoring subregion within **Asia and Oceania** is **Oceania (Pacific)**, with an average GIRAI score of **51.1**.
-
-Key numbers:
-- **Best-performing subregion in the region:** Oceania (Pacific)  
-- **Average GIRAI score (Oceania):** 51.1  
-- **Countries in Oceania (Pacific):** 2  
-- **Regional average for all of Asia and Oceania:** 35.0  
-
-Note that Oceania (Pacific) covers Australia and New Zealand and is geographically in the Asia and Oceania region but is not itself Asian. If you specifically want the top **Asian** subregion, that would be **East Asia**, averaging **42.1**, above both the regional and global averages.    
-
-**Sources**  
-- Asia and Oceania region overview (/regions/asia-and-oceania)",Full,2/2,,,get_subregion_summary,7271,
-Which LATAM subregion scores above the global average?,Only South America (42.87). Central America (31.62) and the Caribbean (22.42) fall below it.,Medium,Reasoning,default (gpt-5.1),1,"Among Latin American subregions, **only South America scores above the global average** GIRAI score.
-
-- **Global average GIRAI:** 35.0  
-- **South America:** 42.9 (above global average, 9 countries)  
-- **Central America:** 31.6 (below global average, 5 countries)    
-
-So within LATAM (South & Central America + Caribbean), the subregion clearly above the global average is **South America**; Central America is below, and the Caribbean is a separate GIRAI region/subregion not included in this particular regional breakdown.  
-
-**Sources**
-
-- South and Central America regional summary: /regions/south-and-central-america",Full,3/3,,,get_averages; get_subregion_summary,8743,
-Which LATAM subregion scores above the global average?,Only South America (42.87). Central America (31.62) and the Caribbean (22.42) fall below it.,Medium,Reasoning,default (gpt-5.1),2,"Among Latin American subregions, **only South America scores above the global average** GIRAI score.
-
-- **Global average GIRAI:** 35.0    
-- **South America:** 42.9 (above-global; 9 countries)    
-- **Central America:** 31.6 (below-global; 5 countries)    
-- **Caribbean:** 22.4 (below-global; 8 countries)    
+**Answer:** In LATAM, **South America** is the only subregion whose average GIRAI score is above the global average.  
 
 **Sources**
 
 - [South and Central America region overview](/regions/south-and-central-america)    
-- [Caribbean region overview](/regions/caribbean)",Full,3/3,,,get_averages; get_subregion_summary,10485,
-Which LATAM subregion scores above the global average?,Only South America (42.87). Central America (31.62) and the Caribbean (22.42) fall below it.,Medium,Reasoning,default (gpt-5.1),3,"Among Latin American subregions, **only South America scores above the global average** GIRAI score.
+- [Caribbean region overview](/regions/caribbean)",Full,3/3,,,get_averages; get_subregion_summary,8696,
+What is Brazil's GIRAI score?,"Brazil scores 63.30 (ranked 11th, the highest-placed LATAM country).",Easy,Consistency,default (gpt-5.1),1,"Brazil’s GIRAI score is **63.3** (out of 100) in the 2026 edition.
 
-- **Global average GIRAI:** 35.0  
-- **South America:** 42.9 (above global average; 9 countries)  
-- **Central America:** 31.6 (below global average; 5 countries)    
-
-Remember that a full LATAM view also includes the separate [Caribbean](/regions/caribbean) subregion, which is reported under its own GIRAI region rather than “South and Central America.”  
-
-**Sources**  
-- [South and Central America region overview](/regions/south-and-central-america)",Full,3/3,,,get_averages; get_subregion_summary,5719,
-What is Brazil's GIRAI score?,"Brazil scores 63.30 (ranked 11th, the highest-placed LATAM country).",Easy,Consistency,default (gpt-5.1),1,"Brazil’s GIRAI score in the 2026 edition is **63.3** out of 100.
-
-- This places [Brazil](/countries/BRA) **11th globally**.
-- It ranks **1st in its region** (South and Central America) and **1st in South America**.
-- It is also **1st among upper middle income countries**.
-- Brazil has a **URAI penalty of 0.9 points** based on 2 documented government misuse items, so its raw score before penalty is 68.1.  
+- This places [Brazil](/countries/BRA) **11th globally**, and **1st** in South and Central America.
+- Brazil is also **1st among upper-middle-income countries**.
+- Its strongest dimensions are [Labour and Skills](/dimensions/labour-skills) (**76.3**) and [Inclusion and Diversity](/dimensions/inclusion-diversity) (**72.0**).  
 
 **Sources**
 
-- [Brazil country profile](/countries/BRA)",Full,1/1,,,lookup_country,5247,
-What is Brazil's GIRAI score?,"Brazil scores 63.30 (ranked 11th, the highest-placed LATAM country).",Easy,Consistency,default (gpt-5.1),2,"Brazil’s GIRAI score is **63.3** (out of 100), based on the 2026 edition.
+- [Brazil country profile](/countries/BRA)",Full,1/1,,,lookup_country,3455,
+How did Brazil perform in the index overall?,"Very strong: score 63.30, ranked 11th globally and the top LATAM country.",Easy,Consistency,default (gpt-5.1),1,"Brazil is one of the strongest performers in the GIRAI 2026 index.
 
-- This places [Brazil](/countries/BRA) **11th globally**.
-- It ranks **1st in South and Central America** and **1st in South America**.
-- It is also **1st among Upper middle income countries**.
-- Brazil has a URAI penalty of **0.93** due to **2 documented government misuse** cases of AI.  
+- **Overall GIRAI score:** 63.3/100, placing Brazil in the top tier of countries on responsible AI governance.  
+- **Global rank:** **11th out of 135** countries.  
+- **Regional performance:** **1st in South and Central America** and **1st in South America**.  
+- **Income group:** **1st among Upper middle income** countries.  
+- **Dimension strengths:** Especially strong in [Labour and Skills](/dimensions/labour-skills) (76.3) and [Inclusion and Diversity](/dimensions/inclusion-diversity) (72.0); relatively weaker but still solid in [Trust and Safety](/dimensions/trust-safety) (61.5).  
+- **Policy vs implementation:** Framework score 49.1 vs implementation score 74.4, indicating delivery on responsible-AI initiatives is ahead of what’s codified on paper.  
+- **URAI penalty:** Brazil has documented government misuse of AI (2 items), which applies a **0.93-point URAI penalty** to its raw score.  
 
-**Sources**  
-- [Brazil country profile](/countries/BRA)",Full,1/1,,,lookup_country,4590,
-What is Brazil's GIRAI score?,"Brazil scores 63.30 (ranked 11th, the highest-placed LATAM country).",Easy,Consistency,default (gpt-5.1),3,"Brazil’s GIRAI score in the 2026 edition is **63.3**.
-
-- This places [Brazil](/countries/BRA) **11th globally** out of 135 countries.
-- It ranks **1st in its region** (South and Central America) and **1st in South America**.
-- It is also **1st among upper-middle-income countries**.
-- Brazil has a URAI penalty of **0.93** based on **2 documented government misuse cases**, which slightly reduces its raw score from 68.1 to 63.3.
-
-**Sources**
-
-- [Brazil country profile](/countries/BRA)",Full,1/1,,,lookup_country,4936,
-How did Brazil perform in the index overall?,"Very strong: score 63.30, ranked 11th globally and the top LATAM country.",Easy,Consistency,default (gpt-5.1),1,"Brazil is a very strong performer in the GIRAI 2026 index.
-
-- Overall [GIRAI score]( /countries/BRA): **63.3/100**, placing Brazil **11th globally**.  
-- It ranks **1st in its region** (South and Central America) and **1st in South America**, as well as **1st among upper middle‑income countries**. citefunctions.lookup_country  
-- Brazil’s strongest dimensions are **Labour and Skills (76.3)** and **Inclusion and Diversity (72.0)**; its weakest are **Trust and Safety (61.5)** and **Ethics and Sustainability (63.4)**. citefunctions.lookup_country  
-- Its **implementation score (74.4)** is much higher than its **framework (policy) score (49.1)**, indicating relatively strong execution compared with the formal policy framework. citefunctions.lookup_country  
-
-Note that Brazil has a documented **URAI penalty of 0.9 points** based on **two government‑misuse evidence items**, which slightly lowers its composite GIRAI score. citefunctions.lookup_country  
-
-**Sources**  
-- [Brazil country profile](/countries/BRA) citefunctions.lookup_country",Full,2/2,,,lookup_country,8198,
-How did Brazil perform in the index overall?,"Very strong: score 63.30, ranked 11th globally and the top LATAM country.",Easy,Consistency,default (gpt-5.1),2,"Brazil is a high performer in the GIRAI 2026 index, ranking near the top globally and leading its region.
-
-- Overall GIRAI score: **63.3 / 100**, placing [Brazil](/countries/BRA) **11th globally** out of 135 countries.
-- Regional standing: **1st in South and Central America** and **1st in South America**.
-- Income-group standing: **1st among Upper middle income** countries.
-- Dimension strengths: especially strong in **Labour and Skills (76.3)** and **Inclusion and Diversity (72.0)**; relatively weaker but still solid in **Trust and Safety (61.5)** and **Ethics and Sustainability (63.4)**.
-- Policy vs implementation: framework (policy design) score **49.1**, implementation score **74.4**, indicating that Brazil’s practical initiatives and execution currently outpace the formal policy framework.
-- URAI penalty: Brazil has a documented **URAI penalty of 0.9 points** based on **2 government misuse** evidence items, slightly reducing its raw score from 68.1 to the reported 63.3.
-
-**Sources**
-
-- [Brazil country profile](/countries/BRA)",Full,2/2,,,lookup_country,49629,
-How did Brazil perform in the index overall?,"Very strong: score 63.30, ranked 11th globally and the top LATAM country.",Easy,Consistency,default (gpt-5.1),3,"Brazil performs very strongly in the GIRAI 2026 index.
-
-- **Overall GIRAI score:** 63.3/100, placing Brazil **11th globally** out of 135 countries  
-- **Regional position:** **1st in South and Central America** and **1st in South America**  
-- **Income group:** **1st among Upper middle income countries**  
-- **URAI (misuse) penalty:** −0.93 points applied, based on **2 documented government misuse cases of AI**  
-- **Strongest dimensions:** [Labour and Skills](/dimensions/labour-skills) (76.3) and [Inclusion and Diversity](/dimensions/inclusion-diversity) (72.0)  
-- **Weakest dimensions (relative to its own profile):** [Trust and Safety](/dimensions/trust-safety) (61.5) and [Ethics and Sustainability](/dimensions/ethics-sustainability) (63.4)  
-
-You can explore full details of Brazil’s performance, evidence items, and indicator scores on its country page: [Brazil](/countries/BRA).  
-
-**Sources**
-
-- [Brazil country profile](/countries/BRA)",Full,2/2,,,lookup_country,7106,
+You can explore the full breakdown of Brazil’s evidence and scores on its country page: [Brazil](/countries/BRA).",Full,2/2,,,lookup_country,5540,

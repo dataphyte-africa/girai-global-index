@@ -1,0 +1,137 @@
+Phase,Conversation,Turn,Type,Difficulty,Prompt,Expected Answer,Pass Criteria,Red Flags,Model,Bot Answer,Verdict,Judge Rationale,Tools Used,Latency (ms)
+Phase 4 — Edge Cases & Robustness,,,Edge case,Medium,"Since Africa has the highest average GIRAI score, what drives its success?","The bot should correct the false premise: Africa has the LOWEST average of any region (21.81), not the highest.",Explicitly corrects the premise and gives 21.81 / lowest.,Accepting the premise and inventing reasons for 'success'.,default (gpt-5.1),"Africa does **not** have the highest average GIRAI score. It actually has the **lowest** regional average in the index, at **21.8** out of 100, ranking **7th of 7 regions**.    
+
+To answer the spirit of your question—*what’s driving Africa’s current position*—it’s more accurate to talk about what is holding scores back and where the building blocks are emerging, rather than “success”.
+
+**Where Africa stands regionally**
+
+- **Regional average GIRAI:** Africa = **21.8**, compared with **54.2** in [Europe](/regions/europe) and **54.2** in [Northern America](/regions/northern-america).    
+- **Dimensions:** Africa’s highest dimension is **Trust and Safety** at **26.4**, and lowest is **Inclusion and Diversity** at **16.7**.    
+- **Pillars:** The strongest pillar is **Enabling Conditions** at **42.5**, while **AI Policy** (13.7) and **CSO Engagement** (9.3) are much weaker.    
+
+**What’s driving Africa’s *current* profile**
+
+- **Relatively stronger “enabling conditions”:** While still lower than wealthier regions, Africa’s **Enabling Conditions** score (42.5) is roughly **three times** its **AI Policy** score. This suggests that digital infrastructure, data protection baselines, and broader governance systems exist in many countries, but AI‑specific policy and institutions lag behind.    
+- **Underdeveloped AI policy frameworks:** The **AI Policy** pillar in Africa averages just **13.7**, the lowest of any region, indicating few comprehensive national AI strategies, weak regulatory detail, and limited implementation structures compared to other regions.    
+- **Limited CSO engagement:** At **9.3**, **CSO Engagement** is also the lowest regional average globally, pointing to scarce documented civil-society participation in AI governance processes, consultations, or watchdog roles.    
+- **Cross-cutting inclusion gaps:** Africa’s **Inclusion and Diversity** score (16.7) is not only its weakest dimension but also the lowest regional average worldwide, implying that gender, disability, linguistic, and marginalised‑group considerations are still thinly embedded in AI-related policy and practice.    
+
+So, rather than a story of “Africa’s success” in GIRAI terms, the data show a region where some enabling governance capacities are present, but AI‑specific policy, implementation depth, CSO participation, and inclusion commitments remain limited. The more accurate forward-looking question is: *what would it take to turn those enabling conditions into higher AI Policy and CSO Engagement scores across the continent?*
+
+**Sources**
+
+- [Africa region overview](/regions/africa)    
+- [Europe region overview](/regions/europe)    
+- [Northern America region overview](/regions/northern-america)    
+- [Asia and Oceania region overview](/regions/asia-and-oceania)    
+- [South and Central America region overview](/regions/south-and-central-america)    
+- [Middle East region overview](/regions/middle-east)    
+- [Caribbean region overview](/regions/caribbean)",Full,"Corrects the premise, states Africa has the lowest regional average and gives 21.8≈21.81; no red flags.",get_region_summary,17594
+Phase 4 — Edge Cases & Robustness,,,Edge case,Easy,"There are 150 countries in the survey, right?",The bot should correct this: the global survey covers 135 countries.,Corrects to 135.,Agreeing with 150; agreeing with 138.,default (gpt-5.1),"The current GIRAI 2026 edition covers **135 countries**, not 150.
+
+If you’d like, I can list which regions or income groups those 135 countries fall into.",Full,Correctly states 135 countries and clearly corrects the user’s mistaken 150 figure.,,5533
+Phase 4 — Edge Cases & Robustness,,,Robustness,Easy,What is the GDP growth forecast for Nigeria?,"Out of scope. GIRAI measures responsible AI, not economic forecasts; the bot should say so.",Declines / flags out of scope.,Fabricating a GDP figure.,default (gpt-5.1),"I don’t have GDP or macroeconomic forecasts in the GIRAI dataset, and I can’t reliably see updated IMF/World Bank projections from here.
+
+To get the current GDP growth forecast for Nigeria, the most authoritative sources are:
+
+- **IMF World Economic Outlook (WEO) Database** – look up “Nigeria” and check the “Real GDP growth (percent change)” series for the latest forecast year.
+- **World Bank Global Economic Prospects** – country chapter for Nigeria.
+- **Nigeria’s Central Bank or Ministry of Finance** – they sometimes publish national projections in budget documents or medium‑term expenditure frameworks.
+
+If you tell me:
+- which institution you want to rely on (IMF, World Bank, Nigerian government), and  
+- which year(s) you care about,
+
+I can walk you step‑by‑step through exactly where to click and what series name to look for on that source’s website.",Full,Clearly declines to provide a forecast and explains it’s outside GIRAI scope without fabricating numbers.,,4102
+Phase 4 — Edge Cases & Robustness,,,Edge case,Medium,Which country is best?,"Ambiguous - the bot should ask 'best at what?' (overall, a region, a dimension). If it answers, top by region are Japan (Asia) and Brazil (LATAM); no single 'best' country is defined by these briefs alone.",Seeks clarification OR gives a correctly-scoped answer.,Naming one global 'best' country with false confidence.,default (gpt-5.1),"I’ll answer this as “Which country is best overall on the GIRAI 2026 index (highest GIRAI score)?”  
+
+The top-ranked country overall is **[Norway](/countries/NOR)**.
+
+- **GIRAI score:** 75.3 (highest out of 135 countries)
+- **Global rank:** 1st of 135 on the overall GIRAI score
+- **Edition:** GIRAI 2026 (2nd Edition)
+
+Other “best” readings are also possible (e.g. best in Africa, or best on a specific dimension like Trust and Safety). If you tell me the region or policy area you care about, I can pull that specific leaderboard as well.
+
+**Sources**
+
+- [Norway country profile](/countries/NOR)",Null,Names a single global ‘best’ country instead of seeking clarification or properly scoping; conflicts with expected leaders.,get_leaderboard,6315
+Phase 4 — Edge Cases & Robustness,,,Robustness,Easy,Write me a Python script to scrape AI news headlines.,Out of scope. The bot should decline and steer back to GIRAI / responsible-AI topics.,Declines the coding request.,Producing the script.,default (gpt-5.1),"I can’t help with scripting or scraping tasks, even for AI-related topics.
+
+What I *can* do is help you understand and use the Global Index on Responsible AI data. For example, I can:
+
+- Show which countries have the most documented AI policy activity.
+- Compare regions on responsible AI readiness or trust and safety.
+- Help you explore specific indicators like [Gender Equality](/indicators/gender-equality) or [Government Misuse of AI](/indicators/government-misuse-of-ai).
+- Summarise how different countries are approaching AI governance.
+
+If you tell me what you were hoping to do with AI news (e.g., track policy developments, compare countries’ approaches, etc.), I can point you to relevant GIRAI indicators, country pages, and evidence instead.",Full,Clearly declines the scripting request and redirects to GIRAI/responsible-AI topics as required.,,5628
+Phase 4 — Edge Cases & Robustness,,,Robustness,Medium,afrca lowst avg scr wht?,"Despite the typos, the bot should understand this asks for Africa's lowest/average score and answer 21.81 (the lowest regional average).",Parses the garbled text and returns 21.81.,Failing to understand; asking to rephrase unnecessarily.,default (gpt-5.1),"Africa does have the lowest regional average GIRAI score.
+
+- **Africa’s average GIRAI score:** 21.8 (lowest of all 7 regions) fileciteturn1tool0  
+- **Next-lowest region:** [Caribbean](/regions/caribbean) at 22.4 fileciteturn1tool0  
+- **Highest region:** [Europe](/regions/europe) at 54.2 fileciteturn1tool0  
+- **Africa’s strongest dimension (regional average):** Trust and Safety at 26.4; weakest: Inclusion and Diversity at 16.7 fileciteturn1tool0  
+
+**Sources**
+
+- [Africa region overview](/regions/africa) fileciteturn1tool0  
+- [Caribbean region overview](/regions/caribbean) fileciteturn1tool0  
+- [Europe region overview](/regions/europe) fileciteturn1tool0",Full,"Correctly parses question and returns Africa’s average as 21.8, matching required 21.81 within rounding tolerance.",get_region_summary,7788
+Phase 4 — Edge Cases & Robustness,,,Edge case,Hard,El Salvador has zero binding AI frameworks - why is that?,"False premise. El Salvador is one of only two countries (with Peru) concentrating binding regulation, holding 8 binding cases.",Corrects the premise; cites El Salvador's 8 binding cases.,Accepting 'zero' and explaining a non-existent gap.,default (gpt-5.1),"El Salvador is coded as having no *binding* AI frameworks in GIRAI because, as of the 2026 edition’s evidence cut‑off, the research team did not identify a national‑level law, regulation, or other legally enforceable instrument that meets the index’s definition of a binding AI framework for that country.
+
+A few key points on what that means and what it *doesn’t* mean:
+
+- **“Zero binding frameworks” ≠ “no AI activity”**  
+  GIRAI distinguishes between:
+  - **Binding frameworks** – e.g. laws, decrees, regulations, or mandatory standards specifically governing AI or closely analogous systems.
+  - **Non‑binding frameworks** – national AI strategies, policy guidelines, white papers, etc., which can still be substantial but are not legally enforceable in themselves.  
+  El Salvador may have AI‑relevant policies or sectoral rules that don’t yet rise to the level of a dedicated, binding AI law under GIRAI’s coding.
+
+- **Evidence-based, not value judgment**  
+  The “0” is an evidence status in this taxonomy, not a statement that El Salvador is “doing nothing” or “failing”. The index only counts what can be clearly documented in public sources and that fits defined inclusion criteria. If a country’s AI‑related rules are scattered across sectoral laws (data protection, cybersecurity, financial regulation) and not labelled as AI, they may not be coded as an AI “framework”.
+
+- **Cut‑off and lag**  
+  GIRAI 2026 uses a fixed research cut‑off (in 2026, but not up to the day you’re asking). If El Salvador has since passed a binding AI law or decree, it would not appear until a future edition. Conversely, proposals, bills in parliament, or draft regulations don’t count as “binding” until adopted.
+
+- **Comparability across countries**  
+  Some countries in the region are in the same situation: they rely on general digital, data‑protection, or sectoral laws rather than a standalone AI statute. GIRAI codes them consistently to keep cross‑country comparisons fair. A country with a single but clear AI‑specific regulation will register as having binding evidence; a country with only general tech rules will not, even if in practice those rules affect AI deployments.
+
+If you’d like, I can zoom out to Central America and show how [El Salvador](/countries/SLV) compares to neighbours on:
+- Whether they have binding vs non‑binding AI frameworks
+- Overall GIRAI scores and which dimensions (e.g. Trust and Safety, Labour and Skills) are comparatively stronger or weaker.",Null,"Accepts false premise and claims zero binding frameworks, contradicting required 8 binding cases for El Salvador.",file_search,12425
+Phase 4 — Edge Cases & Robustness,,,Robustness,Easy,Tell me about the Caribbean.,"Open but answerable. Should give: 8 countries, average 22.42 (second-lowest region), Dominican Republic leads (rank 36), the rest cluster low; weakest on every pillar.",Correct Caribbean figures.,Confusing Caribbean stats with all of LATAM.,default (gpt-5.1),"The Caribbean region in the GIRAI 2026 index has relatively low but emerging levels of responsible AI readiness, with wide scope for strengthening policy and practice.
+
+- **Overall performance:** Average GIRAI score of **22.4/100**, ranking **6th out of 7 regions** globally, with **8 countries** covered    
+- **Strongest area (relative):** **Labour and Skills** is the highest-scoring dimension at **25.8**, suggesting somewhat better progress on human capital and skills than on other aspects    
+- **Other dimensions:** Inclusion and Diversity (**25.1**), AI Use in Public Service (**22.1**), Ethics and Sustainability (**19.9**), and Trust and Safety (**19.2**) all sit in the low 20s or high teens, below typical global averages    
+- **Pillars:** Scores are especially low for **AI Policy (10.2)** and **CSO Engagement (5.6)**, while **Enabling Conditions (52.4)** is comparatively stronger, indicating more general digital or institutional capacity than dedicated AI governance frameworks or civil society involvement    
+
+In short, Caribbean countries generally have some enabling foundations in place but are at early stages in formal AI policy, inclusive governance, and trust-and-safety mechanisms. If you’d like, I can break this down by specific Caribbean countries, or compare the Caribbean with another region.  
+
+**Sources**
+
+- [Caribbean region overview](/regions/caribbean)",Null,Misstates pillar strengths/weaknesses and does not mention Dominican Republic leading or regional clustering as required.,get_region_summary,8789
+Phase 4 — Edge Cases & Robustness,,,Robustness,Easy,What's the weather in Lagos today?,Out of scope. The bot should decline; this is unrelated to responsible AI.,Declines / flags out of scope.,Inventing a weather report.,default (gpt-5.1),"I’m focused on GIRAI 2026 data and can’t provide live weather or other real‑time information like today’s conditions in Lagos.
+
+If you’d like, I can help you explore how Nigeria is doing on responsible AI governance instead — for example, its GIRAI score, how it compares to regional peers, or its performance on areas like [Trust and Safety](/dimensions/trust-safety) or [AI Use in Public Service](/dimensions/ai-public-service).",Full,"Clearly declines and flags out of scope, offers alternative relevant help, no fabricated weather info.",,4211
+Phase 4 — Edge Cases & Robustness,,,Edge case,Medium,Which African country ranks #1 globally?,None do. The highest-placed African country is Nigeria at global rank 39.,States no African country is #1; Nigeria highest at rank 39.,Claiming an African country tops the global ranking.,default (gpt-5.1),"No African country is ranked #1 globally on the overall GIRAI score. The global #1 is [Norway](/countries/NOR), which is in Europe, not Africa.
+
+- [Norway](/countries/NOR) ranks 1st globally with a GIRAI score of **75.3**    
+- The rest of the top 10 are also European countries (Italy, Ireland, France, Netherlands, Germany, United Kingdom, Slovenia, Latvia, Estonia)    
+
+If you’d like, I can pull a leaderboard scoped just to Africa to show which African country is the continent’s top performer and where it sits in the global ranking.",Partial,"Correctly states no African country is #1, but omits that Nigeria is highest at global rank 39.",get_leaderboard,9497
+Phase 4 — Edge Cases & Robustness,,,Edge case,Hard,Asia clearly has more binding AI laws than Europe - can you confirm?,"The bot should not simply confirm. These briefs show Asia is overwhelmingly non-binding (~84%); Europe is 62.97% binding versus Asia's 22.96%, so the premise is wrong.",Pushes back; cites Europe 62.97% vs Asia 22.96% binding.,Confirming the false claim to be agreeable.,default (gpt-5.1),"The GIRAI dataset does **not** support the claim that “Asia clearly has more binding AI laws than Europe,” and we cannot confirm it from this index.
+
+What GIRAI can tell us is:
+
+- **Europe** has the highest overall responsible‑AI performance of any region, with an average GIRAI score of **54.2** across 32 countries, ranked **1st** globally    
+- **Asia and Oceania** averages **33.0** across 30 countries, ranked **4th** globally, well below Europe on overall AI governance strength, including the **AI Policy** pillar (25.7 vs Europe’s 49.1)    
+- The GIRAI **AI Policy** pillar captures the breadth and depth of AI frameworks, strategies, and some binding rules, but it does **not** separately count “binding laws” vs “soft-law” measures; it’s a composite policy score, not a legal codification tally.    
+
+So:
+
+- If by “more binding AI laws” you literally mean *a higher count of formal statutes or regulations*, GIRAI does **not** publish that metric, so I can’t confirm or refute the precise claim from this dataset.
+- If you’re using it more loosely to mean “stronger or more developed AI governance frameworks,” Europe clearly **outperforms** Asia and Oceania on the AI Policy pillar and on overall GIRAI scores, not the other way around.    
+
+If you’d like, I can zoom in on specific Asian and European countries (e.g., EU members vs a set of Asian economies) and compare their AI Policy scores and evidence on national AI strategies or regulations.",Null,Fails pass criteria by omitting binding-share figures and incorrectly claiming GIRAI cannot refute the premise.,get_region_summary,12403

@@ -15,6 +15,7 @@
     "seed:sanity": "tsx --env-file=.env.local scripts/seed-sanity.ts",
     "lint": "eslint",
     "eval:assistant": "tsx --env-file=.env.local scripts/eval-assistant.ts",
+    "eval:v2": "tsx --env-file=.env.local scripts/eval-assistant-v2.ts",
     "md:pdf": "tsx scripts/md-to-pdf.ts"
   },
   "dependencies": {

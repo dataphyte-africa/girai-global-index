@@ -168,6 +168,25 @@ export function getCountrySubregion(country: CountryRanking): string {
   return country.subregion?.trim() || country.region;
 }
 
+/**
+ * User-facing names for subregions whose raw dataset label is ambiguous.
+ *
+ * The dataset calls the Southern African subregion "South Africa" — the same
+ * string as the country. Surfaced verbatim it produces sentences like "South
+ * Africa leads on binding frameworks", which reads as a claim about one
+ * country when it covers four. Tools emit the display name; lookups still
+ * match the raw label, and resolveSubregion accepts both.
+ */
+const SUBREGION_DISPLAY_NAMES: Record<string, string> = {
+  "South Africa": "Southern Africa",
+  "NorthWest Asia": "NorthWest Asia (Central Asia and the Caucasus)",
+  "South West Asia": "South West Asia (South Asia)",
+};
+
+export function getSubregionDisplayName(subregion: string): string {
+  return SUBREGION_DISPLAY_NAMES[subregion] ?? subregion;
+}
+
 export interface SubregionSummary {
   subregion: string;
   /** Parent GIRAI region — subregion names are only unique within one. */

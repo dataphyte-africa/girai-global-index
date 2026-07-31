@@ -1,0 +1,168 @@
+Phase,Conversation,Turn,Type,Difficulty,Prompt,Expected Answer,Pass Criteria,Red Flags,Model,Bot Answer,Verdict,Judge Rationale,Tools Used,Latency (ms)
+Phase 1 — Content Accuracy,,,Factual,Easy,How many African countries are covered in the survey?,"39 African countries, making up 28.9% of the 135 countries in the global survey.",39 (28.9% is a bonus).,41 (first edition); a different count.,default (gpt-5.1),"There are **39 African countries** covered in the GIRAI 2026 survey.
+
+- Region: **Africa**
+- Countries covered: **39**
+- Average GIRAI score for the region: **21.8**
+- Africa’s regional rank globally: **7th out of 7 regions**  
+
+**Sources**
+
+- [Africa region overview](/regions/africa)",Full,Correctly states 39 African countries; no conflicting numbers or red flags present.,get_region_summary,5134
+Phase 1 — Content Accuracy,,,Factual,Medium,"How many countries are covered in the LATAM brief, and how are they split?",22 countries: 14 in South and Central America and 8 in the Caribbean (16.3% of 135).,"22 total, and the 14/8 split.",Wrong total; wrong split.,default (gpt-5.1),"The LATAM brief covers **27 countries in total**, split into **three subregional groups**:
+
+- **South America – 12 countries**  
+- **Central America – 7 countries**  
+- **Caribbean – 8 countries**
+
+These three together make up what the brief refers to as “LATAM” (Latin America), spanning both the *South and Central America* region and the separate *Caribbean* region in the GIRAI framework.",Null,States 27 countries with 12/7/8 split instead of required 22 total with 14/8 split.,file_search,8510
+Phase 1 — Content Accuracy,,,Factual,Hard,How many Asian countries were surveyed?,38 countries.,38.,A different count.,default (gpt-5.1),"Asia in the GIRAI uses the combined **“Asia and Oceania” region**, which includes Asian countries plus Australia and New Zealand. In this region, **30 countries** were surveyed.  
+
+- Region: [Asia and Oceania](/regions/asia-and-oceania)  
+- Countries covered: 30 in total    
+
+**Sources**  
+- Asia and Oceania region overview — /regions/asia-and-oceania",Null,Answer gives 30 instead of required 38 Asian countries; directly contradicts pass criteria.,get_region_summary,7757
+Phase 1 — Content Accuracy,,,Factual,Medium,What share of Africa's frameworks are legally binding?,21.76% (37 of 170); the rest are non-enforceable drafts or guidance.,21.76% or 37 of 170.,A higher share; claiming most are binding.,default (gpt-5.1),"The published GIRAI 2026 materials available here do not report a quantified figure for “the share of Africa’s frameworks that are legally binding,” and my search of the report text and annexes did not surface a regional percentage or count broken down this way.
+
+What this means in practice:
+
+- GIRAI does track whether individual national AI frameworks are binding or non‑binding, but the public narrative and tables in the files you’ve provided don’t aggregate this specifically as “% of African frameworks that are legally binding.”
+- I therefore can’t give you a reliable number (or even a safe range) without access to the underlying micro‑data used by the index team.
+- Any specific percentage I could offer would be a guess, which would be misleading.
+
+If you need this for analysis, there are two defensible options:
+
+1. **Work from country profiles:**  
+   - Go through the African country pages on the site (/countries) and check how each national AI framework is described (law, strategy, guideline, etc.).  
+   - Classify each as “legally binding” vs “non‑binding policy/strategy” and compute the share manually.
+
+2. **Contact the GIRAI research team:**  
+   - Since they clearly code binding vs non‑binding in their framework evidence, they may be willing to share a regional summary or confirm a figure that isn’t in the public report.
+
+If you’d like, tell me which African countries you’re focusing on (e.g. AU members, or just those with dedicated AI strategies), and I can help you design a short coding protocol so you or your team can derive this percentage consistently.",Null,Directly contradicts benchmark: says no figure is available instead of giving 21.76% (37 of 170).,file_search,10847
+Phase 1 — Content Accuracy,,,Factual,Medium,What is Africa's average score on the AI policy pillar?,13.76 (against a global average of 27.75).,13.76.,Wrong figure; confusing with enabling conditions (42.48).,default (gpt-5.1),"Africa’s average score on the **AI Policy** pillar is **13.7/100**.
+
+- Region: [Africa](/regions/africa)  
+- AI Policy pillar average: **13.7**  
+- For context, Africa’s overall GIRAI score average is **21.8**, with much higher performance on **Enabling Conditions** (42.5) than on AI Policy (13.7).  
+
+**Sources**
+
+- [Africa region overview](/regions/africa)",Partial,Close but not exact: 13.7 instead of required 13.76; otherwise correct and no red flags.,get_region_summary,6359
+Phase 1 — Content Accuracy,,,Factual,Medium,Which African subregion has the highest average GIRAI score?,"North Africa, with an average of 27.22.",North Africa and 27.22.,West Africa; Southern Africa; wrong average.,default (gpt-5.1),"The African subregion with the highest average GIRAI score is **North Africa**, with an average score of **27.1**.
+
+Key details:
+- **North Africa**: 27.1 average GIRAI, highest in Africa (ranked 1st within the Africa region)
+- **West Africa**: 24.8
+- **South Africa** (Southern Africa subregion): 23.7
+- **East Africa**: 21.0
+- **Central Africa**: 9.9  
+- All African subregions currently sit **below the global average** of **35.0** for GIRAI scores.
+
+**Sources**  
+- [Africa region overview](/regions/africa)",Partial,Identifies North Africa correctly but gives incorrect average score (27.1 instead of required 27.22).,get_subregion_summary,6195
+Phase 1 — Content Accuracy,,,Factual,Medium,What percentage of frameworks in LATAM are non-binding?,68% of frameworks in the region are completely non-binding.,68%.,A different figure; claiming most are binding.,default (gpt-5.1),"I couldn’t find any figure in the uploaded GIRAI materials that states the percentage of non‑binding (soft‑law) AI frameworks in Latin America (South America + Central America + Caribbean).
+
+A few important clarifications:
+
+- GIRAI does track **frameworks** (national AI strategies, policies, etc.) and some aspects of their legal nature, but:
+  - The publicly exposed dataset/tools focus on **country scores, ranks, and evidence counts**, not regional percentages of “binding vs non‑binding” frameworks.
+  - The file search over the report text returned **no table or passage** that gives “% of LATAM frameworks that are non‑binding.”
+- Even where the database distinguishes legal force for individual frameworks in evidence, it is not aggregated in the public interface as “X% of frameworks in region Y are non‑binding.”
+
+Because of that, I’d be guessing if I tried to give you a specific percentage, which would be misleading.
+
+If you’d like to approximate this yourself, the only rigorous way would be:
+
+1. Enumerate all AI‑related national frameworks in:
+   - South America  
+   - Central America  
+   - The Caribbean  
+2. For each, classify it as binding/non‑binding (e.g., law/regulation vs strategy/guideline).
+3. Compute the share that are non‑binding.
+
+If you can share a specific GIRAI table/excerpt you think might contain this (or if there are additional files), I can re‑check and help you interpret or compute a derived percentage from that table.",Null,Fails to provide required 68% figure; instead claims data unavailable and refuses to answer.,file_search,9131
+Phase 1 — Content Accuracy,,,Factual,Medium,"In Asia, what percentage of policy documents are non-binding?",Roughly 84% (243 of 290 documents captured are non-binding).,~84% or 243 of 290.,A much lower figure.,default (gpt-5.1),"I’m not finding any figure in the GIRAI 2026 materials that states **what percentage of AI policy documents in Asia are non‑binding**, and I can’t safely infer it from the data I have access to.
+
+A few clarifications that may help:
+
+- GIRAI tracks whether each **national AI framework** exists and its characteristics, but the report sections available to me do not present a regional statistic like “X% of Asia’s AI policies are non‑binding.”
+- The dataset underneath GIRAI does store framework-level attributes (including legal status), but I can’t access or recompute those raw microdata tables directly—only the published country scores, ranks, and evidence counts.
+- Without that microdata or an explicit table/figure in the report, any exact percentage for “Asia” (or the “Asia and Oceania” GIRAI region) would be a guess, which I must avoid.
+
+If you have a particular table, figure, or page in mind (for example, a PDF chapter or annex where you saw a partial reference), you could upload or quote it, and I can help interpret / confirm what it says. Otherwise, the safest honest answer is that this specific percentage is not published in the material I can query.",Null,Fails to provide the expected percentage and incorrectly claims the figure cannot be found or inferred.,file_search,10590
+Phase 1 — Content Accuracy,,,Factual,Medium,What is the framework coverage rate for Africa?,20.51% (an active framework exists in only about a fifth of cases).,20.51% (20.5% acceptable).,41.96% (that is the world rate).,default (gpt-5.1),"Africa’s framework coverage rate is **87% of countries** having at least one national AI‑relevant framework (policy, strategy, or equivalent) identified in the GIRAI 2026 research.
+
+- Coverage: **34 of 39 African countries** have at least one AI framework in the dataset.
+- GIRAI context: Africa’s average overall GIRAI score is **21.8**, ranking **7th of 7 regions globally**  
+- Strength: The region’s strongest dimension is **Trust and Safety** (avg **26.4**).
+- Constraint: **AI Policy** pillar scores are relatively low (avg **13.7**), indicating that many frameworks are still early-stage or partial.
+
+**Sources**
+
+- [Africa region overview](/regions/africa)",Null,Coverage figure and percentage are incorrect; does not match required 20.51% and adds misleading extra details.,get_region_summary,12230
+Phase 1 — Content Accuracy,,,Factual,Medium,Which two LATAM countries account for 55% of all binding cases?,Peru (13 cases) and El Salvador (8 cases).,Peru and El Salvador.,Brazil/Chile; other countries.,default (gpt-5.1),"I’m not finding this statistic (“two LATAM countries account for 55% of all binding cases”) anywhere in the GIRAI 2026 materials I can search, so I can’t reliably name the countries from this index.
+
+Most likely, the figure you’re citing comes from another dataset or report (for example, a study focused on court decisions or regulatory enforcement in Latin America) rather than from the Global Index on Responsible AI itself. GIRAI tracks:
+
+- National AI frameworks and initiatives
+- CSO engagement and multistakeholder processes
+- Documented government misuse of AI
+
+…but not a dedicated, comparable count of “binding cases” by country across LATAM.
+
+If you can share:
+- the specific document or a page/section where this 55% figure is mentioned, or  
+- clarify what “binding cases” refers to in your context (e.g., court rulings, data protection authority decisions, regulatory enforcement actions),
+
+I can then either try to locate it in an uploaded file or help you interpret/verify it against other available data.",Null,Fails to name Peru and El Salvador; instead claims it cannot answer. Does not meet pass criteria.,file_search,11456
+Phase 1 — Content Accuracy,,,Factual,Medium,"How many CSO activities did Africa record, and across how many countries?",95 CSO activities across 39 countries (about 2.4 per country).,95 activities (39 countries / 2.4 each are bonus).,A different count.,default (gpt-5.1),"Africa recorded **435 CSO activities** across **39 countries** in the GIRAI 2026 dataset.
+
+- Total CSO activities in Africa: **435**
+- Number of African countries with at least one recorded CSO activity: **39 out of 39** covered countries
+- Average CSO Engagement pillar score for Africa: **9.3/100**, well below its Enabling Conditions average of **42.5/100**  
+
+**Sources**
+
+- [Africa region overview](/regions/africa)",Null,Reported 435 instead of required 95 CSO activities; directly contradicts pass criteria.,get_region_summary,5657
+Phase 1 — Content Accuracy,,,Factual,Hard,How many countries globally had documented unacceptable-risk AI cases?,35 countries; Asia has the largest footprint with 14 (about 40% of affected countries).,35 globally and 14 in Asia.,Wrong totals.,default (gpt-5.1),"Across the 135 countries in GIRAI 2026, **35 countries** have at least one documented case of **unacceptable‑risk AI system use** (government misuse). fileciteturn1tool0  
+
+Key details:  
+- Evidence search for government misuse under [Unacceptable Risks AI Systems](/indicators/unacceptable-risks-ai-systems) returns **53 documented cases** globally. fileciteturn1tool0  
+- These 53 cases are spread across **35 countries** (countryCount). fileciteturn1tool0  
+- All these cases are tagged as “government-misuse” evidence items in the GIRAI dataset. fileciteturn1tool0  
+
+**Sources**  
+- GIRAI 2026 evidence search – government misuse on [Unacceptable Risks AI Systems](/indicators/unacceptable-risks-ai-systems) fileciteturn1tool0",Partial,Gives correct global total (35) but omits required regional figure of 14 Asian countries.,search_evidence,10054
+Phase 1 — Content Accuracy,,,Factual,Hard,What is Asia's average GIRAI score?,"31.79, just short of the global average of 35.02.",31.79.,A figure above the global average; wrong number.,default (gpt-5.1),"Asia’s average GIRAI score (Asia and Oceania region) is **33.0** out of 100.
+
+- Region: **Asia and Oceania**
+- Average GIRAI score: **33.0**
+- Dimension averages: Inclusion & Diversity **33.2**, Ethics & Sustainability **31.0**, Labour & Skills **36.0**, Trust & Safety **38.4**, AI in Public Service **30.0**
+- Tier distribution among 30 countries: **10** Developing (40–60), **14** Emerging (20–40), **6** Nascent (0–20)
+
+**Sources**
+
+- [Asia and Oceania region overview](/regions/asia-and-oceania)",Null,"Incorrect regional average; 33.0 instead of required 31.79, and adds unsupported breakdown details.",get_averages,8631
+Phase 1 — Content Accuracy,,,Factual,Easy,What is the Caribbean's average GIRAI score?,22.42 - the second-lowest-performing region in the Index.,22.42.,Confusing with Africa (21.81); wrong figure.,default (gpt-5.1),"The Caribbean region’s average GIRAI score is **22.4** (out of 100).
+
+- Coverage: 8 countries in the Caribbean region
+- Average by dimension: Inclusion & Diversity **25.1**, Ethics & Sustainability **19.9**, Labour & Skills **25.8**, Trust & Safety **19.2**, AI Use in Public Service **22.1**
+- Average by pillar: AI Policy **10.2**, CSO Engagement **5.6**, Enabling Conditions **52.4**
+- Tier spread: 1 country in **Developing** (40–60), 3 in **Emerging** (20–40), 4 in **Nascent** (0–20)
+
+**Sources**
+
+- [Caribbean region overview](/regions/caribbean)",Partial,"Numeric answer matches when rounded, but omits exact 22.42 value required by pass criteria.",get_averages,10469
+Phase 1 — Content Accuracy,,,Factual,Hard,"How many binding laws does East Asia have, and what share of its frameworks is that?","14 binding laws - about 32% of its 44 framework cases, the most legally aggressive in Asia.",14 laws and ~32%.,Wrong count; claiming another subregion leads.,default (gpt-5.1),"East Asia has **5 binding AI-related laws**, which make up **about 13% of all AI policy frameworks in the subregion** (the rest are soft-law strategies, guidelines, or action plans).  
+
+- Binding laws in East Asia: **5**
+- Share of East Asia’s AI frameworks that are binding: **~13%**
+- East Asia’s average GIRAI score: **42.1**, above the global average of **35.0**    
+
+**Sources**  
+- East Asia subregion analysis – binding vs non‑binding frameworks and scores    
+- [Asia and Oceania region overview](/regions/asia-and-oceania)",Null,Incorrect figures for both number of laws and share; contradicts required 14 and ~32%.,get_subregion_summary,8308
+Phase 1 — Content Accuracy,,,Consistency,Easy,How many countries are in the global survey?,135 countries.,135.,138 (first edition).,default (gpt-5.1),The Global Index on Responsible AI 2026 covers **135 countries** in its survey and scoring.,Full,States the correct figure of 135 countries with no errors or red flags.,,2854
+Phase 1 — Content Accuracy,,,Consistency,Easy,What is the total number of countries assessed in the index?,135 countries.,135 - identical to the paired question above.,Any number other than 135; inconsistency.,default (gpt-5.1),The index assesses **135 countries** in total.,Full,Gives the exact required figure of 135 countries with no inconsistencies or red flags.,get_averages,5313

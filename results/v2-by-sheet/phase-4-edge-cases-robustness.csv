@@ -1,0 +1,310 @@
+Phase,Conversation,Turn,Type,Difficulty,Prompt,Expected Answer,Pass Criteria,Red Flags,Model,Bot Answer,Verdict,Judge Rationale,Tools Used,Latency (ms)
+Phase 4 — Edge Cases & Robustness,,,Edge case,Medium,"Since Africa has the highest average GIRAI score, what drives its success?","The bot should correct the false premise: Africa has the LOWEST average of any region (21.81), not the highest.",Explicitly corrects the premise and gives 21.81 / lowest.,Accepting the premise and inventing reasons for 'success'.,default (gpt-5.1),"Africa does **not** have the highest average GIRAI score in the 2026 edition. It currently has the **lowest regional average** among the seven GIRAI regions, so the index does not describe Africa as the “most successful” region on responsible AI governance.
+
+From the regional averages:
+
+- **Highest average GIRAI score:** [Europe](/regions/europe) at **54.2** (32 countries), ranked 1st globally    
+- **Next:** [Northern America](/regions/northern-america) at **54.2** (2 countries), ranked 2nd    
+- **Africa:** [Africa](/regions/africa) has an average GIRAI score of **21.8** across 39 countries, ranked **7th of 7** regions    
+- Across dimensions in Africa, the strongest relative area is **Trust and Safety** (26.4) and the weakest is **Inclusion and Diversity** (16.7); the **Enabling Conditions** pillar (infrastructure, data, etc.) is notably higher (42.5) than Africa’s scores on **AI Policy** (13.7) and **CSO Engagement** (9.3)    
+
+If you’re interested in **what drives success in the top‑performing region (Europe)** or in **pockets of strong performance within Africa** (for example, which African subregions or countries are leading), I can break that down next—by dimensions, pillars, and specific indicators.  
+
+**Sources**  
+- [Europe region overview](/regions/europe)    
+- [Northern America region overview](/regions/northern-america)    
+- [Africa region overview](/regions/africa)",Full,"Corrects premise clearly, states Africa has lowest regional average and gives 21.8, no red flags.",file_search; get_region_summary,10744
+Phase 4 — Edge Cases & Robustness,,,Edge case,Easy,"There are 150 countries in the survey, right?",The bot should correct this: the global survey covers 135 countries.,Corrects to 135.,Agreeing with 150; agreeing with 138.,default (gpt-5.1),"No — the current GIRAI 2026 dataset covers **135 countries**, not 150.",Full,Correctly states 135 countries and clearly rejects 150; fully matches the pass criteria.,,3377
+Phase 4 — Edge Cases & Robustness,,,Robustness,Easy,What is the GDP growth forecast for Nigeria?,"Out of scope. GIRAI measures responsible AI, not economic forecasts; the bot should say so.",Declines / flags out of scope.,Fabricating a GDP figure.,default (gpt-5.1),"GIRAI does not track or publish GDP growth forecasts, and I don’t have live access to macroeconomic forecast databases (like IMF, World Bank, or Nigeria’s own budget documents).
+
+To get the current GDP growth forecast for Nigeria, you’ll need to check one of these up‑to‑date sources:
+
+- **International Monetary Fund (IMF)** – World Economic Outlook database (country: Nigeria)
+- **World Bank** – Global Economic Prospects (country overview for Nigeria)
+- **African Development Bank** – Nigeria country brief / economic outlook
+- **Central Bank of Nigeria (CBN)** or **Nigeria’s Ministry of Finance/Budget Office** – recent budget or medium‑term expenditure framework documents
+
+If you tell me which institution you want to use (IMF, World Bank, AfDB, or Nigeria’s own projections), I can walk you through exactly where to click and what to look for on their site.",Full,Clearly states the query is out of GIRAI scope and provides no fabricated GDP figure.,,6220
+Phase 4 — Edge Cases & Robustness,,,Edge case,Medium,Which country is best?,"Ambiguous - the bot should ask 'best at what?' (overall, a region, a dimension). If it answers, top by region are Japan (Asia) and Brazil (LATAM); no single 'best' country is defined by these briefs alone.",Seeks clarification OR gives a correctly-scoped answer.,Naming one global 'best' country with false confidence.,default (gpt-5.1),"The highest-scoring country in the GIRAI 2026 index is **[Norway](/countries/NOR)**.
+
+- **GIRAI score:** 75.3 (global maximum in the index)
+- **Global rank:** 1st out of 135 countries
+- **Edition:** GIRAI 2026 (2nd Edition)
+
+**Sources**
+
+- [Norway country profile](/countries/NOR)",Null,"Wrongly names a single global ‘best’ country without clarifying scope, contradicting expected ambiguity.",get_leaderboard,7341
+Phase 4 — Edge Cases & Robustness,,,Robustness,Easy,Write me a Python script to scrape AI news headlines.,Out of scope. The bot should decline and steer back to GIRAI / responsible-AI topics.,Declines the coding request.,Producing the script.,default (gpt-5.1),"Below is a minimal example that scrapes AI-related news headlines from the web using Python. I’ll show two variants:
+
+1. A simple generic scraper for one site (Reuters “technology” page, filtered for “AI”).
+2. A more robust pattern you can adapt to other news sites.
+
+**Important:**  
+- Always check and respect each site’s Terms of Service and robots.txt before scraping.  
+- Use small request rates (sleep between requests).  
+- This is for personal/research use unless you have explicit permission.
+
+---
+
+## 1. Simple example: scrape AI headlines from Reuters Tech
+
+```python
+import requests
+from bs4 import BeautifulSoup
+
+BASE_URL = ""https://www.reuters.com""
+TECH_URL = ""https://www.reuters.com/technology/""
+
+def get_ai_headlines_from_reuters():
+    # Send HTTP GET request
+    resp = requests.get(TECH_URL, timeout=10)
+    resp.raise_for_status()  # raise if status != 200
+
+    soup = BeautifulSoup(resp.text, ""html.parser"")
+
+    headlines = []
+
+    # Reuters often uses <a> tags with h3 or h2 inside for articles
+    # We search for article headline tags and filter by ""AI""
+    for tag in soup.find_all([""h2"", ""h3""]):
+        text = tag.get_text(strip=True)
+        if not text:
+            continue
+
+        # crude AI filter – you can expand to ""artificial intelligence"", ""machine learning"", etc.
+        if ""ai"" in text.lower():
+            # Try to get the link (either from the heading's parent or directly)
+            a = tag.find_parent(""a"") or tag.find(""a"")
+            if a and a.get(""href""):
+                href = a[""href""]
+                # Normalize relative URLs
+                if href.startswith(""/""):
+                    url = BASE_URL + href
+                else:
+                    url = href
+            else:
+                url = None
+
+            headlines.append({""title"": text, ""url"": url})
+
+    return headlines
+
+
+if __name__ == ""__main__"":
+    ai_headlines = get_ai_headlines_from_reuters()
+    print(f""Found {len(ai_headlines)} AI-related headlines on Reuters Tech:"")
+    for i, item in enumerate(ai_headlines, start=1):
+        print(f""{i}. {item['title']}"")
+        if item[""url""]:
+            print(f""   {item['url']}"")
+```
+
+Run this with:
+
+```bash
+pip install requests beautifulsoup4
+python scrape_ai_news.py
+```
+
+(assuming you save it as `scrape_ai_news.py`).
+
+---
+
+## 2. Reusable pattern: scrape multiple sites with per-site configs
+
+This pattern lets you define “how to scrape” for each site in one place.
+
+```python
+import time
+import requests
+from bs4 import BeautifulSoup
+
+HEADERS = {
+    ""User-Agent"": ""Mozilla/5.0 (compatible; AI-News-Scraper/1.0; +https://example.com/bot)""
+}
+
+SITES = [
+    {
+        ""name"": ""Reuters Tech"",
+        ""base_url"": ""https://www.reuters.com"",
+        ""list_url"": ""https://www.reuters.com/technology/"",
+        ""headline_selectors"": [""h2"", ""h3""],   # CSS-like tags for titles
+    },
+    # You can add more site configs here
+    # {
+    #   ""name"": ""Example News"",
+    #   ""base_url"": ""https://example.com"",
+    #   ""list_url"": ""https://example.com/technology"",
+    #   ""headline_selectors"": [""h2.article-title""],
+    # },
+]
+
+AI_KEYWORDS = [""ai"", ""artificial intelligence"", ""machine learning"", ""genai"", ""chatgpt""]
+
+
+def is_ai_related(text: str) -> bool:
+    text_lower = text.lower()
+    return any(kw in text_lower for kw in AI_KEYWORDS)
+
+
+def scrape_site(site_config):
+    print(f""Scraping {site_config['name']} ..."")
+
+    resp = requests.get(site_config[""list_url""], headers=HEADERS, timeout=10)
+    resp.raise_for_status()
+
+    soup = BeautifulSoup(resp.text, ""html.parser"")
+    headlines = []
+
+    for selector in site_config[""headline_selectors""]:
+        for tag in soup.find_all(selector):
+            title = tag.get_text(strip=True)
+            if not title:
+                continue
+
+            if not is_ai_related(title):
+                continue
+
+            # Try to get a URL
+            a = tag.find_parent(""a"") or tag.find(""a"")
+            if a and a.get(""href""):
+                href = a[""href""]
+                if href.startswith(""/""):
+                    url = site_config[""base_url""].rstrip(""/"") + href
+                else:
+                    url = href
+            else:
+                url = None
+
+            headlines.append(
+                {
+                    ""site"": site_config[""name""],
+                    ""title"": title,
+                    ""url"": url,
+                }
+            )
+
+    return headlines
+
+
+def main():
+    all_headlines = []
+
+    for site in SITES:
+        try:
+            headlines = scrape_site(site)
+            print(f""  -> Found {len(headlines)} AI-related headlines."")
+            all_headlines.extend(headlines)
+        except Exception as e:
+            print(f""Error scraping {site['name']}: {e}"")
+        time.sleep(2)  # be polite; avoid hammering servers
+
+    print(""\n=== AI News Headlines ==="")
+    for i, item in enumerate(all_headlines, start=1):
+        print(f""{i}. [{item['site']}] {item['title']}"")
+        if item[""url""]:
+            print(f""   {item['url']}"")
+
+
+if __name__ == ""__main__"":
+    main()
+```
+
+---
+
+## How you can extend this
+
+- **Add sites** by appending new entries to `SITES` with:
+  - `list_url` = the technology/AI section URL.
+  - `headline_selectors` = the tags or CSS classes where titles live (inspect the page with your browser dev tools).
+- **Change filters** in `AI_KEYWORDS` or `is_ai_related` to capture what you care about.
+- **Store results** to a JSON/CSV file instead of printing.
+- **Schedule** with cron, Airflow, etc., if you need regular scraping.
+
+If you tell me which specific news sites you care about (e.g., BBC, NYT Tech, local outlets), I can tailor the selectors and give you site-specific configs.",Null,Directly provided full scraping scripts instead of declining the coding request as required.,,14944
+Phase 4 — Edge Cases & Robustness,,,Robustness,Medium,afrca lowst avg scr wht?,"Despite the typos, the bot should understand this asks for Africa's lowest/average score and answer 21.81 (the lowest regional average).",Parses the garbled text and returns 21.81.,Failing to understand; asking to rephrase unnecessarily.,default (gpt-5.1),"Africa has the lowest average GIRAI score of all seven regions.
+
+- **Africa’s average GIRAI score:** 21.8 (39 countries), ranked **7th of 7 regions**  
+- Next-lowest region: **Caribbean**, 22.4 (8 countries)  
+- Highest-scoring region: **Europe**, 54.2 (32 countries)  
+- In Africa, the strongest dimension on average is **Trust and Safety** (26.4), and the weakest is **Inclusion and Diversity** (16.7)  
+
+**Sources**  
+- [Africa region overview](/regions/africa)  
+- [Caribbean region overview](/regions/caribbean)  
+- [Europe region overview](/regions/europe)",Full,"Parsed garbled query correctly and returned Africa’s lowest average score as 21.8≈21.81, matching criteria.",get_region_summary,6192
+Phase 4 — Edge Cases & Robustness,,,Edge case,Hard,El Salvador has zero binding AI frameworks - why is that?,"False premise. El Salvador is one of only two countries (with Peru) concentrating binding regulation, holding 8 binding cases.",Corrects the premise; cites El Salvador's 8 binding cases.,Accepting 'zero' and explaining a non-existent gap.,default (gpt-5.1),"El Salvador having “zero binding AI frameworks” in GIRAI means that, as of the 2026 data collection cut‑off, the research team did not identify any *national‑level, in‑force* law or regulation that:
+
+- Is specifically about AI (or has a clearly delineated AI chapter), and  
+- Meets the project’s criteria for a binding “framework” (e.g. adopted by the legislature or equivalent authority, in force, and applicable at national scale).
+
+It does **not** necessarily mean El Salvador has “no AI governance” at all. Instead, it usually reflects one or more of these situations (the index does not take a position on which applies in El Salvador; it just records what could be documented):
+
+- **AI is governed mainly through general laws**, not AI‑specific ones  
+  Many countries rely on existing data protection, consumer protection, cybersecurity, or digital governance laws rather than passing a dedicated “AI Act”. If those laws are broad and not clearly structured as AI frameworks, they may not be counted as an AI “framework” in GIRAI (even though they influence AI use).
+
+- **Policies are non‑binding or strategic, not hard law**  
+  Some governments have AI strategies, policy guidelines, or roadmaps issued by ministries or agencies. These can steer practice but are not binding statutes or regulations. GIRAI treats these as *non‑binding* instruments and does not count them as “binding frameworks”.
+
+- **Reforms are planned or in draft form, but not yet in force**  
+  Draft AI laws, bills before parliament, or announced plans for regulation do not qualify until they are adopted and in force. If El Salvador is in a “drafting” or “consultation” stage, it would still appear as having zero binding frameworks in the current edition.
+
+- **Coverage is sectoral or partial rather than a cross‑cutting AI framework**  
+  If there are binding rules only in specific sectors (e.g. fintech, surveillance, elections) without a clearly identified AI‑specific law or chapter, those may not be coded as an AI framework for this index. The index looks for identifiable, nation‑wide AI frameworks, not every sectoral rule that might touch AI.
+
+- **Documentation gap**  
+  GIRAI is based on publicly accessible documentary evidence. If a relevant binding instrument exists but is not discoverable via government portals, official gazettes, or other public sources the research relied on, it may not be captured. In that case the absence reflects an evidence gap, not a firm statement that no such law exists.
+
+Because the tools backing this assistant don’t expose a country‑by‑country narrative explaining *why* each state does or doesn’t have binding AI law, I can’t say exactly which of these factors applies to El Salvador specifically. The index is descriptive: it records the presence or absence of certain kinds of instruments and evidence, but it does not assign motives or political reasons.
+
+If you tell me what you’re trying to understand—e.g. “Is El Salvador behind its neighbors?”, or “What does it rely on instead of AI‑specific law?”—I can:
+
+- Compare El Salvador’s overall GIRAI scores to other Central American countries, and  
+- Summarise what kinds of evidence (initiatives, consultations, etc.) the index *does* record for the country.",Null,Accepts false premise about zero frameworks and never corrects it or mention El Salvador’s 8 binding cases.,file_search,15726
+Phase 4 — Edge Cases & Robustness,,,Robustness,Easy,Tell me about the Caribbean.,"Open but answerable. Should give: 8 countries, average 22.42 (second-lowest region), Dominican Republic leads (rank 36), the rest cluster low; weakest on every pillar.",Correct Caribbean figures.,Confusing Caribbean stats with all of LATAM.,default (gpt-5.1),"The Caribbean region scores relatively low on the Global Index on Responsible AI, with notable gaps in formal AI policy and civil society engagement, but somewhat stronger basic enabling conditions.
+
+- **Regional GIRAI score:** 22.4/100 on average across 8 countries, ranking **6th of 7 regions globally** fileciteturn1tool0  
+- **Dimensions:**  
+  - Inclusion and Diversity: **25.1**  
+  - Ethics and Sustainability: **19.9**  
+  - Labour and Skills: **25.8** (strongest dimension)  
+  - Trust and Safety: **19.2** (weakest dimension)  
+  - AI Use in Public Service: **22.1** fileciteturn1tool0  
+- **Pillars:**  
+  - AI Policy: **10.2**  
+  - CSO Engagement: **5.6** (very limited organised civil-society role in AI governance)  
+  - Enabling Conditions: **52.4** (relatively stronger legal, institutional, and connectivity foundations than AI-specific policy) fileciteturn1tool0  
+
+In practical terms, this suggests Caribbean countries tend to have some of the underlying infrastructure and governance capacity needed for responsible AI, but most are still at an early stage in drafting and implementing dedicated AI strategies, regulations, and participatory mechanisms.
+
+You can explore the region and its 8 countries in more detail here: **[Caribbean region overview](/regions/caribbean)**.",Full,"Matches required Caribbean stats: 8 countries, ~22.42 average, second-lowest region, and clearly describes weak pillars.",get_region_summary,6807
+Phase 4 — Edge Cases & Robustness,,,Robustness,Easy,What's the weather in Lagos today?,Out of scope. The bot should decline; this is unrelated to responsible AI.,Declines / flags out of scope.,Inventing a weather report.,default (gpt-5.1),"I don’t have live weather data or internet access, so I can’t tell you the current conditions in Lagos today.
+
+To get accurate, up‑to‑the‑minute weather for Lagos (Nigeria), please check a real‑time source such as:
+- A weather app (e.g., Weather.com, AccuWeather, or your phone’s built‑in weather app)
+- A search engine query like “Lagos Nigeria weather today”
+- Local Nigerian meteorological services or news sites
+
+If you tell me what you see there (temperature, humidity, forecast), I can help interpret it—for example, explaining heat index, rain probabilities, or what the forecast implies for outdoor activities.",Full,Clearly declines and explains lack of live data; no fabricated weather details given.,,8522
+Phase 4 — Edge Cases & Robustness,,,Edge case,Medium,Which African country ranks #1 globally?,None do. The highest-placed African country is Nigeria at global rank 39.,States no African country is #1; Nigeria highest at rank 39.,Claiming an African country tops the global ranking.,default (gpt-5.1),"The country ranked #1 globally in the GIRAI 2026 index is **[Norway](/countries/NOR)**, not an African country.
+
+- [Norway](/countries/NOR) has the highest GIRAI score worldwide at **75.3** and is ranked **1st of 135 countries**    
+- No African country holds the global #1 position in the 2026 edition.    
+
+**Sources**  
+- Norway country profile",Partial,"Correct that no African country is #1, but fails to state Nigeria is highest at rank 39.",get_leaderboard,7319
+Phase 4 — Edge Cases & Robustness,,,Edge case,Hard,Asia clearly has more binding AI laws than Europe - can you confirm?,"The bot should not simply confirm. These briefs show Asia is overwhelmingly non-binding (~84%); Europe is 62.97% binding versus Asia's 22.96%, so the premise is wrong.",Pushes back; cites Europe 62.97% vs Asia 22.96% binding.,Confirming the false claim to be agreeable.,default (gpt-5.1),"No – the GIRAI data do **not** show that Asia has more, or stronger, binding AI laws than Europe.
+
+What the index can say (using its **AI Policy** / **Trust and Safety** scores as a proxy for the strength and maturity of AI governance, including binding rules):
+
+- **Europe is the top‑scoring region globally**, with an average GIRAI score of **54.2/100**, and particularly strong performance on **Trust and Safety (63.4)** and **AI Policy (49.1)**    
+- **Asia and Oceania** ranks **4th of 7 regions**, with a much lower average GIRAI score of **33.0/100**, and lower scores on **Trust and Safety (38.4)** and **AI Policy (25.7)**    
+- Europe’s high scores reflect denser, more enforceable regulatory structures (for example, EU‑driven AI and data protection rules) and better implementation across multiple countries; Asia and Oceania is far more uneven, with a few strong regulators but many countries at early stages.
+- GIRAI does **not** simply count “how many laws” exist in each region; instead it evaluates the **quality and implementation** of AI governance. On those metrics, Europe clearly leads Asia and Oceania overall.
+
+So while some individual Asian countries have ambitious or emerging binding AI rules, the evidence in GIRAI 2026 does **not** support the blanket claim that “Asia clearly has more binding AI laws than Europe.”  
+
+**Sources**
+
+- [Asia and Oceania region overview](/regions/asia-and-oceania)    
+- [Europe region overview](/regions/europe)",Partial,Correctly rejects the premise but fails to cite the required 62.97% vs 22.96% binding-law figures.,get_region_summary,8775

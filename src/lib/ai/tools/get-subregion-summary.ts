@@ -3,6 +3,7 @@ import { z } from "zod";
 import {
   getCountriesBySubregion,
   getGlobalAverages,
+  getSubregionDisplayName,
   getSubregionSummaries,
 } from "@/lib/girai/data";
 import type { SubregionSummary } from "@/lib/girai/data";
@@ -27,7 +28,8 @@ export const getSubregionSummaryTool = tool({
     "subregion of a region, or for all subregions at once. " +
     "Subregions include East Asia, South East Asia, South West Asia (South Asia), NorthWest Asia " +
     "(Central Asia and the Caucasus), Oceania (Pacific), West/East/North/Central Africa, " +
-    "South Africa (Southern Africa), North/West/Central/Eastern Europe, Balkans, " +
+    "Southern Africa (labelled 'South Africa' in the raw data — it is the subregion, not the country), " +
+    "North/West/Central/Eastern Europe, Balkans, " +
     "South America and Central America. " +
     "Use this — never get_averages or manual arithmetic — for any question about a geography " +
     "smaller than a GIRAI region.",
@@ -51,7 +53,9 @@ export const getSubregionSummaryTool = tool({
     // Every row carries the global-average comparison so the model never has
     // to remember the threshold or do the subtraction itself.
     const row = (r: SubregionSummary) => ({
-      subregion: r.subregion,
+      // Display name, not the raw label: the dataset's "South Africa" subregion
+      // means Southern Africa and is otherwise read back as the country.
+      subregion: getSubregionDisplayName(r.subregion),
       region: r.region,
       isWholeRegion: r.isWholeRegion,
       averageGirai: r.averageGirai,
@@ -63,8 +67,19 @@ export const getSubregionSummaryTool = tool({
 
     const detail = (r: SubregionSummary) => {
       const members = getCountriesBySubregion(r.subregion);
+      // Name the parent region's top subregion alongside this one. A lone
+      // lookup reports rankWithinRegion but nothing to compare it against,
+      // and a 2nd-place subregion has been read back to users as "the best".
+      const leader = getSubregionSummaries()
+        .filter((s) => s.region === r.region)
+        .sort((a, b) => b.averageGirai - a.averageGirai)[0];
       return {
         ...row(r),
+        isTopOfRegion: leader.subregion === r.subregion,
+        topSubregionInRegion: {
+          subregion: getSubregionDisplayName(leader.subregion),
+          averageGirai: leader.averageGirai,
+        },
         dimensions: r.dimensions,
         pillars: r.pillars,
         frameworkScore: r.frameworkScore,
@@ -85,7 +100,9 @@ export const getSubregionSummaryTool = tool({
         return {
           data: {
             ...unknownSubregion(input.subregion),
-            availableSubregions: getSubregionSummaries().map((r) => r.subregion),
+            availableSubregions: getSubregionSummaries().map((r) =>
+              getSubregionDisplayName(r.subregion)
+            ),
           },
           sources: [],
         };
