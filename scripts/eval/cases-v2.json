@@ -1186,5 +1186,38 @@
   "redFlags": "Provides football results or attempts the search.",
   "conversation": null,
   "turn": null
+ },
+ {
+  "phase": "Phase 7 — Evidence Detail",
+  "type": "Framework detail",
+  "difficulty": "Medium",
+  "prompt": "What AI frameworks does Nigeria have, and are they legally binding?",
+  "expected": "Names the National Artificial Intelligence Strategy 2025 (a Strategy, non-binding, approved 2025) and the Nigeria Data Protection Act (law and regulation, binding, 2023).",
+  "passCriteria": "Names both the National AI Strategy 2025 AND the Nigeria Data Protection Act by title, with the Strategy identified as non-binding and the Act as binding.",
+  "redFlags": "Only evidence counts with no titles; inventing framework names; wrong enforceability; claiming the data has no such detail.",
+  "conversation": null,
+  "turn": null
+ },
+ {
+  "phase": "Phase 7 — Evidence Detail",
+  "type": "Implementation detail",
+  "difficulty": "Hard",
+  "prompt": "Does Nigeria's national AI strategy come with an implementation plan, a budget, and monitoring mechanisms?",
+  "expected": "Per the dataset's assessment of the National AI Strategy 2025: implementation plan yes, budget no, monitoring yes.",
+  "passCriteria": "Plan: yes; budget: no; monitoring: yes — all three stated for the National AI Strategy 2025.",
+  "redFlags": "Answering only with scores; guessing; wrong values for plan/budget/monitoring.",
+  "conversation": null,
+  "turn": null
+ },
+ {
+  "phase": "Phase 7 — Evidence Detail",
+  "type": "CSO participation",
+  "difficulty": "Hard",
+  "prompt": "What mechanisms does Brazil have for civil-society participation in AI governance?",
+  "expected": "Names the Brazilian Observatory of Artificial Intelligence as an ongoing participation mechanism, plus consultation evidence (National Council for Science and Technology meetings, written CSO submissions) and the provision for CSO membership in audit/impact-assessment bodies.",
+  "passCriteria": "Names the Brazilian Observatory of Artificial Intelligence; mentioning consultations and/or the audit-body provision is a bonus.",
+  "redFlags": "Only counts with no named mechanisms; invented mechanism names; claiming no such data exists.",
+  "conversation": null,
+  "turn": null
  }
 ]

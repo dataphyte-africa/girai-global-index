@@ -138,9 +138,11 @@ async function ask(
   for (let attempt = 1; attempt <= 3; attempt++) {
     try {
       const result = await agent.generate({ messages });
-      const tools = Array.from(
-        new Set(
-          result.steps.flatMap((s) => (s.toolCalls ?? []).map((t) => t.toolName))
+      // Record inputs, not just names — silent misuse of a filter looks
+      // identical to correct use from the outside.
+      const tools = result.steps.flatMap((s) =>
+        (s.toolCalls ?? []).map(
+          (t) => `${t.toolName}(${JSON.stringify(t.input ?? {})})`
         )
       );
       return { answer: result.text.trim(), tools };

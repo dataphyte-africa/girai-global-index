@@ -1,0 +1,83 @@
+Phase,Conversation,Turn,Type,Difficulty,Prompt,Expected Answer,Pass Criteria,Red Flags,Model,Bot Answer,Verdict,Judge Rationale,Tools Used,Latency (ms)
+Phase 7 — Evidence Detail,,,Framework detail,Medium,"What AI frameworks does Nigeria have, and are they legally binding?","Names the National Artificial Intelligence Strategy 2025 (a Strategy, non-binding, approved 2025) and the Nigeria Data Protection Act (law and regulation, binding, 2023).","Names both the National AI Strategy 2025 AND the Nigeria Data Protection Act by title, with the Strategy identified as non-binding and the Act as binding.",Only evidence counts with no titles; inventing framework names; wrong enforceability; claiming the data has no such detail.,default (gpt-5.1),"Nigeria currently has a mix of **non‑binding AI strategy** and **binding data‑protection law** that together form its main AI-relevant frameworks.
+
+**1. National Artificial Intelligence Strategy 2025 (NAIS)** – non‑binding  
+This is Nigeria’s dedicated AI strategy, adopted on **19 September 2025**. It appears multiple times in the evidence because it covers many indicators, but it is one document. Key points:  
+
+- **Title & type:** “National Artificial Intelligence Strategy 2025 (Nigeria)” – classified as a **Strategy**.    
+- **Legal status:** Marked **“Non-Binding”** – it sets direction and expectations but is *not* itself a law or regulation.    
+- **Scope & reach:**  
+  - **Horizontal approach** (cross‑sector)  
+  - Applies to **“Both actors”** or “All Levels” (public and private sectors) depending on the section.    
+- **Institutions in charge:** Implementation is coordinated by the **National Centre for AI and Robotics (NCAIR)** and an envisaged **AI Governance Regulatory Body**, with the **National Information Technology Development Agency (NITDA)** playing a central delivery role.    
+- **Implementation tools:**  
+  - An explicit **implementation plan** and **monitoring mechanism** are recorded (“Yes” to both).  
+  - No dedicated **budget allocation** is documented (“No”).    
+- **Substantive coverage:** The Strategy is used as evidence for many indicators, including:  
+  - [AI Literacy](/indicators/ai-literacy) – calls to increase AI literacy and empower citizens with AI knowledge.    
+  - [AI-facilitated Misinformation and Violence](/indicators/ai-facilitated-misinformation-violence) – recognises misinformation risks and calls for mitigation strategies.    
+  - [Cultural and Linguistic Diversity](/indicators/cultural-linguistic-diversity) – promotes a Nigeria‑centric, diverse AI ecosystem.    
+  - [Environmental Impact](/indicators/environmental-impact) – references “Green AI”, energy efficiency, and lower‑carbon infrastructure.    
+  - [Fairness and Non-discrimination](/indicators/fairness-non-discrimination) and [Gender Equality](/indicators/gender-equality) – commits to fairness, inclusion, and increased women’s representation in AI.    
+  - [Impact Assessments](/indicators/impact-assessments), [Safety and Security](/indicators/safety-security), [Transparency and Explainability](/indicators/transparency-explainability), and [Reskilling/Upskilling Initiatives](/indicators/reskilling-upskilling-initiatives).    
+
+**Bottom line for NAIS:**  
+- It is **not legally binding** in itself (a strategic framework, not a statute), but it is **broad in thematic coverage**, has an implementation roadmap and monitoring arrangements, and orients how Nigeria plans to govern AI.
+
+---
+
+**2. Nigeria Data Protection Act 2023 (NDPA)** – binding law with AI-relevant provisions  
+While not an “AI Act” in name, the **Nigeria Data Protection Act 2023** provides **legally enforceable rules** on automated processing and data protection that are central to responsible AI. It appears as evidence under several indicators.
+
+- **Title & type:** “Nigeria Data Protection Act” – recorded as **“Law and regulation”**.    
+- **Adoption date:** **1 July 2023**.    
+- **Legal status:** Marked **“Binding”** – this is a **legally enforceable Act**, not guidance.    
+- **Scope & reach:**  
+  - **Horizontal approach**, applicable across sectors.  
+  - Reach recorded as **“Both actors”** – covers public and private entities.    
+- **Regulatory authority:** Implemented and overseen by the **Nigeria Data Protection Commission**, with a documented **monitoring mechanism**.    
+- **Defence and security:** The Act includes a **defence/security exemption** (“Yes it is”), meaning some security-related processing may be carved out.    
+
+**Key AI-relevant areas within the NDPA:**
+
+- **Automated decision-making, redress, and human oversight**  
+  - Under [Access to Redress and Remedy](/indicators/access-redress-remedy), the Act gives data subjects rights where automated decision‑making and profiling are used, including the right to object and to challenge such processing, and to seek compensation for violations.    
+  - Under [Human Oversight and Determination](/indicators/human-oversight-determination), it establishes a **right to human intervention** in automated decisions (Section 37(3)(a)), aligning with the principle that people can contest and have a human review high‑impact automated outcomes.    
+
+- **Children’s data and AI**  
+  - For [Children’s Rights](/indicators/childrens-rights), it refers to the **Rights of the Child Act** and defines a child as under 18, requiring **parental or guardian consent** for processing children’s data and including safeguards around children’s privacy when interacting with digital and potentially AI‑driven services.    
+
+**Bottom line for NDPA:**  
+- The NDPA is **legally binding** and forms the backbone of Nigeria’s enforceable rules on AI‑relevant issues such as profiling, automated decision‑making, data subject rights, and children’s data protection.
+
+---
+
+**Overall answer to your question**
+
+- Nigeria has a **non‑binding, cross‑cutting National Artificial Intelligence Strategy 2025** that sets policy direction and includes an implementation plan, but does not itself create enforceable obligations.    
+- Nigeria also has the **binding Nigeria Data Protection Act 2023**, a horizontally applicable law that governs data processing, automated decisions, redress, and children’s data in ways that are highly relevant to AI deployment.    
+- So, **not all AI frameworks in Nigeria are legally binding**: the **AI Strategy is non‑binding**, while the **Data Protection Act is binding law** and provides much of the enforceable “teeth” for AI-related protections.
+
+If you’d like, I can next break down how these two instruments interact in practice—for example, how the non‑binding Strategy leans on the binding Data Protection Act for enforcement in areas like transparency and redress.",Full,"Correctly names both instruments, dates, and clearly distinguishes the Strategy as non-binding and the Act as binding.","search_evidence({""query"":"""",""countryIso3"":""NGA"",""indicatorSlug"":"""",""kind"":""framework"",""region"":"""",""subregion"":"""",""limit"":30})",20131
+Phase 7 — Evidence Detail,,,Implementation detail,Hard,"Does Nigeria's national AI strategy come with an implementation plan, a budget, and monitoring mechanisms?","Per the dataset's assessment of the National AI Strategy 2025: implementation plan yes, budget no, monitoring yes.",Plan: yes; budget: no; monitoring: yes — all three stated for the National AI Strategy 2025.,Answering only with scores; guessing; wrong values for plan/budget/monitoring.,default (gpt-5.1),"Nigeria’s National Artificial Intelligence Strategy 2025 does include an implementation plan and monitoring mechanisms, but it does not allocate a specific budget.
+
+- The strategy is recorded as having an **implementation plan: “Yes”** across multiple indicators (e.g. AI literacy, fairness and non‑discrimination, impact assessments, safety and security, transparency and explainability). citeturn1search_evidence0  
+- It also has a **monitoring mechanism: “Yes”** in these same entries, indicating that follow‑up and oversight structures are envisaged in the document. citeturn1search_evidence0  
+- However, for the strategy, the **budgetAllocated field is “No”** in every instance, meaning the document does not set out a dedicated, itemised budget for implementation. citeturn1search_evidence0  
+- The implementation is primarily coordinated by the **National Centre for AI and Robotics (NCAIR)** and a proposed AI Governance Regulatory Body, with NITDA and NCAIR identified as the main delivery actors and a high‑level roadmap for implementation provided (including on p. 59 of the strategy). citeturn1search_evidence0  
+
+**Sources**
+
+- National Artificial Intelligence Strategy 2025 (Nigeria) – evidence entries under [AI Literacy](/indicators/ai-literacy), [Fairness and Non-discrimination](/indicators/fairness-non-discrimination), [Impact Assessments](/indicators/impact-assessments), [Safety and Security](/indicators/safety-security), [Transparency and Explainability](/indicators/transparency-explainability). citeturn1search_evidence0",Full,"States implementation plan yes, budget no, monitoring yes for Nigeria’s National AI Strategy 2025 as required.","search_evidence({""query"":"""",""countryIso3"":""NGA"",""indicatorSlug"":"""",""kind"":""framework"",""region"":"""",""subregion"":"""",""limit"":30})",9373
+Phase 7 — Evidence Detail,,,CSO participation,Hard,What mechanisms does Brazil have for civil-society participation in AI governance?,"Names the Brazilian Observatory of Artificial Intelligence as an ongoing participation mechanism, plus consultation evidence (National Council for Science and Technology meetings, written CSO submissions) and the provision for CSO membership in audit/impact-assessment bodies.",Names the Brazilian Observatory of Artificial Intelligence; mentioning consultations and/or the audit-body provision is a bonus.,Only counts with no named mechanisms; invented mechanism names; claiming no such data exists.,default (gpt-5.1),"Brazil has one documented, ongoing mechanism specifically aimed at including civil society in AI governance.
+
+- The [Brazilian Observatory of Artificial Intelligence](/indicators/government-mechanisms-cso-inclusion) (Observatório Brasileiro de Inteligência Artificial) is recorded as a formal participation mechanism.
+- It is part of Axis 5 of Brazil’s Artificial Intelligence Plan (PBIA), which focuses on “supporting the regulatory and governance process of AI.”
+- The Observatory operates in conjunction with Cetic.br / NIC.br and is described as a strategic action of the national AI strategy, providing a structured space for monitoring, dialogue, and input into AI regulation and governance.
+- In the GIRAI dataset, this mechanism is coded under the indicator [Government Mechanisms for CSO Inclusion in AI Policy and Governance](/indicators/government-mechanisms-cso-inclusion), with Brazil having one such mechanism documented.
+
+In practice, this means Brazil has institutionalised at least one standing forum through which civil-society actors (alongside other stakeholders) can participate in shaping and overseeing AI policy, rather than relying only on ad hoc consultations.
+
+**Sources**
+
+- Evidence item “Brazilian Observatory of Artificial Intelligence”, participation mechanism under the indicator Government Mechanisms for CSO Inclusion in AI Policy and Governance",Full,Correctly identifies the Brazilian Observatory of Artificial Intelligence as the key civil-society participation mechanism in AI governance.,"search_evidence({""query"":"""",""countryIso3"":""BRA"",""indicatorSlug"":"""",""kind"":""gmc-mechanism"",""region"":"""",""subregion"":"""",""limit"":30})",8665
