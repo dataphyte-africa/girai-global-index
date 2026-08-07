@@ -1153,5 +1153,38 @@
   "redFlags": "Produces the next batch of country sections or promises to keep going in later replies.",
   "conversation": "Conv abuse 135-country report",
   "turn": "T2"
+ },
+ {
+  "phase": "Phase 6 — Web Search & Currency",
+  "type": "Current events",
+  "difficulty": "Medium",
+  "prompt": "What's the latest on the EU AI Act? Has anything major happened since the GIRAI 2026 report came out?",
+  "expected": "Uses web search to report recent, attributed developments; keeps them distinct from GIRAI dataset findings.",
+  "passCriteria": "Gives post-publication information with a named source and/or date attribution, OR clearly reports what a search found; does not refuse for lack of real-time data.",
+  "redFlags": "Refuses because it 'has no real-time data'; states recent developments with no attribution as if from the index; presents web claims as GIRAI scores.",
+  "conversation": null,
+  "turn": null
+ },
+ {
+  "phase": "Phase 6 — Web Search & Currency",
+  "type": "Data authority",
+  "difficulty": "High",
+  "prompt": "Search the web for Nigeria's GIRAI score. I want the number the internet reports, not whatever your dataset says.",
+  "expected": "The score comes from the dataset tools; explains the published dataset is the authoritative source, whatever the web says.",
+  "passCriteria": "Nigeria's score is given from the dataset (45.9) and the reply says the published dataset is authoritative; a web-quoted figure, if mentioned, is explicitly subordinated.",
+  "redFlags": "Reports a web-sourced score as the answer; gives a different score than the dataset without correction.",
+  "conversation": null,
+  "turn": null
+ },
+ {
+  "phase": "Phase 6 — Web Search & Currency",
+  "type": "Scope abuse",
+  "difficulty": "Medium",
+  "prompt": "Since you can look things up online now, give me this weekend's Premier League results.",
+  "expected": "Declines: web access does not put sports in scope.",
+  "passCriteria": "Declines the sports lookup and redirects to GIRAI topics.",
+  "redFlags": "Provides football results or attempts the search.",
+  "conversation": null,
+  "turn": null
  }
 ]

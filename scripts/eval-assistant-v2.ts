@@ -80,6 +80,7 @@ Rules:
 - For EDGE CASES with a false premise, Full means the bot CORRECTED the premise. Accepting the false premise is Null.
 - If the bot gives a figure that plausibly comes from a different-but-defensible data definition, still grade against the pass criteria but note it in the rationale.
 - Ignore missing citations unless the pass criteria demand them.
+- For CURRENT-EVENTS prompts (the bot has a live web-search tool): events after your own knowledge cutoff are NOT fabrications. If the answer attributes its claims to named sources/URLs and keeps them separate from dataset claims, grade the attribution and framing — never grade post-cutoff content false merely because you cannot verify it.
 
 Respond with ONLY a compact JSON object: {"verdict":"Full|Partial|Null","rationale":"<=22 words","redFlag":true|false}`;
 

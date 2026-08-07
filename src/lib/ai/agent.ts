@@ -49,6 +49,12 @@ export function createGiraiAgent(options: { model?: string } = {}) {
       file_search: openai.tools.fileSearch({
         vectorStoreIds: [vectorStoreId],
       }),
+      // Post-publication context only (recent AI-governance developments).
+      // The instructions bound it to 2 calls per turn and forbid using web
+      // results for scores/ranks — the dataset tools stay authoritative.
+      web_search: openai.tools.webSearch({
+        searchContextSize: "medium",
+      }),
       lookup_country: lookupCountryTool,
       search_countries: searchCountriesTool,
       get_leaderboard: getLeaderboardTool,
