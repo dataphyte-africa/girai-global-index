@@ -14,6 +14,13 @@ import { searchCountriesTool } from "./tools/search-countries";
 import { searchEvidenceTool } from "./tools/search-evidence";
 
 const DEFAULT_MODEL = "gpt-5.1";
+// Hard per-step output ceiling, as defense in depth behind the prompt's
+// bounded-output rule. Legitimate answers are short prose plus sources (well
+// under 2k tokens even with reasoning included), so 8k never truncates real
+// use — but it caps what any one "keep going" turn can burn if the model is
+// talked past the prompt rule. Reasoning tokens count toward this limit on
+// the responses API, so do not lower it aggressively.
+const MAX_OUTPUT_TOKENS = 8192;
 // The vector store holding the published 2026 report and methodology.
 // Override per-environment with OPENAI_VECTOR_STORE_ID. Keep this in sync with
 // the live store: a stale id makes file_search fail silently, which reads as
@@ -42,6 +49,12 @@ export function createGiraiAgent(options: { model?: string } = {}) {
       file_search: openai.tools.fileSearch({
         vectorStoreIds: [vectorStoreId],
       }),
+      // Post-publication context only (recent AI-governance developments).
+      // The instructions bound it to 2 calls per turn and forbid using web
+      // results for scores/ranks — the dataset tools stay authoritative.
+      web_search: openai.tools.webSearch({
+        searchContextSize: "medium",
+      }),
       lookup_country: lookupCountryTool,
       search_countries: searchCountriesTool,
       get_leaderboard: getLeaderboardTool,
@@ -54,6 +67,7 @@ export function createGiraiAgent(options: { model?: string } = {}) {
       get_subregion_summary: getSubregionSummaryTool,
       get_evidence_statistics: getEvidenceStatisticsTool,
     },
+    maxOutputTokens: MAX_OUTPUT_TOKENS,
     stopWhen: stepCountIs(12),
   });
 }

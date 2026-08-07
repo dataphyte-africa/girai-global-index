@@ -41,6 +41,9 @@ const EVIDENCE_KINDS = [
 export const searchEvidenceTool = tool({
   description:
     "Search evidence items by text query and optional filters (country, indicator, kind, region, subregion). " +
+    "Items carry the data dictionary's detail fields: framework title, approval date, enforceability " +
+    "(binding/non-binding), reach, scope, stakeholder consultation, implementation body/plan/budget/monitoring, " +
+    "thematic coverage, and each item's justification — use this for 'what frameworks does X have and are they enforced?'. " +
     "`items` is only a sample, capped at `limit`. To answer 'which countries have …' or " +
     "'which indicator has the most …' use the `countries` / `indicators` roll-ups — " +
     "computed over every match, complete regardless of `limit`.",
@@ -123,7 +126,7 @@ export const searchEvidenceTool = tool({
     if (tokens.length > 0) {
       const matched = items.filter((it) => {
         const haystack =
-          `${it.title} ${it.justification} ${it.country.name}`.toLowerCase();
+          `${it.title} ${it.justification} ${it.country.name} ${it.type ?? ""}`.toLowerCase();
         return tokens.every((t) => haystack.includes(t));
       });
       if (matched.length > 0 || !hasStructuredFilter) items = matched;
@@ -171,6 +174,11 @@ export const searchEvidenceTool = tool({
       (a, b) => b.count - a.count || a.name.localeCompare(b.name)
     );
 
+    // Long free text is truncated so a full page of items stays affordable;
+    // everything else from the data dictionary rides along untrimmed.
+    const clip = (s: string, n: number): string =>
+      s.length > n ? `${s.slice(0, n - 1).trimEnd()}…` : s;
+
     const limited = items.slice(0, input.limit).map((it) => ({
       id: it.id,
       kind: it.kind,
@@ -183,6 +191,38 @@ export const searchEvidenceTool = tool({
       // Real external source URL (Drive mirror as fallback) — evidence has no
       // dedicated on-site detail page.
       link: it.link ?? it.drive ?? null,
+      justification: clip(it.justification, 320),
+      // Data-dictionary detail, present per kind: frameworks carry the
+      // enforcement/implementation assessment; CSO initiatives their reach
+      // across indicators. Omitted (not null) when a field does not apply.
+      ...(it.approval ? { approvalDate: it.approval } : {}),
+      ...(it.enforceability ? { enforceability: it.enforceability } : {}),
+      ...(it.reach ? { reach: it.reach } : {}),
+      // "Horizontal approach (long explanation…)" → "Horizontal approach"
+      ...(it.scope ? { regulatoryScope: it.scope.split(" (")[0] } : {}),
+      ...(it.consultation
+        ? { stakeholderConsultation: it.consultation }
+        : {}),
+      ...(it.body
+        ? {
+            implementationBody: it.body.name ?? it.body.exists,
+          }
+        : {}),
+      ...(it.plan ? { implementationPlan: it.plan } : {}),
+      ...(it.budget ? { budgetAllocated: it.budget } : {}),
+      ...(it.monitoring ? { monitoringMechanism: it.monitoring } : {}),
+      ...(it.defenceAndSecurity
+        ? { defenceSecurityExemption: it.defenceAndSecurity.value }
+        : {}),
+      ...(it.thematicElements?.length
+        ? {
+            thematicCoverage: it.thematicElements.map((e) => ({
+              element: e.text,
+              covered: e.value,
+            })),
+          }
+        : {}),
+      ...(it.contributesTo?.length ? { contributesTo: it.contributesTo } : {}),
     }));
 
     const indicatorSlugs = [...new Set(limited.map((i) => i.indicatorSlug))];

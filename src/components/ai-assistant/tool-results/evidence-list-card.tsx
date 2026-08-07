@@ -15,6 +15,11 @@ type EvidenceRow = {
   indicatorSlug: string;
   /** Real external source URL — evidence has no dedicated on-site page. */
   link?: string | null;
+  // Data-dictionary detail, present per kind (see search_evidence).
+  type?: string | null;
+  approvalDate?: string;
+  enforceability?: string;
+  reach?: string;
 };
 
 const KIND_COLORS: Record<string, string> = {
@@ -93,6 +98,13 @@ export function EvidenceListCard({
                   {item.indicatorSlug}
                 </Link>
               </div>
+              {(item.type || item.enforceability || item.approvalDate) && (
+                <p className="mt-1 text-muted-foreground text-xs">
+                  {[item.type, item.enforceability, item.approvalDate]
+                    .filter(Boolean)
+                    .join(" · ")}
+                </p>
+              )}
             </div>
           </li>
         ))}

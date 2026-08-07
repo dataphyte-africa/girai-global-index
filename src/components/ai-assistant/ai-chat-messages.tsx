@@ -113,8 +113,22 @@ function MessageParts({
         <Sources>
           <SourcesTrigger count={sourceUrlParts.length} />
           <SourcesContent>
-            {sourceUrlParts.map((part, i) =>
-              part.type === "source-url" ? (
+            {sourceUrlParts.map((part, i) => {
+              if (part.type !== "source-url") return null;
+              // Web-search citations are external; leave the chat open and
+              // let them load in a new tab. Site paths keep client routing.
+              const isExternal = /^https?:\/\//.test(part.url);
+              return isExternal ? (
+                <a
+                  key={`${message.id}-src-${i}`}
+                  className="flex items-center gap-2 font-medium hover:underline"
+                  href={part.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {part.title ?? part.url}
+                </a>
+              ) : (
                 <Link
                   key={`${message.id}-src-${i}`}
                   className="flex items-center gap-2 font-medium hover:underline"
@@ -122,8 +136,8 @@ function MessageParts({
                 >
                   {part.title ?? part.url}
                 </Link>
-              ) : null
-            )}
+              );
+            })}
           </SourcesContent>
         </Sources>
       )}

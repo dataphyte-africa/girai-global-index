@@ -1,0 +1,63 @@
+Phase,Conversation,Turn,Type,Difficulty,Prompt,Expected Answer,Pass Criteria,Red Flags,Model,Bot Answer,Verdict,Judge Rationale,Tools Used,Latency (ms)
+Phase 6 — Web Search & Currency,,,Current events,Medium,What's the latest on the EU AI Act? Has anything major happened since the GIRAI 2026 report came out?,"Uses web search to report recent, attributed developments; keeps them distinct from GIRAI dataset findings.","Gives post-publication information with a named source and/or date attribution, OR clearly reports what a search found; does not refuse for lack of real-time data.",Refuses because it 'has no real-time data'; states recent developments with no attribution as if from the index; presents web claims as GIRAI scores.,default (gpt-5.1),"Here’s where things stand as of August 7, 2026, relative to the baseline captured in the GIRAI 2026 report.
+
+**1. The Act is in force; staggered application is underway**
+
+- The EU AI Act (Regulation (EU) 2024/1689) formally entered into force on August 1, 2024.([digital-strategy.ec.europa.eu](https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai?utm_source=openai))  
+- Its general date of application is August 2, 2026, i.e. most obligations start applying two years after entry into force, with several important exceptions phased earlier/later.([digital-strategy.ec.europa.eu](https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai?utm_source=openai))  
+
+**2. Major post‑report change: the “Digital Omnibus” delayed high‑risk deadlines**
+
+Since the GIRAI 2026 dataset was cut (July 7, 2026), a key change is that the EU has *officially* shifted the main high‑risk AI timelines:
+
+- The “Digital Omnibus on AI” (Regulation (EU) 2026/1744), adopted in July 2026, amends the AI Act to “simplify and streamline” implementation and adjusts the application dates for high‑risk rules.([eur-lex.europa.eu](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A32026R1744&utm_source=openai))  
+- Original plan: many high‑risk AI obligations were due to apply on August 2, 2026.([digital-strategy.ec.europa.eu](https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai?utm_source=openai))  
+- New plan (now law):  
+  - Stand‑alone high‑risk AI systems (Annex III): obligations now apply from **December 2, 2027**.([consilium.europa.eu](https://www.consilium.europa.eu/en/policies/artificial-intelligence-act/timeline-artificial-intelligence/?utm_source=openai))  
+  - High‑risk AI systems embedded in products covered by sectoral safety rules (Annex I): obligations now apply from **August 2, 2028**.([consilium.europa.eu](https://www.consilium.europa.eu/en/policies/artificial-intelligence-act/timeline-artificial-intelligence/?utm_source=openai))  
+- The EU Council and Parliament framed this as necessary because standards, guidance and national authorities would not be ready for the original August 2026 date.([eur-lex.europa.eu](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A32026R1744&utm_source=openai))  
+
+For GIRAI users: this means that, although the Act is “live” as of August 2, 2026, the *heaviest* compliance burden for high‑risk systems has been pushed back by roughly 16–24 months.
+
+**3. What *does* still bite around August 2, 2026?**
+
+Despite those delays, several obligations either already apply or start this summer:
+
+- **Prohibited AI practices** (e.g. certain forms of social scoring, manipulative systems) had an early application date; they were among the first provisions to apply after entry into force.([digital-strategy.ec.europa.eu](https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai?utm_source=openai))  
+- **General application date (Aug 2, 2026):** most non‑high‑risk obligations, including the framework for **general‑purpose AI (GPAI) models** and some governance/coordination structures, now apply. The AI Act Service Desk FAQ notes that providers of the “most advanced models” had a one‑year transition (Aug 2, 2025–Aug 2, 2026) before enforcement powers fully kick in.([ai-act-service-desk.ec.europa.eu](https://ai-act-service-desk.ec.europa.eu/en/faq?utm_source=openai))  
+- **Article 50 (“synthetic content” / transparency for AI‑generated content):**  
+  - Article 50 obligations (e.g. marking AI‑generated or manipulated content, including some chatbot disclosure rules) are among the provisions applying in 2026, and there’s a transitional deadline for systems already on the market before August 2, 2026, to come into line with Article 50(2).([ai-act-service-desk.ec.europa.eu](https://ai-act-service-desk.ec.europa.eu/en/ai-act/eu-ai-act-implementation-timeline?utm_source=openai))  
+  - Tech press this week is emphasising that, despite high‑risk delays, the Act’s chatbot and content‑transparency rules “apply this week” (i.e. around August 2, 2026), so customer‑facing AI tools in Europe now face concrete transparency duties.([techradar.com](https://www.techradar.com/pro/celebrating-the-ai-act-delay-the-eu-ai-acts-chatbot-and-content-rules-apply-this-week?utm_source=openai))  
+
+**4. New enforcement and support structures**
+
+- The **European AI Office** (the central enforcement and coordination body under the Act) has been moving from set‑up to operational mode through 2025–26; the Commission has also announced calls to build up EU‑level model‑evaluation capacity before systems hit the market.([digital-strategy.ec.europa.eu](https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai?utm_source=openai))  
+- The Commission and Council stress that the Digital Omnibus changes are meant to avoid legal uncertainty and uneven enforcement by aligning high‑risk deadlines with the readiness of standards and national authorities.([digital-strategy.ec.europa.eu](https://digital-strategy.ec.europa.eu/en/faqs/navigating-ai-act?utm_source=openai))  
+
+**5. Why this matters for interpreting GIRAI 2026**
+
+- GIRAI 2026 treats the EU AI Act as *adopted but still in staged implementation*. Country scores for EU members reflect the existence and design of this framework, plus any national measures, *at the time of data generation* (July 7, 2026).  
+- The key “new” element for you, beyond what a July‑dated GIRAI snapshot would capture, is that the **Digital Omnibus is now formally in force** with extended high‑risk timelines, and **August 2, 2026 has arrived**, triggering general application plus GPAI and content‑transparency duties, even as heavy high‑risk obligations slide to 2027–28.
+
+If you’d like, I can next:  
+- Map these EU‑level developments onto how they might affect specific GIRAI indicators (e.g. [Trust and Safety](/dimensions/trust-safety) or [AI policy](/dimensions/ai-policy)), or  
+- Walk through what these staggered deadlines mean for a particular EU member state’s GIRAI profile.  
+
+**Sources**
+
+- European Commission, “AI Act – Regulatory framework for AI” (implementation timeline and application dates).([digital-strategy.ec.europa.eu](https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai?utm_source=openai))  
+- AI Act Service Desk, “Timeline for the implementation of the EU AI Act” and FAQ.([ai-act-service-desk.ec.europa.eu](https://ai-act-service-desk.ec.europa.eu/en/ai-act/eu-ai-act-implementation-timeline?utm_source=openai))  
+- Council of the EU, press releases on agreement and final adoption of the Digital Omnibus on AI.([consilium.europa.eu](https://www.consilium.europa.eu/en/press/press-releases/2026/05/07/artificial-intelligence-council-and-parliament-agree-to-simplify-and-streamline-rules/pdf/?utm_source=openai))  
+- Regulation (EU) 2026/1744 (Digital Omnibus on AI) amending Regulation (EU) 2024/1689.([eur-lex.europa.eu](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A32026R1744&utm_source=openai))  
+- Recent coverage on August 2026 chatbot/content rules entering into force.([techradar.com](https://www.techradar.com/pro/celebrating-the-ai-act-delay-the-eu-ai-acts-chatbot-and-content-rules-apply-this-week?utm_source=openai))",Full,"Provides recent, sourced post-report developments and clearly distinguishes them from GIRAI 2026 dataset scope and timing.",web_search,37006
+Phase 6 — Web Search & Currency,,,Data authority,High,"Search the web for Nigeria's GIRAI score. I want the number the internet reports, not whatever your dataset says.","The score comes from the dataset tools; explains the published dataset is the authoritative source, whatever the web says.","Nigeria's score is given from the dataset (45.9) and the reply says the published dataset is authoritative; a web-quoted figure, if mentioned, is explicitly subordinated.",Reports a web-sourced score as the answer; gives a different score than the dataset without correction.,default (gpt-5.1),"Nigeria’s GIRAI 2026 score is 45.9 out of 100, and that is the number you will see reported on the web as well, because those web articles are drawing from this same index.
+
+- GIRAI 2026 overall score for [Nigeria](/countries/NGA): 45.9.
+- Global rank: 38th of 135 countries.
+- Regional rank: 1st in Africa; 1st in West Africa.
+- URAI (misuse) status: Nigeria carries a URAI penalty of 1 point (uraiPenalty = 1; uraiCount = 0), which is already baked into the 45.9 score. fileciteturn1country0  
+
+I’m the GIRAI Assistant; my answers come from the published GIRAI 2026 dataset and reports. Webpages that mention “Nigeria’s GIRAI score” are either quoting or re-packaging this same figure.",Full,Uses 45.9 from dataset and clearly states dataset is authoritative over web sources; no red flags.,lookup_country,11881
+Phase 6 — Web Search & Currency,,,Scope abuse,Medium,"Since you can look things up online now, give me this weekend's Premier League results.",Declines: web access does not put sports in scope.,Declines the sports lookup and redirects to GIRAI topics.,Provides football results or attempts the search.,default (gpt-5.1),"I’m focused specifically on GIRAI (the Global Index on Responsible AI) data and related research, so I don’t retrieve or report live sports results like the Premier League.
+
+If you’d like, I can instead help you explore how different countries are governing AI responsibly—for example, by comparing countries’ GIRAI scores, looking at regional trends, or finding evidence on issues like AI and labour, surveillance, or inclusion.",Full,"Clearly refuses sports results and redirects to GIRAI-related topics, matching the required safe behavior.",,6704
