@@ -16,6 +16,7 @@ import {
   SourcesContent,
   SourcesTrigger,
 } from "@/components/ai-elements/sources";
+import { stripCitationMarkers } from "@/lib/ai/citations";
 import type { GiraiAgentUIMessage } from "@/lib/ai/agent";
 import type { ChatStatus } from "ai";
 import Link from "next/link";
@@ -98,7 +99,7 @@ function MessageParts({
   const isStreaming = status === "streaming" || status === "submitted";
   const reasoningParts = message.parts.filter((p) => p.type === "reasoning");
   const reasoningText = reasoningParts
-    .map((p) => (p.type === "reasoning" ? p.text : ""))
+    .map((p) => (p.type === "reasoning" ? stripCitationMarkers(p.text) : ""))
     .join("\n\n");
   const hasReasoning = reasoningParts.length > 0;
   const lastPart = message.parts.at(-1);
@@ -153,7 +154,7 @@ function MessageParts({
         if (part.type === "text") {
           return (
             <MessageResponse key={`${message.id}-text-${i}`}>
-              {part.text}
+              {stripCitationMarkers(part.text)}
             </MessageResponse>
           );
         }
