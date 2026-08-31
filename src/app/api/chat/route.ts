@@ -1,5 +1,11 @@
-import { createAgentUIStreamResponse, type UIMessage } from "ai";
+import {
+  createAgentUIStreamResponse,
+  createUIMessageStream,
+  createUIMessageStreamResponse,
+  type UIMessage,
+} from "ai";
 import { giraiAgent } from "@/lib/ai/agent";
+import { screenRequest } from "@/lib/ai/topic-guard";
 import { captureServerException } from "@/lib/analytics/server";
 
 export const maxDuration = 60;
@@ -59,6 +65,15 @@ export async function POST(req: Request) {
 
   const trimmed = messages.slice(-MAX_MESSAGES);
 
+  // Hard scope gate: an out-of-scope request is answered with a fixed refusal
+  // and never reaches the agent, so it cannot spend tool calls or output
+  // tokens. The prompt-layer scope rules remain as the second line of defence
+  // for anything the gate lets through.
+  const verdict = await screenRequest(trimmed);
+  if (!verdict.allowed) {
+    return refusalResponse(verdict.reply);
+  }
+
   try {
     return createAgentUIStreamResponse({
       agent: giraiAgent,
@@ -72,4 +87,24 @@ export async function POST(req: Request) {
       { status: 500, headers: { "Content-Type": "application/json" } }
     );
   }
+}
+
+/**
+ * Streams a canned refusal back over the same UI message protocol the client
+ * already speaks, so it renders as a normal assistant reply rather than as a
+ * failed request.
+ */
+function refusalResponse(text: string): Response {
+  const stream = createUIMessageStream({
+    execute: ({ writer }) => {
+      const id = "refusal";
+      writer.write({ type: "start" });
+      writer.write({ type: "text-start", id });
+      writer.write({ type: "text-delta", id, delta: text });
+      writer.write({ type: "text-end", id });
+      writer.write({ type: "finish" });
+    },
+  });
+
+  return createUIMessageStreamResponse({ stream });
 }
