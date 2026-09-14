@@ -18,7 +18,7 @@ export const HeroSection = ( {
 } ) => {
   return (
     <div className='md:p-6'>
-   <div className=" relative grid grid-cols-1 md:grid-cols-2 min-h-screen md:min-h-[80vh] w-full overflow-hidden">
+   <div className=" relative grid grid-cols-1 md:grid-cols-2 min-h-screen md:min-h-[80vh] w-full overflow-hidden gap-y-4 md:gap-y-0">
     <Image
       src="/decor1.png"
       alt=""
@@ -76,7 +76,7 @@ export const HeroSection = ( {
       </div>
       </div>
     </div>
-    <div className="relative z-10 col-span-1 order-first md:order-last  overflow-visible min-h-[100px]">
+    <div className="relative z-10 col-span-1 order-first md:order-last">
       <GlobeDemo arcData={arcData} markers={markers} />
     </div>
    </div>

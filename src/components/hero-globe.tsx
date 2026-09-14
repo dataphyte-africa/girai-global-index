@@ -67,10 +67,13 @@ export function GlobeDemo({ arcData, markers, className }: GlobeDemoProps) {
     })),
   };
   return (
-      <div className={cn("relative mx-auto h-full w-full max-w-7xl overflow-hidden md:h-[40rem]", className)}>
-        
-        
-        <div className="absolute z-10 h-72 w-full md:h-full">
+      <div
+        className={cn(
+          "relative mx-auto h-80 w-full max-w-7xl overflow-hidden md:h-[40rem]",
+          className,
+        )}
+      >
+        <div className="absolute inset-0">
           <Suspense fallback={null}>
             <World data={arcData} globeConfig={globeConfig} />
           </Suspense>
