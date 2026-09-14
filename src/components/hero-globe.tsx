@@ -5,7 +5,7 @@ import type { Country } from "@/data/countries";
 import type { ArcPosition } from "@/data/countries";
 import { cn } from "@/lib/utils";
 import { GlobeFallback } from "@/components/ui/globe-fallback";
-import type { GlobeConfig } from "@/components/ui/globe";
+import type { GlobeConfig } from "@/components/ui/globe-types";
 
 function GlobeImportFallback({
   globeConfig,
