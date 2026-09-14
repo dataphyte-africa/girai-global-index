@@ -18,7 +18,7 @@ export const HeroSection = ( {
 } ) => {
   return (
     <div className='md:p-6'>
-   <div className=" relative grid grid-cols-1 md:grid-cols-2 min-h-screen md:min-h-[80vh] w-full overflow-hidden gap-y-4 md:gap-y-0">
+   <div className=" relative grid grid-cols-1 md:grid-cols-2 min-h-screen md:min-h-[80vh] w-full overflow-hidden">
     <Image
       src="/decor1.png"
       alt=""
@@ -55,7 +55,7 @@ export const HeroSection = ( {
       className="pointer-events-none select-none absolute bottom-[-50px] right-0  lg:w-[170px] h-[178px] z-0"
       priority
     />
-    <div className="relative z-10 col-span-1 flex flex-col  md:justify-center items-center px-5 md:pl-20">
+    <div className="relative z-10 col-span-1 flex flex-col md:justify-center items-center px-5 md:pl-20 -mt-8 md:mt-0">
       <div className="flex flex-col gap-7">
       <div className="flex flex-col gap-2">
 
