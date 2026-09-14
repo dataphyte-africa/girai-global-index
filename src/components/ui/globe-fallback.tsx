@@ -1,6 +1,6 @@
 "use client";
 
-import type { MarkerData } from "@/components/ui/globe";
+import type { MarkerData } from "@/components/ui/globe-types";
 
 const PIN_PATH =
   "M14,0 C21.732,0 28,5.641 28,12.6 C28,23.963 14,36 14,36 C14,36 0,24.064 0,12.6 C0,5.641 6.268,0 14,0 Z";
