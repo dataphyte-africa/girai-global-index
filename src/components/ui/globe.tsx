@@ -15,7 +15,7 @@ import { useThree, Canvas, extend, useFrame } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import countries from "@/data/globe.json";
 import { GlobeFallback } from "@/components/ui/globe-fallback";
-import { canUseWebGL } from "@/lib/webgl";
+import { canUseWebGL, isGlobeCapabilityError } from "@/lib/webgl";
 declare module "@react-three/fiber" {
   interface ThreeElements {
     threeGlobe: ThreeElements["mesh"] & {
@@ -430,10 +430,15 @@ export function World(props: WorldProps) {
     setWebglReady(true);
 
     const onError = (event: ErrorEvent) => {
-      if (/webgl/i.test(event.message ?? "")) setWebglOk(false);
+      if (
+        isGlobeCapabilityError(event.message) ||
+        isGlobeCapabilityError(event.error)
+      ) {
+        setWebglOk(false);
+      }
     };
     const onRejection = (event: PromiseRejectionEvent) => {
-      if (/webgl/i.test(String(event.reason ?? ""))) setWebglOk(false);
+      if (isGlobeCapabilityError(event.reason)) setWebglOk(false);
     };
     window.addEventListener("error", onError);
     window.addEventListener("unhandledrejection", onRejection);

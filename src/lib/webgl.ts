@@ -1,3 +1,8 @@
+/** True when a runtime error looks like a WebGL/WebGPU capability failure. */
+export function isGlobeCapabilityError(value: unknown): boolean {
+  return /webgl|webgpu|gpushaderstage/i.test(String(value ?? ""));
+}
+
 /** Returns true when the browser can create a WebGL1/2 context for Three.js. */
 export function canUseWebGL(): boolean {
   if (typeof window === "undefined") return false;
