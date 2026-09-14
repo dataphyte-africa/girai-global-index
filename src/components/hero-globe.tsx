@@ -4,10 +4,28 @@ import dynamic from "next/dynamic";
 import type { Country } from "@/data/countries";
 import type { ArcPosition } from "@/data/countries";
 import { cn } from "@/lib/utils";
+import { GlobeFallback } from "@/components/ui/globe-fallback";
+import type { GlobeConfig } from "@/components/ui/globe-types";
 
-const World = dynamic(() => import("@/components/ui/globe").then((m) => m.World), {
-  ssr: false,
-});
+function GlobeImportFallback({
+  globeConfig,
+}: {
+  globeConfig: GlobeConfig;
+  data: unknown;
+}) {
+  return <GlobeFallback markers={globeConfig.markers ?? []} />;
+}
+
+const World = dynamic(
+  () =>
+    import("@/components/ui/globe")
+      .then((m) => m.World)
+      .catch((error) => {
+        console.warn("[Globe] failed to load WebGL globe, using fallback.", error);
+        return GlobeImportFallback;
+      }),
+  { ssr: false },
+);
 
 interface GlobeDemoProps {
   arcData: ArcPosition[];
@@ -49,10 +67,13 @@ export function GlobeDemo({ arcData, markers, className }: GlobeDemoProps) {
     })),
   };
   return (
-      <div className={cn("relative mx-auto h-full w-full max-w-7xl overflow-hidden md:h-[40rem]", className)}>
-        
-        
-        <div className="absolute z-10 h-72 w-full md:h-full">
+      <div
+        className={cn(
+          "relative mx-auto h-80 w-full max-w-7xl overflow-hidden md:h-[40rem]",
+          className,
+        )}
+      >
+        <div className="absolute inset-0">
           <Suspense fallback={null}>
             <World data={arcData} globeConfig={globeConfig} />
           </Suspense>

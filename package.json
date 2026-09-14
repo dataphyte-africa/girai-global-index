@@ -63,7 +63,7 @@
     "streamdown": "^2.5.0",
     "styled-components": "^6.4.2",
     "tailwind-merge": "^3.4.0",
-    "three": "^0.182.0",
+    "three": "^0.183.2",
     "three-globe": "^2.45.0",
     "use-stick-to-bottom": "^1.1.6"
   },
@@ -74,7 +74,7 @@
     "@types/papaparse": "^5.5.2",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@types/three": "^0.182.0",
+    "@types/three": "^0.183.1",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
     "marked": "^18.0.7",

@@ -55,7 +55,7 @@ export const HeroSection = ( {
       className="pointer-events-none select-none absolute bottom-[-50px] right-0  lg:w-[170px] h-[178px] z-0"
       priority
     />
-    <div className="relative z-10 col-span-1 flex flex-col  md:justify-center items-center px-5 md:pl-20">
+    <div className="relative z-10 col-span-1 flex flex-col md:justify-center items-center px-5 md:pl-20 -mt-8 md:mt-0">
       <div className="flex flex-col gap-7">
       <div className="flex flex-col gap-2">
 
@@ -76,7 +76,7 @@ export const HeroSection = ( {
       </div>
       </div>
     </div>
-    <div className="relative z-10 col-span-1 order-first md:order-last  overflow-visible min-h-[100px]">
+    <div className="relative z-10 col-span-1 order-first md:order-last">
       <GlobeDemo arcData={arcData} markers={markers} />
     </div>
    </div>
