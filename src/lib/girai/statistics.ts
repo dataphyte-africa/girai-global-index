@@ -12,9 +12,10 @@
  * against their published figures (see docs/AI-ASSISTANT-V2-BENCHMARK-REPORT).
  * Exact reproductions include Africa's framework coverage (136/663 = 20.51%),
  * AI Literacy in Africa (35.90% coverage, 85.71% implementation), Southern
- * Africa's binding share (10/31 = 32.26%) and the LATAM misuse roll-up.
- * Where a current figure differs from a brief it is because the evidence
- * corpus has grown since publication, not because the method differs.
+ * Africa's binding share (10/31 = 32.26%, drafts included) and the LATAM
+ * misuse roll-up. Where a current figure differs from a brief it is usually
+ * because the evidence corpus has grown since publication — except binding
+ * share, where the briefs themselves disagree on drafts (see bindingShare).
  */
 
 import evidenceData from "@/data/2026/generated/evidence.json";
@@ -43,7 +44,7 @@ const nationalAiPolicies = (
  * A draft is a proposal, not a rule in force. The briefs' "coverage" counts
  * only frameworks that actually exist as instruments ("an active framework
  * exists in only about a fifth of cases"), so drafts are excluded from
- * coverage and implementation while still counting toward binding share.
+ * coverage, implementation, and the headline binding share.
  */
 const DRAFT_TYPE = "Draft framework";
 const isActiveFramework = (item: EvidenceItem) => item.type !== DRAFT_TYPE;
@@ -243,28 +244,70 @@ function scopedEvidence(scope: StatScope, kind: EvidenceItem["kind"]) {
 
 export interface BindingStat {
   label: string;
+  /** Adopted framework cases — the headline figures exclude drafts. */
   frameworkCases: number;
   binding: number;
   nonBinding: number;
   bindingPct: number | null;
   nonBindingPct: number | null;
+  /** Set when the headline rests on so few cases that a share misleads. */
+  smallBaseNote?: string;
+  /** Draft cases left out of the headline, and how many are coded Binding. */
+  draftCases: number;
+  draftsCodedBinding: number;
+  /** The same share with drafts counted, as the Africa brief computed it. */
+  includingDrafts: {
+    frameworkCases: number;
+    binding: number;
+    bindingPct: number | null;
+    nonBindingPct: number | null;
+  };
 }
+
+const isBinding = (i: EvidenceItem) => i.enforceability === "Binding";
+const SMALL_BASE = 10;
 
 /**
  * Share of framework cases that are legally binding. Counted per
  * country-indicator case, not per unique document: one framework assessed
  * under five indicators counts five times, which is how the briefs count.
+ *
+ * The headline counts adopted frameworks only. A draft bill coded "Binding"
+ * would bind if passed, but is not law — counted in, Panama's draft AI bill
+ * alone made it LATAM's joint binding leader. The briefs split on this: the
+ * LATAM brief excludes drafts (68% non-binding; Peru + El Salvador = 21 of 38
+ * binding cases, 55% — both exact) and Asia's ~84% non-binding matches too,
+ * while the Africa brief included them (37/170; Southern Africa's 10/31 is
+ * exact only with drafts). `includingDrafts` keeps that second reading.
  */
 export function bindingShare(scope: StatScope): BindingStat {
-  const items = scopedEvidence(scope, "framework");
-  const binding = items.filter((i) => i.enforceability === "Binding").length;
+  const all = scopedEvidence(scope, "framework");
+  const adopted = all.filter(isActiveFramework);
+  const binding = adopted.filter(isBinding).length;
+  const bindingWithDrafts = all.filter(isBinding).length;
   return {
     label: scope.label,
-    frameworkCases: items.length,
+    frameworkCases: adopted.length,
     binding,
-    nonBinding: items.length - binding,
-    bindingPct: pct(binding, items.length),
-    nonBindingPct: pct(items.length - binding, items.length),
+    nonBinding: adopted.length - binding,
+    bindingPct: pct(binding, adopted.length),
+    nonBindingPct: pct(adopted.length - binding, adopted.length),
+    // Excluding drafts can leave a handful of cases (Southern Africa: 6 of
+    // 31), and a percentage alone then reads as a firm lead. The flag is in
+    // the data because a prompt rule to caveat it was not followed reliably.
+    ...(adopted.length > 0 && adopted.length < SMALL_BASE
+      ? {
+          smallBaseNote: `Only ${adopted.length} adopted framework cases — say the share rests on few frameworks.`,
+        }
+      : {}),
+    draftCases: all.length - adopted.length,
+    draftsCodedBinding: bindingWithDrafts - binding,
+    includingDrafts: {
+      frameworkCases: all.length,
+      binding: bindingWithDrafts,
+      bindingPct: pct(bindingWithDrafts, all.length),
+      nonBindingPct: pct(all.length - bindingWithDrafts, all.length),
+    },
   };
 }
 
@@ -398,31 +441,46 @@ export function governmentMisuse(scope: StatScope) {
 
 export function bindingByCountry(scope: StatScope) {
   const items = scopedEvidence(scope, "framework");
-  const tally = new Map<string, { name: string; binding: number; total: number }>();
+  const tally = new Map<
+    string,
+    { name: string; binding: number; total: number; draftBinding: number }
+  >();
   for (const i of items) {
     const row = tally.get(i.country.iso3) ?? {
       name: i.country.name,
       binding: 0,
       total: 0,
+      draftBinding: 0,
     };
-    row.total += 1;
-    if (i.enforceability === "Binding") row.binding += 1;
+    // Headline counts adopted frameworks only, as in bindingShare; binding
+    // drafts are reported beside them so a pending bill stays visible.
+    if (isActiveFramework(i)) {
+      row.total += 1;
+      if (isBinding(i)) row.binding += 1;
+    } else if (isBinding(i)) {
+      row.draftBinding += 1;
+    }
     tally.set(i.country.iso3, row);
   }
   const totalBinding = items.filter(
-    (i) => i.enforceability === "Binding"
+    (i) => isActiveFramework(i) && isBinding(i)
   ).length;
   return {
     totalBindingCases: totalBinding,
     countries: [...tally.entries()]
+      .filter(([, r]) => r.total > 0 || r.draftBinding > 0)
       .map(([iso3, r]) => ({
         iso3,
         name: r.name,
         binding: r.binding,
         frameworkCases: r.total,
         shareOfScopeBindingPct: pct(r.binding, totalBinding),
+        draftsCodedBinding: r.draftBinding,
       }))
-      .sort((a, b) => b.binding - a.binding),
+      .sort(
+        (a, b) =>
+          b.binding - a.binding || b.draftsCodedBinding - a.draftsCodedBinding
+      ),
   };
 }
 
