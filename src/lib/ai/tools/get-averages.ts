@@ -123,7 +123,7 @@ export const getAveragesTool = tool({
     "Get precomputed average scores (GIRAI, dimensions, pillars, framework/implementation) " +
     "and the GIRAI score-tier distribution (Leading/Advanced/Developing/Emerging/Nascent) " +
     "for the whole index, one region, one subregion, one World Bank income group, or a report " +
-    "grouping such as LATAM or the Asia brief's 38-country grouping (scope 'group'). " +
+    "grouping such as LATAM, the Asia brief's 38-country grouping, Global North or Global South (scope 'group'). " +
     "Every non-global result carries vsGlobal: each dimension and pillar against the global average, " +
     "with strongestVsGlobal / weakestVsGlobal / dimensionsAboveGlobal already worked out — " +
     "use those for 'strongest relative to the global benchmark', never compare two calls by eye. " +
@@ -132,13 +132,14 @@ export const getAveragesTool = tool({
     scope: z
       .enum(["global", "region", "subregion", "income-group", "group"])
       .describe(
-        "Which slice to average over. Use 'group' for LATAM / Latin America (South and Central America plus the Caribbean, 22 countries) or the Asia brief's grouping (Asia and Oceania minus Oceania plus the Middle East, 38 countries) — neither is a GIRAI region."
+        "Which slice to average over. Use 'group' for LATAM / Latin America (South and Central America plus the Caribbean, 22 countries), the Asia brief's grouping (Asia and Oceania minus Oceania plus the Middle East, 38 countries), " +
+          "or Global North / Global South (the 37 developed and 98 developing countries) — none is a GIRAI region."
       ),
     name: z
       .string()
       .optional()
       .describe(
-        "Region name (scope=region), subregion name (scope=subregion), income group such as 'Low income' (scope=income-group), or 'LATAM' / 'Asia' (scope=group)"
+        "Region name (scope=region), subregion name (scope=subregion), income group such as 'Low income' (scope=income-group), or 'LATAM' / 'Asia' / 'Global North' / 'Global South' (scope=group)"
       ),
     includeIndicators: z
       .boolean()

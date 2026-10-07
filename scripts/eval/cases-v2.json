@@ -1219,5 +1219,159 @@
   "redFlags": "Only counts with no named mechanisms; invented mechanism names; claiming no such data exists.",
   "conversation": null,
   "turn": null
+ },
+ {
+  "phase": "Phase 8 — National AI Policy",
+  "type": "Factual",
+  "difficulty": "Medium",
+  "prompt": "How many national AI policies are adopted or active?",
+  "expected": "73 of 135 countries (54.1%) have an adopted National AI Policy or equivalent; a further 13 have one in draft and 49 have none. Of the 73, 47 are strategies, 18 policies, 5 laws and 3 white papers. 6 are legally binding (5 laws and 1 policy).",
+  "passCriteria": "73 adopted (of 135, ~54%). Mentioning 13 draft and 49 none is a bonus.",
+  "redFlags": "Any count derived from framework evidence: 368, 312, 1,167, 109 countries, or 'framework documents'; treating drafts as adopted (86).",
+  "conversation": null,
+  "turn": null
+ },
+ {
+  "phase": "Phase 8 — National AI Policy",
+  "type": "Factual",
+  "difficulty": "Medium",
+  "prompt": "Which African countries are still drafting a national AI policy?",
+  "expected": "Four: Angola, Lesotho, South Africa and Tanzania. 12 of Africa's 39 countries have adopted one; 23 have none.",
+  "passCriteria": "Names exactly Angola, Lesotho, South Africa and Tanzania.",
+  "redFlags": "Listing countries with adopted policies as drafting; listing draft data-protection laws or other framework drafts; South Africa described as having an adopted policy.",
+  "conversation": null,
+  "turn": null
+ },
+ {
+  "phase": "Phase 8 — National AI Policy",
+  "type": "Factual",
+  "difficulty": "Easy",
+  "prompt": "Does South Africa have a national AI policy?",
+  "expected": "Not an adopted one: the index records South Africa's National Artificial Intelligence Policy Framework (October 2024) as a draft.",
+  "passCriteria": "Says it is a draft, not adopted, and names the National AI Policy Framework.",
+  "redFlags": "Says South Africa has an adopted national AI policy; confuses the country with the Southern Africa subregion.",
+  "conversation": null,
+  "turn": null
+ },
+ {
+  "phase": "Phase 8 — National AI Policy",
+  "type": "Comparative",
+  "difficulty": "Medium",
+  "prompt": "Which region has the highest share of countries with an adopted national AI policy?",
+  "expected": "Northern America at 100% (2 of 2), then the Middle East at 90% (9 of 10) and Europe at 75% (24 of 32). Africa (12 of 39, 30.8%) and the Caribbean (1 of 8) are lowest.",
+  "passCriteria": "Northern America and/or Middle East named as highest with correct counts; ideally notes Northern America's tiny sample.",
+  "redFlags": "Ranking regions by framework coverage or GIRAI score instead of national AI policy adoption; invented percentages.",
+  "conversation": null,
+  "turn": null
+ },
+ {
+  "phase": "Phase 8 — National AI Policy",
+  "type": "Factual",
+  "difficulty": "Hard",
+  "prompt": "How many national AI policies are legally binding?",
+  "expected": "6 of the 73 adopted national AI policies are binding (e.g. Italy's Law 132/2025, South Korea's AI Basic Act); the other 67 are non-binding strategies, policies or white papers.",
+  "passCriteria": "6 binding of 73 adopted.",
+  "redFlags": "Quoting framework binding share (461 binding framework records, ~39.5%) as the answer; conflating national AI policies with all frameworks.",
+  "conversation": null,
+  "turn": null
+ },
+ {
+  "phase": "Phase 8 — National AI Policy",
+  "type": "Analytical",
+  "difficulty": "Medium",
+  "prompt": "Of the countries with an adopted national AI policy, how many back it with a budget, an implementation plan and monitoring?",
+  "expected": "18 of the 73 adopted policies have all three (plan, budget and monitoring). Individually: 21 allocate a budget, 51 include an implementation plan, 54 include monitoring, and 65 name an implementation body.",
+  "passCriteria": "18 with all three, or the individual counts (budget 21, plan 51, monitoring 54) — ideally both.",
+  "redFlags": "Any other all-three figure; counting from a capped list of policies; percentages over all 135 countries instead of the 73 adopted.",
+  "conversation": null,
+  "turn": null
+ },
+ {
+  "phase": "Phase 8 — National AI Policy",
+  "type": "Factual",
+  "difficulty": "Medium",
+  "prompt": "How many countries adopted their national AI policy in 2024 or 2025?",
+  "expected": "40 of the 73: 18 in 2024 and 22 in 2025 — more than half of all adopted national AI policies date from the last two years.",
+  "passCriteria": "40 (18 + 22).",
+  "redFlags": "Counting framework adoption dates; including drafts.",
+  "conversation": null,
+  "turn": null
+ },
+ {
+  "phase": "Phase 9 — Global North/South & Edition Change",
+  "type": "Comparative",
+  "difficulty": "Easy",
+  "prompt": "How do Global North and Global South countries compare on average GIRAI score?",
+  "expected": "Global North (37 developed countries) averages 55.2; Global South (98 developing countries) averages 27.4 — roughly double. The global average is 35.0.",
+  "passCriteria": "55.2 (or ~55) vs 27.4 (or ~27).",
+  "redFlags": "Using high-income vs other income-group averages instead; refusing because there is no 'Global North' region; computing averages by hand from a partial list.",
+  "conversation": null,
+  "turn": null
+ },
+ {
+  "phase": "Phase 9 — Global North/South & Edition Change",
+  "type": "Factual",
+  "difficulty": "Easy",
+  "prompt": "Which Global South country ranks highest in the index?",
+  "expected": "Brazil, with a GIRAI score of 63.3, followed by Chile (61.9) and Uruguay (57.0).",
+  "passCriteria": "Brazil with 63.3.",
+  "redFlags": "Naming a developed country; naming the top country of a region instead.",
+  "conversation": null,
+  "turn": null
+ },
+ {
+  "phase": "Phase 9 — Global North/South & Edition Change",
+  "type": "Comparative",
+  "difficulty": "Medium",
+  "prompt": "Since the last edition, how much did framework coverage grow in the Global South compared with the Global North?",
+  "expected": "Average number of the 14 comparable indicators with an adopted framework: Global South 2.5 → 4.7 (about +84%; the report rounds to +88%), Global North 8.2 → 11.1 (about +35%). The South grew faster from a much lower base.",
+  "passCriteria": "South ~2.5 → ~4.7 with growth in the 84–88% range, and North ~8.2 → ~11.1 with ~35%.",
+  "redFlags": "Comparing 2024 and 2026 GIRAI scores; refusing because scores are not comparable without offering evidence change; invented figures.",
+  "conversation": null,
+  "turn": null
+ },
+ {
+  "phase": "Phase 9 — Global North/South & Edition Change",
+  "type": "Factual",
+  "difficulty": "Medium",
+  "prompt": "How many frameworks went from non-binding to binding between the two editions, and how is that split between the Global North and South?",
+  "expected": "76 country-indicator cases were upgraded from non-binding to binding: 67 in the Global North (88%) and 9 in the Global South (12%).",
+  "passCriteria": "76 total; 67 North and 9 South.",
+  "redFlags": "Counting all new binding cases (177) as upgrades; reversing the split.",
+  "conversation": null,
+  "turn": null
+ },
+ {
+  "phase": "Phase 9 — Global North/South & Edition Change",
+  "type": "Factual",
+  "difficulty": "Medium",
+  "prompt": "How many countries newly adopted a Safety and Security framework since the 2024 edition?",
+  "expected": "30 countries are new since 2024, on top of 37 that already had one — an 81% increase. 63 of the 130 countries assessed in both editions still have none.",
+  "passCriteria": "30 new (37 already had one is a bonus).",
+  "redFlags": "Giving the 2026 total (67) as the number of new adopters; using all 135 countries without noting the 5 with no 2024 baseline is a minor issue only.",
+  "conversation": null,
+  "turn": null
+ },
+ {
+  "phase": "Phase 9 — Global North/South & Edition Change",
+  "type": "Analytical",
+  "difficulty": "Medium",
+  "prompt": "Which indicator saw the most new framework adoptions since the 2024 edition?",
+  "expected": "Fairness and Non-discrimination, with 32 countries adopting a framework since 2024; Reskilling/Upskilling and Safety and Security follow with 30 each.",
+  "passCriteria": "Fairness and Non-discrimination (32).",
+  "redFlags": "Answering from 2026 coverage levels rather than change; naming an indicator not comparable across editions.",
+  "conversation": null,
+  "turn": null
+ },
+ {
+  "phase": "Phase 9 — Global North/South & Edition Change",
+  "type": "Comparative",
+  "difficulty": "Hard",
+  "prompt": "What share of frameworks are non-binding in the Global South versus the Global North?",
+  "expected": "About 78% (78.3%) of adopted framework cases in the Global South are non-binding, versus about 41% (40.6%) in the Global North (the report rounds this to 42%), across the 14 indicators comparable between editions.",
+  "passCriteria": "~78% South and ~40–42% North.",
+  "redFlags": "Mixing the edition-based figure with the all-records binding-share figures (72.6% / 45.0%) in one answer without explanation; reversing North and South.",
+  "conversation": null,
+  "turn": null
  }
 ]

@@ -1,0 +1,63 @@
+Phase,Conversation,Turn,Type,Difficulty,Prompt,Expected Answer,Pass Criteria,Red Flags,Model,Bot Answer,Verdict,Judge Rationale,Tools Used,Latency (ms)
+Phase 9 — Global North/South & Edition Change,,,Comparative,Easy,How do Global North and Global South countries compare on average GIRAI score?,Global North (37 developed countries) averages 55.2; Global South (98 developing countries) averages 27.4 — roughly double. The global average is 35.0.,55.2 (or ~55) vs 27.4 (or ~27).,Using high-income vs other income-group averages instead; refusing because there is no 'Global North' region; computing averages by hand from a partial list.,default (gpt-5.1),"Global North countries score about twice as high on average as Global South countries in GIRAI 2026.
+
+- Global North (37 developed countries): average GIRAI score **55.2** out of 100, well above the global average of 35.0.
+- Global South (98 developing countries): average GIRAI score **27.4**, below the global average of 35.0.
+- Across every dimension (from [Inclusion and Diversity](/dimensions/inclusion-diversity) to [AI Use in Public Service](/dimensions/ai-use-public-service)), the Global North’s averages are 16–23 points higher than the global mean, while the Global South’s are 6–9 points lower.
+- On pillars, the gap is widest for [Enabling Conditions](/pillars/enabling-conditions): **77.5** in the Global North vs **50.0** in the Global South, a difference of about 27.5 points.",Full,Includes correct 55.2 vs 27.4 comparison and aligns with expected framing; no red flags present.,"get_averages({""scope"":""group"",""name"":""Global North"",""includeIndicators"":false}); get_averages({""scope"":""group"",""name"":""Global South"",""includeIndicators"":false})",17930
+Phase 9 — Global North/South & Edition Change,,,Factual,Easy,Which Global South country ranks highest in the index?,"Brazil, with a GIRAI score of 63.3, followed by Chile (61.9) and Uruguay (57.0).",Brazil with 63.3.,Naming a developed country; naming the top country of a region instead.,default (gpt-5.1),"Among Global South countries, [Brazil](/countries/BRA) ranks highest in the GIRAI 2026 index.
+
+- Brazil’s GIRAI score: 63.3
+- Development group: Global South (as defined in the index’s 37-country Global North / 98-country Global South split)
+- Position within Global South: 1st out of 98 developing countries
+- You can explore Brazil’s full profile, including its strongest and weakest dimensions, at its country page. 
+
+**Sources**
+
+- Brazil country profile (/countries/BRA)",Full,"Correctly identifies Brazil as highest Global South country and gives the exact score 63.3, no red flags.","get_leaderboard({""metric"":""girai"",""metricSlug"":"""",""region"":"""",""subregion"":"""",""incomeGroup"":"""",""development"":""Global South"",""limit"":1,""order"":""top""})",15021
+Phase 9 — Global North/South & Edition Change,,,Comparative,Medium,"Since the last edition, how much did framework coverage grow in the Global South compared with the Global North?","Average number of the 14 comparable indicators with an adopted framework: Global South 2.5 → 4.7 (about +84%; the report rounds to +88%), Global North 8.2 → 11.1 (about +35%). The South grew faster from a much lower base.","South ~2.5 → ~4.7 with growth in the 84–88% range, and North ~8.2 → ~11.1 with ~35%.",Comparing 2024 and 2026 GIRAI scores; refusing because scores are not comparable without offering evidence change; invented figures.,default (gpt-5.1),"Framework coverage grew substantially more in the Global South than in the Global North between the 2024 and 2026 editions, measured across the 14 comparable indicators and 130 countries with a 2024 baseline.
+
+- Global South: average indicators with at least one framework per country rose from 2.53 to 4.65, an increase of 2.12 indicators or about 84.2% growth.
+- Global North: average indicators with at least one framework per country rose from 8.17 to 11.06, an increase of 2.89 indicators or about 35.3% growth.
+- In absolute terms, both groups added a similar number of new framework cases (203 in the Global South vs 103 in the Global North), but starting from a much lower baseline, the Global South’s relative (percentage) growth is more than twice as large.
+- This comparison covers 35 Global North and 95 Global South countries that appear in both editions; five countries without 2024 coverage are excluded from the change statistics.",Full,"Correctly states starting/ending values and growth (~84% South, ~35% North) and emphasizes faster growth from lower base.","get_evidence_statistics({""metric"":""edition-change"",""scope"":""global"",""indicatorSlug"":"""",""groupBy"":""development"",""limit"":10})",17062
+Phase 9 — Global North/South & Edition Change,,,Factual,Medium,"How many frameworks went from non-binding to binding between the two editions, and how is that split between the Global North and South?",76 country-indicator cases were upgraded from non-binding to binding: 67 in the Global North (88%) and 9 in the Global South (12%).,76 total; 67 North and 9 South.,Counting all new binding cases (177) as upgrades; reversing the split.,default (gpt-5.1),"Across the whole index, 76 framework records were upgraded from non‑binding to binding between the 2024 and 2026 editions, with a very uneven split between developed and developing countries.
+
+- Global total (across 14 comparable indicators, 130 countries): 76 “upgraded to binding” framework cases.
+- Global North: 67 upgrades out of 387 framework cases in 2026 — about 88% of all upgrades happened in the 37 developed countries (35 with 2024 baselines). citeturn0functions0  
+- Global South: 9 upgrades out of 442 framework cases in 2026 — the remaining ~12% of upgrades across the 98 developing countries (95 with 2024 baselines). citeturn0functions0  
+- Context: over the same period, the Global North’s average indicators with any framework grew from 8.17 to 11.06 (+35.3%), while the Global South’s nearly doubled from 2.53 to 4.65 (+84.2%), but much of this growth in the South remained non‑binding. citeturn0functions0  
+
+**Sources**
+
+- GIRAI 2026, edition-change evidence statistics, global scope grouped by development (/download/data/2026).",Full,"Gives 76 total, with 67 in the Global North and 9 in the Global South, matching required split.","get_evidence_statistics({""metric"":""edition-change"",""scope"":""global"",""indicatorSlug"":"""",""groupBy"":""development"",""limit"":10})",8342
+Phase 9 — Global North/South & Edition Change,,,Factual,Medium,How many countries newly adopted a Safety and Security framework since the 2024 edition?,"30 countries are new since 2024, on top of 37 that already had one — an 81% increase. 63 of the 130 countries assessed in both editions still have none.",30 new (37 already had one is a bonus).,Giving the 2026 total (67) as the number of new adopters; using all 135 countries without noting the 5 with no 2024 baseline is a minor issue only.,default (gpt-5.1),"30 countries newly adopted a [Safety and Security](/indicators/safety-security) framework between the 2024 and 2026 editions of the index.
+
+- Countries with a Safety and Security framework in 2024: 37 (out of 130 comparable countries)
+- Countries with a Safety and Security framework in 2026: 67
+- Newly covered countries since 2024: 30
+- Countries that still have no Safety and Security framework in 2026: 63  
+- No countries dropped Safety and Security frameworks between editions (0 “lost since 2024”).",Full,States 30 newly adopted frameworks and correctly distinguishes new from total; no red-flag misinterpretation.,"get_evidence_statistics({""metric"":""edition-change"",""scope"":""global"",""indicatorSlug"":""safety-security"",""groupBy"":""none"",""limit"":10})",8100
+Phase 9 — Global North/South & Edition Change,,,Analytical,Medium,Which indicator saw the most new framework adoptions since the 2024 edition?,"Fairness and Non-discrimination, with 32 countries adopting a framework since 2024; Reskilling/Upskilling and Safety and Security follow with 30 each.",Fairness and Non-discrimination (32).,Answering from 2026 coverage levels rather than change; naming an indicator not comparable across editions.,default (gpt-5.1),"The indicator with the largest number of new framework adoptions since the 2024 edition is **[Fairness and Non-discrimination](/indicators/fairness-non-discrimination)**.
+
+Key figures from the 14 comparable indicators globally:
+
+- Fairness and Non-discrimination: **32 countries** adopted a framework since 2024 (from 38 to 69 countries with frameworks, +81.6%). citeturn0function0  
+- Next largest increases:
+  - [Reskilling/Upskilling Initiatives](/indicators/reskilling-upskilling-initiatives): **30** new countries (40 → 70). citeturn0function0  
+  - [Safety and Security](/indicators/safety-security): **30** new countries (37 → 67). citeturn0function0  
+- Overall, across the 130 comparable countries and 14 indicators, the average number of indicators with at least one framework per country rose from **4.05 in 2024** to **6.38 in 2026** (+57.6%). citeturn0function0  
+
+**Sources**
+
+- GIRAI 2026, global evidence change statistics 2024→2026, edition-change metric by indicator (/download/data/2026). citeturn0function0",Full,Correctly identifies Fairness and Non-discrimination and gives the required figure of 32 new adoptions.,"get_evidence_statistics({""metric"":""edition-change"",""scope"":""global"",""indicatorSlug"":"""",""groupBy"":""indicator"",""limit"":10})",10442
+Phase 9 — Global North/South & Edition Change,,,Comparative,Hard,What share of frameworks are non-binding in the Global South versus the Global North?,"About 78% of adopted framework cases in the Global South are non-binding, versus about 41% in the Global North (the report says 42%), across the 14 indicators comparable between editions.",~78% South and ~41–42% North.,Mixing the edition-based figure with the all-records binding-share figures (72.6% / 45.0%) in one answer without explanation; reversing North and South.,default (gpt-5.1),"Across the comparable indicators in the GIRAI 2024→2026 evidence panel:
+
+- In the **Global South**, about **78.3%** of documented framework cases in 2026 are **non‑binding**.
+- In the **Global North**, about **40.6%** of framework cases in 2026 are **non‑binding**.
+- In 2024, these shares were **82.9%** (South) vs **59.8%** (North), so both groups reduced reliance on non‑binding instruments, but the South still relies much more heavily on them.
+- These figures are computed over the **14 indicators** that are comparable across both editions, counting all framework records (not just national AI policies) in each development group.
+
+**Sources**
+
+- GIRAI 2026 evidence statistics, edition-change panel by development group (/download/data/2026).",Partial,South figure is fine; North share (40.6%) is slightly outside 41–42% band but conceptually correct and well‑scoped.,"get_evidence_statistics({""metric"":""edition-change"",""scope"":""global"",""indicatorSlug"":"""",""groupBy"":""development"",""limit"":10})",9823

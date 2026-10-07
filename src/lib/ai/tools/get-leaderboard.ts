@@ -62,6 +62,15 @@ export const getLeaderboardTool = tool({
       .string()
       .optional()
       .describe("Rank only countries in this World Bank income group"),
+    // "any" is a real option, not just a default: strict tool schemas make the
+    // model fill every field, and an enum offering only the two groups got one
+    // of them on every call — silently filtering "which country is best?".
+    development: z
+      .enum(["any", "Global North", "Global South"])
+      .default("any")
+      .describe(
+        "'any' (no filter) unless the question is explicitly about the Global North (37 developed countries) or Global South (98 developing countries)"
+      ),
     limit: z.number().min(1).max(50).default(10),
     order: z.enum(["top", "bottom"]).default("top"),
   }),
@@ -141,6 +150,13 @@ export const getLeaderboardTool = tool({
         e.country.incomeGroup.toLowerCase().includes(ig)
       );
       scope = scope ? `${scope} · ${input.incomeGroup}` : input.incomeGroup;
+    }
+
+    if (input.development !== "any") {
+      const want =
+        input.development === "Global North" ? "Developed" : "Developing";
+      board = board.filter((e) => e.country.developing === want);
+      scope = scope ? `${scope} · ${input.development}` : input.development;
     }
 
     // Size of the full scoped ranking behind `entries`. Without it a caller

@@ -33,10 +33,13 @@ export const searchCountriesTool = tool({
     incomeGroup: z.string().optional().describe("World Bank income group"),
     minGirai: z.number().optional().describe("Minimum GIRAI score (0–100)"),
     maxGirai: z.number().optional().describe("Maximum GIRAI score (0–100)"),
+    // "any" gives strict-mode tool calls a no-filter choice; see get_leaderboard.
     developing: z
-      .enum(["Yes", "No"])
-      .optional()
-      .describe("Developing economy filter"),
+      .enum(["any", "Yes", "No"])
+      .default("any")
+      .describe(
+        "'Yes' = Global South (developing), 'No' = Global North (developed), 'any' = no filter (default)"
+      ),
     minDimensionScore: z.number().optional(),
     dimension: z
       .string()
@@ -77,7 +80,7 @@ export const searchCountriesTool = tool({
         c.incomeGroup.toLowerCase().includes(ig)
       );
     }
-    if (input.developing) {
+    if (input.developing !== "any") {
       // The dataset stores "Developing"/"Developed", not the Yes/No the model
       // sends — comparing raw input matched nothing, ever.
       const want = input.developing === "Yes" ? "Developing" : "Developed";
