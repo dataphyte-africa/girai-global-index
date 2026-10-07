@@ -1,0 +1,73 @@
+Phase,Conversation,Turn,Type,Difficulty,Prompt,Expected Answer,Pass Criteria,Red Flags,Model,Bot Answer,Verdict,Judge Rationale,Tools Used,Latency (ms)
+Phase 8 — National AI Policy,,,Factual,Medium,How many national AI policies are adopted or active?,"73 of 135 countries (54.1%) have an adopted National AI Policy or equivalent; a further 13 have one in draft and 49 have none. Of the 73, 47 are strategies, 18 policies, 5 laws and 3 white papers. 6 are legally binding (5 laws and 1 policy).","73 adopted (of 135, ~54%). Mentioning 13 draft and 49 none is a bonus.","Any count derived from framework evidence: 368, 312, 1,167, 109 countries, or 'framework documents'; treating drafts as adopted (86).",default (gpt-5.1),"There are 73 adopted (i.e. active) national AI policies or equivalent frameworks in the GIRAI 2026 dataset, out of 135 countries.
+
+Key details:
+
+- 73 adopted policies = 54.1% of countries; 13 countries (9.6%) have a draft, and 49 (36.3%) have no recorded national AI policy.
+- Among adopted policies, most are framed as a Strategy (47), followed by Policy (18), Law and regulation (5), and White Paper (3).
+- Only 6 of the 73 adopted policies are legally binding instruments (5 laws/regulations and 1 binding policy); the rest are non-binding.
+- Adoption has accelerated recently: 18 policies were adopted in 2024 and 22 in 2025, together accounting for more than half of all adopted policies.
+
+**Sources**
+
+- GIRAI 2026 live evidence statistics, global scope, metric “national-ai-policy”: /download/data/2026, Global Center on AI Governance, 2026.",Full,Correctly states 73 adopted out of 135 (54.1%) and does not include any disallowed framework-based or draft-miscount figures.,"get_evidence_statistics({""metric"":""national-ai-policy"",""scope"":""global"",""indicatorSlug"":"""",""groupBy"":""none"",""limit"":10})",7801
+Phase 8 — National AI Policy,,,Factual,Medium,Which African countries are still drafting a national AI policy?,"Four: Angola, Lesotho, South Africa and Tanzania. 12 of Africa's 39 countries have adopted one; 23 have none.","Names exactly Angola, Lesotho, South Africa and Tanzania.",Listing countries with adopted policies as drafting; listing draft data-protection laws or other framework drafts; South Africa described as having an adopted policy.,default (gpt-5.1),"According to the GIRAI 2026 dataset, four African countries are recorded as still **drafting** a national AI policy (status = Draft) at the time of publication:
+
+- [Angola](/countries/AGO) – “Draft Law on Artificial Intelligence (Angola)” (type: Draft framework, approval date recorded as 2025‑09‑01; enforceability if adopted would be Binding).  
+- [Lesotho](/countries/LSO) – “Artificial Intelligence Policy and Implementation Plan (Second Draft) (Lesotho)” (type: Draft framework, 2025‑01‑21; Non‑Binding).  
+- [South Africa](/countries/ZAF) – “South Africa National Artificial Intelligence Policy Framework” (type: Draft framework, 2024‑10‑25; Non‑Binding).  
+- [United Republic of Tanzania](/countries/TZA) – “Guidelines for the Secure and Ethical Use of Artificial Intelligence in Tanzania (Draft Version 2.0)” (type: Draft framework, 2024‑06‑01; Non‑Binding).  
+
+A few contextual points:
+
+- Across Africa, the index records 39 countries in total, of which 12 have **adopted** a national AI policy/strategy, 4 have a **draft**, and 23 have **no recorded national AI policy** at publication.  
+- All four draft instruments above are treated as the country’s single National AI Policy record in the dataset until they are formally adopted, replaced, or withdrawn.  
+
+**Sources**
+
+- GIRAI 2026 evidence statistics, metric “national-ai-policy”, scope “Africa”, grouped by country (see Angola, Lesotho, South Africa, Tanzania entries under policies).",Full,"Names exactly Angola, Lesotho, South Africa, and Tanzania; does not misstate their status as adopted.","get_evidence_statistics({""metric"":""national-ai-policy"",""scope"":""Africa"",""indicatorSlug"":"""",""groupBy"":""country"",""limit"":25})",9481
+Phase 8 — National AI Policy,,,Factual,Easy,Does South Africa have a national AI policy?,Not an adopted one: the index records South Africa's National Artificial Intelligence Policy Framework (October 2024) as a draft.,"Says it is a draft, not adopted, and names the National AI Policy Framework.",Says South Africa has an adopted national AI policy; confuses the country with the Southern Africa subregion.,default (gpt-5.1),"Yes. At the time of the GIRAI 2026 edition, South Africa has a **draft national AI policy framework**, not yet an adopted (in-force) policy.
+
+Key details from the index:
+
+- **Status:** Draft (not yet adopted into force as law or a binding policy)
+- **Title:** “South Africa National Artificial Intelligence Policy Framework”
+- **Type:** Draft framework
+- **Approval date recorded:** 25 October 2024
+- **Enforceability:** Non-binding (it is a policy framework draft, not a law)
+- **Profile link:** [South Africa](/countries/ZAF)
+
+So, South Africa is in the “Draft” stage for its national AI policy rather than having a fully adopted national AI strategy or act.",Full,"Clearly states it is a draft, not adopted, and correctly names the National AI Policy Framework.","lookup_country({""query"":""South Africa"",""indicators"":[]})",6302
+Phase 8 — National AI Policy,,,Comparative,Medium,Which region has the highest share of countries with an adopted national AI policy?,"Northern America at 100% (2 of 2), then the Middle East at 90% (9 of 10) and Europe at 75% (24 of 32). Africa (12 of 39, 30.8%) and the Caribbean (1 of 8) are lowest.",Northern America and/or Middle East named as highest with correct counts; ideally notes Northern America's tiny sample.,Ranking regions by framework coverage or GIRAI score instead of national AI policy adoption; invented percentages.,default (gpt-5.1),"Northern America has the highest share: every country in the region has an adopted national AI policy.
+
+- **Northern America:** 2 of 2 countries have adopted a national AI policy (100.0%).
+- **Middle East:** 9 of 10 countries (90.0%) have an adopted policy.
+- **Europe:** 24 of 32 countries (75.0%).
+- **Global benchmark:** 73 of 135 countries worldwide (54.1%) have an adopted national AI policy.  
+
+**Sources:** GIRAI 2026 evidence statistics on national AI policy adoption by region (/download/data/2026, national-ai-policy, grouped by region).",Full,Correctly identifies Northern America as highest and gives correct counts and percentages; no red flags present.,"get_evidence_statistics({""metric"":""national-ai-policy"",""scope"":""global"",""indicatorSlug"":"""",""groupBy"":""region"",""limit"":10})",5429
+Phase 8 — National AI Policy,,,Factual,Hard,How many national AI policies are legally binding?,"6 of the 73 adopted national AI policies are binding (e.g. Italy's Law 132/2025, South Korea's AI Basic Act); the other 67 are non-binding strategies, policies or white papers.",6 binding of 73 adopted.,"Quoting framework binding share (461 binding framework records, ~39.5%) as the answer; conflating national AI policies with all frameworks.",default (gpt-5.1),"Globally, 6 adopted national AI policies in the GIRAI 2026 dataset are legally binding.
+
+- Out of 73 adopted national AI policies or equivalent frameworks, 6 are classified as binding and 67 as non‑binding.
+- Binding policies are mostly “Law and regulation” types (5), plus 1 binding “Policy” instrument.
+- Strategies and white papers are all non‑binding in the adopted set.
+- Overall, this means only about 8% of adopted national AI policies in the index are legally enforceable instruments.",Full,States 6 of 73 adopted national AI policies are binding and distinguishes binding from non‑binding correctly.,"get_evidence_statistics({""metric"":""national-ai-policy"",""scope"":""global"",""indicatorSlug"":"""",""groupBy"":""none"",""limit"":10})",6323
+Phase 8 — National AI Policy,,,Analytical,Medium,"Of the countries with an adopted national AI policy, how many back it with a budget, an implementation plan and monitoring?","18 of the 73 adopted policies have all three (plan, budget and monitoring). Individually: 21 allocate a budget, 51 include an implementation plan, 54 include monitoring, and 65 name an implementation body.","18 with all three, or the individual counts (budget 21, plan 51, monitoring 54) — ideally both.",Any other all-three figure; counting from a capped list of policies; percentages over all 135 countries instead of the 73 adopted.,default (gpt-5.1),"18 countries.
+
+- Globally, 73 of 135 countries have an adopted National AI Policy or equivalent.
+- Of those 73, 18 policies include all three: an implementation plan, a dedicated budget, and a monitoring mechanism.
+- More broadly, 51 have an implementation plan, 21 have a dedicated budget, and 54 have a monitoring mechanism, but most are missing at least one of these three elements.
+- These figures are computed from the 2026 GIRAI evidence statistics on national AI policies. fileciteturn1evidence_statistics0  
+
+**Sources**  
+- Global national AI policy statistics, GIRAI 2026 – ""National AI Policy"" evidence metric (/download/data/2026). fileciteturn1evidence_statistics0",Full,"States 18 with all three and correctly lists 21 budget, 51 plan, 54 monitoring; scope and counts match criteria.","get_evidence_statistics({""metric"":""national-ai-policy"",""scope"":""global"",""indicatorSlug"":"""",""groupBy"":""none"",""limit"":10})",5886
+Phase 8 — National AI Policy,,,Factual,Medium,How many countries adopted their national AI policy in 2024 or 2025?,40 of the 73: 18 in 2024 and 22 in 2025 — more than half of all adopted national AI policies date from the last two years.,40 (18 + 22).,Counting framework adoption dates; including drafts.,default (gpt-5.1),"Across all 135 countries in GIRAI 2026, **40 countries adopted their national AI policy in 2024 or 2025**.
+
+- 18 countries adopted in **2024**.
+- 22 countries adopted in **2025**.
+- Together, these 40 adoptions make up more than half of the **73 adopted** national AI policies recorded globally.
+- Earlier years saw smaller waves (for example 7 in 2023, 6 in 2019, 6 in 2021), underscoring the acceleration in 2024–2025.
+
+**Sources**
+
+- GIRAI 2026 evidence statistics, metric “national-ai-policy”, global scope → `adoptedByYear` field in the dataset, and total `adopted` count.",Full,Matches required figures 40 (18+22) with correct context; no disallowed considerations included.,"get_evidence_statistics({""metric"":""national-ai-policy"",""scope"":""global"",""indicatorSlug"":"""",""groupBy"":""none"",""limit"":10})",6334

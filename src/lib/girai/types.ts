@@ -227,6 +227,45 @@ export interface EvidenceArtifact {
   items: EvidenceItem[];
 }
 
+export type NationalAiPolicyStatus = "Adopted" | "Draft" | "No framework";
+
+/**
+ * A country's National AI Policy (or equivalent framework), from the GMC
+ * sheet. One per country; every document field is null when status is
+ * "No framework".
+ */
+export interface NationalAiPolicy {
+  country: EvidenceCountryRef;
+  status: NationalAiPolicyStatus;
+  title: string | null;
+  link: string | null;
+  drive: string | null;
+  /** Strategy, Policy, Law and regulation, White Paper, or Draft framework. */
+  type: string | null;
+  /** Adoption date when adopted; publication date when draft. */
+  approval: string | null;
+  enforceability: string | null;
+  reach: string | null;
+  defenceAndSecurity: { value: string; justification: string } | null;
+  body: { exists: string; name: string | null } | null;
+  plan: string | null;
+  budget: string | null;
+  monitoring: string | null;
+  /** Whether stakeholder consultation took place in drafting the policy. */
+  csoConsultation: string | null;
+  thematicElements: EvidenceThematicElement[] | null;
+}
+
+export interface NationalAiPolicyArtifact {
+  generatedAt: string;
+  sourceHash: string;
+  totals: {
+    countries: number;
+    byStatus: Record<NationalAiPolicyStatus, number>;
+  };
+  policies: NationalAiPolicy[];
+}
+
 export type FrameworkAdoptionStatus = "adopted" | "draft" | "notAdopted";
 
 export interface IndicatorAdoptionEntry {

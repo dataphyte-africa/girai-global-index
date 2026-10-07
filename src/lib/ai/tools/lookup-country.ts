@@ -5,6 +5,7 @@ import {
   getIndicatorLeaderboard,
   getSubregionalRank,
 } from "@/lib/girai/data";
+import { getNationalAiPolicy } from "@/lib/girai/statistics";
 import { countrySource, indicatorSource, mergeSources } from "../sources";
 import type { GiraiToolResult } from "../types";
 import {
@@ -16,7 +17,7 @@ import {
 
 export const lookupCountryTool = tool({
   description:
-    "Look up a country by ISO3 code or name. Returns GIRAI score, ranks, dimension/pillar scores, URAI info, and evidence counts. " +
+    "Look up a country by ISO3 code or name. Returns GIRAI score, ranks, dimension/pillar scores, URAI info, evidence counts, and its National AI Policy status. " +
     "Pass `indicators` to also get the country's score and global rank on specific indicators.",
   inputSchema: z.object({
     query: z
@@ -58,6 +59,8 @@ export const lookupCountryTool = tool({
       };
     });
 
+    const nationalAiPolicy = getNationalAiPolicy(country.iso3);
+
     return {
       data: {
         found: true,
@@ -86,6 +89,18 @@ export const lookupCountryTool = tool({
         strongestDimensions: topDimensions(country),
         weakestDimensions: bottomDimensions(country),
         evidenceCounts: country.evidenceCounts,
+        // The dataset's own National AI Policy status (Adopted / Draft /
+        // No framework) — not inferable from framework evidence counts.
+        nationalAiPolicy: nationalAiPolicy
+          ? {
+              status: nationalAiPolicy.status,
+              title: nationalAiPolicy.title,
+              type: nationalAiPolicy.type,
+              approval: nationalAiPolicy.approval,
+              enforceability: nationalAiPolicy.enforceability,
+              link: nationalAiPolicy.link,
+            }
+          : null,
         ...(indicatorDetails.length > 0 ? { indicatorDetails } : {}),
       },
       sources: mergeSources(

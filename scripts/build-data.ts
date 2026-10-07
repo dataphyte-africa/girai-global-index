@@ -1003,6 +1003,85 @@ for (const row of uraiRows) {
 }
 
 // ---------------------------------------------------------------------------
+// 3f. National AI Policy (one record per country, from the GMC sheet)
+//
+// gmc_status is the dataset's own answer to "does this country have a national
+// AI policy?" — Adopted / Draft / No framework, with the document's type, date,
+// enforceability and implementation fields. It is NOT derivable from the
+// framework evidence: that corpus counts every document assessed against any
+// AI Policy indicator (data-protection acts, the EU AI Act, sector guidelines),
+// once per indicator, so counting it overstates national AI policies roughly
+// five-fold. Section 3d above keeps only the GMC consultation/provision/
+// mechanism blocks; this keeps the policy itself.
+
+type NapStatus = "Adopted" | "Draft" | "No framework";
+const NAP_STATUSES: readonly NapStatus[] = ["Adopted", "Draft", "No framework"];
+
+const nationalAiPolicies = gmcRows
+  .filter((row) => str(row["ISO3"]))
+  .map((row) => {
+    const iso3 = str(row["ISO3"])!;
+    const ik = str(row["interview_key"]);
+    const status = str(row["gmc_status"]);
+    if (!status || !NAP_STATUSES.includes(status as NapStatus)) {
+      throw new Error(`Unknown gmc_status for ${iso3}: ${JSON.stringify(status)}`);
+    }
+    const hasPolicy = status !== "No framework";
+    const dsValue = str(row["gmc_defence_and_security"]);
+    const bodyExists = str(row["gmc_body"]);
+    return {
+      country: countryRef(iso3),
+      status: status as NapStatus,
+      title: hasPolicy ? str(row["gmc_title"]) : null,
+      link: hasPolicy ? str(row["gmc_link"]) : null,
+      drive: hasPolicy ? str(row["gmc_drive"]) : null,
+      type: hasPolicy ? str(row["gmc_type"]) : null,
+      approval: hasPolicy ? excelDateToIso(row["gmc_approval"]) : null,
+      enforceability: hasPolicy ? str(row["gmc_enforceability"]) : null,
+      reach: hasPolicy ? str(row["gmc_reach"]) : null,
+      defenceAndSecurity:
+        hasPolicy && dsValue
+          ? { value: dsValue, justification: strOr(row["gmc_defence_and_security_justif"]) }
+          : null,
+      body:
+        hasPolicy && bodyExists
+          ? { exists: bodyExists, name: str(row["gmc_body_name"]) }
+          : null,
+      plan: hasPolicy ? str(row["gmc_plan"]) : null,
+      budget: hasPolicy ? str(row["gmc_budget"]) : null,
+      monitoring: hasPolicy ? str(row["gmc_monitoring"]) : null,
+      csoConsultation: hasPolicy ? str(row["gmc_consultation"]) : null,
+      thematicElements: hasPolicy && ik ? thematicByKey.get(`${ik}::gmc`) ?? null : null,
+    };
+  })
+  .sort((a, b) => a.country.name.localeCompare(b.country.name));
+
+{
+  const covered = new Set(nationalAiPolicies.map((p) => p.country.iso3));
+  if (covered.size !== nationalAiPolicies.length) {
+    throw new Error("Duplicate country in gmc_cse national AI policy rows");
+  }
+  const missing = countriesFinal.filter((c) => !covered.has(c.iso3));
+  if (missing.length) {
+    throw new Error(
+      `gmc_cse has no national AI policy row for: ${missing.map((c) => c.iso3).join(", ")}`
+    );
+  }
+}
+
+const napCounts = Object.fromEntries(
+  NAP_STATUSES.map((s) => [s, nationalAiPolicies.filter((p) => p.status === s).length])
+);
+writeJson(path.join(OUT_GENERATED, "national-ai-policies.json"), {
+  ...PROVENANCE,
+  totals: { countries: nationalAiPolicies.length, byStatus: napCounts },
+  policies: nationalAiPolicies,
+});
+console.log(
+  `[build-data] wrote national-ai-policies.json (${napCounts["Adopted"]} adopted, ${napCounts["Draft"]} draft, ${napCounts["No framework"]} none)`
+);
+
+// ---------------------------------------------------------------------------
 // 3e½. Country pillar highlights (country page "What Drives This Performance?")
 
 const CSO_PILLAR_INDICATORS = INDICATORS.filter((i) => i.pillar === "cso-engagement");
