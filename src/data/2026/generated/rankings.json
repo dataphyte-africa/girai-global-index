@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-07-07T15:33:29.818Z",
-  "sourceHash": "805076eec44668e5d51a6fd04aedcc6988cc57707ad27ebe27cb9a046c53c439",
+  "generatedAt": "2026-10-25T18:30:03.719Z",
+  "sourceHash": "48033e24f777f1e97fe5174208bb1ffe1e0a4d9b49157124eae5c108d3636c76",
   "countries": [
     {
       "iso3": "NOR",
@@ -728,8 +728,8 @@
       },
       "frameworkRankGlobal": 37,
       "frameworkRankRegional": 23,
-      "implementationRankGlobal": 33,
-      "implementationRankRegional": 19
+      "implementationRankGlobal": 32,
+      "implementationRankRegional": 18
     },
     {
       "iso3": "FRA",
@@ -3129,7 +3129,7 @@
         }
       },
       "frameworkScore": 67.27272727272727,
-      "implementationScore": 70.58823529411765,
+      "implementationScore": 52.069716775599126,
       "rankRegional": 12,
       "rankIncomeGroup": 12,
       "dimensionRanksGlobal": {
@@ -3158,8 +3158,8 @@
       },
       "frameworkRankGlobal": 11,
       "frameworkRankRegional": 7,
-      "implementationRankGlobal": 21,
-      "implementationRankRegional": 12
+      "implementationRankGlobal": 60,
+      "implementationRankRegional": 25
     },
     {
       "iso3": "CHL",
@@ -3401,7 +3401,7 @@
       },
       "frameworkRankGlobal": 43,
       "frameworkRankRegional": 3,
-      "implementationRankGlobal": 35,
+      "implementationRankGlobal": 34,
       "implementationRankRegional": 3
     },
     {
@@ -3644,8 +3644,8 @@
       },
       "frameworkRankGlobal": 13,
       "frameworkRankRegional": 8,
-      "implementationRankGlobal": 24,
-      "implementationRankRegional": 15
+      "implementationRankGlobal": 22,
+      "implementationRankRegional": 14
     },
     {
       "iso3": "BEL",
@@ -3887,8 +3887,8 @@
       },
       "frameworkRankGlobal": 27,
       "frameworkRankRegional": 20,
-      "implementationRankGlobal": 24,
-      "implementationRankRegional": 15
+      "implementationRankGlobal": 22,
+      "implementationRankRegional": 14
     },
     {
       "iso3": "POL",
@@ -4130,8 +4130,8 @@
       },
       "frameworkRankGlobal": 25,
       "frameworkRankRegional": 18,
-      "implementationRankGlobal": 36,
-      "implementationRankRegional": 21
+      "implementationRankGlobal": 35,
+      "implementationRankRegional": 20
     },
     {
       "iso3": "PRT",
@@ -4373,8 +4373,8 @@
       },
       "frameworkRankGlobal": 21,
       "frameworkRankRegional": 16,
-      "implementationRankGlobal": 30,
-      "implementationRankRegional": 18
+      "implementationRankGlobal": 29,
+      "implementationRankRegional": 17
     },
     {
       "iso3": "CHE",
@@ -4616,8 +4616,8 @@
       },
       "frameworkRankGlobal": 66,
       "frameworkRankRegional": 28,
-      "implementationRankGlobal": 46,
-      "implementationRankRegional": 25
+      "implementationRankGlobal": 43,
+      "implementationRankRegional": 23
     },
     {
       "iso3": "AUT",
@@ -4859,8 +4859,8 @@
       },
       "frameworkRankGlobal": 8,
       "frameworkRankRegional": 4,
-      "implementationRankGlobal": 44,
-      "implementationRankRegional": 24
+      "implementationRankGlobal": 42,
+      "implementationRankRegional": 22
     },
     {
       "iso3": "LTU",
@@ -5102,8 +5102,8 @@
       },
       "frameworkRankGlobal": 9,
       "frameworkRankRegional": 5,
-      "implementationRankGlobal": 23,
-      "implementationRankRegional": 14
+      "implementationRankGlobal": 21,
+      "implementationRankRegional": 13
     },
     {
       "iso3": "URY",
@@ -5345,7 +5345,7 @@
       },
       "frameworkRankGlobal": 44,
       "frameworkRankRegional": 4,
-      "implementationRankGlobal": 61,
+      "implementationRankGlobal": 59,
       "implementationRankRegional": 5
     },
     {
@@ -5588,7 +5588,7 @@
       },
       "frameworkRankGlobal": 50,
       "frameworkRankRegional": 9,
-      "implementationRankGlobal": 20,
+      "implementationRankGlobal": 19,
       "implementationRankRegional": 4
     },
     {
@@ -5802,7 +5802,7 @@
         }
       },
       "frameworkScore": 54.08163265306123,
-      "implementationScore": 60.947712418300654,
+      "implementationScore": 57.475490196078425,
       "rankRegional": 2,
       "rankIncomeGroup": 23,
       "dimensionRanksGlobal": {
@@ -5831,8 +5831,8 @@
       },
       "frameworkRankGlobal": 46,
       "frameworkRankRegional": 7,
-      "implementationRankGlobal": 45,
-      "implementationRankRegional": 10
+      "implementationRankGlobal": 50,
+      "implementationRankRegional": 12
     },
     {
       "iso3": "CAN",
@@ -6317,7 +6317,7 @@
       },
       "frameworkRankGlobal": 72,
       "frameworkRankRegional": 9,
-      "implementationRankGlobal": 29,
+      "implementationRankGlobal": 28,
       "implementationRankRegional": 2
     },
     {
@@ -6531,7 +6531,7 @@
         }
       },
       "frameworkScore": 54.08163265306123,
-      "implementationScore": 63.38742393509128,
+      "implementationScore": 61.385199240986715,
       "rankRegional": 2,
       "rankIncomeGroup": 25,
       "dimensionRanksGlobal": {
@@ -6560,7 +6560,7 @@
       },
       "frameworkRankGlobal": 46,
       "frameworkRankRegional": 2,
-      "implementationRankGlobal": 37,
+      "implementationRankGlobal": 41,
       "implementationRankRegional": 2
     },
     {
@@ -7046,8 +7046,8 @@
       },
       "frameworkRankGlobal": 25,
       "frameworkRankRegional": 18,
-      "implementationRankGlobal": 69,
-      "implementationRankRegional": 29
+      "implementationRankGlobal": 68,
+      "implementationRankRegional": 28
     },
     {
       "iso3": "ROU",
@@ -7289,8 +7289,8 @@
       },
       "frameworkRankGlobal": 14,
       "frameworkRankRegional": 9,
-      "implementationRankGlobal": 48,
-      "implementationRankRegional": 26
+      "implementationRankGlobal": 45,
+      "implementationRankRegional": 24
     },
     {
       "iso3": "KGZ",
@@ -7775,8 +7775,8 @@
       },
       "frameworkRankGlobal": 20,
       "frameworkRankRegional": 15,
-      "implementationRankGlobal": 67,
-      "implementationRankRegional": 28
+      "implementationRankGlobal": 66,
+      "implementationRankRegional": 27
     },
     {
       "iso3": "SRB",
@@ -8018,8 +8018,8 @@
       },
       "frameworkRankGlobal": 62,
       "frameworkRankRegional": 27,
-      "implementationRankGlobal": 26,
-      "implementationRankRegional": 17
+      "implementationRankGlobal": 24,
+      "implementationRankRegional": 16
     },
     {
       "iso3": "PER",
@@ -8261,7 +8261,7 @@
       },
       "frameworkRankGlobal": 74,
       "frameworkRankRegional": 10,
-      "implementationRankGlobal": 57,
+      "implementationRankGlobal": 55,
       "implementationRankRegional": 4
     },
     {
@@ -8504,8 +8504,8 @@
       },
       "frameworkRankGlobal": 6,
       "frameworkRankRegional": 2,
-      "implementationRankGlobal": 34,
-      "implementationRankRegional": 20
+      "implementationRankGlobal": 33,
+      "implementationRankRegional": 19
     },
     {
       "iso3": "DOM",
@@ -8747,7 +8747,7 @@
       },
       "frameworkRankGlobal": 77,
       "frameworkRankRegional": 1,
-      "implementationRankGlobal": 68,
+      "implementationRankGlobal": 67,
       "implementationRankRegional": 3
     },
     {
@@ -9233,7 +9233,7 @@
       },
       "frameworkRankGlobal": 75,
       "frameworkRankRegional": 11,
-      "implementationRankGlobal": 51,
+      "implementationRankGlobal": 48,
       "implementationRankRegional": 7
     },
     {
@@ -9476,7 +9476,7 @@
       },
       "frameworkRankGlobal": 53,
       "frameworkRankRegional": 11,
-      "implementationRankGlobal": 70,
+      "implementationRankGlobal": 69,
       "implementationRankRegional": 17
     },
     {
@@ -9719,8 +9719,8 @@
       },
       "frameworkRankGlobal": 69,
       "frameworkRankRegional": 18,
-      "implementationRankGlobal": 52,
-      "implementationRankRegional": 12
+      "implementationRankGlobal": 49,
+      "implementationRankRegional": 11
     },
     {
       "iso3": "ISR",
@@ -9962,7 +9962,7 @@
       },
       "frameworkRankGlobal": 3,
       "frameworkRankRegional": 2,
-      "implementationRankGlobal": 56,
+      "implementationRankGlobal": 54,
       "implementationRankRegional": 2
     },
     {
@@ -10205,7 +10205,7 @@
       },
       "frameworkRankGlobal": 28,
       "frameworkRankRegional": 3,
-      "implementationRankGlobal": 38,
+      "implementationRankGlobal": 36,
       "implementationRankRegional": 8
     },
     {
@@ -10662,7 +10662,7 @@
         }
       },
       "frameworkScore": 52.63157894736842,
-      "implementationScore": 35.661764705882355,
+      "implementationScore": 34.411764705882355,
       "rankRegional": 25,
       "rankIncomeGroup": 7,
       "dimensionRanksGlobal": {
@@ -10691,8 +10691,8 @@
       },
       "frameworkRankGlobal": 52,
       "frameworkRankRegional": 26,
-      "implementationRankGlobal": 85,
-      "implementationRankRegional": 30
+      "implementationRankGlobal": 84,
+      "implementationRankRegional": 29
     },
     {
       "iso3": "MDA",
@@ -10905,7 +10905,7 @@
         }
       },
       "frameworkScore": 38.57142857142857,
-      "implementationScore": 61.76470588235294,
+      "implementationScore": 31.764705882352942,
       "rankRegional": 26,
       "rankIncomeGroup": 8,
       "dimensionRanksGlobal": {
@@ -10934,8 +10934,8 @@
       },
       "frameworkRankGlobal": 79,
       "frameworkRankRegional": 29,
-      "implementationRankGlobal": 39,
-      "implementationRankRegional": 22
+      "implementationRankGlobal": 86,
+      "implementationRankRegional": 30
     },
     {
       "iso3": "IND",
@@ -11148,7 +11148,7 @@
         }
       },
       "frameworkScore": 53.333333333333336,
-      "implementationScore": 43.69747899159664,
+      "implementationScore": 41.911764705882355,
       "rankRegional": 9,
       "rankIncomeGroup": 3,
       "dimensionRanksGlobal": {
@@ -11420,7 +11420,7 @@
       },
       "frameworkRankGlobal": 38,
       "frameworkRankRegional": 5,
-      "implementationRankGlobal": 31,
+      "implementationRankGlobal": 30,
       "implementationRankRegional": 6
     },
     {
@@ -11634,7 +11634,7 @@
         }
       },
       "frameworkScore": 56.25,
-      "implementationScore": 72.62443438914028,
+      "implementationScore": 66.47058823529412,
       "rankRegional": 2,
       "rankIncomeGroup": 5,
       "dimensionRanksGlobal": {
@@ -11663,8 +11663,8 @@
       },
       "frameworkRankGlobal": 42,
       "frameworkRankRegional": 5,
-      "implementationRankGlobal": 19,
-      "implementationRankRegional": 2
+      "implementationRankGlobal": 27,
+      "implementationRankRegional": 3
     },
     {
       "iso3": "JOR",
@@ -11906,7 +11906,7 @@
       },
       "frameworkRankGlobal": 92,
       "frameworkRankRegional": 8,
-      "implementationRankGlobal": 66,
+      "implementationRankGlobal": 65,
       "implementationRankRegional": 3
     },
     {
@@ -12149,7 +12149,7 @@
       },
       "frameworkRankGlobal": 97,
       "frameworkRankRegional": 20,
-      "implementationRankGlobal": 72,
+      "implementationRankGlobal": 71,
       "implementationRankRegional": 13
     },
     {
@@ -12392,7 +12392,7 @@
       },
       "frameworkRankGlobal": 78,
       "frameworkRankRegional": 19,
-      "implementationRankGlobal": 54,
+      "implementationRankGlobal": 52,
       "implementationRankRegional": 13
     },
     {
@@ -12635,7 +12635,7 @@
       },
       "frameworkRankGlobal": 35,
       "frameworkRankRegional": 4,
-      "implementationRankGlobal": 80,
+      "implementationRankGlobal": 79,
       "implementationRankRegional": 4
     },
     {
@@ -12878,7 +12878,7 @@
       },
       "frameworkRankGlobal": 68,
       "frameworkRankRegional": 17,
-      "implementationRankGlobal": 63,
+      "implementationRankGlobal": 62,
       "implementationRankRegional": 16
     },
     {
@@ -13121,8 +13121,8 @@
       },
       "frameworkRankGlobal": 22,
       "frameworkRankRegional": 2,
-      "implementationRankGlobal": 47,
-      "implementationRankRegional": 11
+      "implementationRankGlobal": 44,
+      "implementationRankRegional": 10
     },
     {
       "iso3": "ARE",
@@ -13364,7 +13364,7 @@
       },
       "frameworkRankGlobal": 65,
       "frameworkRankRegional": 6,
-      "implementationRankGlobal": 84,
+      "implementationRankGlobal": 83,
       "implementationRankRegional": 5
     },
     {
@@ -13607,7 +13607,7 @@
       },
       "frameworkRankGlobal": 81,
       "frameworkRankRegional": 12,
-      "implementationRankGlobal": 81,
+      "implementationRankGlobal": 80,
       "implementationRankRegional": 15
     },
     {
@@ -13821,7 +13821,7 @@
         }
       },
       "frameworkScore": 21.875,
-      "implementationScore": 35.08403361344538,
+      "implementationScore": 32.94117647058823,
       "rankRegional": 14,
       "rankIncomeGroup": 10,
       "dimensionRanksGlobal": {
@@ -13850,7 +13850,7 @@
       },
       "frameworkRankGlobal": 98,
       "frameworkRankRegional": 23,
-      "implementationRankGlobal": 86,
+      "implementationRankGlobal": 85,
       "implementationRankRegional": 23
     },
     {
@@ -14093,7 +14093,7 @@
       },
       "frameworkRankGlobal": 82,
       "frameworkRankRegional": 30,
-      "implementationRankGlobal": 21,
+      "implementationRankGlobal": 20,
       "implementationRankRegional": 12
     },
     {
@@ -14336,8 +14336,8 @@
       },
       "frameworkRankGlobal": 89,
       "frameworkRankRegional": 17,
-      "implementationRankGlobal": 26,
-      "implementationRankRegional": 3
+      "implementationRankGlobal": 24,
+      "implementationRankRegional": 2
     },
     {
       "iso3": "THA",
@@ -14579,7 +14579,7 @@
       },
       "frameworkRankGlobal": 54,
       "frameworkRankRegional": 12,
-      "implementationRankGlobal": 74,
+      "implementationRankGlobal": 73,
       "implementationRankRegional": 18
     },
     {
@@ -14822,7 +14822,7 @@
       },
       "frameworkRankGlobal": 99,
       "frameworkRankRegional": 13,
-      "implementationRankGlobal": 73,
+      "implementationRankGlobal": 72,
       "implementationRankRegional": 6
     },
     {
@@ -15551,7 +15551,7 @@
       },
       "frameworkRankGlobal": 49,
       "frameworkRankRegional": 6,
-      "implementationRankGlobal": 64,
+      "implementationRankGlobal": 63,
       "implementationRankRegional": 10
     },
     {
@@ -16037,7 +16037,7 @@
       },
       "frameworkRankGlobal": 31,
       "frameworkRankRegional": 4,
-      "implementationRankGlobal": 83,
+      "implementationRankGlobal": 82,
       "implementationRankRegional": 16
     },
     {
@@ -16280,7 +16280,7 @@
       },
       "frameworkRankGlobal": 4,
       "frameworkRankRegional": 3,
-      "implementationRankGlobal": 53,
+      "implementationRankGlobal": 51,
       "implementationRankRegional": 1
     },
     {
@@ -16523,7 +16523,7 @@
       },
       "frameworkRankGlobal": 48,
       "frameworkRankRegional": 8,
-      "implementationRankGlobal": 32,
+      "implementationRankGlobal": 31,
       "implementationRankRegional": 7
     },
     {
@@ -16766,8 +16766,8 @@
       },
       "frameworkRankGlobal": 15,
       "frameworkRankRegional": 10,
-      "implementationRankGlobal": 39,
-      "implementationRankRegional": 22
+      "implementationRankGlobal": 37,
+      "implementationRankRegional": 21
     },
     {
       "iso3": "KAZ",
@@ -17009,7 +17009,7 @@
       },
       "frameworkRankGlobal": 55,
       "frameworkRankRegional": 13,
-      "implementationRankGlobal": 74,
+      "implementationRankGlobal": 73,
       "implementationRankRegional": 18
     },
     {
@@ -17252,8 +17252,8 @@
       },
       "frameworkRankGlobal": 23,
       "frameworkRankRegional": 17,
-      "implementationRankGlobal": 62,
-      "implementationRankRegional": 27
+      "implementationRankGlobal": 61,
+      "implementationRankRegional": 26
     },
     {
       "iso3": "LKA",
@@ -17738,7 +17738,7 @@
       },
       "frameworkRankGlobal": 86,
       "frameworkRankRegional": 15,
-      "implementationRankGlobal": 71,
+      "implementationRankGlobal": 70,
       "implementationRankRegional": 12
     },
     {
@@ -17981,7 +17981,7 @@
       },
       "frameworkRankGlobal": 96,
       "frameworkRankRegional": 19,
-      "implementationRankGlobal": 39,
+      "implementationRankGlobal": 37,
       "implementationRankRegional": 4
     },
     {
@@ -18467,7 +18467,7 @@
       },
       "frameworkRankGlobal": 82,
       "frameworkRankRegional": 20,
-      "implementationRankGlobal": 39,
+      "implementationRankGlobal": 37,
       "implementationRankRegional": 9
     },
     {
@@ -18710,7 +18710,7 @@
       },
       "frameworkRankGlobal": 85,
       "frameworkRankRegional": 14,
-      "implementationRankGlobal": 39,
+      "implementationRankGlobal": 37,
       "implementationRankRegional": 4
     },
     {
@@ -19196,7 +19196,7 @@
       },
       "frameworkRankGlobal": 82,
       "frameworkRankRegional": 13,
-      "implementationRankGlobal": 78,
+      "implementationRankGlobal": 76,
       "implementationRankRegional": 14
     },
     {
@@ -20168,7 +20168,7 @@
       },
       "frameworkRankGlobal": 63,
       "frameworkRankRegional": 15,
-      "implementationRankGlobal": 28,
+      "implementationRankGlobal": 26,
       "implementationRankRegional": 5
     },
     {
@@ -20654,7 +20654,7 @@
       },
       "frameworkRankGlobal": 32,
       "frameworkRankRegional": 2,
-      "implementationRankGlobal": 79,
+      "implementationRankGlobal": 78,
       "implementationRankRegional": 7
     },
     {
@@ -21626,7 +21626,7 @@
       },
       "frameworkRankGlobal": 67,
       "frameworkRankRegional": 16,
-      "implementationRankGlobal": 82,
+      "implementationRankGlobal": 81,
       "implementationRankRegional": 22
     },
     {
@@ -22112,7 +22112,7 @@
       },
       "frameworkRankGlobal": 91,
       "frameworkRankRegional": 22,
-      "implementationRankGlobal": 74,
+      "implementationRankGlobal": 73,
       "implementationRankRegional": 18
     },
     {
@@ -22355,7 +22355,7 @@
       },
       "frameworkRankGlobal": 106,
       "frameworkRankRegional": 22,
-      "implementationRankGlobal": 57,
+      "implementationRankGlobal": 55,
       "implementationRankRegional": 9
     },
     {
@@ -24299,7 +24299,7 @@
       },
       "frameworkRankGlobal": 73,
       "frameworkRankRegional": 10,
-      "implementationRankGlobal": 48,
+      "implementationRankGlobal": 45,
       "implementationRankRegional": 6
     },
     {
@@ -24542,7 +24542,7 @@
       },
       "frameworkRankGlobal": 61,
       "frameworkRankRegional": 14,
-      "implementationRankGlobal": 57,
+      "implementationRankGlobal": 55,
       "implementationRankRegional": 14
     },
     {
@@ -25271,7 +25271,7 @@
       },
       "frameworkRankGlobal": 104,
       "frameworkRankRegional": 24,
-      "implementationRankGlobal": 57,
+      "implementationRankGlobal": 55,
       "implementationRankRegional": 14
     },
     {
@@ -25514,7 +25514,7 @@
       },
       "frameworkRankGlobal": 100,
       "frameworkRankRegional": 4,
-      "implementationRankGlobal": 48,
+      "implementationRankGlobal": 45,
       "implementationRankRegional": 2
     },
     {
@@ -29402,7 +29402,7 @@
       },
       "frameworkRankGlobal": 108,
       "frameworkRankRegional": 24,
-      "implementationRankGlobal": 65,
+      "implementationRankGlobal": 64,
       "implementationRankRegional": 11
     },
     {
@@ -30131,7 +30131,7 @@
       },
       "frameworkRankGlobal": 100,
       "frameworkRankRegional": 21,
-      "implementationRankGlobal": 54,
+      "implementationRankGlobal": 52,
       "implementationRankRegional": 8
     },
     {
@@ -32864,7 +32864,7 @@
         "unacceptable-risks-ai-systems": 0.9862222222222219
       },
       "frameworkScore": 47.58870665461409,
-      "implementationScore": 43.17441624109104
+      "implementationScore": 42.69052451503725
     },
     "byRegion": {
       "Europe": {
@@ -32922,7 +32922,7 @@
           "unacceptable-risks-ai-systems": 0.979375
         },
         "frameworkScore": 59.95519101330664,
-        "implementationScore": 65.57300357115483
+        "implementationScore": 64.01773736745112
       },
       "South and Central America": {
         "girai": 38.854285714285716,
@@ -33036,7 +33036,7 @@
           "unacceptable-risks-ai-systems": 0.9823333333333334
         },
         "frameworkScore": 46.01663609773812,
-        "implementationScore": 47.358709936459306
+        "implementationScore": 47.112016814766186
       },
       "Northern America": {
         "girai": 54.215,
@@ -33093,7 +33093,7 @@
           "unacceptable-risks-ai-systems": 0.9450000000000001
         },
         "frameworkScore": 55.72934091669455,
-        "implementationScore": 68.45841784989858
+        "implementationScore": 67.4573055028463
       },
       "Caribbean": {
         "girai": 22.418750000000003,
@@ -33207,7 +33207,7 @@
           "unacceptable-risks-ai-systems": 0.996923076923077
         },
         "frameworkScore": 37.14077135934794,
-        "implementationScore": 27.74969394745326
+        "implementationScore": 27.591903020431563
       },
       "Middle East": {
         "girai": 32.073,
@@ -33323,7 +33323,7 @@
           "unacceptable-risks-ai-systems": 0.9782222222222223
         },
         "frameworkScore": 56.971454987400435,
-        "implementationScore": 57.947128987344875
+        "implementationScore": 57.41395197768165
       },
       "Upper middle income": {
         "girai": 31.866285714285706,
@@ -33380,7 +33380,7 @@
           "unacceptable-risks-ai-systems": 0.9871428571428571
         },
         "frameworkScore": 43.00519400096607,
-        "implementationScore": 44.64796709752483
+        "implementationScore": 43.75510995466769
       },
       "Lower middle income": {
         "girai": 26.967297297297304,
@@ -33437,7 +33437,7 @@
           "unacceptable-risks-ai-systems": 0.9894594594594597
         },
         "frameworkScore": 41.24117700488109,
-        "implementationScore": 35.520583170199565
+        "implementationScore": 35.248085397701786
       },
       "Low income": {
         "girai": 14.927777777777777,
