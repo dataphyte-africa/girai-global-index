@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-06T12:13:00.983Z",
-  "sourceHash": "805076eec44668e5d51a6fd04aedcc6988cc57707ad27ebe27cb9a046c53c439",
+  "generatedAt": "2026-10-25T18:30:20.797Z",
+  "sourceHash": "48033e24f777f1e97fe5174208bb1ffe1e0a4d9b49157124eae5c108d3636c76",
   "countries": {
     "NOR": {
       "iso3": "NOR",
@@ -417,8 +417,8 @@
           "contributionPct": 37.52790475178059,
           "checklistBullets": [
             "Strongest context signal: Egalitarian Democracy (100.0)",
-            "Labour Rights (100.0)",
-            "Data Sharing and Access (100.0)"
+            "Rule of Law (100.0)",
+            "Labour Rights & Compliance (100.0)"
           ],
           "sampleEvidenceTitles": [],
           "allowedTitles": [],
@@ -853,7 +853,7 @@
           "aboveMedian": true,
           "contributionPct": 31.90488633394304,
           "checklistBullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
             "Data Protection and Privacy (100.0)",
             "Consumer Protection (100.0)"
           ],
@@ -893,7 +893,7 @@
         "frameworkScore": 58.18181818181818,
         "frameworkRankGlobal": 37,
         "implementationScore": 64.1711229946524,
-        "implementationRankGlobal": 33,
+        "implementationRankGlobal": 32,
         "strongestDimension": {
           "slug": "labour-skills",
           "name": "Labour and Skills",
@@ -1285,8 +1285,8 @@
           "aboveMedian": true,
           "contributionPct": 37.72168212254504,
           "checklistBullets": [
-            "Strongest context signal: Socioeconomic Inclusion in Connectivity (100.0)",
-            "Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Device Affordability (100.0)",
+            "Gender Gap in Mobile Internet (100.0)",
             "Data Protection and Privacy (100.0)"
           ],
           "sampleEvidenceTitles": [],
@@ -1734,8 +1734,8 @@
           "contributionPct": 34.59280027508134,
           "checklistBullets": [
             "Strongest context signal: Cybersecurity (98.9)",
-            "Gender Inclusion in Connectivity (97.7)",
-            "Socioeconomic Inclusion in Connectivity (97.2)"
+            "Gender Gap in Mobile Internet (97.7)",
+            "Device Affordability (97.2)"
           ],
           "sampleEvidenceTitles": [],
           "allowedTitles": [],
@@ -2202,7 +2202,7 @@
           "checklistBullets": [
             "Strongest context signal: Data Protection and Privacy (100.0)",
             "Cybersecurity (99.2)",
-            "Population Digital Readiness (97.6)"
+            "Skills & Literacy (97.6)"
           ],
           "sampleEvidenceTitles": [],
           "allowedTitles": [],
@@ -2645,7 +2645,7 @@
           "checklistBullets": [
             "Strongest context signal: Data Protection and Privacy (100.0)",
             "Cybersecurity (97.8)",
-            "Population Digital Readiness (97.6)"
+            "Skills & Literacy (97.6)"
           ],
           "sampleEvidenceTitles": [],
           "allowedTitles": [],
@@ -3105,9 +3105,9 @@
           "aboveMedian": true,
           "contributionPct": 33.82735165625172,
           "checklistBullets": [
-            "Strongest context signal: Population Digital Readiness (100.0)",
+            "Strongest context signal: Skills & Literacy (100.0)",
             "Cybersecurity (100.0)",
-            "Gender Inclusion in Connectivity (97.7)"
+            "Gender Gap in Mobile Internet (97.7)"
           ],
           "sampleEvidenceTitles": [],
           "allowedTitles": [],
@@ -3934,7 +3934,7 @@
           "aboveMedian": true,
           "contributionPct": 38.77143996808935,
           "checklistBullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
             "Public Service Delivery (94.7)",
             "Data Protection and Privacy (91.8)"
           ],
@@ -4358,9 +4358,9 @@
           "aboveMedian": true,
           "contributionPct": 40.41671161521984,
           "checklistBullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
             "Public Service Delivery (100.0)",
-            "Civil Society Oversight (96.5)"
+            "Civil Society Accountability (96.5)"
           ],
           "sampleEvidenceTitles": [],
           "allowedTitles": [],
@@ -4802,7 +4802,7 @@
           "aboveMedian": true,
           "contributionPct": 31.89304341438331,
           "checklistBullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
             "Public Service Delivery (99.1)",
             "Consumer Protection (96.6)"
           ],
@@ -5229,7 +5229,7 @@
           "checklistBullets": [
             "Strongest context signal: Data Protection and Privacy (100.0)",
             "Cybersecurity (99.7)",
-            "Population Digital Readiness (94.7)"
+            "Skills & Literacy (94.7)"
           ],
           "sampleEvidenceTitles": [],
           "allowedTitles": [],
@@ -5269,8 +5269,8 @@
         "deltaVsIncomeGroupGirai": 10.242888888888892,
         "frameworkScore": 67.27272727272727,
         "frameworkRankGlobal": 11,
-        "implementationScore": 70.58823529411765,
-        "implementationRankGlobal": 21,
+        "implementationScore": 52.069716775599126,
+        "implementationRankGlobal": 60,
         "strongestDimension": {
           "slug": "ai-use-public-service",
           "name": "AI Use in Public Service",
@@ -5654,7 +5654,7 @@
           "contributionPct": 32.49470575953709,
           "checklistBullets": [
             "Strongest context signal: Cybersecurity (97.0)",
-            "Population Digital Readiness (94.9)",
+            "Skills & Literacy (94.9)",
             "Public Service Delivery (93.9)"
           ],
           "sampleEvidenceTitles": [],
@@ -5695,7 +5695,7 @@
         "frameworkScore": 56.03448275862069,
         "frameworkRankGlobal": 43,
         "implementationScore": 63.62229102167183,
-        "implementationRankGlobal": 35,
+        "implementationRankGlobal": 34,
         "strongestDimension": {
           "slug": "labour-skills",
           "name": "Labour and Skills",
@@ -6080,7 +6080,7 @@
           "aboveMedian": true,
           "contributionPct": 35.968367188711426,
           "checklistBullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
             "Public Service Delivery (91.1)",
             "Data Sharing and Access (87.5)"
           ],
@@ -6120,7 +6120,7 @@
         "frameworkScore": 65.9090909090909,
         "frameworkRankGlobal": 13,
         "implementationScore": 68.57585139318886,
-        "implementationRankGlobal": 24,
+        "implementationRankGlobal": 22,
         "strongestDimension": {
           "slug": "trust-safety",
           "name": "Trust and Safety",
@@ -6515,7 +6515,7 @@
           "aboveMedian": true,
           "contributionPct": 35.378897310632496,
           "checklistBullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
             "Consumer Protection (94.7)",
             "Public Service Delivery (92.7)"
           ],
@@ -6555,7 +6555,7 @@
         "frameworkScore": 62.19512195121951,
         "frameworkRankGlobal": 27,
         "implementationScore": 68.57585139318886,
-        "implementationRankGlobal": 24,
+        "implementationRankGlobal": 22,
         "strongestDimension": {
           "slug": "ethics-sustainability",
           "name": "Ethics and Sustainability",
@@ -6970,7 +6970,7 @@
         "frameworkScore": 62.5,
         "frameworkRankGlobal": 25,
         "implementationScore": 63.529411764705884,
-        "implementationRankGlobal": 36,
+        "implementationRankGlobal": 35,
         "strongestDimension": {
           "slug": "trust-safety",
           "name": "Trust and Safety",
@@ -7343,7 +7343,7 @@
           "contributionPct": 37.180018225499126,
           "checklistBullets": [
             "Strongest context signal: Data Protection and Privacy (100.0)",
-            "Gender Inclusion in Connectivity (97.6)",
+            "Gender Gap in Mobile Internet (97.6)",
             "Data Sharing and Access (93.8)"
           ],
           "sampleEvidenceTitles": [],
@@ -7369,7 +7369,7 @@
         "uraiPenalty": 0.96,
         "uraiCount": 1,
         "uraiEvidenceTitles": [
-          "AI Surveillance Cameras Aid Crime Reduction in Bulgarian Resorts"
+          "Integrated Risk Management Platform (PIGR): machine-learning fraud risk scoring of Social Security numbers"
         ],
         "rankGlobal": 18,
         "rankRegional": 16,
@@ -7384,7 +7384,7 @@
         "frameworkScore": 63.829787234042556,
         "frameworkRankGlobal": 21,
         "implementationScore": 65.52287581699346,
-        "implementationRankGlobal": 30,
+        "implementationRankGlobal": 29,
         "strongestDimension": {
           "slug": "inclusion-diversity",
           "name": "Inclusion and Diversity",
@@ -7808,7 +7808,7 @@
         "frameworkScore": 45,
         "frameworkRankGlobal": 66,
         "implementationScore": 60.294117647058826,
-        "implementationRankGlobal": 46,
+        "implementationRankGlobal": 43,
         "strongestDimension": {
           "slug": "ethics-sustainability",
           "name": "Ethics and Sustainability",
@@ -8187,8 +8187,8 @@
           "aboveMedian": true,
           "contributionPct": 46.37831854696698,
           "checklistBullets": [
-            "Strongest context signal: Socioeconomic Inclusion in Connectivity (100.0)",
-            "Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Device Affordability (100.0)",
+            "Gender Gap in Mobile Internet (100.0)",
             "Data Sharing and Access (100.0)"
           ],
           "sampleEvidenceTitles": [],
@@ -8227,7 +8227,7 @@
         "frameworkScore": 68.42105263157895,
         "frameworkRankGlobal": 8,
         "implementationScore": 61.213235294117645,
-        "implementationRankGlobal": 44,
+        "implementationRankGlobal": 42,
         "strongestDimension": {
           "slug": "labour-skills",
           "name": "Labour and Skills",
@@ -8583,7 +8583,7 @@
           "aboveMedian": true,
           "contributionPct": 46.3443152899099,
           "checklistBullets": [
-            "Strongest context signal: Socioeconomic Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Device Affordability (100.0)",
             "Data Protection and Privacy (100.0)",
             "Global Peace (98.4)"
           ],
@@ -8623,7 +8623,7 @@
         "frameworkScore": 68.29268292682927,
         "frameworkRankGlobal": 9,
         "implementationScore": 70.22058823529412,
-        "implementationRankGlobal": 23,
+        "implementationRankGlobal": 21,
         "strongestDimension": {
           "slug": "trust-safety",
           "name": "Trust and Safety",
@@ -8992,7 +8992,7 @@
           "checklistBullets": [
             "Strongest context signal: Data Protection and Privacy (100.0)",
             "Consumer Protection (99.6)",
-            "Gender Inclusion in Connectivity (94.9)"
+            "Gender Gap in Mobile Internet (94.9)"
           ],
           "sampleEvidenceTitles": [],
           "allowedTitles": [],
@@ -9032,7 +9032,7 @@
         "frameworkScore": 55.43478260869565,
         "frameworkRankGlobal": 44,
         "implementationScore": 52.16718266253869,
-        "implementationRankGlobal": 61,
+        "implementationRankGlobal": 59,
         "strongestDimension": {
           "slug": "ai-use-public-service",
           "name": "AI Use in Public Service",
@@ -9150,13 +9150,13 @@
             "initiativeCount": 4,
             "sampleTitles": [
               "National Artificial Intelligence Strategy of Uruguay 2024-2030",
-              "Recommendations on algorithmic transparency",
+              "Recommendations on Algorithmic Transparency",
               "Contributions from Data Uruguay to the development of the report provided for in art. 74 of Law No. 20.212",
               "Workshops for ICD human rights defenders"
             ],
             "allowedTitles": [
               "National Artificial Intelligence Strategy of Uruguay 2024-2030",
-              "Recommendations on algorithmic transparency",
+              "Recommendations on Algorithmic Transparency",
               "Contributions from Data Uruguay to the development of the report provided for in art. 74 of Law No. 20.212",
               "Workshops for ICD human rights defenders"
             ]
@@ -9338,14 +9338,14 @@
             "Law No. 18331: Personal Data Protection Law (Uruguay)",
             "Law 20.396/2025 on Minimum Protections for Workers Performing Tasks through Digital Platforms",
             "AI in Education",
-            "Recommendations on algorithmic transparency"
+            "Recommendations on Algorithmic Transparency"
           ],
           "allowedTitles": [
             "National Artificial Intelligence Strategy of Uruguay 2024-2030",
             "Law No. 18331: Personal Data Protection Law (Uruguay)",
             "Law 20.396/2025 on Minimum Protections for Workers Performing Tasks through Digital Platforms",
             "AI in Education",
-            "Recommendations on algorithmic transparency"
+            "Recommendations on Algorithmic Transparency"
           ],
           "relativeToCountryRank": {
             "countryRankGlobal": 22,
@@ -9389,8 +9389,8 @@
           "aboveMedian": true,
           "contributionPct": 42.40157679284379,
           "checklistBullets": [
-            "Strongest context signal: Environmental Performance (98.9)",
-            "Gender Inclusion in Connectivity (95.7)",
+            "Strongest context signal: Low-Carbon Energy Share (98.9)",
+            "Gender Gap in Mobile Internet (95.7)",
             "Public Service Delivery (94.6)"
           ],
           "sampleEvidenceTitles": [],
@@ -9431,7 +9431,7 @@
         "frameworkScore": 53.44827586206897,
         "frameworkRankGlobal": 50,
         "implementationScore": 71.56862745098039,
-        "implementationRankGlobal": 20,
+        "implementationRankGlobal": 19,
         "strongestDimension": {
           "slug": "inclusion-diversity",
           "name": "Inclusion and Diversity",
@@ -9828,9 +9828,9 @@
           "aboveMedian": true,
           "contributionPct": 42.060465749693584,
           "checklistBullets": [
-            "Strongest context signal: Socioeconomic Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Device Affordability (100.0)",
             "Public Service Delivery (99.2)",
-            "Gender Inclusion in Connectivity (97.8)"
+            "Gender Gap in Mobile Internet (97.8)"
           ],
           "sampleEvidenceTitles": [],
           "allowedTitles": [],
@@ -9869,8 +9869,8 @@
         "deltaVsIncomeGroupGirai": 3.542888888888889,
         "frameworkScore": 54.08163265306123,
         "frameworkRankGlobal": 46,
-        "implementationScore": 60.947712418300654,
-        "implementationRankGlobal": 45,
+        "implementationScore": 57.475490196078425,
+        "implementationRankGlobal": 50,
         "strongestDimension": {
           "slug": "ai-use-public-service",
           "name": "AI Use in Public Service",
@@ -10265,7 +10265,7 @@
           "contributionPct": 41.4274872360977,
           "checklistBullets": [
             "Strongest context signal: Cybersecurity (97.5)",
-            "Socioeconomic Inclusion in Connectivity (96.6)",
+            "Device Affordability (96.6)",
             "Public Service Delivery (94.4)"
           ],
           "sampleEvidenceTitles": [],
@@ -10699,8 +10699,8 @@
           "contributionPct": 45.30373261771163,
           "checklistBullets": [
             "Strongest context signal: Public Service Delivery (96.9)",
-            "Population Digital Readiness (96.8)",
-            "Gender Inclusion in Connectivity (95.1)"
+            "Skills & Literacy (96.8)",
+            "Gender Gap in Mobile Internet (95.1)"
           ],
           "sampleEvidenceTitles": [],
           "allowedTitles": [],
@@ -10738,7 +10738,7 @@
         "frameworkScore": 42.30769230769231,
         "frameworkRankGlobal": 72,
         "implementationScore": 65.75630252100841,
-        "implementationRankGlobal": 29,
+        "implementationRankGlobal": 28,
         "strongestDimension": {
           "slug": "labour-skills",
           "name": "Labour and Skills",
@@ -11122,7 +11122,7 @@
           "aboveMedian": true,
           "contributionPct": 33.17623849188953,
           "checklistBullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
             "Consumer Protection (92.0)",
             "Data Sharing and Access (87.5)"
           ],
@@ -11164,8 +11164,8 @@
         "deltaVsIncomeGroupGirai": 1.222888888888896,
         "frameworkScore": 54.08163265306123,
         "frameworkRankGlobal": 46,
-        "implementationScore": 63.38742393509128,
-        "implementationRankGlobal": 37,
+        "implementationScore": 61.385199240986715,
+        "implementationRankGlobal": 41,
         "strongestDimension": {
           "slug": "ai-use-public-service",
           "name": "AI Use in Public Service",
@@ -11558,8 +11558,8 @@
           "aboveMedian": true,
           "contributionPct": 38.18134263295554,
           "checklistBullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
-            "Population Digital Readiness (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
+            "Skills & Literacy (100.0)",
             "Cybersecurity (99.8)"
           ],
           "sampleEvidenceTitles": [],
@@ -11941,8 +11941,8 @@
           "aboveMedian": true,
           "contributionPct": 43.08907331625043,
           "checklistBullets": [
-            "Strongest context signal: Environmental Performance (99.9)",
-            "Gender Inclusion in Connectivity (97.7)",
+            "Strongest context signal: Low-Carbon Energy Share (99.9)",
+            "Gender Gap in Mobile Internet (97.7)",
             "Consumer Protection (95.8)"
           ],
           "sampleEvidenceTitles": [],
@@ -11981,7 +11981,7 @@
         "frameworkScore": 62.5,
         "frameworkRankGlobal": 25,
         "implementationScore": 46.79144385026738,
-        "implementationRankGlobal": 69,
+        "implementationRankGlobal": 68,
         "strongestDimension": {
           "slug": "trust-safety",
           "name": "Trust and Safety",
@@ -12334,7 +12334,7 @@
           "aboveMedian": true,
           "contributionPct": 40.40788109229174,
           "checklistBullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
             "Data Protection and Privacy (100.0)",
             "Consumer Protection (95.1)"
           ],
@@ -12374,7 +12374,7 @@
         "frameworkScore": 65.85365853658537,
         "frameworkRankGlobal": 14,
         "implementationScore": 58.82352941176471,
-        "implementationRankGlobal": 48,
+        "implementationRankGlobal": 45,
         "strongestDimension": {
           "slug": "trust-safety",
           "name": "Trust and Safety",
@@ -12738,7 +12738,7 @@
           "contributionPct": 40.91040993596564,
           "checklistBullets": [
             "Strongest context signal: Data Protection and Privacy (100.0)",
-            "Gender Inclusion in Connectivity (97.3)",
+            "Gender Gap in Mobile Internet (97.3)",
             "Consumer Protection (97.0)"
           ],
           "sampleEvidenceTitles": [],
@@ -13152,8 +13152,8 @@
           "aboveMedian": true,
           "contributionPct": 32.585418448154066,
           "checklistBullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
-            "Environmental Performance (88.8)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
+            "Low-Carbon Energy Share (88.8)",
             "Data Sharing and Access (87.5)"
           ],
           "sampleEvidenceTitles": [],
@@ -13192,7 +13192,7 @@
         "frameworkScore": 64.1025641025641,
         "frameworkRankGlobal": 20,
         "implementationScore": 48.19004524886878,
-        "implementationRankGlobal": 67,
+        "implementationRankGlobal": 66,
         "strongestDimension": {
           "slug": "trust-safety",
           "name": "Trust and Safety",
@@ -13552,7 +13552,7 @@
           "checklistBullets": [
             "Strongest context signal: Cybersecurity (94.2)",
             "Data Protection and Privacy (91.8)",
-            "Gender Inclusion in Connectivity (90.4)"
+            "Gender Gap in Mobile Internet (90.4)"
           ],
           "sampleEvidenceTitles": [],
           "allowedTitles": [],
@@ -13590,7 +13590,7 @@
         "frameworkScore": 46.59090909090909,
         "frameworkRankGlobal": 62,
         "implementationScore": 67.64705882352942,
-        "implementationRankGlobal": 26,
+        "implementationRankGlobal": 24,
         "strongestDimension": {
           "slug": "ai-use-public-service",
           "name": "AI Use in Public Service",
@@ -13947,7 +13947,7 @@
           "checklistBullets": [
             "Strongest context signal: Cybersecurity (96.7)",
             "Public Service Delivery (96.0)",
-            "Gender Inclusion in Connectivity (94.9)"
+            "Gender Gap in Mobile Internet (94.9)"
           ],
           "sampleEvidenceTitles": [],
           "allowedTitles": [],
@@ -13985,7 +13985,7 @@
         "frameworkScore": 41.46341463414634,
         "frameworkRankGlobal": 74,
         "implementationScore": 52.94117647058823,
-        "implementationRankGlobal": 57,
+        "implementationRankGlobal": 55,
         "strongestDimension": {
           "slug": "ethics-sustainability",
           "name": "Ethics and Sustainability",
@@ -14325,7 +14325,7 @@
           "contributionPct": 37.49175972352624,
           "checklistBullets": [
             "Strongest context signal: Public Service Delivery (96.7)",
-            "Gender Inclusion in Connectivity (89.6)",
+            "Gender Gap in Mobile Internet (89.6)",
             "Data Sharing and Access (87.5)"
           ],
           "sampleEvidenceTitles": [],
@@ -14364,7 +14364,7 @@
         "frameworkScore": 71.42857142857143,
         "frameworkRankGlobal": 6,
         "implementationScore": 63.800904977375566,
-        "implementationRankGlobal": 34,
+        "implementationRankGlobal": 33,
         "strongestDimension": {
           "slug": "trust-safety",
           "name": "Trust and Safety",
@@ -14767,7 +14767,7 @@
         "frameworkScore": 39.743589743589745,
         "frameworkRankGlobal": 77,
         "implementationScore": 48.03921568627452,
-        "implementationRankGlobal": 68,
+        "implementationRankGlobal": 67,
         "strongestDimension": {
           "slug": "ai-use-public-service",
           "name": "AI Use in Public Service",
@@ -15116,8 +15116,8 @@
           "aboveMedian": true,
           "contributionPct": 36.2226582067123,
           "checklistBullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
-            "Civil Society Oversight (87.5)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
+            "Civil Society Accountability (87.5)",
             "Consumer Protection (79.7)"
           ],
           "sampleEvidenceTitles": [],
@@ -15525,7 +15525,7 @@
           "checklistBullets": [
             "Strongest context signal: Cybersecurity (100.0)",
             "Public Service Delivery (100.0)",
-            "Population Digital Readiness (95.5)"
+            "Skills & Literacy (95.5)"
           ],
           "sampleEvidenceTitles": [],
           "allowedTitles": [],
@@ -15563,7 +15563,7 @@
         "frameworkScore": 40.24390243902439,
         "frameworkRankGlobal": 75,
         "implementationScore": 58.37789661319073,
-        "implementationRankGlobal": 51,
+        "implementationRankGlobal": 48,
         "strongestDimension": {
           "slug": "trust-safety",
           "name": "Trust and Safety",
@@ -15962,7 +15962,7 @@
         "frameworkScore": 52.41935483870968,
         "frameworkRankGlobal": 53,
         "implementationScore": 46.07843137254902,
-        "implementationRankGlobal": 70,
+        "implementationRankGlobal": 69,
         "strongestDimension": {
           "slug": "ethics-sustainability",
           "name": "Ethics and Sustainability",
@@ -16349,8 +16349,8 @@
           "contributionPct": 55.320542204177855,
           "checklistBullets": [
             "Strongest context signal: Global Peace (99.0)",
-            "Gender Inclusion in Connectivity (95.7)",
-            "Population Digital Readiness (93.3)"
+            "Gender Gap in Mobile Internet (95.7)",
+            "Skills & Literacy (93.3)"
           ],
           "sampleEvidenceTitles": [],
           "allowedTitles": [],
@@ -16388,7 +16388,7 @@
         "frameworkScore": 43.90243902439025,
         "frameworkRankGlobal": 69,
         "implementationScore": 58.288770053475936,
-        "implementationRankGlobal": 52,
+        "implementationRankGlobal": 49,
         "strongestDimension": {
           "slug": "inclusion-diversity",
           "name": "Inclusion and Diversity",
@@ -16751,8 +16751,8 @@
           "aboveMedian": true,
           "contributionPct": 50.48440610484406,
           "checklistBullets": [
-            "Strongest context signal: Socioeconomic Inclusion in Connectivity (100.0)",
-            "Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Device Affordability (100.0)",
+            "Gender Gap in Mobile Internet (100.0)",
             "Data Sharing and Access (100.0)"
           ],
           "sampleEvidenceTitles": [],
@@ -16795,7 +16795,7 @@
         "frameworkScore": 80.50847457627118,
         "frameworkRankGlobal": 3,
         "implementationScore": 54.2483660130719,
-        "implementationRankGlobal": 56,
+        "implementationRankGlobal": 54,
         "strongestDimension": {
           "slug": "ai-use-public-service",
           "name": "AI Use in Public Service",
@@ -17171,9 +17171,9 @@
           "aboveMedian": true,
           "contributionPct": 37.372854914196566,
           "checklistBullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (95.3)",
+            "Strongest context signal: Gender Gap in Mobile Internet (95.3)",
             "Cybersecurity (93.5)",
-            "Population Digital Readiness (91.2)"
+            "Skills & Literacy (91.2)"
           ],
           "sampleEvidenceTitles": [],
           "allowedTitles": [],
@@ -17216,7 +17216,7 @@
         "frameworkScore": 61.320754716981135,
         "frameworkRankGlobal": 28,
         "implementationScore": 62.11764705882353,
-        "implementationRankGlobal": 38,
+        "implementationRankGlobal": 36,
         "strongestDimension": {
           "slug": "trust-safety",
           "name": "Trust and Safety",
@@ -17615,9 +17615,9 @@
           "aboveMedian": false,
           "contributionPct": 30.055762081784387,
           "checklistBullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (91.9)",
+            "Strongest context signal: Gender Gap in Mobile Internet (91.9)",
             "Cybersecurity (91.3)",
-            "Population Digital Readiness (79.7)"
+            "Skills & Literacy (79.7)"
           ],
           "sampleEvidenceTitles": [],
           "allowedTitles": [],
@@ -18015,9 +18015,9 @@
           "aboveMedian": true,
           "contributionPct": 47.38430583501005,
           "checklistBullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
             "Cybersecurity (99.8)",
-            "Population Digital Readiness (98.1)"
+            "Skills & Literacy (98.1)"
           ],
           "sampleEvidenceTitles": [],
           "allowedTitles": [],
@@ -18057,8 +18057,8 @@
         "deltaVsIncomeGroupGirai": 10.303714285714296,
         "frameworkScore": 52.63157894736842,
         "frameworkRankGlobal": 52,
-        "implementationScore": 35.661764705882355,
-        "implementationRankGlobal": 85,
+        "implementationScore": 34.411764705882355,
+        "implementationRankGlobal": 84,
         "strongestDimension": {
           "slug": "labour-skills",
           "name": "Labour and Skills",
@@ -18444,7 +18444,7 @@
           "aboveMedian": true,
           "contributionPct": 41.544263596665346,
           "checklistBullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
             "Public Service Delivery (97.3)",
             "Data Sharing and Access (93.8)"
           ],
@@ -18483,8 +18483,8 @@
         "deltaVsIncomeGroupGirai": 10.173714285714293,
         "frameworkScore": 38.57142857142857,
         "frameworkRankGlobal": 79,
-        "implementationScore": 61.76470588235294,
-        "implementationRankGlobal": 39,
+        "implementationScore": 31.764705882352942,
+        "implementationRankGlobal": 86,
         "strongestDimension": {
           "slug": "labour-skills",
           "name": "Labour and Skills",
@@ -18839,7 +18839,7 @@
           "checklistBullets": [
             "Strongest context signal: Data Sharing and Access (93.8)",
             "Consumer Protection (92.6)",
-            "Gender Inclusion in Connectivity (85.5)"
+            "Gender Gap in Mobile Internet (85.5)"
           ],
           "sampleEvidenceTitles": [],
           "allowedTitles": [],
@@ -18879,7 +18879,7 @@
         "deltaVsIncomeGroupGirai": 14.8027027027027,
         "frameworkScore": 53.333333333333336,
         "frameworkRankGlobal": 51,
-        "implementationScore": 43.69747899159664,
+        "implementationScore": 41.911764705882355,
         "implementationRankGlobal": 77,
         "strongestDimension": {
           "slug": "inclusion-diversity",
@@ -19311,7 +19311,7 @@
         "frameworkScore": 58.16326530612245,
         "frameworkRankGlobal": 38,
         "implementationScore": 65.50802139037432,
-        "implementationRankGlobal": 31,
+        "implementationRankGlobal": 30,
         "strongestDimension": {
           "slug": "ai-use-public-service",
           "name": "AI Use in Public Service",
@@ -19697,7 +19697,7 @@
           "checklistBullets": [
             "Strongest context signal: Cybersecurity (99.7)",
             "Data Sharing and Access (87.5)",
-            "Gender Inclusion in Connectivity (85.7)"
+            "Gender Gap in Mobile Internet (85.7)"
           ],
           "sampleEvidenceTitles": [],
           "allowedTitles": [],
@@ -19734,8 +19734,8 @@
         "deltaVsIncomeGroupGirai": 14.292702702702694,
         "frameworkScore": 56.25,
         "frameworkRankGlobal": 42,
-        "implementationScore": 72.62443438914028,
-        "implementationRankGlobal": 19,
+        "implementationScore": 66.47058823529412,
+        "implementationRankGlobal": 27,
         "strongestDimension": {
           "slug": "labour-skills",
           "name": "Labour and Skills",
@@ -20149,7 +20149,7 @@
         "frameworkScore": 27.63157894736842,
         "frameworkRankGlobal": 92,
         "implementationScore": 48.20261437908497,
-        "implementationRankGlobal": 66,
+        "implementationRankGlobal": 65,
         "strongestDimension": {
           "slug": "labour-skills",
           "name": "Labour and Skills",
@@ -20550,7 +20550,7 @@
         "frameworkScore": 23.4375,
         "frameworkRankGlobal": 97,
         "implementationScore": 45.47511312217195,
-        "implementationRankGlobal": 72,
+        "implementationRankGlobal": 71,
         "strongestDimension": {
           "slug": "ai-use-public-service",
           "name": "AI Use in Public Service",
@@ -20913,7 +20913,7 @@
           "contributionPct": 38.64834017338934,
           "checklistBullets": [
             "Strongest context signal: Cybersecurity (98.5)",
-            "Environmental Performance (91.5)",
+            "Low-Carbon Energy Share (91.5)",
             "Public Service Delivery (83.9)"
           ],
           "sampleEvidenceTitles": [],
@@ -20954,7 +20954,7 @@
         "frameworkScore": 38.888888888888886,
         "frameworkRankGlobal": 78,
         "implementationScore": 55.88235294117647,
-        "implementationRankGlobal": 54,
+        "implementationRankGlobal": 52,
         "strongestDimension": {
           "slug": "ai-use-public-service",
           "name": "AI Use in Public Service",
@@ -21341,7 +21341,7 @@
         "frameworkScore": 58.53658536585366,
         "frameworkRankGlobal": 35,
         "implementationScore": 39.869281045751634,
-        "implementationRankGlobal": 80,
+        "implementationRankGlobal": 79,
         "strongestDimension": {
           "slug": "trust-safety",
           "name": "Trust and Safety",
@@ -21692,7 +21692,7 @@
           "aboveMedian": false,
           "contributionPct": 42.839506172839506,
           "checklistBullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
             "Cybersecurity (100.0)",
             "Public Service Delivery (89.3)"
           ],
@@ -21732,7 +21732,7 @@
         "frameworkScore": 44.285714285714285,
         "frameworkRankGlobal": 68,
         "implementationScore": 51.470588235294116,
-        "implementationRankGlobal": 63,
+        "implementationRankGlobal": 62,
         "strongestDimension": {
           "slug": "labour-skills",
           "name": "Labour and Skills",
@@ -22143,7 +22143,7 @@
         "frameworkScore": 63.41463414634146,
         "frameworkRankGlobal": 22,
         "implementationScore": 59.47712418300653,
-        "implementationRankGlobal": 47,
+        "implementationRankGlobal": 44,
         "strongestDimension": {
           "slug": "labour-skills",
           "name": "Labour and Skills",
@@ -22550,7 +22550,7 @@
         "frameworkScore": 45.588235294117645,
         "frameworkRankGlobal": 65,
         "implementationScore": 35.97285067873303,
-        "implementationRankGlobal": 84,
+        "implementationRankGlobal": 83,
         "strongestDimension": {
           "slug": "inclusion-diversity",
           "name": "Inclusion and Diversity",
@@ -22908,8 +22908,8 @@
           "aboveMedian": true,
           "contributionPct": 45.91699466892531,
           "checklistBullets": [
-            "Strongest context signal: Socioeconomic Inclusion in Connectivity (100.0)",
-            "Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Device Affordability (100.0)",
+            "Gender Gap in Mobile Internet (100.0)",
             "Cybersecurity (100.0)"
           ],
           "sampleEvidenceTitles": [],
@@ -22950,7 +22950,7 @@
         "frameworkScore": 37.5,
         "frameworkRankGlobal": 81,
         "implementationScore": 39.25831202046036,
-        "implementationRankGlobal": 81,
+        "implementationRankGlobal": 80,
         "strongestDimension": {
           "slug": "ai-use-public-service",
           "name": "AI Use in Public Service",
@@ -23342,8 +23342,8 @@
         "deltaVsIncomeGroupGirai": 10.722702702702694,
         "frameworkScore": 21.875,
         "frameworkRankGlobal": 98,
-        "implementationScore": 35.08403361344538,
-        "implementationRankGlobal": 86,
+        "implementationScore": 32.94117647058823,
+        "implementationRankGlobal": 85,
         "strongestDimension": {
           "slug": "ethics-sustainability",
           "name": "Ethics and Sustainability",
@@ -23702,8 +23702,8 @@
           "aboveMedian": false,
           "contributionPct": 41.388004584235325,
           "checklistBullets": [
-            "Strongest context signal: Environmental Performance (100.0)",
-            "Civil Society Oversight (73.7)",
+            "Strongest context signal: Low-Carbon Energy Share (100.0)",
+            "Civil Society Accountability (73.7)",
             "Consumer Protection (73.5)"
           ],
           "sampleEvidenceTitles": [],
@@ -23742,7 +23742,7 @@
         "frameworkScore": 36.666666666666664,
         "frameworkRankGlobal": 82,
         "implementationScore": 70.58823529411765,
-        "implementationRankGlobal": 21,
+        "implementationRankGlobal": 20,
         "strongestDimension": {
           "slug": "labour-skills",
           "name": "Labour and Skills",
@@ -24121,7 +24121,7 @@
           "aboveMedian": true,
           "contributionPct": 52.11847308530384,
           "checklistBullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
             "Consumer Protection (96.8)",
             "Data Sharing and Access (87.5)"
           ],
@@ -24161,7 +24161,7 @@
         "frameworkScore": 29.62962962962963,
         "frameworkRankGlobal": 89,
         "implementationScore": 67.64705882352942,
-        "implementationRankGlobal": 26,
+        "implementationRankGlobal": 24,
         "strongestDimension": {
           "slug": "ai-use-public-service",
           "name": "AI Use in Public Service",
@@ -24552,7 +24552,7 @@
         "frameworkScore": 51.5625,
         "frameworkRankGlobal": 54,
         "implementationScore": 45.09803921568628,
-        "implementationRankGlobal": 74,
+        "implementationRankGlobal": 73,
         "strongestDimension": {
           "slug": "ai-use-public-service",
           "name": "AI Use in Public Service",
@@ -24903,7 +24903,7 @@
           "aboveMedian": true,
           "contributionPct": 46.74039423518913,
           "checklistBullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
             "Cybersecurity (99.2)",
             "Consumer Protection (95.1)"
           ],
@@ -24943,7 +24943,7 @@
         "frameworkScore": 21.428571428571427,
         "frameworkRankGlobal": 99,
         "implementationScore": 45.18716577540107,
-        "implementationRankGlobal": 73,
+        "implementationRankGlobal": 72,
         "strongestDimension": {
           "slug": "ethics-sustainability",
           "name": "Ethics and Sustainability",
@@ -25282,7 +25282,7 @@
           "aboveMedian": false,
           "contributionPct": 43.90443462608411,
           "checklistBullets": [
-            "Strongest context signal: Environmental Performance (90.8)",
+            "Strongest context signal: Low-Carbon Energy Share (90.8)",
             "Public Service Delivery (87.5)",
             "Data Sharing and Access (87.5)"
           ],
@@ -26110,7 +26110,7 @@
         "frameworkScore": 53.57142857142857,
         "frameworkRankGlobal": 49,
         "implementationScore": 50.94117647058823,
-        "implementationRankGlobal": 64,
+        "implementationRankGlobal": 63,
         "strongestDimension": {
           "slug": "inclusion-diversity",
           "name": "Inclusion and Diversity",
@@ -26838,7 +26838,7 @@
           "aboveMedian": true,
           "contributionPct": 56.51616288221062,
           "checklistBullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
             "Consumer Protection (94.5)",
             "Public Service Delivery (90.4)"
           ],
@@ -26878,7 +26878,7 @@
         "frameworkScore": 60.3448275862069,
         "frameworkRankGlobal": 31,
         "implementationScore": 36.27450980392157,
-        "implementationRankGlobal": 83,
+        "implementationRankGlobal": 82,
         "strongestDimension": {
           "slug": "ai-use-public-service",
           "name": "AI Use in Public Service",
@@ -27243,7 +27243,7 @@
         "frameworkScore": 74.28571428571429,
         "frameworkRankGlobal": 4,
         "implementationScore": 56.86274509803921,
-        "implementationRankGlobal": 53,
+        "implementationRankGlobal": 51,
         "strongestDimension": {
           "slug": "trust-safety",
           "name": "Trust and Safety",
@@ -27635,7 +27635,7 @@
         "frameworkScore": 53.7037037037037,
         "frameworkRankGlobal": 48,
         "implementationScore": 65.12605042016807,
-        "implementationRankGlobal": 32,
+        "implementationRankGlobal": 31,
         "strongestDimension": {
           "slug": "ai-use-public-service",
           "name": "AI Use in Public Service",
@@ -28006,7 +28006,7 @@
           "aboveMedian": false,
           "contributionPct": 49.50113722517058,
           "checklistBullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
             "Data Protection and Privacy (100.0)",
             "Cybersecurity (93.2)"
           ],
@@ -28046,7 +28046,7 @@
         "frameworkScore": 65.78947368421052,
         "frameworkRankGlobal": 15,
         "implementationScore": 61.76470588235294,
-        "implementationRankGlobal": 39,
+        "implementationRankGlobal": 37,
         "strongestDimension": {
           "slug": "ethics-sustainability",
           "name": "Ethics and Sustainability",
@@ -28379,7 +28379,7 @@
           "aboveMedian": true,
           "contributionPct": 60.64390785456564,
           "checklistBullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (95.2)",
+            "Strongest context signal: Gender Gap in Mobile Internet (95.2)",
             "Consumer Protection (94.3)",
             "Data Sharing and Access (93.8)"
           ],
@@ -28419,7 +28419,7 @@
         "frameworkScore": 50,
         "frameworkRankGlobal": 55,
         "implementationScore": 45.09803921568628,
-        "implementationRankGlobal": 74,
+        "implementationRankGlobal": 73,
         "strongestDimension": {
           "slug": "inclusion-diversity",
           "name": "Inclusion and Diversity",
@@ -28786,7 +28786,7 @@
           "aboveMedian": true,
           "contributionPct": 51.8754445097251,
           "checklistBullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
             "Public Service Delivery (99.4)",
             "Cybersecurity (93.8)"
           ],
@@ -28826,7 +28826,7 @@
         "frameworkScore": 62.96296296296296,
         "frameworkRankGlobal": 23,
         "implementationScore": 51.76470588235294,
-        "implementationRankGlobal": 62,
+        "implementationRankGlobal": 61,
         "strongestDimension": {
           "slug": "ethics-sustainability",
           "name": "Ethics and Sustainability",
@@ -29180,8 +29180,8 @@
           "aboveMedian": true,
           "contributionPct": 63.586805017810136,
           "checklistBullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
-            "Environmental Performance (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
+            "Low-Carbon Energy Share (100.0)",
             "Consumer Protection (94.9)"
           ],
           "sampleEvidenceTitles": [],
@@ -29586,8 +29586,8 @@
           "contributionPct": 51.42456359102244,
           "checklistBullets": [
             "Strongest context signal: Cybersecurity (86.4)",
-            "Civil Society Oversight (78.3)",
-            "Population Digital Readiness (69.3)"
+            "Civil Society Accountability (78.3)",
+            "Skills & Literacy (69.3)"
           ],
           "sampleEvidenceTitles": [],
           "allowedTitles": [],
@@ -29625,7 +29625,7 @@
         "frameworkScore": 32.142857142857146,
         "frameworkRankGlobal": 86,
         "implementationScore": 45.6656346749226,
-        "implementationRankGlobal": 71,
+        "implementationRankGlobal": 70,
         "strongestDimension": {
           "slug": "ethics-sustainability",
           "name": "Ethics and Sustainability",
@@ -29966,7 +29966,7 @@
           "aboveMedian": false,
           "contributionPct": 35.44845196297479,
           "checklistBullets": [
-            "Strongest context signal: Environmental Performance (100.0)",
+            "Strongest context signal: Low-Carbon Energy Share (100.0)",
             "Public Service Delivery (77.9)",
             "Cybersecurity (75.3)"
           ],
@@ -30006,7 +30006,7 @@
         "frameworkScore": 23.68421052631579,
         "frameworkRankGlobal": 96,
         "implementationScore": 61.76470588235294,
-        "implementationRankGlobal": 39,
+        "implementationRankGlobal": 37,
         "strongestDimension": {
           "slug": "ai-use-public-service",
           "name": "AI Use in Public Service",
@@ -30335,7 +30335,7 @@
           "checklistBullets": [
             "Strongest context signal: Data Protection and Privacy (100.0)",
             "Consumer Protection (80.7)",
-            "Civil Society Oversight (77.8)"
+            "Civil Society Accountability (77.8)"
           ],
           "sampleEvidenceTitles": [],
           "allowedTitles": [],
@@ -30706,7 +30706,7 @@
           "aboveMedian": false,
           "contributionPct": 50.570641479732394,
           "checklistBullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
             "Cybersecurity (97.8)",
             "Public Service Delivery (95.7)"
           ],
@@ -30746,7 +30746,7 @@
         "frameworkScore": 36.666666666666664,
         "frameworkRankGlobal": 82,
         "implementationScore": 61.76470588235294,
-        "implementationRankGlobal": 39,
+        "implementationRankGlobal": 37,
         "strongestDimension": {
           "slug": "labour-skills",
           "name": "Labour and Skills",
@@ -31129,7 +31129,7 @@
         "frameworkScore": 33.92857142857143,
         "frameworkRankGlobal": 85,
         "implementationScore": 61.76470588235294,
-        "implementationRankGlobal": 39,
+        "implementationRankGlobal": 37,
         "strongestDimension": {
           "slug": "trust-safety",
           "name": "Trust and Safety",
@@ -31503,7 +31503,7 @@
           "contributionPct": 63.40690817186184,
           "checklistBullets": [
             "Strongest context signal: Consumer Protection (96.0)",
-            "Gender Inclusion in Connectivity (93.8)",
+            "Gender Gap in Mobile Internet (93.8)",
             "Data Sharing and Access (87.5)"
           ],
           "sampleEvidenceTitles": [],
@@ -31887,8 +31887,8 @@
           "aboveMedian": false,
           "contributionPct": 33.368665800451346,
           "checklistBullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
-            "Population Digital Readiness (68.8)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
+            "Skills & Literacy (68.8)",
             "Cybersecurity (66.5)"
           ],
           "sampleEvidenceTitles": [],
@@ -31927,7 +31927,7 @@
         "frameworkScore": 36.666666666666664,
         "frameworkRankGlobal": 82,
         "implementationScore": 43.43891402714932,
-        "implementationRankGlobal": 78,
+        "implementationRankGlobal": 76,
         "strongestDimension": {
           "slug": "ethics-sustainability",
           "name": "Ethics and Sustainability",
@@ -32279,7 +32279,7 @@
           "contributionPct": 53.02239318587718,
           "checklistBullets": [
             "Strongest context signal: Cybersecurity (92.2)",
-            "Environmental Performance (87.5)",
+            "Low-Carbon Energy Share (87.5)",
             "Consumer Protection (81.4)"
           ],
           "sampleEvidenceTitles": [],
@@ -32660,8 +32660,8 @@
           "contributionPct": 40.17809628552169,
           "checklistBullets": [
             "Strongest context signal: Consumer Protection (87.7)",
-            "Gender Inclusion in Connectivity (84.6)",
-            "Civil Society Oversight (78.5)"
+            "Gender Gap in Mobile Internet (84.6)",
+            "Civil Society Accountability (78.5)"
           ],
           "sampleEvidenceTitles": [],
           "allowedTitles": [],
@@ -33058,7 +33058,7 @@
           "aboveMedian": true,
           "contributionPct": 57.774343122102,
           "checklistBullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (95.9)",
+            "Strongest context signal: Gender Gap in Mobile Internet (95.9)",
             "Public Service Delivery (89.2)",
             "Cybersecurity (85.0)"
           ],
@@ -33466,7 +33466,7 @@
           "aboveMedian": true,
           "contributionPct": 71.09676075408812,
           "checklistBullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (95.3)",
+            "Strongest context signal: Gender Gap in Mobile Internet (95.3)",
             "Consumer Protection (94.5)",
             "Data Sharing and Access (87.5)"
           ],
@@ -33506,7 +33506,7 @@
         "frameworkScore": 46.42857142857143,
         "frameworkRankGlobal": 63,
         "implementationScore": 66.7420814479638,
-        "implementationRankGlobal": 28,
+        "implementationRankGlobal": 26,
         "strongestDimension": {
           "slug": "labour-skills",
           "name": "Labour and Skills",
@@ -34252,7 +34252,7 @@
         "frameworkScore": 59.61538461538461,
         "frameworkRankGlobal": 32,
         "implementationScore": 41.17647058823529,
-        "implementationRankGlobal": 79,
+        "implementationRankGlobal": 78,
         "strongestDimension": {
           "slug": "ethics-sustainability",
           "name": "Ethics and Sustainability",
@@ -34615,8 +34615,8 @@
           "aboveMedian": true,
           "contributionPct": 73.892586642185,
           "checklistBullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
-            "Environmental Performance (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
+            "Low-Carbon Energy Share (100.0)",
             "Data Sharing and Access (87.5)"
           ],
           "sampleEvidenceTitles": [],
@@ -35002,9 +35002,9 @@
           "aboveMedian": true,
           "contributionPct": 64.88657664205655,
           "checklistBullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
             "Consumer Protection (97.9)",
-            "Civil Society Oversight (82.8)"
+            "Civil Society Accountability (82.8)"
           ],
           "sampleEvidenceTitles": [],
           "allowedTitles": [],
@@ -35376,8 +35376,8 @@
           "contributionPct": 76.71415153412649,
           "checklistBullets": [
             "Strongest context signal: Data Sharing and Access (87.5)",
-            "Socioeconomic Inclusion in Connectivity (83.3)",
-            "Civil Society Oversight (79.2)"
+            "Device Affordability (83.3)",
+            "Civil Society Accountability (79.2)"
           ],
           "sampleEvidenceTitles": [],
           "allowedTitles": [],
@@ -35758,8 +35758,8 @@
           "aboveMedian": true,
           "contributionPct": 70.77525773195876,
           "checklistBullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
-            "Civil Society Oversight (91.8)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
+            "Civil Society Accountability (91.8)",
             "Egalitarian Democracy (77.5)"
           ],
           "sampleEvidenceTitles": [],
@@ -35798,7 +35798,7 @@
         "frameworkScore": 44.73684210526316,
         "frameworkRankGlobal": 67,
         "implementationScore": 37.25490196078431,
-        "implementationRankGlobal": 82,
+        "implementationRankGlobal": 81,
         "strongestDimension": {
           "slug": "inclusion-diversity",
           "name": "Inclusion and Diversity",
@@ -36162,7 +36162,7 @@
           "checklistBullets": [
             "Strongest context signal: Data Sharing and Access (100.0)",
             "Public Service Delivery (74.3)",
-            "Gender Inclusion in Connectivity (70.4)"
+            "Gender Gap in Mobile Internet (70.4)"
           ],
           "sampleEvidenceTitles": [],
           "allowedTitles": [],
@@ -36551,7 +36551,7 @@
           "aboveMedian": false,
           "contributionPct": 65.916809845367,
           "checklistBullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
             "Consumer Protection (92.0)",
             "Data Sharing and Access (87.5)"
           ],
@@ -36591,7 +36591,7 @@
         "frameworkScore": 28.571428571428573,
         "frameworkRankGlobal": 91,
         "implementationScore": 45.09803921568628,
-        "implementationRankGlobal": 74,
+        "implementationRankGlobal": 73,
         "strongestDimension": {
           "slug": "inclusion-diversity",
           "name": "Inclusion and Diversity",
@@ -36914,8 +36914,8 @@
           "aboveMedian": true,
           "contributionPct": 79.62748876043673,
           "checklistBullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
-            "Environmental Performance (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
+            "Low-Carbon Energy Share (100.0)",
             "Global Peace (87.3)"
           ],
           "sampleEvidenceTitles": [],
@@ -36954,7 +36954,7 @@
         "frameworkScore": 11.11111111111111,
         "frameworkRankGlobal": 106,
         "implementationScore": 52.94117647058823,
-        "implementationRankGlobal": 57,
+        "implementationRankGlobal": 55,
         "strongestDimension": {
           "slug": "trust-safety",
           "name": "Trust and Safety",
@@ -37273,7 +37273,7 @@
           "checklistBullets": [
             "Strongest context signal: Consumer Protection (94.1)",
             "Data Sharing and Access (87.5)",
-            "Gender Inclusion in Connectivity (81.1)"
+            "Gender Gap in Mobile Internet (81.1)"
           ],
           "sampleEvidenceTitles": [],
           "allowedTitles": [],
@@ -38025,8 +38025,8 @@
           "aboveMedian": false,
           "contributionPct": 73.06865540688747,
           "checklistBullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
-            "Environmental Performance (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
+            "Low-Carbon Energy Share (100.0)",
             "Data Sharing and Access (87.5)"
           ],
           "sampleEvidenceTitles": [],
@@ -38404,7 +38404,7 @@
           "aboveMedian": true,
           "contributionPct": 82.41567790961206,
           "checklistBullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
             "Consumer Protection (92.2)",
             "Public Service Delivery (80.7)"
           ],
@@ -38777,7 +38777,7 @@
           "aboveMedian": true,
           "contributionPct": 77.30721478824665,
           "checklistBullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
             "Public Service Delivery (90.5)",
             "Data Sharing and Access (87.5)"
           ],
@@ -39140,7 +39140,7 @@
           "aboveMedian": false,
           "contributionPct": 79.21845528848479,
           "checklistBullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
             "Consumer Protection (81.8)",
             "Public Service Delivery (80.6)"
           ],
@@ -39495,8 +39495,8 @@
           "aboveMedian": false,
           "contributionPct": 64.31078182881653,
           "checklistBullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (91.9)",
-            "Population Digital Readiness (74.7)",
+            "Strongest context signal: Gender Gap in Mobile Internet (91.9)",
+            "Skills & Literacy (74.7)",
             "Public Service Delivery (64.0)"
           ],
           "sampleEvidenceTitles": [],
@@ -39860,9 +39860,9 @@
           "aboveMedian": true,
           "contributionPct": 88.52044609665428,
           "checklistBullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (97.8)",
-            "Civil Society Oversight (87.4)",
-            "Population Digital Readiness (81.3)"
+            "Strongest context signal: Gender Gap in Mobile Internet (97.8)",
+            "Civil Society Accountability (87.4)",
+            "Skills & Literacy (81.3)"
           ],
           "sampleEvidenceTitles": [],
           "allowedTitles": [],
@@ -39900,7 +39900,7 @@
         "frameworkScore": 41.666666666666664,
         "frameworkRankGlobal": 73,
         "implementationScore": 58.82352941176471,
-        "implementationRankGlobal": 48,
+        "implementationRankGlobal": 45,
         "strongestDimension": {
           "slug": "ethics-sustainability",
           "name": "Ethics and Sustainability",
@@ -40233,7 +40233,7 @@
           "aboveMedian": false,
           "contributionPct": 69.20734801583274,
           "checklistBullets": [
-            "Strongest context signal: Environmental Performance (95.6)",
+            "Strongest context signal: Low-Carbon Energy Share (95.6)",
             "Consumer Protection (92.2)",
             "Cybersecurity (79.4)"
           ],
@@ -40275,7 +40275,7 @@
         "frameworkScore": 46.96969696969697,
         "frameworkRankGlobal": 61,
         "implementationScore": 52.94117647058823,
-        "implementationRankGlobal": 57,
+        "implementationRankGlobal": 55,
         "strongestDimension": {
           "slug": "trust-safety",
           "name": "Trust and Safety",
@@ -40993,7 +40993,7 @@
           "checklistBullets": [
             "Strongest context signal: Data Sharing and Access (87.5)",
             "Public Service Delivery (75.9)",
-            "Environmental Performance (73.7)"
+            "Low-Carbon Energy Share (73.7)"
           ],
           "sampleEvidenceTitles": [],
           "allowedTitles": [],
@@ -41337,7 +41337,7 @@
           "contributionPct": 98.34319526627219,
           "checklistBullets": [
             "Strongest context signal: Data Protection and Privacy (100.0)",
-            "Gender Inclusion in Connectivity (96.2)",
+            "Gender Gap in Mobile Internet (96.2)",
             "Consumer Protection (95.1)"
           ],
           "sampleEvidenceTitles": [],
@@ -41376,7 +41376,7 @@
         "frameworkScore": 15.384615384615385,
         "frameworkRankGlobal": 104,
         "implementationScore": 52.94117647058823,
-        "implementationRankGlobal": 57,
+        "implementationRankGlobal": 55,
         "strongestDimension": {
           "slug": "ethics-sustainability",
           "name": "Ethics and Sustainability",
@@ -41705,7 +41705,7 @@
           "aboveMedian": false,
           "contributionPct": 62.02909564650961,
           "checklistBullets": [
-            "Strongest context signal: Environmental Performance (94.6)",
+            "Strongest context signal: Low-Carbon Energy Share (94.6)",
             "Data Sharing and Access (68.8)",
             "Data Protection and Privacy (66.8)"
           ],
@@ -41745,7 +41745,7 @@
         "frameworkScore": 16.666666666666668,
         "frameworkRankGlobal": 100,
         "implementationScore": 58.82352941176471,
-        "implementationRankGlobal": 48,
+        "implementationRankGlobal": 45,
         "strongestDimension": {
           "slug": "ethics-sustainability",
           "name": "Ethics and Sustainability",
@@ -42064,9 +42064,9 @@
           "aboveMedian": false,
           "contributionPct": 84.62057335581787,
           "checklistBullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
-            "Environmental Performance (87.2)",
-            "Population Digital Readiness (68.0)"
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
+            "Low-Carbon Energy Share (87.2)",
+            "Skills & Literacy (68.0)"
           ],
           "sampleEvidenceTitles": [],
           "allowedTitles": [],
@@ -42411,9 +42411,9 @@
           "aboveMedian": true,
           "contributionPct": 96.3970088375255,
           "checklistBullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (98.9)",
-            "Labour Rights (90.5)",
-            "Civil Society Oversight (85.1)"
+            "Strongest context signal: Gender Gap in Mobile Internet (98.9)",
+            "Labour Rights & Compliance (90.5)",
+            "Civil Society Accountability (85.1)"
           ],
           "sampleEvidenceTitles": [],
           "allowedTitles": [],
@@ -42770,7 +42770,7 @@
           "aboveMedian": false,
           "contributionPct": 78.60328572235082,
           "checklistBullets": [
-            "Strongest context signal: Environmental Performance (97.1)",
+            "Strongest context signal: Low-Carbon Energy Share (97.1)",
             "Data Sharing and Access (93.8)",
             "Consumer Protection (91.5)"
           ],
@@ -43141,7 +43141,7 @@
           "aboveMedian": false,
           "contributionPct": 83.58415499048607,
           "checklistBullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (89.7)",
+            "Strongest context signal: Gender Gap in Mobile Internet (89.7)",
             "Data Sharing and Access (87.5)",
             "Consumer Protection (82.0)"
           ],
@@ -43482,8 +43482,8 @@
           "aboveMedian": false,
           "contributionPct": 97.77696793002916,
           "checklistBullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
-            "Civil Society Oversight (89.6)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
+            "Civil Society Accountability (89.6)",
             "Consumer Protection (68.9)"
           ],
           "sampleEvidenceTitles": [],
@@ -43845,7 +43845,7 @@
           "checklistBullets": [
             "Strongest context signal: Data Protection and Privacy (91.8)",
             "Cybersecurity (81.0)",
-            "Gender Inclusion in Connectivity (77.8)"
+            "Gender Gap in Mobile Internet (77.8)"
           ],
           "sampleEvidenceTitles": [],
           "allowedTitles": [],
@@ -44216,9 +44216,9 @@
           "aboveMedian": false,
           "contributionPct": 78.56976608867681,
           "checklistBullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
             "Data Sharing and Access (87.5)",
-            "Population Digital Readiness (84.0)"
+            "Skills & Literacy (84.0)"
           ],
           "sampleEvidenceTitles": [],
           "allowedTitles": [],
@@ -44573,9 +44573,9 @@
           "aboveMedian": false,
           "contributionPct": 93.91187567947816,
           "checklistBullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (91.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (91.0)",
             "Consumer Protection (87.5)",
-            "Civil Society Oversight (81.4)"
+            "Civil Society Accountability (81.4)"
           ],
           "sampleEvidenceTitles": [],
           "allowedTitles": [],
@@ -44938,7 +44938,7 @@
           "aboveMedian": false,
           "contributionPct": 85.08170795993675,
           "checklistBullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
             "Public Service Delivery (75.6)",
             "Consumer Protection (72.7)"
           ],
@@ -45299,8 +45299,8 @@
           "aboveMedian": false,
           "contributionPct": 88.25186079259706,
           "checklistBullets": [
-            "Strongest context signal: Environmental Performance (95.2)",
-            "Civil Society Oversight (80.8)",
+            "Strongest context signal: Low-Carbon Energy Share (95.2)",
+            "Civil Society Accountability (80.8)",
             "Global Peace (71.2)"
           ],
           "sampleEvidenceTitles": [],
@@ -45666,9 +45666,9 @@
           "aboveMedian": false,
           "contributionPct": 88.04280289955125,
           "checklistBullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (90.9)",
-            "Population Digital Readiness (75.2)",
-            "Civil Society Oversight (70.0)"
+            "Strongest context signal: Gender Gap in Mobile Internet (90.9)",
+            "Skills & Literacy (75.2)",
+            "Civil Society Accountability (70.0)"
           ],
           "sampleEvidenceTitles": [],
           "allowedTitles": [],
@@ -46014,8 +46014,8 @@
           "contributionPct": 96.04980975441025,
           "checklistBullets": [
             "Strongest context signal: Data Sharing and Access (93.8)",
-            "Gender Inclusion in Connectivity (78.5)",
-            "Environmental Performance (76.7)"
+            "Gender Gap in Mobile Internet (78.5)",
+            "Low-Carbon Energy Share (76.7)"
           ],
           "sampleEvidenceTitles": [],
           "allowedTitles": [],
@@ -46714,7 +46714,7 @@
           "contributionPct": 97.33275032794053,
           "checklistBullets": [
             "Strongest context signal: Consumer Protection (87.1)",
-            "Environmental Performance (75.2)",
+            "Low-Carbon Energy Share (75.2)",
             "Public Service Delivery (71.7)"
           ],
           "sampleEvidenceTitles": [],
@@ -47063,8 +47063,8 @@
           "contributionPct": 95.78099601004877,
           "checklistBullets": [
             "Strongest context signal: Consumer Protection (92.6)",
-            "Gender Inclusion in Connectivity (87.2)",
-            "Environmental Performance (73.1)"
+            "Gender Gap in Mobile Internet (87.2)",
+            "Low-Carbon Energy Share (73.1)"
           ],
           "sampleEvidenceTitles": [],
           "allowedTitles": [],
@@ -47439,7 +47439,7 @@
           "aboveMedian": false,
           "contributionPct": 83.41116299755392,
           "checklistBullets": [
-            "Strongest context signal: Environmental Performance (83.4)",
+            "Strongest context signal: Low-Carbon Energy Share (83.4)",
             "Consumer Protection (68.6)",
             "Cybersecurity (64.4)"
           ],
@@ -47479,7 +47479,7 @@
         "frameworkScore": 0,
         "frameworkRankGlobal": 108,
         "implementationScore": 50,
-        "implementationRankGlobal": 65,
+        "implementationRankGlobal": 64,
         "strongestDimension": {
           "slug": "trust-safety",
           "name": "Trust and Safety",
@@ -48140,7 +48140,7 @@
           "contributionPct": 100,
           "checklistBullets": [
             "Strongest context signal: Data Sharing and Access (87.5)",
-            "Civil Society Oversight (78.3)",
+            "Civil Society Accountability (78.3)",
             "Consumer Protection (76.5)"
           ],
           "sampleEvidenceTitles": [],
@@ -48524,7 +48524,7 @@
         "frameworkScore": 16.666666666666668,
         "frameworkRankGlobal": 100,
         "implementationScore": 55.88235294117647,
-        "implementationRankGlobal": 54,
+        "implementationRankGlobal": 52,
         "strongestDimension": {
           "slug": "trust-safety",
           "name": "Trust and Safety",
@@ -48833,8 +48833,8 @@
           "aboveMedian": false,
           "contributionPct": 52.179327521793276,
           "checklistBullets": [
-            "Strongest context signal: Civil Society Oversight (56.4)",
-            "Gender Inclusion in Connectivity (44.5)",
+            "Strongest context signal: Civil Society Accountability (56.4)",
+            "Gender Gap in Mobile Internet (44.5)",
             "Consumer Protection (42.6)"
           ],
           "sampleEvidenceTitles": [],
@@ -49190,9 +49190,9 @@
           "aboveMedian": false,
           "contributionPct": 79.22737490633587,
           "checklistBullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
             "Data Protection and Privacy (83.4)",
-            "Civil Society Oversight (69.8)"
+            "Civil Society Accountability (69.8)"
           ],
           "sampleEvidenceTitles": [],
           "allowedTitles": [],
@@ -49557,7 +49557,7 @@
           "checklistBullets": [
             "Strongest context signal: Data Sharing and Access (87.5)",
             "Cybersecurity (72.3)",
-            "Gender Inclusion in Connectivity (69.1)"
+            "Gender Gap in Mobile Internet (69.1)"
           ],
           "sampleEvidenceTitles": [],
           "allowedTitles": [],
@@ -49914,8 +49914,8 @@
           "aboveMedian": false,
           "contributionPct": 90.85926449787836,
           "checklistBullets": [
-            "Strongest context signal: Gender Inclusion in Connectivity (100.0)",
-            "Population Digital Readiness (77.3)",
+            "Strongest context signal: Gender Gap in Mobile Internet (100.0)",
+            "Skills & Literacy (77.3)",
             "Global Peace (65.1)"
           ],
           "sampleEvidenceTitles": [],
@@ -50255,7 +50255,7 @@
           "aboveMedian": false,
           "contributionPct": 98.4299732381802,
           "checklistBullets": [
-            "Strongest context signal: Environmental Performance (100.0)",
+            "Strongest context signal: Low-Carbon Energy Share (100.0)",
             "Consumer Protection (63.1)",
             "Data Sharing and Access (62.5)"
           ],
@@ -50610,9 +50610,9 @@
           "aboveMedian": false,
           "contributionPct": 87.4258474576271,
           "checklistBullets": [
-            "Strongest context signal: Environmental Performance (100.0)",
+            "Strongest context signal: Low-Carbon Energy Share (100.0)",
             "Consumer Protection (67.0)",
-            "Civil Society Oversight (47.6)"
+            "Civil Society Accountability (47.6)"
           ],
           "sampleEvidenceTitles": [],
           "allowedTitles": [],
@@ -50956,8 +50956,8 @@
           "contributionPct": 91.89279731993301,
           "checklistBullets": [
             "Strongest context signal: Consumer Protection (77.8)",
-            "Civil Society Oversight (71.3)",
-            "Gender Inclusion in Connectivity (70.7)"
+            "Civil Society Accountability (71.3)",
+            "Gender Gap in Mobile Internet (70.7)"
           ],
           "sampleEvidenceTitles": [],
           "allowedTitles": [],
@@ -51649,9 +51649,9 @@
           "aboveMedian": false,
           "contributionPct": 95.28843943920937,
           "checklistBullets": [
-            "Strongest context signal: Environmental Performance (75.5)",
+            "Strongest context signal: Low-Carbon Energy Share (75.5)",
             "Consumer Protection (51.1)",
-            "Population Digital Readiness (41.6)"
+            "Skills & Literacy (41.6)"
           ],
           "sampleEvidenceTitles": [],
           "allowedTitles": [],
@@ -52323,7 +52323,7 @@
           "aboveMedian": false,
           "contributionPct": 100,
           "checklistBullets": [
-            "Strongest context signal: Environmental Performance (86.9)",
+            "Strongest context signal: Low-Carbon Energy Share (86.9)",
             "Consumer Protection (55.3)",
             "Public Service Delivery (25.6)"
           ],

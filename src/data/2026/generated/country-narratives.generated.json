@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-06T12:13:00.983Z",
-  "sourceHash": "805076eec44668e5d51a6fd04aedcc6988cc57707ad27ebe27cb9a046c53c439",
+  "generatedAt": "2026-10-25T18:30:20.797Z",
+  "sourceHash": "48033e24f777f1e97fe5174208bb1ffe1e0a4d9b49157124eae5c108d3636c76",
   "source": "deterministic",
   "model": null,
   "countries": {
@@ -261,7 +261,7 @@
       }
     },
     "PRT": {
-      "hero": "Portugal's index score lands +5.8 against the Europe average (54.2) and +7.9 against High income peers (52.1). It scores ahead of 87% of the 135 countries and jurisdictions assessed this edition. Published score 60.0 reflects a URAI adjustment from 62.5 (1 government-misuse evidence item on file) — including \"AI Surveillance Cameras Aid Crime Reduction in Bulgarian Resorts\". The profile rests on 38 documented evidence items spanning policy frameworks, government initiatives and civil society activity.",
+      "hero": "Portugal's index score lands +5.8 against the Europe average (54.2) and +7.9 against High income peers (52.1). It scores ahead of 87% of the 135 countries and jurisdictions assessed this edition. Published score 60.0 reflects a URAI adjustment from 62.5 (1 government-misuse evidence item on file). The profile rests on 38 documented evidence items spanning policy frameworks, government initiatives and civil society activity.",
       "dimensions": {
         "inclusion-diversity": "Portugal runs +15.8 against the regional average (56.4) on Inclusion and Diversity. Strongest indicators: Children's Rights (80.3), Cultural and Linguistic Diversity (75.0). Weakest: Gender Equality (63.4). This dimension ranks 9th globally — ahead of the country's overall position (18th). 9 evidence items on file, including \"EU Digital Services Act\" and 3 other documented items.",
         "ethics-sustainability": "Portugal runs +7.1 against the regional average (54.8) on Ethics and Sustainability. Strongest indicators: Fairness and Non-discrimination (73.9), Human Oversight and Determination (73.9). Weakest: Environmental Impact (0.0), Transparency and Explainability (64.8). This dimension ranks 14th globally — ahead of the country's overall position (18th). 8 evidence items on file, including \"EU AI Act\" and 4 other documented items.",

@@ -365,8 +365,52 @@ const AI_POLICY_INDICATOR_NAMES = new Set(
   AI_POLICY_INDICATORS.flatMap((i) => [i.name, ...i.aliases])
 );
 
+// thematic_coverage value columns are `element{i}` since Dataset v1.1
+// (2026-10); earlier workbooks used `element{i}_value`. Accept either, and
+// fail loudly if neither is present rather than silently emitting no
+// thematic elements.
+function readThematicCoverage(): Record<string, unknown>[] {
+  const rows = readSheet(DATASET_FILE, "thematic_coverage");
+  const headers = new Set(rows.length ? Object.keys(rows[0]) : []);
+  const missing = [1, 2, 3, 4].filter(
+    (i) => !headers.has(`element${i}`) && !headers.has(`element${i}_value`)
+  );
+  if (missing.length) {
+    throw new Error(
+      `Sheet "thematic_coverage" in ${path.basename(DATASET_FILE)} has neither ` +
+        missing.map((i) => `"element${i}" nor "element${i}_value"`).join(", ") +
+        ` (rows=${rows.length}). Thematic element values would be empty.`
+    );
+  }
+  return rows;
+}
+
+function thematicValue(row: Record<string, unknown>, i: number): string | null {
+  return str(row[`element${i}`] ?? row[`element${i}_value`]);
+}
+
+/**
+ * Optional fallback: the v1.1 changelog announced per-slot
+ * `fr{n}_element{i}_text` / `_justif` columns in `frameworks`, but they are
+ * not in the v1.1 file. If a future workbook ships them, use them when
+ * thematic_coverage has no entry for that interview_key + slot.
+ */
+function frameworkElementsFallback(
+  row: Record<string, unknown>,
+  slot: 1 | 2
+): { text: string; value: string; justification: string }[] | null {
+  const elems: { text: string; value: string; justification: string }[] = [];
+  for (let i = 1; i <= 4; i++) {
+    const p = `fr${slot}_element${i}`;
+    const text = str(row[`${p}_text`]);
+    const value = str(row[p] ?? row[`${p}_value`]);
+    if (text && value) elems.push({ text, value, justification: strOr(row[`${p}_justif`]) });
+  }
+  return elems.length ? elems : null;
+}
+
 const _frameworksRows = readSheet(DATASET_FILE, "frameworks");
-const _thematicRows = readSheet(DATASET_FILE, "thematic_coverage");
+const _thematicRows = readThematicCoverage();
 const _initiativesRows = readSheet(DATASET_FILE, "initiatives");
 
 const _thematicByKey = new Map<string, (string | null)[]>();
@@ -375,7 +419,7 @@ for (const row of _thematicRows) {
   const source = str(row["source"]);
   if (!ik || !source) continue;
   const values: (string | null)[] = [];
-  for (let i = 1; i <= 4; i++) values.push(str(row[`element${i}_value`]));
+  for (let i = 1; i <= 4; i++) values.push(thematicValue(row, i));
   _thematicByKey.set(`${ik}::${source}`, values);
 }
 
@@ -399,7 +443,10 @@ for (const row of _thematicRows) {
     for (const slot of [1, 2] as const) {
       const title = str(row[`fr${slot}_title`]);
       if (!title) continue;
-      const thematic = _thematicByKey.get(`${ik}::fr${slot}`) ?? [];
+      const thematic =
+        _thematicByKey.get(`${ik}::fr${slot}`) ??
+        frameworkElementsFallback(row, slot)?.map((e) => e.value) ??
+        [];
       for (const v of thematic) {
         const s = ynpToScore(v);
         if (s !== null) pushVal(thematicSamples, iso3, s);
@@ -710,7 +757,7 @@ const evidence: EvidenceItem[] = [];
 
 // 3a. Frameworks
 const frameworksRows = readSheet(DATASET_FILE, "frameworks");
-const thematicRows = readSheet(DATASET_FILE, "thematic_coverage");
+const thematicRows = readThematicCoverage();
 
 // Build thematic-coverage lookup keyed by interview_key + source ("fr1"/"fr2"/"gmc")
 const thematicByKey = new Map<
@@ -725,7 +772,7 @@ for (const row of thematicRows) {
   const elems: { text: string; value: string; justification: string }[] = [];
   for (let i = 1; i <= 4; i++) {
     const text = str(row[`element${i}_text`]);
-    const value = str(row[`element${i}_value`]);
+    const value = thematicValue(row, i);
     const just = str(row[`element${i}_justif`]);
     if (text && value) elems.push({ text, value, justification: just ?? "" });
   }
@@ -820,8 +867,36 @@ for (const row of frameworksRows) {
       plan: str(row[`fr${slot}_plan`]),
       budget: str(row[`fr${slot}_budget`]),
       monitoring: str(row[`fr${slot}_monitoring`]),
-      thematicElements: thematicByKey.get(`${ik}::fr${slot}`) ?? null,
+      thematicElements:
+        thematicByKey.get(`${ik}::fr${slot}`) ?? frameworkElementsFallback(row, slot),
     });
+  }
+}
+
+// Guard: fail loudly if thematic_coverage has element values but they did not
+// reach the framework evidence (e.g. a renamed column or source key).
+{
+  const frameworkIds = new Set(
+    evidence.filter((e) => e.kind === "framework").map((e) => e.id)
+  );
+  const sheetKeysWithValues = thematicRows.filter((row) =>
+    [1, 2, 3, 4].some((i) => thematicValue(row, i))
+  );
+  const matchedKeys = sheetKeysWithValues.filter((row) => {
+    const slot = str(row["source"])?.match(/^fr([12])$/)?.[1];
+    return slot && frameworkIds.has(`${str(row["interview_key"])}:framework:${slot}`);
+  }).length;
+  const withThematic = evidence.filter((e) => e.thematicElements?.length).length;
+  console.log(
+    `[build-data] thematic coverage: ${withThematic} framework evidence items with thematicElements ` +
+      `(${sheetKeysWithValues.length} sheet rows with element values, ${matchedKeys} matched to frameworks)`
+  );
+  if (sheetKeysWithValues.length > 0 && (withThematic === 0 || withThematic < matchedKeys * 0.5)) {
+    throw new Error(
+      `[build-data] thematic_coverage has ${sheetKeysWithValues.length} rows with element values ` +
+        `(${matchedKeys} matching framework evidence) but only ${withThematic} evidence items got ` +
+        `thematicElements. Check thematic_coverage column names (element{i}_text / element{i}) and source keys.`
+    );
   }
 }
 

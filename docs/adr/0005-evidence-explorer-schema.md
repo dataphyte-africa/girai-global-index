@@ -60,6 +60,10 @@ type EvidenceItem = {
 };
 ```
 
+`thematicElements` comes from the `thematic_coverage` sheet
+(`element{i}_text`, `element{i}`, `element{i}_justif`). Before Dataset v1.1
+the value column was `element{i}_value`, and the build still accepts that name.
+
 `id` is built deterministically from `interview_key` + kind + slot index
 so reruns produce stable IDs.
 

@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-06T21:36:25.956Z",
-  "sourceHash": "805076eec44668e5d51a6fd04aedcc6988cc57707ad27ebe27cb9a046c53c439",
+  "generatedAt": "2026-10-25T18:30:03.719Z",
+  "sourceHash": "48033e24f777f1e97fe5174208bb1ffe1e0a4d9b49157124eae5c108d3636c76",
   "totals": {
     "countries": 135,
     "byStatus": {
@@ -1443,7 +1443,7 @@
         {
           "text": "Mandate to ensure diversity and inclusiveness in consultations actively engaging CSOs that represent marginalized and vulnerable groups",
           "value": "Partially",
-          "justification": "The proposed law in article 4 - paragraph p establishes multi-stakeholder collaboration and international cooperation as key principles stating that the AI ??ecosystem should be nurtured by the active and coordinated participation of diverse relevant actors: the public sector industry academia civil society the technical community international organizations and citizens. It calls for promoting intersectoral dialogue interdisciplinary research and the exchange of best practices at the national and global levels for intelligent and harmonized governance of common challenges. However it does not define specific mechanisms for achieving this."
+          "justification": "The proposed law in article 4 - paragraph p establishes multi-stakeholder collaboration and international cooperation as key principles stating that the AI ecosystem should be nurtured by the active and coordinated participation of diverse relevant actors: the public sector; industry; academia; civil society; the technical community; international organizations and citizens. It calls for promoting intersectoral dialogue; interdisciplinary research and the exchange of best practices at the national and global levels; for intelligent and harmonized governance of common challenges. However it does not define specific mechanisms for achieving this."
         },
         {
           "text": "Requirement for the government to demonstrate how CSO feedback was considered and incorporated into final decisions providing accountability",
@@ -1678,7 +1678,7 @@
         {
           "text": "Mandate to ensure diversity and inclusiveness in consultations actively engaging CSOs that represent marginalized and vulnerable groups",
           "value": "Partially",
-          "justification": "The strategy mandates the National Digital Council (CNNum) to structure 'democratic debates' through the 'Cafés IA' initiative explicitly designed to be inclusive and 'gather the largest possible number of actors.' It aims to ensure 'all French people' can appropriate AI specifically targeting diverse groups such as 'students employees [and] people returning to employment' (personnes en reprise d'emploi) to prevent a 'digital fracture.' Furthermore it emphasises 'social dialogue' with trade unions (organisations syndicales) to address However the strategy lacks a specific formal mandate that explicitly requires the active and targeted engagement of marginalised and vulnerable groups as a defined procedural step in every consultation."
+          "justification": "The strategy mandates the National Digital Council (CNNum) to structure 'democratic debates' through the AI Coffe ('Cafés IA') initiative explicitly designed to be inclusive and 'gather the largest possible number of actors.' It aims to ensure 'all French people' can appropriate AI specifically targeting diverse groups such as 'students employees [and] people returning to employment' (personnes en reprise d'emploi) to prevent a 'digital fracture.' Furthermore it emphasises 'social dialogue' with trade unions (organisations syndicales) to address However the strategy lacks a specific formal mandate that explicitly requires the active and targeted engagement of marginalised and vulnerable groups as a defined procedural step in every consultation."
         },
         {
           "text": "Requirement for the government to demonstrate how CSO feedback was considered and incorporated into final decisions providing accountability",
@@ -1858,8 +1858,8 @@
         "exists": "Yes",
         "name": "National Artificial Intelligence Supervisory Authority"
       },
-      "plan": null,
-      "budget": null,
+      "plan": "No",
+      "budget": "No",
       "monitoring": "Yes",
       "csoConsultation": "Yes",
       "thematicElements": [
@@ -2693,7 +2693,7 @@
         {
           "text": "Mandate to ensure diversity and inclusiveness in consultations actively engaging CSOs that represent marginalized and vulnerable groups",
           "value": "Partially",
-          "justification": "Section 3.2 of the Draft Plan calls for “inclusive and participatory consultations engaging government academia private sector and civil society” (p. 11) and highlights the inclusion of women youth and persons with disabilities in policy design. However it does not specify formal mandates or procedures ensuring representation of marginalized CSOs or vulnerable groups in all consultation rounds."
+          "justification": "The Draft plan outlines the role of CSOs to advocate for vulnerable groups to ensure they are not left behind in the AI revolution (P. 21 and 72) but does not specify formal mandates or procedures ensuring representation of marginalized CSOs or vulnerable groups in all consultation rounds."
         },
         {
           "text": "Requirement for the government to demonstrate how CSO feedback was considered and incorporated into final decisions providing accountability",
@@ -3653,7 +3653,7 @@
       "reach": "Both actors",
       "defenceAndSecurity": {
         "value": "Yes it is",
-        "justification": "Page 2 This AI Policy does not cover state activities in the area of ??national security and defense."
+        "justification": "Page 2: This AI Policy does not cover state activities in the area of national security and defense."
       },
       "body": {
         "exists": "Yes",
@@ -3800,8 +3800,8 @@
         "exists": "Yes",
         "name": "Sub-Council for Artificial Intelligence and Data Governance (SCIA)"
       },
-      "plan": null,
-      "budget": null,
+      "plan": "No",
+      "budget": "No",
       "monitoring": "Yes",
       "csoConsultation": "Yes",
       "thematicElements": [
@@ -4422,7 +4422,7 @@
         {
           "text": "Mandate to ensure diversity and inclusiveness in consultations actively engaging CSOs that represent marginalized and vulnerable groups",
           "value": "Partially",
-          "justification": "Spain's AI authority the Agencia Española de Supervisión de la Inteligencia Artificial will develop an annual work plan with the scheduling of different sectoral and specialized discussion forums organized by key AI themes (p. 58). Reports and guides will be regularly updated with new developments and discussions with associations or entities providing an overview of how AI is being developed and applied in various sectors (p. 59). However there are no measures of representativeness target groups or monitoring."
+          "justification": "Spain's AI authority the Spanish Agency for the Supervision of Artificial Intelligence (Agencia Española de Supervisión de la Inteligencia Artificial) will develop an annual work plan with the scheduling of different sectoral and specialized discussion forums organized by key AI themes (p. 58). Reports and guides will be regularly updated with new developments and discussions with associations or entities providing an overview of how AI is being developed and applied in various sectors (p. 59). However there are no measures of representativeness target groups or monitoring."
         },
         {
           "text": "Requirement for the government to demonstrate how CSO feedback was considered and incorporated into final decisions providing accountability",
@@ -4818,8 +4818,8 @@
         "exists": "No",
         "name": null
       },
-      "plan": null,
-      "budget": null,
+      "plan": "No",
+      "budget": "No",
       "monitoring": "No",
       "csoConsultation": "Yes",
       "thematicElements": [
@@ -5199,7 +5199,7 @@
         {
           "text": "Mandate to ensure diversity and inclusiveness in consultations actively engaging CSOs that represent marginalized and vulnerable groups",
           "value": "Yes",
-          "justification": "The strategy calls for “inclusive participation” under Multi Stakeholder Involvement ensuring “representation from all relevant sectors including marginalized groups” (Page 18 19) and commits to “consultative processes to gather diverse perspectives inclusive CSOS” . The National AI Council will include CSOs and TWGs foresee civil society involvement (Page 38). Further Page 34 under Inclusive Ecosystem Development  states “Engage key institutions in the AI ecosystem: government agencies  NGOs international bodies incubators and accelerators and civil society groups”.  However there is no explicit mandate to ensure meaningful  participation of CSOs representing marginalized or vulnerable groups."
+          "justification": "Section 3.3 Stakeholder Engagement (Page 18) states that consultations were conducted with representatives from ministries; the private sector; academic institutions; civil society and international development partners; and their feedback shaped the strategy to ensure it was both practical and representative of the interests of all including marginalized and vulnerable groups."
         },
         {
           "text": "Requirement for the government to demonstrate how CSO feedback was considered and incorporated into final decisions providing accountability",
