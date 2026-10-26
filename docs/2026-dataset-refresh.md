@@ -83,7 +83,7 @@ Europe`, `Eastern Asia` → `East Asia`, `Western Africa` → `West Africa`,
 | ------------------------------ | ----------------------------------------------------------------------------------------------- |
 | `all_evidences`                | Rogue backtick column header replaced by `interview_key`. Sanitization shim in the build is now a no-op but kept defensively. |
 | `gmc_cse`                      | Removed `gmc_existence`. Not used by the pipeline.                                              |
-| `frameworks`                   | Added `implementation` column. Thematic elements also inlined as `frN_element1..4` per slot. The pipeline keeps using the dedicated `thematic_coverage` sheet (richer text/value/justif tuples). |
+| `frameworks`                   | Added `implementation` column. Thematic elements also inlined as `frN_element1..4` per slot. The pipeline keeps using the dedicated `thematic_coverage` sheet (richer text/value/justif tuples; value columns renamed `element{i}_value` → `element{i}` in Dataset v1.1, see `data-changes-2026-10-25.md`). |
 | `urai`                         | Slot count reduced from 7 to 4 (`urai1`..`urai4`). Loop iterates 1..7 defensively; empty slots are skipped. |
 | `scoring_output.xlsx`          | New informational `db_dictionary` sheet (not consumed).                                         |
 | `all_indicators` / `all_indicators_long` | All indicator-name renames listed above. Long-format rows: 5,266 → 5,131 (consistent with one indicator dropped). |

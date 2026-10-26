@@ -18,11 +18,17 @@ type DownloadAsset = {
   mimeType: string;
 };
 
+export const DATASET_2026_FILENAME = "GIRAI_2026_dataset.xlsx";
+export const DATASET_2026_PUBLIC_PATH = `/downloads/${DATASET_2026_FILENAME}`;
+
 const PUBLIC_DOWNLOADS = {
   firstReport: process.env.DOWNLOAD_FIRST_REPORT_PATH ?? "/downloads/GIRAI-2024-report.pdf",
   secondReport: process.env.DOWNLOAD_SECOND_REPORT_PATH ?? "/downloads/Global-Index-on-Responsible-AI-2026.pdf",
   firstData: process.env.DOWNLOAD_FIRST_DATA_PATH ?? "/downloads/GIRAI_2024_dataset.xlsx",
-  secondData: process.env.DOWNLOAD_SECOND_DATA_PATH ?? "/downloads/GIRAI_2026_dataset.xlsx",
+  // Always served same-origin: `pnpm sync:downloads` (prebuild) copies it from
+  // src/data/2026/GIRAI_dataset.xlsx, so the download matches the site data.
+  // DOWNLOAD_SECOND_DATA_PATH (old GCS URL) is intentionally no longer read.
+  secondData: DATASET_2026_PUBLIC_PATH,
   firstMethodology:
     process.env.DOWNLOAD_FIRST_METHODOLOGY_PATH ?? "/downloads/GIRAI-2024-methodology.pdf",
   secondMethodology:
@@ -58,7 +64,7 @@ export function getDownloadAsset(
         }
       : {
           path: PUBLIC_DOWNLOADS.secondData,
-          filename: "GIRAI_2026_dataset.xlsx",
+          filename: DATASET_2026_FILENAME,
           mimeType:
             "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         };

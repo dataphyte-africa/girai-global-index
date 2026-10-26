@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-07-07T15:33:29.818Z",
-  "sourceHash": "805076eec44668e5d51a6fd04aedcc6988cc57707ad27ebe27cb9a046c53c439",
+  "generatedAt": "2026-10-25T17:50:26.680Z",
+  "sourceHash": "48033e24f777f1e97fe5174208bb1ffe1e0a4d9b49157124eae5c108d3636c76",
   "totals": {
     "items": 2977,
     "uniqueItems": 1939,
@@ -40356,7 +40356,7 @@
     {
       "id": "62-05-28-89:initiative:b1-i1",
       "kind": "initiative",
-      "title": "Recommendations on algorithmic transparency",
+      "title": "Recommendations on Algorithmic Transparency",
       "link": "https://web.archive.org/web/20260123144911/https://www.gub.uy/agencia-gobierno-electronico-sociedad-informacion-conocimiento/comunicacion/publicaciones/recomendaciones-sobre-transparencia-algoritmica",
       "type": "Knowledge Generation — Research reports",
       "enforceability": null,
@@ -55404,7 +55404,7 @@
     {
       "id": "15-50-06-01:gmc-consultation:1",
       "kind": "gmc-consultation",
-      "title": "Received input on the AI ??strategy",
+      "title": "Received input on the AI strategy",
       "link": "https://www-regjeringen-no.translate.goog/no/tema/statlig-forvaltning/it-politikk/KI-strategi/mottatte-innspill-til-ki-strategien/id2640057/?_x_tr_sl=auto&_x_tr_tl=es&_x_tr_hl=es&_x_tr_pto=wapp",
       "type": "Open public consultation (e.g. online comments public hearing)",
       "enforceability": null,
@@ -56240,7 +56240,7 @@
     {
       "id": "16-67-57-07:gmc-mechanism:1",
       "kind": "gmc-mechanism",
-      "title": "D? th?o Online - Noi nhân dân tham gia vào ho?t d?ng l?p pháp c?a qu?c h?i (Online Draft Legislations - Where people participate in the legislative activities of the National Assembly)",
+      "title": "Online Draft Legislations - Where people participate in the legislative activities of the National Assembly",
       "link": "https://duthaoonline.quochoi.vn/dt/luat-tri-tue-nhan-tao/251009091536864496",
       "type": "Other",
       "enforceability": null,
@@ -57038,9 +57038,9 @@
     {
       "id": "85-27-93-09:government-misuse:1",
       "kind": "government-misuse",
-      "title": "AI Surveillance Cameras Aid Crime Reduction in Bulgarian Resorts",
-      "link": "https://oecd.ai/en/incidents/2024-04-04-b641",
-      "type": "Mass biometric surveillance (e.g. facial recognition in public spaces)",
+      "title": "Integrated Risk Management Platform (PIGR): machine-learning fraud risk scoring of Social Security numbers",
+      "link": "https://www.ela.europa.eu/sites/default/files/2026-01/PT_GP2025_Integrated_Risk_Management_Platform.pdf",
+      "type": "Social scoring systems",
       "enforceability": null,
       "approval": null,
       "country": {
