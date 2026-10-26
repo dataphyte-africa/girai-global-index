@@ -164,11 +164,19 @@ Accountability"). The committed file predated an earlier relabel.
 ## 6. Public dataset download
 
 `public/downloads/GIRAI_2026_dataset.xlsx` has been replaced with the v1.1
-website-format file. Production does not serve that file: the live download
-comes from the GCS bucket
-(`storage.googleapis.com/girai-global-index-downloads/GIRAI_2026_dataset.xlsx`,
-set in `apphosting.yaml`). The bucket object must be replaced separately
-after approval. Updating the repo copy does not change what users download.
+website-format file, and the app now serves it directly at
+`/downloads/GIRAI_2026_dataset.xlsx`. It is synced at build time from
+`src/data/2026/GIRAI_dataset.xlsx` by `pnpm sync:downloads` (first step of
+`prebuild`), so the download always matches the data the site is built from;
+`pnpm check:downloads` fails if the committed copy has drifted.
+
+- `DOWNLOAD_SECOND_DATA_PATH` is no longer read; it can be removed from
+  `apphosting.yaml` / Vercel later.
+- The GCS object
+  (`storage.googleapis.com/girai-global-index-downloads/GIRAI_2026_dataset.xlsx`)
+  is no longer referenced for the 2026 dataset and does not need replacing.
+- The download modal's success screen (link to the Google Drive library) is
+  unchanged.
 
 ## 7. Follow-ups
 

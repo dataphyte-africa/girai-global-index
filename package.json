@@ -5,12 +5,14 @@
   "packageManager": "pnpm@10.34.1",
   "scripts": {
     "dev": "next dev",
-    "prebuild": "pnpm build:data && pnpm build:narratives:deterministic",
+    "prebuild": "pnpm sync:downloads && pnpm build:data && pnpm build:narratives:deterministic",
     "build": "next build",
     "build:data": "tsx scripts/build-data.ts",
     "build:narratives": "tsx scripts/build-narratives.ts",
     "build:narratives:llm": "tsx scripts/build-narratives.ts --llm",
     "build:narratives:deterministic": "tsx scripts/build-narratives.ts --deterministic",
+    "sync:downloads": "tsx scripts/sync-dataset-download.ts",
+    "check:downloads": "tsx scripts/sync-dataset-download.ts --check",
     "start": "next start",
     "seed:sanity": "tsx --env-file=.env.local scripts/seed-sanity.ts",
     "lint": "eslint"

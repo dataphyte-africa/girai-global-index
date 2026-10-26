@@ -114,6 +114,7 @@ In the **current Firebase setup**:
 | `GOOGLE_SERVICE_ACCOUNT_EMAIL` | **Secret** | Google Sheets write access | Secret Manager / `.env.local` |
 | `GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY` | **Secret** | Google Sheets write access | Secret Manager / `.env.local` |
 | `DOWNLOAD_FIRST_REPORT_PATH` etc. | Config | Public URLs of report/dataset downloads (GCS) | apphosting.yaml |
+| `DOWNLOAD_SECOND_DATA_PATH` | Unused | No longer read: the 2026 dataset is always served from `/downloads/GIRAI_2026_dataset.xlsx` (see Section 7). Can be removed from apphosting.yaml / Vercel. | apphosting.yaml |
 | `NEXT_PUBLIC_SITE_URL` | Config | Canonical site URL (for citations/SEO) | env |
 
 > **Action required:** After the OpenAI, Mailchimp, and Sanity accounts are transferred, **all their keys must be regenerated** and updated in Secret Manager (see Section 9). The developer’s old keys should be revoked.
@@ -175,11 +176,13 @@ The large downloadable files (PDF reports and Excel datasets) are **not** in the
 | 2024 report (PDF) | `storage.googleapis.com/girai-global-index-downloads/GIRAI-2024-report.pdf` |
 | 2026 report (PDF) | `storage.googleapis.com/girai-global-index-downloads/GIRAI-2026-report.pdf` |
 | 2024 dataset (XLSX) | `storage.googleapis.com/girai-global-index-downloads/GIRAI_2024_dataset.xlsx` |
-| 2026 dataset (XLSX) | `storage.googleapis.com/girai-global-index-downloads/GIRAI_2026_dataset.xlsx` |
+| 2026 dataset (XLSX) | Served by the site itself at `/downloads/GIRAI_2026_dataset.xlsx` (not GCS — see below) |
 
 - Bucket name: **`girai-global-index-downloads`** (inside the `girai-global-index` Google Cloud project).
 - To update a report, upload a new file to the bucket (same filename) — no code change needed.
 - The download URLs are wired into the site via the `DOWNLOAD_*` variables in `apphosting.yaml`.
+- **2026 dataset exception:** it is served from the app at `/downloads/GIRAI_2026_dataset.xlsx`. Every build runs `pnpm sync:downloads` (first step of `prebuild`), which copies `src/data/2026/GIRAI_dataset.xlsx` — the file the site’s data is built from — to `public/downloads/GIRAI_2026_dataset.xlsx`. To update it, replace `src/data/2026/GIRAI_dataset.xlsx`, run `pnpm sync:downloads`, and commit (`pnpm check:downloads` fails if the two differ). `DOWNLOAD_SECOND_DATA_PATH` is no longer read and can be removed from `apphosting.yaml` / Vercel later; the GCS object `GIRAI_2026_dataset.xlsx` is no longer referenced by the site.
+- The dataset download form still logs the request and then shows its existing success screen linking to the Google Drive library — that UX is unchanged.
 
 ---
 
