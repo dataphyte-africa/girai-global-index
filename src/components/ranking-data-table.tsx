@@ -24,6 +24,7 @@ import {
 import {
   Table,
   TableBody,
+  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -45,6 +46,7 @@ import type { CountryRanking } from "@/lib/girai";
 import { flagUrlForIso3 } from "@/lib/geo-iso";
 import type { DimensionSlug, PillarSlug } from "@/data/2026/taxonomy";
 import {
+  EMPTY_SCORE_FILTER,
   buildRegionalScoreRankMap,
   buildScoreRankMap,
   resolvePerformanceScore,
@@ -56,6 +58,7 @@ import {
   parseScoreFilterValues,
   scoreFilterSelectedValues,
 } from "@/lib/score-filter-options";
+import { compareScoresMissingLast } from "@/lib/competition-rank";
 import { cn } from "@/lib/utils";
 
 function ordinal(n: number): string {
@@ -217,6 +220,7 @@ export function RankingDataTable({
   data,
   dimensionSlug,
   indicatorSlug,
+  indicatorName,
 }: RankingDataTableProps) {
   const locked = Boolean(dimensionSlug || indicatorSlug);
   const [sorting, setSorting] = useState<SortingState>(
@@ -257,6 +261,31 @@ export function RankingDataTable({
         lockedDimensionSlug: dimensionSlug,
       });
 
+  // When the primary sort is the score column, the Rank / Region Rank columns
+  // re-rank by that score over the filtered rows (competition ranking, rank 1
+  // = highest regardless of sort direction). Otherwise they keep the overall
+  // (or locked dimension / indicator / selected-score) rank.
+  const rankByScore = sorting[0]?.id === "score";
+  const scoreSortDesc = sorting.find((s) => s.id === "score")?.desc ?? false;
+
+  // What the Rank column is based on — always the score column's measure.
+  // Indicator names can be long, so the header says "Indicator" and the
+  // accessible caption carries the full name.
+  const rankBasis = indicatorSlug ? "Indicator" : indexHeader;
+  const rankBasisDescription = indicatorSlug
+    ? (indicatorName ?? "this indicator")
+    : indexHeader;
+  // Region Rank only follows a selected score when re-ranking by it; otherwise
+  // it keeps the overall / locked-dimension / indicator regional rank.
+  const regionRankBasis =
+    rankByScore || indicatorSlug
+      ? rankBasis
+      : dimensionSlug
+        ? scoreColumnLabel(EMPTY_SCORE_FILTER, {
+            lockedDimensionSlug: dimensionSlug,
+          })
+        : "Index";
+
   const regions = useMemo(() => {
     const set = new Set<string>();
     for (const row of data) if (row.region) set.add(row.region);
@@ -282,18 +311,18 @@ export function RankingDataTable({
 
   const rankMap = useMemo(
     () =>
-      customScore
+      customScore || rankByScore
         ? buildScoreRankMap(geoFilteredData, resolveScore)
         : new Map<string, number>(),
-    [geoFilteredData, resolveScore, customScore]
+    [geoFilteredData, resolveScore, customScore, rankByScore]
   );
 
   const regionalRankMap = useMemo(
     () =>
-      indicatorSlug
+      indicatorSlug || rankByScore
         ? buildRegionalScoreRankMap(geoFilteredData, resolveScore)
         : new Map<string, number>(),
-    [geoFilteredData, resolveScore, indicatorSlug]
+    [geoFilteredData, resolveScore, indicatorSlug, rankByScore]
   );
 
   const scoreFilterGroups = buildScoreFilterGroups({
@@ -316,11 +345,12 @@ export function RankingDataTable({
 
   const regionRankTotal = useMemo(() => {
     const counts = new Map<string, number>();
-    for (const row of data) {
+    // Score re-ranking happens over the filtered rows, so totals follow suit.
+    for (const row of rankByScore ? geoFilteredData : data) {
       if (row.region) counts.set(row.region, (counts.get(row.region) ?? 0) + 1);
     }
     return counts;
-  }, [data]);
+  }, [data, geoFilteredData, rankByScore]);
 
   const incomeRankTotal = useMemo(() => {
     const counts = new Map<string, number>();
@@ -334,13 +364,13 @@ export function RankingDataTable({
 
   const columns = useMemo<ColumnDef<CountryRanking>[]>(() => {
     const globalRank = (row: CountryRanking) => {
-      if (customScore) return rankMap.get(row.iso3) ?? null;
+      if (customScore || rankByScore) return rankMap.get(row.iso3) ?? null;
       if (dimensionSlug) return row.dimensionRanksGlobal[dimensionSlug] ?? null;
       return row.rankGlobal;
     };
 
     const regionalRank = (row: CountryRanking) => {
-      if (indicatorSlug) return regionalRankMap.get(row.iso3) ?? null;
+      if (indicatorSlug || rankByScore) return regionalRankMap.get(row.iso3) ?? null;
       if (dimensionSlug) return row.dimensionRanksRegional[dimensionSlug] ?? null;
       return row.rankRegional;
     };
@@ -349,7 +379,7 @@ export function RankingDataTable({
       {
         id: "ranking",
         accessorFn: (row) => globalRank(row) ?? Number.MAX_SAFE_INTEGER,
-        header: "Rank",
+        header: `Rank (${rankBasis})`,
         cell: ({ row }) => (
           <span className="inline-flex size-8 items-center justify-center rounded-full bg-muted text-sm font-medium tabular-nums text-muted-foreground">
             {globalRank(row.original) ?? "—"}
@@ -374,11 +404,12 @@ export function RankingDataTable({
         accessorFn: (row) => resolveScore(row) ?? -1,
         header: indexHeader,
         cell: ({ row }) => <IndexBadge value={resolveScore(row.original)} />,
-        sortingFn: (a, b) => {
-          const av = resolveScore(a.original) ?? -1;
-          const bv = resolveScore(b.original) ?? -1;
-          return av - bv;
-        },
+        sortingFn: (a, b) =>
+          compareScoresMissingLast(
+            resolveScore(a.original),
+            resolveScore(b.original),
+            scoreSortDesc
+          ),
       },
       {
         id: "region",
@@ -440,7 +471,7 @@ export function RankingDataTable({
       {
         id: "regionRank",
         accessorFn: (row) => regionalRank(row) ?? Number.MAX_SAFE_INTEGER,
-        header: "Region Rank",
+        header: `Region Rank (${regionRankBasis})`,
         cell: ({ row }) => (
           <RankPill
             rank={regionalRank(row.original)}
@@ -487,6 +518,10 @@ export function RankingDataTable({
     indexHeader,
     resolveScore,
     customScore,
+    rankByScore,
+    scoreSortDesc,
+    rankBasis,
+    regionRankBasis,
     rankMap,
     regionalRankMap,
     regionRankTotal,
@@ -597,6 +632,14 @@ export function RankingDataTable({
 
       <div className="overflow-x-auto">
         <Table className="min-w-[880px]">
+          <TableCaption className="sr-only">
+            {`Rank based on ${rankBasisDescription}`}
+            {rankByScore &&
+            (selectedRegions.length > 0 || selectedIncomeGroups.length > 0)
+              ? ", among the countries matching the selected filters"
+              : ""}
+            {indicatorSlug ? "." : `. Region rank based on ${regionRankBasis}.`}
+          </TableCaption>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow
