@@ -1,6 +1,7 @@
 "use client";
 
 import { Suspense } from "react";
+import Link from "next/link";
 import { Info } from "lucide-react";
 import { EvidenceExplorer } from "@/components/evidence-explorer";
 import { getCountryNote, type CountryNote } from "@/content/countryNotes";
@@ -41,6 +42,9 @@ function CountryEvidenceExplorerInner({
   );
 }
 
+const NOTE_LINK_CLASS =
+  "rounded-sm font-medium text-primary underline underline-offset-2 hover:text-primary/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
+
 function CountryNoteCallout({
   countryName,
   note,
@@ -58,17 +62,21 @@ function CountryNoteCallout({
         {note.map((segment, i) =>
           typeof segment === "string" ? (
             segment
-          ) : (
+          ) : segment.external ? (
             <a
               key={i}
               href={segment.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-sm font-medium text-primary underline underline-offset-2 hover:text-primary/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              className={NOTE_LINK_CLASS}
             >
               {segment.text}
               <span className="sr-only"> (opens in a new tab)</span>
             </a>
+          ) : (
+            <Link key={i} href={segment.href} className={NOTE_LINK_CLASS}>
+              {segment.text}
+            </Link>
           )
         )}
       </p>
