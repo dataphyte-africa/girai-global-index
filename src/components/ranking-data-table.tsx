@@ -277,8 +277,11 @@ export function RankingDataTable({
     : indexHeader;
   // Region Rank only follows a selected score when re-ranking by it; otherwise
   // it keeps the overall / locked-dimension / indicator regional rank.
+  // Region Rank follows the same basis as Rank whenever a custom score
+  // (pillar / dimension) is selected, so both headers stay consistent.
+  const followsScoreBasis = rankByScore || customScore;
   const regionRankBasis =
-    rankByScore || indicatorSlug
+    followsScoreBasis || indicatorSlug
       ? rankBasis
       : dimensionSlug
         ? scoreColumnLabel(EMPTY_SCORE_FILTER, {
@@ -319,10 +322,10 @@ export function RankingDataTable({
 
   const regionalRankMap = useMemo(
     () =>
-      indicatorSlug || rankByScore
+      indicatorSlug || followsScoreBasis
         ? buildRegionalScoreRankMap(geoFilteredData, resolveScore)
         : new Map<string, number>(),
-    [geoFilteredData, resolveScore, indicatorSlug, rankByScore]
+    [geoFilteredData, resolveScore, indicatorSlug, followsScoreBasis]
   );
 
   const scoreFilterGroups = buildScoreFilterGroups({
@@ -346,11 +349,11 @@ export function RankingDataTable({
   const regionRankTotal = useMemo(() => {
     const counts = new Map<string, number>();
     // Score re-ranking happens over the filtered rows, so totals follow suit.
-    for (const row of rankByScore ? geoFilteredData : data) {
+    for (const row of followsScoreBasis ? geoFilteredData : data) {
       if (row.region) counts.set(row.region, (counts.get(row.region) ?? 0) + 1);
     }
     return counts;
-  }, [data, geoFilteredData, rankByScore]);
+  }, [data, geoFilteredData, followsScoreBasis]);
 
   const incomeRankTotal = useMemo(() => {
     const counts = new Map<string, number>();
@@ -370,7 +373,7 @@ export function RankingDataTable({
     };
 
     const regionalRank = (row: CountryRanking) => {
-      if (indicatorSlug || rankByScore) return regionalRankMap.get(row.iso3) ?? null;
+      if (indicatorSlug || followsScoreBasis) return regionalRankMap.get(row.iso3) ?? null;
       if (dimensionSlug) return row.dimensionRanksRegional[dimensionSlug] ?? null;
       return row.rankRegional;
     };
@@ -379,6 +382,12 @@ export function RankingDataTable({
       {
         id: "ranking",
         accessorFn: (row) => globalRank(row) ?? Number.MAX_SAFE_INTEGER,
+        // TanStack caches accessor values per row and only invalidates them
+        // when `data` changes, so sort on the live rank basis instead.
+        sortingFn: (a, b) =>
+          (globalRank(a.original) ?? Number.MAX_SAFE_INTEGER) -
+          (globalRank(b.original) ?? Number.MAX_SAFE_INTEGER),
+        sortDescFirst: false,
         header: `Rank (${rankBasis})`,
         cell: ({ row }) => (
           <span className="inline-flex size-8 items-center justify-center rounded-full bg-muted text-sm font-medium tabular-nums text-muted-foreground">
@@ -471,6 +480,10 @@ export function RankingDataTable({
       {
         id: "regionRank",
         accessorFn: (row) => regionalRank(row) ?? Number.MAX_SAFE_INTEGER,
+        sortingFn: (a, b) =>
+          (regionalRank(a.original) ?? Number.MAX_SAFE_INTEGER) -
+          (regionalRank(b.original) ?? Number.MAX_SAFE_INTEGER),
+        sortDescFirst: false,
         header: `Region Rank (${regionRankBasis})`,
         cell: ({ row }) => (
           <RankPill
@@ -519,6 +532,7 @@ export function RankingDataTable({
     resolveScore,
     customScore,
     rankByScore,
+    followsScoreBasis,
     scoreSortDesc,
     rankBasis,
     regionRankBasis,
