@@ -11,77 +11,106 @@ export const DOWNLOAD_REASONS = [
   { value: "other", label: "Other" },
 ] as const;
 
-type DownloadAsset = {
+/** Env overrides that are intentionally ignored on this branch. */
+const ENV_DISABLED = new Set<string>([]);
+
+export type DownloadAsset = {
   filename: string;
   /** Server-side path relative to project root, or public URL path */
   path: string;
   mimeType: string;
+  /** Where the path came from: Sanity upload, hosting env override, or repo file. */
+  source: "sanity" | "env" | "repo";
 };
 
-const PUBLIC_DOWNLOADS = {
-  firstReport: process.env.DOWNLOAD_FIRST_REPORT_PATH ?? "/downloads/GIRAI-2024-report.pdf",
-  secondReport: process.env.DOWNLOAD_SECOND_REPORT_PATH ?? "/downloads/Global-Index-on-Responsible-AI-2026.pdf",
-  firstData: process.env.DOWNLOAD_FIRST_DATA_PATH ?? "/downloads/GIRAI_2024_dataset.xlsx",
-  secondData: process.env.DOWNLOAD_SECOND_DATA_PATH ?? "/downloads/GIRAI_2026_dataset.xlsx",
-  firstMethodology:
-    process.env.DOWNLOAD_FIRST_METHODOLOGY_PATH ?? "/downloads/GIRAI-2024-methodology.pdf",
-  secondMethodology:
-    process.env.DOWNLOAD_SECOND_METHODOLOGY_PATH ?? "/downloads/GIRAI-2026-methodology.pdf",
+/** Sanity `siteFiles` field name for each edition + asset type. */
+export type SiteFileSlot =
+  | "report2026"
+  | "report2024"
+  | "methodology2026"
+  | "methodology2024"
+  | "dataset2026"
+  | "dataset2024";
+
+/** A file uploaded to the Sanity `siteFiles` singleton (already resolved to a URL). */
+export type SiteFileOverride = { url: string; filename?: string | null };
+export type SiteFileOverrides = Partial<Record<SiteFileSlot, SiteFileOverride | null>>;
+
+const PDF = "application/pdf";
+const XLSX = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
+type AssetDefinition = {
+  slot: SiteFileSlot;
+  envVar: string;
+  repoPath: string;
+  filename: string;
+  mimeType: string;
 };
 
-/** Maps edition + asset type to downloadable files. Paths can be swapped via env vars. */
-export function getDownloadAsset(
+const ASSETS: Record<DownloadAssetType, Record<DownloadEdition, AssetDefinition>> = {
+  report: {
+    first: { slot: "report2024", envVar: "DOWNLOAD_FIRST_REPORT_PATH", repoPath: "/downloads/GIRAI-2024-report.pdf", filename: "GIRAI-2024-report.pdf", mimeType: PDF },
+    second: { slot: "report2026", envVar: "DOWNLOAD_SECOND_REPORT_PATH", repoPath: "/downloads/Global-Index-on-Responsible-AI-2026.pdf", filename: "Global-Index-on-Responsible-AI-2026.pdf", mimeType: PDF },
+  },
+  data: {
+    first: { slot: "dataset2024", envVar: "DOWNLOAD_FIRST_DATA_PATH", repoPath: "/downloads/GIRAI_2024_dataset.xlsx", filename: "GIRAI_2024_dataset.xlsx", mimeType: XLSX },
+    second: { slot: "dataset2026", envVar: "DOWNLOAD_SECOND_DATA_PATH", repoPath: "/downloads/GIRAI_2026_dataset.xlsx", filename: "GIRAI_2026_dataset.xlsx", mimeType: XLSX },
+  },
+  methodology: {
+    first: { slot: "methodology2024", envVar: "DOWNLOAD_FIRST_METHODOLOGY_PATH", repoPath: "/downloads/GIRAI-2024-methodology.pdf", filename: "GIRAI-2024-methodology.pdf", mimeType: PDF },
+    second: { slot: "methodology2026", envVar: "DOWNLOAD_SECOND_METHODOLOGY_PATH", repoPath: "/downloads/GIRAI-2026-methodology.pdf", filename: "GIRAI-2026-methodology.pdf", mimeType: PDF },
+  },
+};
+
+export function getSiteFileSlot(
   edition: DownloadEdition,
   assetType: DownloadAssetType
+): SiteFileSlot {
+  return ASSETS[assetType][edition].slot;
+}
+
+/** Adds Sanity's `dl` param so the CDN serves the file as an attachment with our filename. */
+function withDownloadName(url: string, filename: string): string {
+  const u = new URL(url);
+  u.searchParams.set("dl", filename);
+  return u.toString();
+}
+
+/**
+ * Maps edition + asset type to a downloadable file. Resolution order:
+ *   1. a file uploaded to the Sanity `siteFiles` singleton (pass `overrides`),
+ *   2. the DOWNLOAD_*_PATH hosting env override,
+ *   3. the committed file in public/downloads.
+ */
+export function getDownloadAsset(
+  edition: DownloadEdition,
+  assetType: DownloadAssetType,
+  overrides?: SiteFileOverrides | null
 ): DownloadAsset {
-  if (assetType === "methodology") {
-    return edition === "first"
-      ? {
-          path: PUBLIC_DOWNLOADS.firstMethodology,
-          filename: "GIRAI-2024-methodology.pdf",
-          mimeType: "application/pdf",
-        }
-      : {
-          path: PUBLIC_DOWNLOADS.secondMethodology,
-          filename: "GIRAI-2026-methodology.pdf",
-          mimeType: "application/pdf",
-        };
+  const def = ASSETS[assetType][edition];
+  const uploaded = overrides?.[def.slot];
+  if (uploaded?.url) {
+    const filename = uploaded.filename?.trim() || def.filename;
+    return {
+      path: withDownloadName(uploaded.url, filename),
+      filename,
+      mimeType: def.mimeType,
+      source: "sanity",
+    };
   }
-
-  if (assetType === "data") {
-    return edition === "first"
-      ? {
-          path: PUBLIC_DOWNLOADS.firstData,
-          filename: "GIRAI_2024_dataset.xlsx",
-          mimeType:
-            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        }
-      : {
-          path: PUBLIC_DOWNLOADS.secondData,
-          filename: "GIRAI_2026_dataset.xlsx",
-          mimeType:
-            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        };
+  const envPath = ENV_DISABLED.has(def.envVar) ? undefined : process.env[def.envVar];
+  if (envPath) {
+    return { path: envPath, filename: def.filename, mimeType: def.mimeType, source: "env" };
   }
-
-  return edition === "first"
-    ? {
-        path: PUBLIC_DOWNLOADS.firstReport,
-        filename: "GIRAI-2024-report.pdf",
-        mimeType: "application/pdf",
-      }
-    : {
-        path: PUBLIC_DOWNLOADS.secondReport,
-        filename: "Global-Index-on-Responsible-AI-2026.pdf",
-        mimeType: "application/pdf",
-      };
+  return { path: def.repoPath, filename: def.filename, mimeType: def.mimeType, source: "repo" };
 }
 
 export function getPublicDownloadUrl(
   edition: DownloadEdition,
-  assetType: DownloadAssetType
+  assetType: DownloadAssetType,
+  overrides?: SiteFileOverrides | null
 ): string {
-  const asset = getDownloadAsset(edition, assetType);
+  const asset = getDownloadAsset(edition, assetType, overrides);
   if (asset.path.startsWith("http://") || asset.path.startsWith("https://")) {
     return asset.path;
   }
