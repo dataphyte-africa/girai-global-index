@@ -45,7 +45,7 @@ export function RegionCountryExplorer({
           </motion.p>
         </div>
 
-        <CountryHeatmapTable data={countries} />
+        <CountryHeatmapTable data={countries} rankScope="region" />
       </div>
     </section>
   );

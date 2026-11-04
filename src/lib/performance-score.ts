@@ -1,6 +1,10 @@
 import type { CountryRanking } from "@/lib/girai";
 import type { DimensionSlug, PillarSlug } from "@/data/2026/taxonomy";
 import { DIMENSIONS, PILLARS } from "@/data/2026/taxonomy";
+import {
+  buildCompetitionRankMap,
+  buildGroupedCompetitionRankMap,
+} from "@/lib/competition-rank";
 
 export interface ScoreFilterSelection {
   dimensions: string[];
@@ -74,41 +78,31 @@ export function resolvePerformanceScore(
   return values.reduce((sum, v) => sum + v, 0) / values.length;
 }
 
-/** Regional rank (1 = highest within region) for a custom score function. */
+/**
+ * Regional rank (1 = highest within region) for a custom score function.
+ * Competition ranking: ties share a rank.
+ */
 export function buildRegionalScoreRankMap(
   countries: CountryRanking[],
   getScore: (c: CountryRanking) => number | null
 ): Map<string, number> {
-  const byRegion = new Map<string, { iso3: string; score: number }[]>();
-  for (const c of countries) {
-    const score = getScore(c);
-    if (score == null || !c.region) continue;
-    const list = byRegion.get(c.region) ?? [];
-    list.push({ iso3: c.iso3, score });
-    byRegion.set(c.region, list);
-  }
-
-  const map = new Map<string, number>();
-  for (const list of byRegion.values()) {
-    list.sort((a, b) => b.score - a.score);
-    list.forEach((row, index) => map.set(row.iso3, index + 1));
-  }
-  return map;
+  return buildGroupedCompetitionRankMap(
+    countries,
+    (c) => c.iso3,
+    (c) => c.region,
+    getScore
+  );
 }
 
-/** Global rank (1 = highest) for a custom score function over the dataset. */
+/**
+ * Global rank (1 = highest) for a custom score function over the dataset.
+ * Competition ranking: ties share a rank.
+ */
 export function buildScoreRankMap(
   countries: CountryRanking[],
   getScore: (c: CountryRanking) => number | null
 ): Map<string, number> {
-  const ranked = countries
-    .map((c) => ({ iso3: c.iso3, score: getScore(c) }))
-    .filter((row): row is { iso3: string; score: number } => row.score != null)
-    .sort((a, b) => b.score - a.score);
-
-  const map = new Map<string, number>();
-  ranked.forEach((row, index) => map.set(row.iso3, index + 1));
-  return map;
+  return buildCompetitionRankMap(countries, (c) => c.iso3, getScore);
 }
 
 export function usesCustomScoreFilter(
