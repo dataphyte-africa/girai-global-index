@@ -25,6 +25,7 @@ import {
 import {
   Table,
   TableBody,
+  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -48,6 +49,10 @@ import {
   type DimensionSlug,
   type PillarSlug,
 } from "@/data/2026/taxonomy";
+import {
+  buildCompetitionRankMap,
+  compareScoresMissingLast,
+} from "@/lib/competition-rank";
 import { cn } from "@/lib/utils";
 
 // ---------------------------------------------------------------------------
@@ -202,9 +207,18 @@ function SortableHeader({
 
 export interface CountryHeatmapTableProps {
   data: CountryRanking[];
+  /**
+   * "global" (default): Rank is the global rank. "region": `data` is a single
+   * region, Rank is the regional rank and a compact Global rank column is
+   * added (md and up).
+   */
+  rankScope?: "global" | "region";
 }
 
-export function CountryHeatmapTable({ data }: CountryHeatmapTableProps) {
+export function CountryHeatmapTable({
+  data,
+  rankScope = "global",
+}: CountryHeatmapTableProps) {
   const [mode, setMode] = useState<Mode>("dimensions");
   const [sorting, setSorting] = useState<SortingState>([
     { id: "ranking", desc: false },
@@ -231,7 +245,36 @@ export function CountryHeatmapTable({ data }: CountryHeatmapTableProps) {
     [mode]
   );
 
+  // When the primary sort is a score column (Index or a category), Rank is
+  // recomputed from that score over `data` (competition ranking, rank 1 =
+  // highest regardless of direction). Otherwise it is the overall rank.
+  const sortedId = sorting[0]?.id;
+  // A category id from the other mode (e.g. after switching tabs) no longer
+  // matches a column, so it falls back to the overall rank.
+  const sortedCategory = categories.find((c) => `cat:${c.slug}` === sortedId);
+  const rankScoreSlug =
+    sortedId === "index" ? "index" : (sortedCategory?.slug ?? null);
+  const rankBasis = sortedCategory?.name ?? "Index";
+  const rankHeader =
+    rankScope === "region" ? `Region rank (${rankBasis})` : `Rank (${rankBasis})`;
+
+  const scoreRankMap = useMemo(() => {
+    if (!rankScoreSlug) return null;
+    return buildCompetitionRankMap(
+      data,
+      (row) => row.iso3,
+      (row) => (rankScoreSlug === "index" ? row.girai : scoreFor(row, rankScoreSlug))
+    );
+  }, [data, rankScoreSlug, scoreFor]);
+
   const columns = useMemo<ColumnDef<CountryRanking>[]>(() => {
+    const isSortedDesc = (id: string) =>
+      sorting.find((s) => s.id === id)?.desc ?? false;
+    const overallRank = (row: CountryRanking) =>
+      rankScope === "region" ? row.rankRegional : row.rankGlobal;
+    const displayRank = (row: CountryRanking) =>
+      scoreRankMap ? (scoreRankMap.get(row.iso3) ?? null) : overallRank(row);
+
     const categoryColumns: ColumnDef<CountryRanking>[] = categories.map(
       (cat) => ({
         id: `cat:${cat.slug}`,
@@ -239,23 +282,44 @@ export function CountryHeatmapTable({ data }: CountryHeatmapTableProps) {
         header: cat.name,
         cell: ({ row }) => <HeatCell score={scoreFor(row.original, cat.slug)} />,
         sortingFn: (a, b) =>
-          (scoreFor(a.original, cat.slug) ?? -1) -
-          (scoreFor(b.original, cat.slug) ?? -1),
+          compareScoresMissingLast(
+            scoreFor(a.original, cat.slug),
+            scoreFor(b.original, cat.slug),
+            isSortedDesc(`cat:${cat.slug}`)
+          ),
       })
     );
+
+    const globalRankColumn: ColumnDef<CountryRanking>[] =
+      rankScope === "region"
+        ? [
+            {
+              id: "globalRank",
+              accessorFn: (row) => row.rankGlobal ?? Number.MAX_SAFE_INTEGER,
+              header: "Global",
+              cell: ({ row }) => (
+                <span className="text-sm tabular-nums text-muted-foreground">
+                  {row.original.rankGlobal ?? "—"}
+                </span>
+              ),
+              size: 56,
+            },
+          ]
+        : [];
 
     return [
       {
         id: "ranking",
-        accessorFn: (row) => row.rankGlobal ?? Number.MAX_SAFE_INTEGER,
-        header: "Rank",
+        accessorFn: (row) => displayRank(row) ?? Number.MAX_SAFE_INTEGER,
+        header: rankHeader,
         cell: ({ row }) => (
           <span className="inline-flex size-8 items-center justify-center rounded-full bg-muted text-sm font-medium tabular-nums text-muted-foreground">
-            {row.original.rankGlobal ?? "—"}
+            {displayRank(row.original) ?? "—"}
           </span>
         ),
         size: 64,
       },
+      ...globalRankColumn,
       {
         id: "country",
         accessorFn: (row) => row.name,
@@ -269,7 +333,12 @@ export function CountryHeatmapTable({ data }: CountryHeatmapTableProps) {
         accessorFn: (row) => row.girai ?? -1,
         header: "Index",
         cell: ({ row }) => <HeatCell score={row.original.girai} />,
-        sortingFn: (a, b) => (a.original.girai ?? -1) - (b.original.girai ?? -1),
+        sortingFn: (a, b) =>
+          compareScoresMissingLast(
+            a.original.girai,
+            b.original.girai,
+            isSortedDesc("index")
+          ),
       },
       ...categoryColumns,
       {
@@ -292,7 +361,7 @@ export function CountryHeatmapTable({ data }: CountryHeatmapTableProps) {
         ),
       },
     ];
-  }, [categories, scoreFor]);
+  }, [categories, scoreFor, sorting, scoreRankMap, rankHeader, rankScope]);
 
   const table = useReactTable({
     data,
@@ -368,6 +437,11 @@ export function CountryHeatmapTable({ data }: CountryHeatmapTableProps) {
 
       <div className="overflow-x-auto">
         <Table className="min-w-[1000px]">
+          <TableCaption className="sr-only">
+            {rankScope === "region"
+              ? `Region rank based on ${rankBasis}, within this region. Global rank based on Index across all countries.`
+              : `Rank based on ${rankBasis}.`}
+          </TableCaption>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow
@@ -385,7 +459,10 @@ export function CountryHeatmapTable({ data }: CountryHeatmapTableProps) {
                   return (
                     <TableHead
                       key={header.id}
-                      className="h-12 px-4 align-middle text-xs font-medium text-muted-foreground"
+                      className={cn(
+                        "h-12 px-4 align-middle text-xs font-medium text-muted-foreground",
+                        header.column.id === "globalRank" && "hidden md:table-cell"
+                      )}
                     >
                       {header.isPlaceholder || label === "" ? null : canSort ? (
                         <SortableHeader
@@ -431,7 +508,9 @@ export function CountryHeatmapTable({ data }: CountryHeatmapTableProps) {
                           key={cell.id}
                           className={cn(
                             "align-middle",
-                            isHeat ? "p-0" : "px-4 py-3"
+                            isHeat ? "p-0" : "px-4 py-3",
+                            cell.column.id === "globalRank" &&
+                              "hidden md:table-cell"
                           )}
                         >
                           {flexRender(
