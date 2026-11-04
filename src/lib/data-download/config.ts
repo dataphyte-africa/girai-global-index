@@ -11,8 +11,12 @@ export const DOWNLOAD_REASONS = [
   { value: "other", label: "Other" },
 ] as const;
 
-/** Env overrides that are intentionally ignored on this branch. */
-const ENV_DISABLED = new Set<string>([]);
+/**
+ * Env overrides that are intentionally ignored. The 2026 dataset is served from
+ * the repo copy (public/downloads), so DOWNLOAD_SECOND_DATA_PATH (old GCS URL)
+ * is not read. Matches main.
+ */
+const ENV_DISABLED = new Set<string>(["DOWNLOAD_SECOND_DATA_PATH"]);
 
 export type DownloadAsset = {
   filename: string;
