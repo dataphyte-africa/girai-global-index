@@ -298,3 +298,16 @@ export const updateBySlugQuery = groq`
 
 export const updateSlugsQuery = groq`
 *[_type == "updatePost" && defined(slug.current)].slug.current`;
+
+const siteFileSlotProjection = `{ "url": file.asset->url, filename }`;
+
+/** Uploaded download overrides; a slot is null/absent until a file is uploaded. */
+export const siteFilesQuery = groq`
+*[_type == "siteFiles"][0]{
+  "report2026": report2026${siteFileSlotProjection},
+  "report2024": report2024${siteFileSlotProjection},
+  "methodology2026": methodology2026${siteFileSlotProjection},
+  "methodology2024": methodology2024${siteFileSlotProjection},
+  "dataset2026": dataset2026${siteFileSlotProjection},
+  "dataset2024": dataset2024${siteFileSlotProjection}
+}`;

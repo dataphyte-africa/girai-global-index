@@ -11,6 +11,7 @@ const SINGLETONS: { id: string; type: string; title: string }[] = [
   { id: "downloadModal", type: "downloadModal", title: "Download Modal" },
   { id: "countdownModal", type: "countdownModal", title: "Countdown Modal" },
   { id: "reportDownload", type: "reportDownload", title: "Report Download Section" },
+  { id: "siteFiles", type: "siteFiles", title: "Site Files & Downloads" },
   { id: "keyFindings", type: "keyFindings", title: "Key Findings (Accordion)" },
   { id: "homePage", type: "homePage", title: "Home Page" },
   { id: "aboutPage", type: "aboutPage", title: "About Page" },

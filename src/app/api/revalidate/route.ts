@@ -25,6 +25,9 @@ const TYPE_PATHS: Record<string, readonly string[]> = {
   downloadModal: ALL_PAGE_PATHS,
   // Report-download section is reused across these pages.
   reportDownload: ["/", "/countries", "/regions", "/takeaways"],
+  // Replaceable downloads are resolved per request in /api/data-download via
+  // the "siteFiles" tag (busted by revalidateTag below); no page HTML embeds them.
+  siteFiles: [],
   // Key Findings accordion is reused on these pages.
   keyFindings: ["/takeaways", "/countries"],
   homePage: ["/"],

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { getPublicDownloadUrl } from "@/lib/data-download/config";
+import { getDownloadAsset, getPublicDownloadUrl } from "@/lib/data-download/config";
+import { getSiteFileOverrides } from "@/lib/data-download/site-files";
 import {
   appendDataDownloadSubmission,
   isGoogleSheetsConfigured,
@@ -73,22 +74,18 @@ export async function POST(request: Request) {
       },
     });
 
+    // Sanity upload → DOWNLOAD_*_PATH override → public/downloads file.
+    const overrides = await getSiteFileOverrides();
     const downloadUrl = getPublicDownloadUrl(
       submission.edition,
-      submission.assetType
+      submission.assetType,
+      overrides
     );
-    const filename =
-      submission.assetType === "data"
-        ? submission.edition === "first"
-          ? "GIRAI_2024_dataset.xlsx"
-          : "GIRAI_2026_dataset.xlsx"
-        : submission.assetType === "methodology"
-          ? submission.edition === "first"
-            ? "GIRAI-2024-methodology.pdf"
-            : "GIRAI-2026-methodology.pdf"
-          : submission.edition === "first"
-            ? "GIRAI-2024-report.pdf"
-            : "Global-Index-on-Responsible-AI-2026.pdf";
+    const { filename } = getDownloadAsset(
+      submission.edition,
+      submission.assetType,
+      overrides
+    );
 
     return NextResponse.json({
       ok: true,
