@@ -19,6 +19,7 @@ export const EVENTS = {
   DOWNLOAD_COMPLETED: "download_completed",
   DOWNLOAD_FAILED: "download_failed",
   DOWNLOAD_REQUESTED: "download_requested", // server-side
+  DOWNLOAD_REPEAT: "data_download_repeat", // remembered identity, form skipped
 
   // Comparison tool
   COMPARISON_ENTITY_SELECTED: "comparison_entity_selected",
