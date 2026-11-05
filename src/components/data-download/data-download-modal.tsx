@@ -178,16 +178,14 @@ export function DataDownloadModal({
       // user gesture and can be caught by pop-up blockers — when that happens
       // `window.open` returns null (or a closed window), so we fall back to a
       // direct download instead of silently failing.
-      const newTab = window.open(
-        payload.downloadUrl,
-        "_blank",
-        "noopener,noreferrer"
-      );
+      // Don't pass "noopener" in the features string: with it, window.open
+      // always returns null, which made the fallback below fire as well and
+      // downloaded the file twice. Detach the opener manually instead.
+      const newTab = window.open(payload.downloadUrl, "_blank");
 
-      const popupBlocked =
-        !newTab || newTab.closed || typeof newTab.closed === "undefined";
-
-      if (popupBlocked) {
+      if (newTab) {
+        newTab.opener = null;
+      } else {
         const anchor = document.createElement("a");
         anchor.href = payload.downloadUrl;
         anchor.download = payload.filename ?? "";
