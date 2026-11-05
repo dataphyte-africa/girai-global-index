@@ -4,9 +4,12 @@ import * as React from "react";
 import { useDataDownload } from "@/components/data-download/data-download-provider";
 import type { CitationDownloadTarget } from "@/lib/data-download/citation-links";
 import { buildCitationSource } from "@/lib/data-download/citation-links";
+import type { ReportLanguage } from "@/lib/data-download/types";
 
 type DownloadCitationLauncherProps = CitationDownloadTarget & {
   searchParams: Record<string, string | string[] | undefined>;
+  /** Preselected report language from `?lang=`; ignored for non-report assets. */
+  language?: ReportLanguage;
 };
 
 function toUrlSearchParams(
@@ -27,6 +30,7 @@ export function DownloadCitationLauncher({
   assetType,
   edition,
   searchParams,
+  language,
 }: DownloadCitationLauncherProps) {
   const { openDataDownload } = useDataDownload();
   const hasOpened = React.useRef(false);
@@ -54,9 +58,10 @@ export function DownloadCitationLauncher({
       assetType,
       edition,
       source,
+      language,
       lockEdition: Boolean(edition),
     });
-  }, [assetType, edition, openDataDownload, searchParams]);
+  }, [assetType, edition, language, openDataDownload, searchParams]);
 
   return null;
 }

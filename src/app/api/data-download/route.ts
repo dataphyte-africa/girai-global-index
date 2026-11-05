@@ -1,6 +1,11 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { getPublicDownloadUrl } from "@/lib/data-download/config";
+import {
+  getDownloadAsset,
+  getPublicDownloadUrl,
+  hasLanguageChoice,
+  isReportLanguage,
+} from "@/lib/data-download/config";
 import {
   appendDataDownloadSubmission,
   isGoogleSheetsConfigured,
@@ -34,7 +39,36 @@ const submissionSchema = z.object({
       message: "Consent to the data policy is required",
     }),
   source: z.string().trim().optional(),
+  language: z.enum(["en", "es", "fr"]).optional(),
 });
+
+/**
+ * Resolves a file without logging anything. Used for repeat downloads by
+ * visitors whose identity is remembered client-side, so they don't create
+ * another Sheets row. Redirects so the server-only env path overrides apply.
+ */
+export async function GET(request: Request) {
+  const params = new URL(request.url).searchParams;
+  const edition = params.get("edition");
+  const assetType = params.get("type");
+  const lang = params.get("lang");
+
+  if (
+    (edition !== "first" && edition !== "second") ||
+    (assetType !== "report" && assetType !== "data" && assetType !== "methodology")
+  ) {
+    return NextResponse.json({ error: "Invalid download" }, { status: 400 });
+  }
+
+  const language =
+    hasLanguageChoice(edition, assetType) && isReportLanguage(lang)
+      ? lang
+      : undefined;
+
+  return NextResponse.redirect(
+    new URL(getPublicDownloadUrl(edition, assetType, language), request.url)
+  );
+}
 
 export async function POST(request: Request) {
   try {
@@ -48,7 +82,14 @@ export async function POST(request: Request) {
       );
     }
 
-    const submission = parsed.data;
+    const { language, ...fields } = parsed.data;
+    // Language only applies to the 2026 report; drop it for everything else.
+    const submission = {
+      ...fields,
+      language: hasLanguageChoice(fields.edition, fields.assetType)
+        ? language
+        : undefined,
+    };
 
     if (!isGoogleSheetsConfigured() && process.env.NODE_ENV === "production") {
       return NextResponse.json(
@@ -70,25 +111,20 @@ export async function POST(request: Request) {
         reason: submission.reason,
         has_organization: Boolean(submission.organization),
         source: submission.source,
+        language: submission.language,
       },
     });
 
     const downloadUrl = getPublicDownloadUrl(
       submission.edition,
-      submission.assetType
+      submission.assetType,
+      submission.language
     );
-    const filename =
-      submission.assetType === "data"
-        ? submission.edition === "first"
-          ? "GIRAI_2024_dataset.xlsx"
-          : "GIRAI_2026_dataset.xlsx"
-        : submission.assetType === "methodology"
-          ? submission.edition === "first"
-            ? "GIRAI-2024-methodology.pdf"
-            : "GIRAI-2026-methodology.pdf"
-          : submission.edition === "first"
-            ? "GIRAI-2024-report.pdf"
-            : "Global-Index-on-Responsible-AI-2026.pdf";
+    const { filename } = getDownloadAsset(
+      submission.edition,
+      submission.assetType,
+      submission.language
+    );
 
     return NextResponse.json({
       ok: true,
