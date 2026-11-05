@@ -6,6 +6,10 @@ import {
   editionToYear,
   parseDownloadRoute,
 } from "@/lib/data-download/citation-links";
+import {
+  hasLanguageChoice,
+  isReportLanguage,
+} from "@/lib/data-download/config";
 import type { DownloadAssetType } from "@/lib/data-download/types";
 import { getDownloadModalContent } from "@/content/downloadModal";
 
@@ -51,6 +55,12 @@ export default async function CitationDownloadPage({
 
   const resolvedSearchParams = await searchParams;
   const content = await getDownloadModalContent();
+  // `?lang=es|fr` preselects a translated 2026 report; ignored elsewhere.
+  const lang = resolvedSearchParams.lang;
+  const language =
+    hasLanguageChoice(target.edition, target.assetType) && isReportLanguage(lang)
+      ? lang
+      : undefined;
   const editionLabel =
     target.edition != null ? `${editionToYear(target.edition)} ` : "";
   const assetLabel = ASSET_LABELS[target.assetType];
@@ -81,6 +91,7 @@ export default async function CitationDownloadPage({
       <DownloadCitationLauncher
         assetType={target.assetType}
         edition={target.edition}
+        language={language}
         searchParams={resolvedSearchParams}
       />
 
