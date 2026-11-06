@@ -6,6 +6,7 @@ import {
   hasLanguageChoice,
   isReportLanguage,
 } from "@/lib/data-download/config";
+import { getSiteFileOverrides } from "@/lib/data-download/site-files";
 import {
   appendDataDownloadSubmission,
   isGoogleSheetsConfigured,
@@ -45,7 +46,7 @@ const submissionSchema = z.object({
 /**
  * Resolves a file without logging anything. Used for repeat downloads by
  * visitors whose identity is remembered client-side, so they don't create
- * another Sheets row. Redirects so the server-only env path overrides apply.
+ * another Sheets row. Redirects so Sanity uploads and server-only env path overrides apply.
  */
 export async function GET(request: Request) {
   const params = new URL(request.url).searchParams;
@@ -65,8 +66,12 @@ export async function GET(request: Request) {
       ? lang
       : undefined;
 
+  const overrides = await getSiteFileOverrides();
   return NextResponse.redirect(
-    new URL(getPublicDownloadUrl(edition, assetType, language), request.url)
+    new URL(
+      getPublicDownloadUrl(edition, assetType, { language, overrides }),
+      request.url
+    )
   );
 }
 
@@ -115,15 +120,18 @@ export async function POST(request: Request) {
       },
     });
 
+    // Sanity upload → DOWNLOAD_*_PATH override → public/downloads file.
+    const overrides = await getSiteFileOverrides();
+    const assetOptions = { language: submission.language, overrides };
     const downloadUrl = getPublicDownloadUrl(
       submission.edition,
       submission.assetType,
-      submission.language
+      assetOptions
     );
     const { filename } = getDownloadAsset(
       submission.edition,
       submission.assetType,
-      submission.language
+      assetOptions
     );
 
     return NextResponse.json({
