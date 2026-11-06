@@ -47,6 +47,9 @@ var HEADERS = [
   "Edition",
   "Asset Type",
   "Source",
+  // Added later — kept LAST so existing columns don't shift. Only filled for
+  // the 2026 report (English / Español / Français); blank otherwise.
+  "Language",
 ];
 
 function doPost(e) {
@@ -64,6 +67,8 @@ function doPost(e) {
     // Add a header row the first time we write to an empty sheet.
     if (sheet.getLastRow() === 0) {
       sheet.appendRow(HEADERS);
+    } else {
+      ensureTrailingHeaders(sheet);
     }
 
     sheet.appendRow([
@@ -76,11 +81,23 @@ function doPost(e) {
       data.edition || "",
       data.assetType || "",
       data.source || "",
+      data.language || "",
     ]);
 
     return jsonOut({ ok: true });
   } catch (err) {
     return jsonOut({ ok: false, error: String(err) });
+  }
+}
+
+// Sheets created before a column was appended to HEADERS are missing its
+// header cell; fill in any blanks at the end of row 1 without touching the rest.
+function ensureTrailingHeaders(sheet) {
+  var row = sheet.getRange(1, 1, 1, HEADERS.length).getValues()[0];
+  for (var i = 0; i < HEADERS.length; i++) {
+    if (row[i] === "") {
+      sheet.getRange(1, i + 1).setValue(HEADERS[i]);
+    }
   }
 }
 

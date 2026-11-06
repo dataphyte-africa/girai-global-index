@@ -1,6 +1,11 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { getDownloadAsset, getPublicDownloadUrl } from "@/lib/data-download/config";
+import {
+  getDownloadAsset,
+  getPublicDownloadUrl,
+  hasLanguageChoice,
+  isReportLanguage,
+} from "@/lib/data-download/config";
 import { getSiteFileOverrides } from "@/lib/data-download/site-files";
 import {
   appendDataDownloadSubmission,
@@ -35,7 +40,40 @@ const submissionSchema = z.object({
       message: "Consent to the data policy is required",
     }),
   source: z.string().trim().optional(),
+  language: z.enum(["en", "es", "fr"]).optional(),
 });
+
+/**
+ * Resolves a file without logging anything. Used for repeat downloads by
+ * visitors whose identity is remembered client-side, so they don't create
+ * another Sheets row. Redirects so Sanity uploads and server-only env path overrides apply.
+ */
+export async function GET(request: Request) {
+  const params = new URL(request.url).searchParams;
+  const edition = params.get("edition");
+  const assetType = params.get("type");
+  const lang = params.get("lang");
+
+  if (
+    (edition !== "first" && edition !== "second") ||
+    (assetType !== "report" && assetType !== "data" && assetType !== "methodology")
+  ) {
+    return NextResponse.json({ error: "Invalid download" }, { status: 400 });
+  }
+
+  const language =
+    hasLanguageChoice(edition, assetType) && isReportLanguage(lang)
+      ? lang
+      : undefined;
+
+  const overrides = await getSiteFileOverrides();
+  return NextResponse.redirect(
+    new URL(
+      getPublicDownloadUrl(edition, assetType, { language, overrides }),
+      request.url
+    )
+  );
+}
 
 export async function POST(request: Request) {
   try {
@@ -49,7 +87,14 @@ export async function POST(request: Request) {
       );
     }
 
-    const submission = parsed.data;
+    const { language, ...fields } = parsed.data;
+    // Language only applies to the 2026 report; drop it for everything else.
+    const submission = {
+      ...fields,
+      language: hasLanguageChoice(fields.edition, fields.assetType)
+        ? language
+        : undefined,
+    };
 
     if (!isGoogleSheetsConfigured() && process.env.NODE_ENV === "production") {
       return NextResponse.json(
@@ -71,20 +116,22 @@ export async function POST(request: Request) {
         reason: submission.reason,
         has_organization: Boolean(submission.organization),
         source: submission.source,
+        language: submission.language,
       },
     });
 
     // Sanity upload → DOWNLOAD_*_PATH override → public/downloads file.
     const overrides = await getSiteFileOverrides();
+    const assetOptions = { language: submission.language, overrides };
     const downloadUrl = getPublicDownloadUrl(
       submission.edition,
       submission.assetType,
-      overrides
+      assetOptions
     );
     const { filename } = getDownloadAsset(
       submission.edition,
       submission.assetType,
-      overrides
+      assetOptions
     );
 
     return NextResponse.json({

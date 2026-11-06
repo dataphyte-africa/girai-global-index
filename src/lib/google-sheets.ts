@@ -1,5 +1,8 @@
 import { createSign } from "crypto";
-import { DOWNLOAD_REASONS } from "@/lib/data-download/config";
+import {
+  DOWNLOAD_REASONS,
+  REPORT_2026_LANGUAGE_FILES,
+} from "@/lib/data-download/config";
 import type {
   DataDownloadSubmission,
   DownloadReferralEvent,
@@ -20,6 +23,13 @@ function getReasonLabel(reason: string): string {
   return (
     DOWNLOAD_REASONS.find((item) => item.value === reason)?.label ?? reason
   );
+}
+
+/** Blank for every asset other than the 2026 report. */
+function getLanguageLabel(submission: DataDownloadSubmission): string {
+  return submission.language
+    ? REPORT_2026_LANGUAGE_FILES[submission.language].label
+    : "";
 }
 
 function getServiceAccountConfig(): SheetsConfig | null {
@@ -110,6 +120,8 @@ function submissionToRow(submission: DataDownloadSubmission): string[] {
     submission.assetType,
     submission.source ?? "",
     submission.consent ? "Yes" : "No",
+    // Appended last so existing columns don't shift.
+    getLanguageLabel(submission),
   ];
 }
 
@@ -118,7 +130,7 @@ async function appendViaServiceAccount(
   submission: DataDownloadSubmission
 ): Promise<void> {
   const accessToken = await getGoogleAccessToken(config);
-  const range = encodeURIComponent(`${config.sheetName}!A:J`);
+  const range = encodeURIComponent(`${config.sheetName}!A:K`);
   const url = `https://sheets.googleapis.com/v4/spreadsheets/${config.spreadsheetId}/values/${range}:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`;
 
   const response = await fetch(url, {
@@ -156,6 +168,7 @@ async function appendViaWebApp(
       assetType: submission.assetType,
       source: submission.source ?? "",
       consent: submission.consent ? "Yes" : "No",
+      language: getLanguageLabel(submission),
     }),
   });
 
@@ -211,6 +224,7 @@ function referralToRow(event: DownloadReferralEvent): string[] {
     event.assetType,
     event.source,
     "",
+    "",
   ];
 }
 
@@ -219,7 +233,7 @@ async function appendReferralViaServiceAccount(
   event: DownloadReferralEvent
 ): Promise<void> {
   const accessToken = await getGoogleAccessToken(config);
-  const range = encodeURIComponent(`${config.sheetName}!A:J`);
+  const range = encodeURIComponent(`${config.sheetName}!A:K`);
   const url = `https://sheets.googleapis.com/v4/spreadsheets/${config.spreadsheetId}/values/${range}:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`;
 
   const response = await fetch(url, {

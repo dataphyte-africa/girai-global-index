@@ -2,7 +2,9 @@
  * Sample Google Apps Script for GOOGLE_SHEETS_WEB_APP_URL.
  *
  * 1. Create a Google Sheet with headers in row 1:
- *    Timestamp | Full Name | Email | Organization | Role | Reason | Edition | Asset Type | Source
+ *    Timestamp | Full Name | Email | Organization | Role | Reason | Edition | Asset Type | Source | Language
+ *    (Language was appended last so existing sheets only need a new header in
+ *    column J; it is filled for the 2026 report only, blank otherwise.)
  * 2. Extensions → Apps Script → paste this file → Deploy → New deployment → Web app
  * 3. Execute as: Me | Who has access: Anyone
  * 4. Copy the deployment URL into GOOGLE_SHEETS_WEB_APP_URL
@@ -27,6 +29,7 @@ function doPost(e) {
     data.edition || "",
     data.assetType || "",
     data.source || "",
+    data.language || "",
   ]);
 
   return ContentService.createTextOutput(

@@ -15,7 +15,20 @@ import type {
   DataDownloadFormValues,
   DataDownloadOpenOptions,
   DownloadEdition,
+  ReportLanguage,
 } from "@/lib/data-download/types";
+import {
+  hasLanguageChoice,
+  REPORT_2026_LANGUAGE_FILES,
+  REPORT_LANGUAGES,
+} from "@/lib/data-download/config";
+import { editionToYear } from "@/lib/data-download/citation-links";
+import {
+  clearDownloadIdentity,
+  loadDownloadIdentity,
+  saveDownloadIdentity,
+  type DownloadIdentity,
+} from "@/lib/data-download/identity";
 import {
   downloadModalDefaults,
   type DownloadModalContent,
@@ -53,6 +66,9 @@ export function DataDownloadModal({
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
   const [showSuccess, setShowSuccess] = React.useState(false);
+  const [language, setLanguage] = React.useState<ReportLanguage>("en");
+  // Remembered from a previous submit; when set, the form is skipped.
+  const [identity, setIdentity] = React.useState<DownloadIdentity | null>(null);
 
   React.useEffect(() => {
     if (!open) return;
@@ -60,10 +76,17 @@ export function DataDownloadModal({
       ...EMPTY_FORM,
       edition: options?.edition ?? "second",
     });
+    setLanguage(options?.language ?? "en");
+    setIdentity(loadDownloadIdentity());
     setError(null);
     setIsSubmitting(false);
     setShowSuccess(false);
-  }, [open, options?.edition]);
+  }, [open, options?.edition, options?.language]);
+
+  const showLanguagePicker = options
+    ? hasLanguageChoice(form.edition, options.assetType)
+    : false;
+  const selectedLanguage = showLanguagePicker ? language : undefined;
 
   const assetLabel =
     options?.assetType === "report"
@@ -108,6 +131,7 @@ export function DataDownloadModal({
       has_organization: Boolean(form.organization),
       role: form.role || undefined,
       source: options.source,
+      language: selectedLanguage,
     });
 
     try {
@@ -118,6 +142,7 @@ export function DataDownloadModal({
           ...form,
           assetType: options.assetType,
           source: options.source,
+          language: selectedLanguage,
         }),
       });
 
@@ -132,11 +157,13 @@ export function DataDownloadModal({
         throw new Error(payload.error ?? "Something went wrong. Please try again.");
       }
 
+      saveDownloadIdentity(form);
       onSubmitSuccess?.();
 
       track(EVENTS.DOWNLOAD_COMPLETED, {
         asset_type: options.assetType,
         edition: form.edition,
+        language: selectedLanguage,
       });
 
       // Datasets live in a shared Google Drive library, so rather than pushing a
@@ -151,16 +178,14 @@ export function DataDownloadModal({
       // user gesture and can be caught by pop-up blockers — when that happens
       // `window.open` returns null (or a closed window), so we fall back to a
       // direct download instead of silently failing.
-      const newTab = window.open(
-        payload.downloadUrl,
-        "_blank",
-        "noopener,noreferrer"
-      );
+      // Don't pass "noopener" in the features string: with it, window.open
+      // always returns null, which made the fallback below fire as well and
+      // downloaded the file twice. Detach the opener manually instead.
+      const newTab = window.open(payload.downloadUrl, "_blank");
 
-      const popupBlocked =
-        !newTab || newTab.closed || typeof newTab.closed === "undefined";
-
-      if (popupBlocked) {
+      if (newTab) {
+        newTab.opener = null;
+      } else {
         const anchor = document.createElement("a");
         anchor.href = payload.downloadUrl;
         anchor.download = payload.filename ?? "";
@@ -187,6 +212,65 @@ export function DataDownloadModal({
     }
   };
 
+  // Remembered visitor: no Sheets POST, just a lightweight analytics event and
+  // the file. Runs synchronously inside the click, so the new tab isn't
+  // treated as a pop-up.
+  const handleRepeatDownload = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!options) return;
+
+    track(EVENTS.DOWNLOAD_REPEAT, {
+      asset_type: options.assetType,
+      year: editionToYear(form.edition),
+      language: selectedLanguage,
+      source: options.source,
+    });
+
+    onSubmitSuccess?.();
+
+    if (options.assetType === "data") {
+      setShowSuccess(true);
+      return;
+    }
+
+    const params = new URLSearchParams({
+      edition: form.edition,
+      type: options.assetType,
+    });
+    if (selectedLanguage) params.set("lang", selectedLanguage);
+
+    const anchor = document.createElement("a");
+    anchor.href = `/api/data-download?${params.toString()}`;
+    anchor.target = "_blank";
+    anchor.rel = "noopener noreferrer";
+    document.body.appendChild(anchor);
+    anchor.click();
+    anchor.remove();
+
+    onOpenChange(false);
+  };
+
+  const handleNotYou = () => {
+    clearDownloadIdentity();
+    setIdentity(null);
+    setForm((current) => ({ ...EMPTY_FORM, edition: current.edition }));
+    setError(null);
+  };
+
+  const editionToggle = (
+    <EditionToggle
+      value={form.edition}
+      onChange={(edition) => setField("edition", edition)}
+      locked={options?.lockEdition}
+      firstLabel={content.editionFirstLabel}
+      secondLabel={content.editionSecondLabel}
+    />
+  );
+
+  const languagePicker = showLanguagePicker ? (
+    <LanguageToggle value={language} onChange={setLanguage} />
+  ) : null;
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
@@ -211,14 +295,42 @@ export function DataDownloadModal({
               {content.description}
             </DialogDescription>
 
+            {identity ? (
+            <form
+              onSubmit={handleRepeatDownload}
+              className="mt-6 flex flex-1 flex-col"
+            >
+              {editionToggle}
+              {languagePicker}
+
+              <div className="mt-5 rounded-xl border border-[#e2e2ea] bg-[#f8f8fb] px-4 py-3.5 dark:border-input dark:bg-muted/40">
+                <p className="text-sm text-[#1a1a2e] dark:text-foreground">
+                  Downloading as{" "}
+                  <span className="font-semibold">{identity.fullName}</span>{" "}
+                  <span className="text-[#6b6b80] dark:text-muted-foreground">
+                    ({identity.email})
+                  </span>
+                </p>
+                <button
+                  type="button"
+                  onClick={handleNotYou}
+                  className="mt-1 text-xs font-medium text-primary underline-offset-2 hover:underline"
+                >
+                  Not you?
+                </button>
+              </div>
+
+              <Button
+                type="submit"
+                className="mt-5 h-12 w-full rounded-xl bg-primary text-base font-semibold text-primary-foreground hover:bg-primary/90"
+              >
+                Download
+              </Button>
+            </form>
+            ) : (
             <form onSubmit={handleSubmit} className="mt-6 flex flex-1 flex-col">
-              <EditionToggle
-                value={form.edition}
-                onChange={(edition) => setField("edition", edition)}
-                locked={options?.lockEdition}
-                firstLabel={content.editionFirstLabel}
-                secondLabel={content.editionSecondLabel}
-              />
+              {editionToggle}
+              {languagePicker}
 
               <div className="mt-5 space-y-4">
                 <Field label={content.fullNameLabel}>
@@ -363,6 +475,7 @@ export function DataDownloadModal({
                 )}
               </Button>
             </form>
+            )}
           </div>
           )}
 
@@ -525,6 +638,53 @@ function EditionToggle({
           </button>
         );
       })}
+    </div>
+  );
+}
+
+/** Language choice for the 2026 report — a compact version of EditionToggle. */
+function LanguageToggle({
+  value,
+  onChange,
+}: {
+  value: ReportLanguage;
+  onChange: (language: ReportLanguage) => void;
+}) {
+  return (
+    <div className="mt-4">
+      <span
+        id="report-language-label"
+        className="text-sm font-semibold text-[#1a1a2e] dark:text-foreground"
+      >
+        Report language
+      </span>
+      <div
+        role="radiogroup"
+        aria-labelledby="report-language-label"
+        className="mt-1.5 inline-flex w-full rounded-full bg-[#f3f3f7] p-1 dark:bg-muted"
+      >
+        {REPORT_LANGUAGES.map((language) => {
+          const isActive = value === language;
+          return (
+            <button
+              key={language}
+              type="button"
+              role="radio"
+              aria-checked={isActive}
+              lang={language}
+              onClick={() => onChange(language)}
+              className={cn(
+                "flex-1 rounded-full px-3 py-1.5 text-xs font-medium transition-colors",
+                isActive
+                  ? "bg-white text-[#1a1a2e] shadow-sm dark:bg-background dark:text-foreground"
+                  : "text-[#8b8b9e] hover:text-[#1a1a2e] dark:text-muted-foreground dark:hover:text-foreground"
+              )}
+            >
+              {REPORT_2026_LANGUAGE_FILES[language].label}
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 }
