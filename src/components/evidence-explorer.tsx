@@ -117,7 +117,14 @@ const FACET_KEYS = [
   "dimension",
 ] as const;
 type FacetKey = (typeof FACET_KEYS)[number];
-const FILTER_KEYS = [...FACET_KEYS, "type", "kind"] as const;
+/**
+ * Kind-scoped attribute filters (frameworks → enforceability, government
+ * initiatives → initiative category, CSO initiatives → initiative type).
+ * See `SCOPED_FILTERS` below for semantics.
+ */
+const SCOPED_KEYS = ["enforceability", "initiativeType", "csoType"] as const;
+type ScopedKey = (typeof SCOPED_KEYS)[number];
+const FILTER_KEYS = [...FACET_KEYS, "type", "kind", ...SCOPED_KEYS] as const;
 type FilterKey = (typeof FILTER_KEYS)[number];
 
 interface FilterSpec<TKey extends FilterKey = FilterKey> {
@@ -199,6 +206,110 @@ const KIND_FILTER: FilterSpec<"kind"> = {
 };
 
 const FILTERS: FilterSpec[] = [...FACETS, TYPE_FILTER, KIND_FILTER];
+
+/**
+ * Government-initiative `type` is built as "<init*_category*> — <init*_type*>"
+ * in `scripts/build-data.ts`. The filter uses the category half (the
+ * dataset's high-level "type of initiative"); the sub-type stays visible on
+ * each row.
+ */
+const INITIATIVE_TYPE_SEPARATOR = " — ";
+function initiativeCategory(type: string | null | undefined): string {
+  if (!type) return "";
+  return type.split(INITIATIVE_TYPE_SEPARATOR)[0]?.trim() ?? "";
+}
+
+/** Display label for a scoped-filter value (drops the source's trailing period). */
+function scopedValueLabel(value: string): string {
+  return value.replace(/\.\s*$/, "").trim();
+}
+
+interface ScopedFilterSpec extends FilterSpec<ScopedKey> {
+  /** The only evidence kind this filter describes. */
+  kind: EvidenceKind;
+  /** Optional fixed option order (values not listed sort A→Z after these). */
+  order?: string[];
+}
+
+/**
+ * Kind-scoped filters. Semantics (deliberately different from the AND-across
+ * facets above): each scoped filter only constrains rows of its own kind.
+ * When one or more are active, a row passes iff its kind has an active scoped
+ * filter and its value is selected — so "Enforceability: Binding" shows only
+ * binding frameworks, and "Binding" + "CSO type: Litigation" shows binding
+ * frameworks OR litigation CSO initiatives (instead of an empty AND).
+ *
+ * Dataset fields (2026 workbook → evidence-index row):
+ *   - enforceability → frameworks sheet `fr{n}_enforceability` (row.enforceability)
+ *   - initiativeType → initiatives sheet `init{b}_category{i}` (row.type, before " — ")
+ *   - csoType        → cse_initiatives sheet `cse{n}_type` (row.type)
+ */
+const SCOPED_FILTERS: ScopedFilterSpec[] = [
+  {
+    key: "enforceability",
+    kind: "framework",
+    label: "ENFORCEABILITY (FRAMEWORKS)",
+    chipLabel: "Enforceability",
+    placeholder: "All frameworks",
+    order: ["Binding", "Non-Binding"],
+    resolve: (r) => (r.kind === "framework" ? (r.enforceability ?? "") : ""),
+  },
+  {
+    key: "initiativeType",
+    kind: "initiative",
+    label: "GOV. INITIATIVE TYPE",
+    chipLabel: "Gov. initiative type",
+    placeholder: "All government initiatives",
+    resolve: (r) => (r.kind === "initiative" ? initiativeCategory(r.type) : ""),
+  },
+  {
+    key: "csoType",
+    kind: "cso-initiative",
+    label: "CSO INITIATIVE TYPE",
+    chipLabel: "CSO initiative type",
+    placeholder: "All CSO initiatives",
+    resolve: (r) => (r.kind === "cso-initiative" ? (r.type ?? "") : ""),
+  },
+];
+
+/** A scoped filter is only meaningful while its kind isn't excluded by the Type (kind) filter. */
+function scopedKindAllowed(spec: ScopedFilterSpec, kinds: string[]): boolean {
+  return kinds.length === 0 || kinds.includes(spec.kind);
+}
+
+/** See `SCOPED_FILTERS` for the OR-across-kinds semantics. */
+function passesScoped(
+  row: EvidenceIndexRow,
+  facets: Record<FilterKey, string[]>
+): boolean {
+  let anyActive = false;
+  for (const spec of SCOPED_FILTERS) {
+    const active = facets[spec.key];
+    if (active.length === 0) continue;
+    anyActive = true;
+    if (row.kind !== spec.kind) continue;
+    const v = spec.resolve(row);
+    return typeof v === "string" ? active.includes(v) : v.some((x) => active.includes(x));
+  }
+  return !anyActive;
+}
+
+/**
+ * Drop scoped-filter values whose kind is excluded by the Type (kind)
+ * filter, so a stale "Enforceability" selection can't silently empty the
+ * list after the user switches the Pillar/Type tree to initiatives.
+ */
+function normalizeState(state: ExplorerState): ExplorerState {
+  let changed = false;
+  const facets = { ...state.facets };
+  for (const spec of SCOPED_FILTERS) {
+    if (facets[spec.key].length && !scopedKindAllowed(spec, facets.kind)) {
+      facets[spec.key] = [];
+      changed = true;
+    }
+  }
+  return changed ? { ...state, facets } : state;
+}
 
 // ---------------------------------------------------------------------------
 // URL state helpers
@@ -306,7 +417,8 @@ function withPresets(
 function applyFacets(
   rows: EvidenceIndexRow[],
   facets: Record<FilterKey, string[]>,
-  excludeKey?: FacetKey
+  /** A facet to ignore, or `"scoped"` to ignore every kind-scoped filter. */
+  excludeKey?: FacetKey | "scoped"
 ): EvidenceIndexRow[] {
   return rows.filter((row) => {
     for (const f of FILTERS) {
@@ -318,6 +430,7 @@ function applyFacets(
       const ok = values.some((x) => x && active.includes(x));
       if (!ok) return false;
     }
+    if (excludeKey !== "scoped" && !passesScoped(row, facets)) return false;
     return true;
   });
 }
@@ -505,11 +618,13 @@ export function EvidenceExplorer({
   // --- URL state ------------------------------------------------------------
   const urlState = React.useMemo(
     () =>
-      withPresets(parseStateFromUrl(searchParams), {
-        presetCountryIso3,
-        presetIndicatorSlug,
-        presetRegion,
-      }),
+      normalizeState(
+        withPresets(parseStateFromUrl(searchParams), {
+          presetCountryIso3,
+          presetIndicatorSlug,
+          presetRegion,
+        })
+      ),
     [searchParams, presetCountryIso3, presetIndicatorSlug, presetRegion]
   );
 
@@ -557,14 +672,44 @@ export function EvidenceExplorer({
     setSearchInput(urlState.q);
   }, [urlState.q]);
 
+  // Scroll position captured just before a filter write. Filter changes
+  // re-render the URL (router.replace) and swap the result list; on region
+  // pages that could leave the viewport jumped to the top of the page.
+  // We restore the captured position synchronously once the new search
+  // params commit (and once more on the next frame, in case anything —
+  // router scroll handling, focus loss from a removed chip, layout shifts —
+  // moved it after our layout effect).
+  const pendingScrollRef = React.useRef<{ y: number; at: number } | null>(null);
+
   const writeState = React.useCallback(
-    (next: ExplorerState) => {
-      const params = serializeStateToUrl(next);
+    (next: ExplorerState, opts: { preserveScroll?: boolean } = {}) => {
+      const { preserveScroll = true } = opts;
+      pendingScrollRef.current =
+        preserveScroll && typeof window !== "undefined"
+          ? { y: window.scrollY, at: performance.now() }
+          : null;
+      const params = serializeStateToUrl(normalizeState(next));
       const qs = params.toString();
       router.replace(`${pathname}${qs ? `?${qs}` : ""}`, { scroll: false });
     },
     [router, pathname]
   );
+
+  React.useLayoutEffect(() => {
+    const pending = pendingScrollRef.current;
+    if (!pending) return;
+    pendingScrollRef.current = null;
+    // Ignore stale captures (e.g. a write that didn't change the URL).
+    if (performance.now() - pending.at > 3000) return;
+    const restore = () => {
+      if (Math.abs(window.scrollY - pending.y) > 1) {
+        window.scrollTo({ top: pending.y, left: window.scrollX, behavior: "instant" });
+      }
+    };
+    restore();
+    const raf = requestAnimationFrame(restore);
+    return () => cancelAnimationFrame(raf);
+  }, [searchParams]);
 
   // Debounce search input → URL.
   React.useEffect(() => {
@@ -621,7 +766,7 @@ export function EvidenceExplorer({
         const values = Array.isArray(v) ? v : [v];
         if (!values.some((x) => x && active.includes(x))) return false;
       }
-      return true;
+      return passesScoped(row, urlState.facets);
     });
 
     const byPillar = new Map<
@@ -682,6 +827,44 @@ export function EvidenceExplorer({
     return out;
   }, [allRows, urlState.facets, countryLookup]);
 
+  // Option lists for the kind-scoped filters: rows of that kind that pass
+  // every regular facet (scoped filters on other kinds don't constrain them).
+  const scopedOptions = React.useMemo(() => {
+    const base = applyFacets(allRows, urlState.facets, "scoped");
+    const out = {} as Record<ScopedKey, FacetOption[]>;
+    for (const spec of SCOPED_FILTERS) {
+      const counts = new Map<string, number>();
+      for (const row of base) {
+        if (row.kind !== spec.kind) continue;
+        const v = spec.resolve(row);
+        for (const val of Array.isArray(v) ? v : [v]) {
+          if (val) counts.set(val, (counts.get(val) ?? 0) + 1);
+        }
+      }
+      const rank = (v: string) => {
+        const i = spec.order?.indexOf(v) ?? -1;
+        if (i >= 0) return i;
+        return /^other$/i.test(v) ? 1e6 : 1e3; // "Other" last
+      };
+      out[spec.key] = Array.from(counts.entries())
+        .map(([value, count]) => ({ value, count, label: scopedValueLabel(value) }))
+        .sort((a, b) => rank(a.value) - rank(b.value) || a.label.localeCompare(b.label));
+    }
+    return out;
+  }, [allRows, urlState.facets]);
+
+  // Scoped filters shown right now: their kind is in view (Type filter empty
+  // or includes it) and there's something to pick (or something picked).
+  const visibleScoped = React.useMemo(
+    () =>
+      SCOPED_FILTERS.filter(
+        (spec) =>
+          scopedKindAllowed(spec, urlState.facets.kind) &&
+          (scopedOptions[spec.key].length > 0 || urlState.facets[spec.key].length > 0)
+      ),
+    [scopedOptions, urlState.facets]
+  );
+
   // Fuse instance over the entire index (search is restricted to the
   // post-facet subset inside `searchRows`).
   const fuse = React.useMemo(
@@ -741,7 +924,7 @@ export function EvidenceExplorer({
 
   // --- Mutators -------------------------------------------------------------
   const toggleFacet = React.useCallback(
-    (key: FacetKey, value: string) => {
+    (key: FacetKey | ScopedKey, value: string) => {
       const current = urlState.facets[key];
       const isRemoving = current.includes(value);
       const next = isRemoving
@@ -920,13 +1103,16 @@ export function EvidenceExplorer({
     if (presetIndicatorSlug) {
       facets.indicator = [presetIndicatorSlug];
     }
+    if (presetRegion) {
+      facets.region = [presetRegion];
+    }
     writeState({
       q: "",
       page: 1,
       facets,
     });
     setSearchInput("");
-  }, [writeState, presetCountryIso3, presetIndicatorSlug]);
+  }, [writeState, presetCountryIso3, presetIndicatorSlug, presetRegion]);
 
   // Scroll-to-top on page change lands on the stat cards just above the
   // results. The filter bar is sticky (top-16 / 64px below the site header)
@@ -938,7 +1124,7 @@ export function EvidenceExplorer({
 
   const goToPage = React.useCallback(
     (page: number) => {
-      writeState({ ...urlState, page });
+      writeState({ ...urlState, page }, { preserveScroll: false });
       const anchor = listTopRef.current;
       if (!anchor) return;
       const barHeight = filterBarRef.current?.getBoundingClientRect().height ?? 0;
@@ -1040,6 +1226,22 @@ export function EvidenceExplorer({
           )}
         </div>
 
+        {/* Kind-scoped filters — desktop inline (second row) */}
+        {visibleScoped.length > 0 && (
+          <div className="mb-3 hidden grid-cols-2 gap-3 md:grid md:grid-cols-3 lg:grid-cols-5">
+            {visibleScoped.map((spec) => (
+              <FacetDropdown
+                key={spec.key}
+                facet={spec}
+                selected={urlState.facets[spec.key]}
+                options={scopedOptions[spec.key]}
+                onToggle={(v) => toggleFacet(spec.key, v)}
+                onClear={() => clearFacet(spec.key)}
+              />
+            ))}
+          </div>
+        )}
+
         {/* Filters — mobile sheet trigger */}
         <div className="mb-3 flex items-center justify-between md:hidden">
           <MobileFilterSheet
@@ -1053,6 +1255,8 @@ export function EvidenceExplorer({
             onTogglePillarLeaf={togglePillarKindLeaf}
             onTogglePillarGroup={togglePillarGroup}
             onClearPillarTree={clearPillarTree}
+            scopedFilters={visibleScoped}
+            scopedOptions={scopedOptions}
             activeCount={FILTER_KEYS.reduce((sum, k) => sum + urlState.facets[k].length, 0)}
           />
           {hasActiveFilters && (
@@ -1171,7 +1375,7 @@ function ActiveChips({
       onRemove: onClearSearch,
     });
   }
-  for (const facet of FILTERS) {
+  for (const facet of [...FILTERS, ...SCOPED_FILTERS]) {
     for (const value of state.facets[facet.key]) {
       let display = value;
       switch (facet.key) {
@@ -1189,6 +1393,11 @@ function ActiveChips({
           break;
         case "kind":
           display = KIND_LABELS[value as EvidenceKind] ?? value;
+          break;
+        case "enforceability":
+        case "initiativeType":
+        case "csoType":
+          display = scopedValueLabel(value);
           break;
       }
       chips.push({
@@ -1235,7 +1444,7 @@ function FacetDropdown({
   onToggle,
   onClear,
 }: {
-  facet: FacetSpec;
+  facet: FilterSpec;
   selected: string[];
   options: FacetOption[];
   onToggle: (value: string) => void;
@@ -1376,7 +1585,9 @@ function FacetDropdown({
                           </svg>
                         )}
                       </span>
-                      <span className="min-w-0 flex-1 truncate">{opt.label}</span>
+                      <span className="min-w-0 flex-1 truncate" title={opt.label}>
+                        {opt.label}
+                      </span>
                       <span className="ml-auto text-xs tabular-nums text-muted-foreground">
                         {opt.count}
                       </span>
@@ -1416,13 +1627,15 @@ function MobileFilterSheet({
   onTogglePillarLeaf,
   onTogglePillarGroup,
   onClearPillarTree,
+  scopedFilters,
+  scopedOptions,
   activeCount,
 }: {
   facets: FacetSpec[];
-  selected: Record<FacetKey, string[]>;
+  selected: Record<FilterKey, string[]>;
   options: Record<FacetKey, FacetOption[]>;
-  onToggle: (key: FacetKey, value: string) => void;
-  onClear: (key: FacetKey) => void;
+  onToggle: (key: FacetKey | ScopedKey, value: string) => void;
+  onClear: (key: FacetKey | ScopedKey) => void;
   pillarTree: PillarTreeOption[];
   selectedKinds: EvidenceKind[];
   onTogglePillarLeaf: (
@@ -1432,6 +1645,8 @@ function MobileFilterSheet({
   ) => void;
   onTogglePillarGroup: (pillarSlug: string, visibleKinds: EvidenceKind[]) => void;
   onClearPillarTree: () => void;
+  scopedFilters: ScopedFilterSpec[];
+  scopedOptions: Record<ScopedKey, FacetOption[]>;
   activeCount: number;
 }) {
   return (
@@ -1477,6 +1692,16 @@ function MobileFilterSheet({
               />
             )
           )}
+          {scopedFilters.map((spec) => (
+            <FacetDropdown
+              key={spec.key}
+              facet={spec}
+              selected={selected[spec.key]}
+              options={scopedOptions[spec.key]}
+              onToggle={(v) => onToggle(spec.key, v)}
+              onClear={() => onClear(spec.key)}
+            />
+          ))}
         </div>
       </SheetContent>
     </Sheet>
