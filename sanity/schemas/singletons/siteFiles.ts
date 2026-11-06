@@ -55,7 +55,9 @@ export const siteFiles = defineType({
     { name: "other", title: "Other files" },
   ],
   fields: [
-    { ...fileSlot("report2026", "2026 Report (PDF)", PDF, "The full 2026 GIRAI report / book."), group: "y2026" },
+    { ...fileSlot("report2026", "2026 Report – English (PDF)", PDF, "The full 2026 GIRAI report / book in English (the default download). Repo fallback: Global-Index-on-Responsible-AI-2026.pdf."), group: "y2026" },
+    { ...fileSlot("report2026Es", "2026 Report – Español (PDF)", PDF, "Spanish edition, served when a visitor picks Español in the download form. Repo fallback: Indice-Global-de-IA-Responsable-2026.pdf."), group: "y2026" },
+    { ...fileSlot("report2026Fr", "2026 Report – Français (PDF)", PDF, "French edition, served when a visitor picks Français in the download form. Repo fallback: Indice-mondial-de-l-IA-responsable-2026.pdf."), group: "y2026" },
     { ...fileSlot("methodology2026", "2026 Methodology (PDF)", PDF, "Linked from the Methodology page buttons and citations."), group: "y2026" },
     {
       ...fileSlot(

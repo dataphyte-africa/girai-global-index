@@ -1,4 +1,8 @@
-import type { DownloadAssetType, DownloadEdition } from "./types";
+import type {
+  DownloadAssetType,
+  DownloadEdition,
+  ReportLanguage,
+} from "./types";
 
 const EDITION_YEARS: Record<DownloadEdition, string> = {
   first: "2024",
@@ -22,6 +26,8 @@ export type CitationLinkOptions = {
   source?: string;
   /** Site origin, e.g. https://global.responsible.ai */
   origin?: string;
+  /** Preselects a translated 2026 report (adds `?lang=`). */
+  lang?: ReportLanguage;
 };
 
 export function editionToYear(edition: DownloadEdition): string {
@@ -62,6 +68,9 @@ export function getCitationDownloadUrl(
   }
   if (options.source) {
     params.set("source", options.source);
+  }
+  if (options.lang && options.lang !== "en") {
+    params.set("lang", options.lang);
   }
 
   const query = params.toString();

@@ -305,6 +305,8 @@ const siteFileSlotProjection = `{ "url": file.asset->url, filename }`;
 export const siteFilesQuery = groq`
 *[_type == "siteFiles"][0]{
   "report2026": report2026${siteFileSlotProjection},
+  "report2026Es": report2026Es${siteFileSlotProjection},
+  "report2026Fr": report2026Fr${siteFileSlotProjection},
   "report2024": report2024${siteFileSlotProjection},
   "methodology2026": methodology2026${siteFileSlotProjection},
   "methodology2024": methodology2024${siteFileSlotProjection},
