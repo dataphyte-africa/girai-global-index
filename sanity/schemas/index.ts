@@ -32,6 +32,7 @@ import { countriesPage } from "./singletons/countriesPage";
 import { downloadModal } from "./singletons/downloadModal";
 import { countdownModal } from "./singletons/countdownModal";
 import { reportDownload } from "./singletons/reportDownload";
+import { siteFiles } from "./singletons/siteFiles";
 import { keyFindings } from "./singletons/keyFindings";
 
 import { pillar } from "./documents/pillar";
@@ -75,6 +76,7 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   downloadModal,
   countdownModal,
   reportDownload,
+  siteFiles,
   keyFindings,
   // Fixed collections (one document per entity)
   pillar,
@@ -102,6 +104,7 @@ export const singletonTypes = new Set([
   "downloadModal",
   "countdownModal",
   "reportDownload",
+  "siteFiles",
   "keyFindings",
   // Fixed collections: a known set seeded with stable ids, edited in place.
   // Treated like singletons so Studio hides create/delete for them.
